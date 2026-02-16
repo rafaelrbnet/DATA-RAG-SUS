@@ -1,0 +1,42 @@
+# Ambiente
+.venv/
+venv/
+env/
+.env
+*.pyc
+__pycache__/
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Dados (não versionar Parquet/CSV grandes)
+data/raw/*.parquet
+data/raw/*.csv
+data/processed/*.parquet
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/schemas/.gitkeep
+
+# Build / dist
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Notebooks (opcional: manter só outputs limpos)
+# .ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

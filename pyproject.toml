@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datas-rag-sus"
+version = "0.1.0"
+description = "SUS Data RAG: Parquet + DuckDB + LLM para perguntas sobre dados do SUS"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "Rafael Baena Neto" },
+  { name = "Denise Ribeiro" }
+]
+keywords = ["sus", "datasus", "rag", "duckdb", "parquet", "llm", "health"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Healthcare Industry",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+]
+
+dependencies = [
+  "duckdb>=0.9.0",
+  "pandas>=2.0",
+  "pyarrow>=14.0",
+  "fastapi>=0.104",
+  "uvicorn[standard]>=0.24",
+  "langchain>=0.1",
+  "langchain-openai>=0.0.5",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0",
+  "pytest-cov>=4.0",
+]
+
+[project.urls]
+Repository = "https://github.com/rafaelrbnet/DATA-RAG-SUS"
+Documentation = "https://github.com/rafaelrbnet/DATA-RAG-SUS#readme"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
