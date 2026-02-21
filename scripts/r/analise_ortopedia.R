@@ -179,6 +179,10 @@ process_datasus_file <- function(system, state, year, month) {
         )
     }
     
+    # Libera raw_data logo após obter proc_data (reduz pico de RAM)
+    rm(raw_data)
+    gc(verbose = FALSE)
+    
     # Salva o resultado em Parquet
     final_data <- proc_data %>%
       mutate(
@@ -191,14 +195,21 @@ process_datasus_file <- function(system, state, year, month) {
     write_parquet(final_data, file_path)
     message(paste("💾 [SALVO]", system, file_name, "| Linhas:", nrow(final_data)))
     
+    # Libera proc_data e final_data após gravar (reduz RAM para próximo arquivo)
+    rm(proc_data, final_data)
+    gc(verbose = FALSE)
+    
   }, error = function(e) {
     # Erro durante o processamento (ex: coluna faltando, erro de memória)
     append_log(paste("ERRO PROCESSAMENTO:", system, state, year, month, "-", conditionMessage(e)))
     message(paste("❌ Erro ao processar dados baixados:", conditionMessage(e)))
   })
   
-  # Limpeza de memória forçada
-  rm(raw_data); if(exists("proc_data")) rm(proc_data); if(exists("final_data")) rm(final_data)
+  # Limpeza de memória forçada (caso tenha sobrado algo por erro ou early return)
+  if (exists("raw_data")) rm(raw_data)
+  if (exists("proc_data")) rm(proc_data)
+  if (exists("final_data")) rm(final_data)
+  gc(verbose = FALSE)
   return(TRUE)
 }
 
@@ -228,12 +239,14 @@ for (state in states) {
       process_datasus_file("SIH-RD", state, year, month)
       
       # 2. Processa SIA (Ambulatorial) - AGORA ATIVO
-      process_datasus_file("SIA-PA", state, year, month) 
+      process_datasus_file("SIA-PA", state, year, month)
       
+      # Libera memória após cada par SIH+SIA (mês)
+      gc(verbose = FALSE)
     }
   }
   # Limpeza pesada de memória ao trocar de estado
-  gc(verbose=FALSE)
+  gc(verbose = FALSE)
 }
 
 message("\n✅ Processo Finalizado!")
