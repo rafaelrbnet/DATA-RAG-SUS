@@ -52,6 +52,7 @@ datas-rag-sus/
 ├── README.md
 ├── pyproject.toml
 ├── data/raw | data/processed | data/schemas
+├── scripts/r/     # Scripts R do pipeline de dados
 ├── docs/          # Documentação modular (índice em docs/README.md)
 ├── src/rag/       # agent, sql_generator, executor, prompts
 ├── src/data/      # ingest, transform, dictionary
