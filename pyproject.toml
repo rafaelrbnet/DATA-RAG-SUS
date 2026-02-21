@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "datas-rag-sus"
 version = "0.1.0"
-description = "SUS Data RAG: Parquet + DuckDB + LLM para perguntas sobre dados do SUS"
+description = "SUS Data RAG: Parquet + DuckDB + LLM para perguntas sobre dados ortopédicos do SUS (SIH e SIA)"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -13,7 +13,7 @@ authors = [
   { name = "Rafael Baena Neto" },
   { name = "Denise Ribeiro" }
 ]
-keywords = ["sus", "datasus", "rag", "duckdb", "parquet", "llm", "health"]
+keywords = ["sus", "datasus", "rag", "duckdb", "parquet", "llm", "health", "ortopedia", "sih", "sia"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Healthcare Industry",

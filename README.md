@@ -1,6 +1,6 @@
 # SUS Data RAG
 
-Sistema de **RAG baseado em dados estruturados do SUS**: Parquet + DuckDB + LLM. O modelo atua como agente gerador de SQL; as consultas são executadas em DuckDB sobre arquivos Parquet, com respostas precisas, auditáveis e reproduzíveis.
+Sistema de **RAG baseado em dados estruturados do SUS** (foco em **dados ortopédicos** — SIH e SIA): Parquet + DuckDB + LLM. O modelo atua como agente gerador de SQL; as consultas são executadas em DuckDB sobre arquivos Parquet, com respostas precisas, auditáveis e reproduzíveis.
 
 ---
 
@@ -30,7 +30,7 @@ Sistema de **RAG baseado em dados estruturados do SUS**: Parquet + DuckDB + LLM.
 
 | Item | Descrição |
 |------|------------|
-| **Objetivo** | Responder perguntas clínicas, epidemiológicas e financeiras sobre o SUS via linguagem natural, com SQL gerado por LLM e executado em DuckDB. |
+| **Objetivo** | Responder perguntas clínicas (ortopedia), assistenciais e financeiras sobre dados do SUS via linguagem natural, com SQL gerado por LLM e executado em DuckDB. |
 | **Arquitetura** | **Data RAG** (Code-Interpreter RAG): dados em Parquet, motor DuckDB, LLM para interpretar pergunta, gerar SQL e explicar resultado. |
 | **Finalidades** | Científica (pesquisa em saúde digital), tecnológica (arquitetura Data RAG), social (apoio à decisão em saúde pública). |
 

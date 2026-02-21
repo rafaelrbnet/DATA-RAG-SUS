@@ -2,12 +2,12 @@
 
 ## Visão geral
 
-Criar um sistema de **RAG baseado em dados estruturados do SUS** onde:
+Criar um sistema de **RAG baseado em dados estruturados do SUS** (foco em **dados ortopédicos** — SIH e SIA) onde:
 
 - Os dados permanecem em **Parquet** (sem vetorizar linha a linha).
 - O LLM atua como **agente gerador de código SQL/Python**.
 - As consultas são executadas via **DuckDB** com alta performance.
-- O sistema responde perguntas clínicas, epidemiológicas e financeiras sobre o SUS de forma **precisa, auditável e reproduzível**.
+- O sistema responde perguntas **clínicas (dados ortopédicos), assistenciais e financeiras** sobre o SUS de forma **precisa, auditável e reproduzível**. O foco são dados de atenção à saúde (SIH, SIA), não vigilância epidemiológica.
 
 ## Finalidades
 
