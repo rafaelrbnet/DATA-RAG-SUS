@@ -110,11 +110,21 @@ A documentação está em **modular** em `docs/`:
 2. Copiar `.env.example` para `.env` e configurar (ex.: chave OpenAI ou endpoint Ollama).
 3. Criar ambiente virtual e instalar dependências:
    ```bash
-   python -m venv .venv
+   python3 -m venv .venv
    source .venv/bin/activate   # ou .venv\Scripts\activate no Windows
    pip install -e .
    ```
-4. Colocar dados em `data/raw` (ou seguir o pipeline em `src/data/`).
+4. Pipeline de dados (R → ingest → transform):
+   ```bash
+   # 1. R: download do DATASUS → data/downloaded/
+   Rscript scripts/r/analise_ortopedia.R
+
+   # 2. Ingest: move para data/raw particionado (ano, uf, sistema)
+   python -m src.data.ingest
+
+   # 3. Transform: raw → data/processed com colunas derivadas
+   python -m src.data.transform
+   ```
 5. Rodar a API: `uvicorn src.api.main:app --reload`.
 
 **Próximo passo:** definir se o primeiro agente usará **OpenAI** ou **LLM local (Ollama)** para implementar a geração de SQL e a explicação.

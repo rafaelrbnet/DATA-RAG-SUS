@@ -51,21 +51,25 @@ def run_ingest() -> None:
 
     if not DOWNLOADED_DIR.is_dir():
         log(quem, onde_base, f"Diretório inexistente: {DOWNLOADED_DIR}")
+        print("ERRO: Diretório data/downloaded/ inexistente.", flush=True)
         return
 
     raw_files = sorted(DOWNLOADED_DIR.glob("*.parquet"))
     if not raw_files:
         log(quem, onde_base, f"Nenhum .parquet em {DOWNLOADED_DIR}")
+        print("Nenhum .parquet em data/downloaded/. Execute o script R antes.", flush=True)
         return
 
+    total = len(raw_files)
+    print(f"Iniciando ingest: {total} arquivo(s) em data/downloaded/", flush=True)
     moved = 0
     skipped = 0
-    for path in raw_files:
+    for i, path in enumerate(raw_files, start=1):
         name = path.name
         info = _parse_filename(name)
         if not info:
-            log(quem, onde_base, f"Arquivo ignorado (nome fora do padrão): {name}")
             skipped += 1
+            print(f"  [{i}/{total}] Ignorado (nome fora do padrão): {name}", flush=True)
             continue
 
         dest_dir = RAW_BASE / f"ano={info['ano']}" / f"uf={info['uf']}" / f"sistema={info['sistema']}"
@@ -74,16 +78,19 @@ def run_ingest() -> None:
 
         try:
             if dest_path.exists():
-                log(quem, str(dest_path), f"Já existe; mantendo original em {path}")
                 skipped += 1
+                print(f"  [{i}/{total}] Pulado (já existe): {name}", flush=True)
                 continue
             shutil.move(str(path), str(dest_path))
-            log(quem, str(dest_path), f"Movido de {path}")
             moved += 1
+            print(f"  [{i}/{total}] Movido: {name}", flush=True)
         except OSError as e:
-            log(quem, str(path), f"Erro ao mover: {e}")
+            log(quem, str(path), f"ERRO ao mover: {e}")
+            print(f"  [{i}/{total}] ⚠ ERRO ao mover {name}: {e}", flush=True)
 
-    log(quem, onde_base, f"Concluído: {moved} movidos, {skipped} ignorados/pulados.")
+    n_raw = len(list(RAW_BASE.rglob("*.parquet"))) if RAW_BASE.is_dir() else 0
+    log(quem, onde_base, f"Concluído: {moved} movidos, {skipped} ignorados. data/raw/: {n_raw} arquivos .parquet.")
+    print(f"Concluído: {moved} movidos, {skipped} ignorados. data/raw/: {n_raw} arquivos.", flush=True)
 
 
 def list_bases_by_partition() -> list[dict]:

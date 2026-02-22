@@ -1,9 +1,15 @@
 """
 Transformação: lê Parquets de data/raw/ (particionado por ano, UF, sistema),
-padroniza tipos, adiciona colunas derivadas (custo_total, idade_grupo, cid_capitulo)
-e grava em data/processed/ com a mesma estrutura de partições.
+padroniza tipos e adiciona colunas derivadas, grava em data/processed/ com a mesma
+estrutura de partições. Um arquivo por vez para controle de memória (ex.: 16 GB RAM).
 
-Processa um arquivo por vez para controle de memória (16 GB RAM).
+Colunas derivadas:
+- custo_total: normalização (não é soma). SIH e SIA têm nomes de coluna diferentes;
+  escolhemos a coluna de valor apropriada por sistema e expomos como custo_total.
+- idade_grupo: faixas etárias; atualmente 0-17, 18-59, 60+. Pendente: artigo de
+  referência para classificação dos grupos.
+- cid_capitulo: primeiro caractere do CID (capítulo CID-10). Os grupos clínicos
+  (icd_group) vêm do R (regex no script); referenciar dicionário/artigo na doc.
 """
 
 from pathlib import Path
@@ -22,7 +28,7 @@ PROCESSED_BASE = _root() / "data" / "processed"
 QUEM = "Python"
 ONDE_BASE = "transform"
 
-# Faixas de idade (padrão; pode ser configurável depois)
+# Faixas de idade (provisório). TODO: basear em artigo de referência para categorização.
 IDADE_GRUPOS = [
     (0, 17, "0-17"),
     (18, 59, "18-59"),
@@ -31,24 +37,27 @@ IDADE_GRUPOS = [
 
 
 def _ensure_numeric(series: pd.Series) -> pd.Series:
-    """Converte para numérico, coercendo erros para NaN."""
-    return pd.to_numeric(series, errors="coerce")
+    """Converte para numérico, coercendo erros para NaN. Passa por string para evitar edge cases (Arrow/object)."""
+    return pd.to_numeric(series.astype(str), errors="coerce")
 
 
 def _add_custo_total(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Coluna derivada custo_total: soma de colunas de valor quando existirem,
-    ou coluna única. Nomes comuns após clean_names (R): valor, val_tot, pa_valtot, etc.
+    Normalização: uma única coluna de valor por sistema → custo_total (não é soma).
+    SIA e SIH usam nomes diferentes; escolhemos a coluna apropriada e expomos como custo_total.
+    SIA: pa_valpro, pa_valapr, nu_vpa_tot, nu_pa_tot. SIH: valor, val_tot, valor_total.
     """
-    cand = ["valor", "val_tot", "valor_total", "pa_valtot", "pa_val_ap"]
+    cand = [
+        "pa_valpro", "pa_valapr", "nu_vpa_tot", "nu_pa_tot",  # SIA
+        "valor", "val_tot", "valor_total", "pa_valtot", "pa_val_ap",  # SIH / alternativos
+    ]
     for c in cand:
         if c in df.columns:
             df = df.copy()
             df["custo_total"] = _ensure_numeric(df[c])
             return df
-    # Se não achar, tenta qualquer coluna com 'val' no nome
     for c in df.columns:
-        if "val" in c.lower() and df[c].dtype in ("object", "float64", "int64", "Int64"):
+        if "val" in c.lower() and str(df[c].dtype) in ("object", "string", "float64", "int64", "Int64"):
             df = df.copy()
             df["custo_total"] = _ensure_numeric(df[c])
             return df
@@ -86,8 +95,9 @@ def _add_idade_grupo(df: pd.DataFrame) -> pd.DataFrame:
 
 def _add_cid_capitulo(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Coluna derivada cid_capitulo: primeiro caractere do CID (capítulo CID-10)
-    a partir de main_icd / diag_princ / pa_cidpri. Ignora valores vazios ou 'nan'.
+    Coluna derivada cid_capitulo: primeiro caractere do CID (capítulo CID-10).
+    Grupos clínicos (icd_group) vêm do R (regex em analise_ortopedia.R); referenciar
+    dicionário de dados ou documentação/artigo na documentação do projeto.
     """
     df = df.copy()
     for c in ["main_icd", "diag_princ", "pa_cidpri", "cid"]:
@@ -104,15 +114,60 @@ def _add_cid_capitulo(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+# Colunas que devem ser numéricas (SIA/SIH após clean_names no R)
+NUMERIC_COLUMNS = [
+    "pa_idade", "idademin", "idademax",
+    "pa_qtdpro", "pa_qtdapr", "pa_valpro", "pa_valapr",
+    "nu_vpa_tot", "nu_pa_tot", "pa_vl_cf", "pa_vl_cl", "pa_vl_inc", "pa_dif_val",
+    "valor", "val_tot", "valor_total",
+    "mun_res_lat", "mun_res_lon", "mun_res_alt", "mun_res_area",
+]
+
+# Colunas de UF: padronizar para 2 letras maiúsculas
+UF_COLUMNS = ["uf_origem", "pa_ufmun", "pa_ufdif", "mun_res_uf"]
+
+
+def _standardize_numeric_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """Converte colunas conhecidas de valor/quantidade para numérico."""
+    df = df.copy()
+    for col in NUMERIC_COLUMNS:
+        if col in df.columns and df[col].dtype == "object":
+            df[col] = _ensure_numeric(df[col])
+    return df
+
+
+def _standardize_uf_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """Padroniza colunas de UF para 2 letras maiúsculas."""
+    df = df.copy()
+    for col in UF_COLUMNS:
+        if col not in df.columns:
+            continue
+        s = df[col].astype(str).str.strip().str.upper()
+        # Mantém só os 2 primeiros caracteres se for código (ex.: "12" ou "AC")
+        df[col] = s.str[:2].replace("NA", "").replace("NAN", "")
+    return df
+
+
+def _add_data_competencia(df: pd.DataFrame) -> pd.DataFrame:
+    """Coluna derivada ano_mes (YYYYMM) para ordenação/filtro por competência."""
+    df = df.copy()
+    ano = df.get("ano_cmpt")
+    mes = df.get("mes_cmpt")
+    if ano is not None and mes is not None:
+        df["ano_mes"] = _ensure_numeric(ano).astype("Int64") * 100 + _ensure_numeric(mes).astype("Int64")
+    else:
+        df["ano_mes"] = pd.NA
+    return df
+
+
 def _standardize_types(df: pd.DataFrame) -> pd.DataFrame:
-    """Padroniza tipos: strings onde for texto, numérico onde for número."""
+    """Padroniza tipos: strings trim; numéricos e UFs nas funções dedicadas."""
     df = df.copy()
     for col in df.columns:
-        if col in ("custo_total", "idade_grupo", "cid_capitulo"):
+        if col in ("custo_total", "idade_grupo", "cid_capitulo", "ano_mes"):
             continue
-        if df[col].dtype == "object":
-            # mantém string; opcional: trim
-            df[col] = df[col].astype(str).replace("nan", "").replace("None", "")
+        if df[col].dtype == "object" or str(df[col].dtype) == "string":
+            df[col] = df[col].astype(str).str.strip().replace("nan", "").replace("None", "")
     return df
 
 
@@ -133,21 +188,28 @@ def transform_single_file(raw_path: Path) -> Path | None:
         elif p.startswith("sistema="):
             sistema = p.split("=", 1)[1]
     if not (ano and uf and sistema):
-        log(QUEM, ONDE_BASE, f"Path sem partições esperadas: {raw_path}")
+        log(QUEM, ONDE_BASE, f"ERRO: path sem partições esperadas: {raw_path}")
         return None
 
     try:
-        df = pd.read_parquet(raw_path)
+        # dtype_backend='pyarrow' mantém tipos Arrow e tende a ser mais rápido que a conversão para StringDtype
+        try:
+            df = pd.read_parquet(raw_path, dtype_backend="pyarrow")
+        except (TypeError, ValueError):
+            df = pd.read_parquet(raw_path)
     except Exception as e:
-        log(QUEM, str(raw_path), f"Erro ao ler Parquet: {e}")
+        log(QUEM, str(raw_path), f"ERRO ao ler Parquet: {e}")
         return None
 
     if df.empty:
-        log(QUEM, str(raw_path), "Arquivo vazio; gravando mesmo assim.")
+        pass  # grava vazio; sem log para não poluir
     else:
         df = _add_custo_total(df)
         df = _add_idade_grupo(df)
         df = _add_cid_capitulo(df)
+        df = _add_data_competencia(df)
+        df = _standardize_numeric_columns(df)
+        df = _standardize_uf_columns(df)
         df = _standardize_types(df)
 
     dest_dir = PROCESSED_BASE / f"ano={ano}" / f"uf={uf}" / f"sistema={sistema}"
@@ -156,10 +218,9 @@ def transform_single_file(raw_path: Path) -> Path | None:
 
     try:
         df.to_parquet(dest_path, index=False)
-        log(QUEM, str(dest_path), f"Transformado: {len(df)} linhas")
         return dest_path
     except Exception as e:
-        log(QUEM, str(dest_path), f"Erro ao gravar: {e}")
+        log(QUEM, str(dest_path), f"ERRO ao gravar: {e}")
         return None
     finally:
         del df
@@ -172,23 +233,31 @@ def run_transform() -> None:
     """
     if not RAW_BASE.is_dir():
         log(QUEM, ONDE_BASE, f"Diretório inexistente: {RAW_BASE}")
+        print("ERRO: Diretório data/raw/ inexistente.", flush=True)
         return
 
     raw_files = sorted(RAW_BASE.rglob("*.parquet"))
     if not raw_files:
         log(QUEM, ONDE_BASE, f"Nenhum .parquet em {RAW_BASE}")
+        print("Nenhum .parquet em data/raw/. Execute o ingest antes.", flush=True)
         return
 
+    total = len(raw_files)
+    print(f"Iniciando transform: {total} arquivo(s) em data/raw/", flush=True)
     ok = 0
     fail = 0
-    for path in raw_files:
+    for i, path in enumerate(raw_files, start=1):
+        print(f"  [{i}/{total}] Processando: {path.name}", flush=True)
         result = transform_single_file(path)
         if result is not None:
             ok += 1
         else:
             fail += 1
+            print(f"       ⚠ Falha ao processar {path.name}", flush=True)
 
-    log(QUEM, ONDE_BASE, f"Concluído: {ok} processados, {fail} falhas.")
+    n_processed = len(list(PROCESSED_BASE.rglob("*.parquet"))) if PROCESSED_BASE.is_dir() else 0
+    log(QUEM, ONDE_BASE, f"Concluído: {ok} processados, {fail} falhas. data/processed/: {n_processed} arquivos .parquet.")
+    print(f"Concluído: {ok} processados, {fail} falhas. data/processed/: {n_processed} arquivos.", flush=True)
 
 
 if __name__ == "__main__":
