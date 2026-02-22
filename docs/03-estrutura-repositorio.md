@@ -13,6 +13,9 @@ datas-rag-sus/
 │   ├── processed/    # Parquet tratado
 │   └── schemas/      # Dicionários de dados
 │
+├── scripts/
+│   └── r/            # Scripts R do pipeline (download, tratamento DATASUS)
+│
 ├── docs/             # Documentação modular
 │   ├── README.md     # Índice da documentação
 │   ├── 01-objetivo.md

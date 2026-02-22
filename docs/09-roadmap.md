@@ -2,8 +2,8 @@
 
 ## Curto prazo
 
-- Perguntas financeiras (gastos, custos por procedimento)
-- Perguntas epidemiológicas (óbitos, internações por CID, UF, ano)
+- Perguntas financeiras (gastos, custos por procedimento ortopédico)
+- Perguntas clínicas e assistenciais (internações e procedimentos ortopédicos por CID, UF, ano)
 
 ## Médio prazo
 
