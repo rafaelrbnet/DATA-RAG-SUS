@@ -31,8 +31,8 @@ if (dir.exists("data")) {
   project_root <- "../.."
 }
 
-# Saída alinhada à estrutura do projeto: data/processed/
-output_dir <- path(project_root, "data", "processed")
+# Saída alinhada à estrutura do projeto: data/downloaded/
+output_dir <- path(project_root, "data", "downloaded")
 if (!dir_exists(output_dir)) dir_create(output_dir)
 
 # Log em logs/ na raiz do projeto
@@ -61,8 +61,11 @@ cid_regex <- paste0(
 
 # --- 2. FUNÇÕES AUXILIARES ---
 
-append_log <- function(msg) {
-  write(paste(Sys.time(), msg), file = log_file, append = TRUE)
+# Formato: quando (ISO) | quem | onde | o que (mesmo formato do pipeline Python)
+append_log <- function(msg, onde = "analise_ortopedia.R") {
+  quando <- format(Sys.time(), "%Y-%m-%dT%H:%M:%S")
+  linha <- paste(quando, "|", "Script R", "|", onde, "|", msg)
+  write(linha, file = log_file, append = TRUE)
 }
 
 classify_cid <- function(cid) {
