@@ -55,7 +55,7 @@ datas-rag-sus/
 ├── scripts/r/     # Scripts R do pipeline de dados
 ├── docs/          # Documentação modular (índice em docs/README.md)
 ├── src/rag/       # agent, sql_generator, executor, prompts
-├── src/data/      # ingest, transform, dictionary
+├── src/data/      # transform, dictionary
 ├── src/api/       # main (FastAPI)
 ├── notebooks/
 └── tests/
@@ -114,15 +114,12 @@ A documentação está em **modular** em `docs/`:
    source .venv/bin/activate   # ou .venv\Scripts\activate no Windows
    pip install -e .
    ```
-4. Pipeline de dados (R → ingest → transform):
+4. Pipeline de dados (R → transform):
    ```bash
-   # 1. R: download do DATASUS → data/downloaded/
+   # 1. R: download do DATASUS → grava em data/raw/ (particionado)
    Rscript scripts/r/analise_ortopedia.R
 
-   # 2. Ingest: move para data/raw particionado (ano, uf, sistema)
-   python -m src.data.ingest
-
-   # 3. Transform: raw → data/processed com colunas derivadas
+   # 2. Transform: data/raw → data/processed (colunas derivadas)
    python -m src.data.transform
    ```
 5. Rodar a API: `uvicorn src.api.main:app --reload`.

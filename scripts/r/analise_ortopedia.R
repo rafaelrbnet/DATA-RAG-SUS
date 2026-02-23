@@ -31,9 +31,10 @@ if (dir.exists("data")) {
   project_root <- "../.."
 }
 
-# Saída alinhada à estrutura do projeto: data/downloaded/
-output_dir <- path(project_root, "data", "downloaded")
-if (!dir_exists(output_dir)) dir_create(output_dir)
+# Saída já particionada: data/raw/ano=X/uf=Y/sistema=SIH|SIA/ (fonte da verdade do pipeline)
+# O R grava direto nessa estrutura, eliminando a necessidade do ingest para o fluxo novo.
+raw_base <- path(project_root, "data", "raw")
+if (!dir_exists(raw_base)) dir_create(raw_base)
 
 # Log em logs/ na raiz do projeto
 logs_dir <- path(project_root, "logs")
@@ -82,9 +83,13 @@ classify_cid <- function(cid) {
 # --- 3. FUNÇÃO PRINCIPAL: DOWNLOAD E PROCESSAMENTO ---
 process_datasus_file <- function(system, state, year, month) {
   
-  # Define prefixo e nome do arquivo
+  # Define prefixo, sistema (partição) e nome do arquivo
   prefix <- ifelse(system == "SIH-RD", "sih", "sia")
+  sistema_label <- ifelse(system == "SIH-RD", "SIH", "SIA")
   file_name <- paste0(prefix, "_", state, "_", year, "_", sprintf("%02d", month), ".parquet")
+  # Diretório particionado: data/raw/ano=X/uf=Y/sistema=Z/
+  output_dir <- path(raw_base, paste0("ano=", year), paste0("uf=", state), paste0("sistema=", sistema_label))
+  if (!dir_exists(output_dir)) dir_create(output_dir)
   file_path <- path(output_dir, file_name)
   
   # --- CHECKPOINT: Se já existe, não faz nada ---

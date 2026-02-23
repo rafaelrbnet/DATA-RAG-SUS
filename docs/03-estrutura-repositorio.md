@@ -37,8 +37,7 @@ datas-rag-sus/
 │   │   └── prompts.py      # Prompts do sistema
 │   │
 │   ├── data/
-│   │   ├── ingest.py       # Conversão CSV → Parquet
-│   │   ├── transform.py    # Limpeza e tipagem
+│   │   ├── transform.py    # Pipeline de transformação (raw → processed)
 │   │   └── dictionary.py   # CID, SIGTAP etc.
 │   │
 │   └── api/

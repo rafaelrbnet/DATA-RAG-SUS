@@ -248,7 +248,7 @@ def run_transform() -> None:
     raw_files = sorted(RAW_BASE.rglob("*.parquet"))
     if not raw_files:
         log(QUEM, ONDE_BASE, f"Nenhum .parquet em {RAW_BASE}")
-        print("Nenhum .parquet em data/raw/. Execute o ingest antes.", flush=True)
+        print("Nenhum .parquet em data/raw/. Execute o script R antes.", flush=True)
         return
 
     total = len(raw_files)

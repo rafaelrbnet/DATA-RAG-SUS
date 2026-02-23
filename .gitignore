@@ -19,10 +19,8 @@ __pycache__/
 # Dados (não versionar Parquet/CSV do pipeline)
 data/raw/**/*.parquet
 data/raw/**/*.csv
-data/downloaded/*.parquet
 data/processed/**/*.parquet
 !data/raw/.gitkeep
-!data/downloaded/.gitkeep
 !data/processed/.gitkeep
 !data/schemas/.gitkeep
 
