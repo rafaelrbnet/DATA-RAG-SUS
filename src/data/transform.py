@@ -1,18 +1,19 @@
 """
 Transformação: lê Parquets de data/raw/ (particionado por ano, UF, sistema),
-padroniza tipos e adiciona colunas derivadas, grava em data/processed/ com a mesma
-estrutura de partições. Um arquivo por vez para controle de memória (ex.: 16 GB RAM).
+aplica o pipeline de transformações e grava em data/processed/.
+Um arquivo por vez para controle de memória (ex.: 16 GB RAM).
 
-Colunas derivadas:
-- custo_total: normalização (não é soma). SIH e SIA têm nomes de coluna diferentes;
-  escolhemos a coluna de valor apropriada por sistema e expomos como custo_total.
-- idade_grupo: faixas etárias; atualmente 0-17, 18-59, 60+. Pendente: artigo de
-  referência para classificação dos grupos.
-- cid_capitulo: primeiro caractere do CID (capítulo CID-10). Os grupos clínicos
-  (icd_group) vêm do R (regex no script); referenciar dicionário/artigo na doc.
+data/raw/ é a fonte da verdade; data/processed/ é camada derivada.
+Os arquivos permanecem em raw — não são removidos. Qualquer reprocessamento
+(novas métricas, correções) deve ser feito a partir de raw.
+
+Para adicionar nova transformação ou métrica:
+  1. Crie uma função (df: pd.DataFrame) -> pd.DataFrame que receba e retorne o DataFrame.
+  2. Adicione-a à lista TRANSFORM_STEPS abaixo (ordem importa).
 """
 
 from pathlib import Path
+from typing import Callable
 
 import pandas as pd
 
@@ -171,10 +172,23 @@ def _standardize_types(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+# Pipeline de transformações: ordem importa. Para nova métrica/coluna, crie uma função
+# (df: pd.DataFrame) -> pd.DataFrame e adicione aqui.
+TRANSFORM_STEPS: list[Callable[[pd.DataFrame], pd.DataFrame]] = [
+    _add_custo_total,
+    _add_idade_grupo,
+    _add_cid_capitulo,
+    _add_data_competencia,
+    _standardize_numeric_columns,
+    _standardize_uf_columns,
+    _standardize_types,
+]
+
+
 def transform_single_file(raw_path: Path) -> Path | None:
     """
-    Lê um Parquet em raw_path, aplica transformações e grava em
-    data/processed/ com a mesma estrutura de partições (ano=, uf=, sistema=).
+    Lê o Parquet em raw_path, aplica o pipeline de transformações e grava em
+    data/processed/ (mesma estrutura de partições). O arquivo em raw permanece (fonte da verdade).
     Retorna o path de destino ou None em caso de erro.
     """
     # Inferir partições a partir do caminho: .../ano=X/uf=Y/sistema=Z/arquivo.parquet
@@ -204,13 +218,8 @@ def transform_single_file(raw_path: Path) -> Path | None:
     if df.empty:
         pass  # grava vazio; sem log para não poluir
     else:
-        df = _add_custo_total(df)
-        df = _add_idade_grupo(df)
-        df = _add_cid_capitulo(df)
-        df = _add_data_competencia(df)
-        df = _standardize_numeric_columns(df)
-        df = _standardize_uf_columns(df)
-        df = _standardize_types(df)
+        for step in TRANSFORM_STEPS:
+            df = step(df)
 
     dest_dir = PROCESSED_BASE / f"ano={ano}" / f"uf={uf}" / f"sistema={sistema}"
     dest_dir.mkdir(parents=True, exist_ok=True)
@@ -228,8 +237,8 @@ def transform_single_file(raw_path: Path) -> Path | None:
 
 def run_transform() -> None:
     """
-    Percorre data/raw/ (ano=, uf=, sistema=), processa cada .parquet
-    um a um e grava em data/processed/ com as mesmas partições.
+    Percorre data/raw/, aplica o pipeline a cada .parquet e grava em data/processed/
+    (mesma estrutura de partições). Arquivos em raw permanecem (fonte da verdade).
     """
     if not RAW_BASE.is_dir():
         log(QUEM, ONDE_BASE, f"Diretório inexistente: {RAW_BASE}")

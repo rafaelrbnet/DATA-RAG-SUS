@@ -9,7 +9,7 @@
 
 - **Script R** (`scripts/r/analise_ortopedia.R`): única fonte de download do DATASUS (microdatasus); grava Parquets em `data/downloaded/` (ex.: `sih_SP_2021_01.parquet`, `sia_SP_2021_01.parquet`).
 - **ingest.py**: lê `data/downloaded/` (lista `.parquet`), move cada arquivo para `data/raw/ano=X/uf=Y/sistema=SIH|SIA/` (particionado). Não baixa do DATASUS; um arquivo por vez, controle de memória.
-- **transform.py**: lê `data/raw/` (particionado), padroniza tipos e adiciona colunas derivadas, grava em `data/processed/` com a mesma estrutura de partições. Um arquivo por vez para controle de memória (ex.: 16 GB RAM).
+- **transform.py**: lê `data/raw/` (fonte da verdade), aplica o pipeline de transformações e grava em `data/processed/` (camada derivada). **Os arquivos em raw permanecem**; todo reprocessamento (novas métricas, correções) é feito a partir de raw. Um arquivo por vez para controle de memória. **Estender:** novas métricas = criar função `(df) -> df` e adicionar à lista `TRANSFORM_STEPS` em `transform.py`.
 
 **Colunas derivadas e padronizações:**
 - **custo_total:** normalização (não é soma). SIH e SIA têm colunas de valor com nomes diferentes; escolhemos a coluna apropriada por sistema e expomos como `custo_total` para visibilidade.
@@ -24,9 +24,9 @@
 **Ao final do processamento — o que você deve ver:**
 | Estágio | Diretório | Conteúdo |
 |---------|-----------|----------|
-| **Entrada do pipeline** | `data/downloaded/` | Parquets gravados pelo R (ex.: `sih_SP_2021_01.parquet`). Após o ingest, este diretório fica vazio (arquivos foram *movidos* para raw). |
-| **Após ingest** | `data/raw/` | Mesmos arquivos, reorganizados em `ano=X/uf=Y/sistema=SIH|SIA/`. São a *entrada* do transform. |
-| **Após transform** | `data/processed/` | Um .parquet por arquivo de raw, na mesma estrutura de partições, com colunas padronizadas e derivadas (`custo_total`, `idade_grupo`, `cid_capitulo`, `ano_mes`). São a *entrada* do DuckDB/RAG. |
+| **Entrada do pipeline** | `data/downloaded/` | Parquets gravados pelo R. Após o ingest, são *movidos* para raw (downloaded fica vazio para esses arquivos). |
+| **Fonte da verdade** | `data/raw/` | Arquivos em `ano=X/uf=Y/sistema=SIH|SIA/`. **Não são removidos** pelo transform. Todo reprocessamento parte daqui. |
+| **Camada derivada** | `data/processed/` | Resultado do pipeline (colunas padronizadas e derivadas). Sempre reconstruível a partir de raw; ao rodar o transform de novo, processed é regravado a partir de raw. |
 
 No log: ao final do **ingest** aparece uma linha tipo `Concluído: N movidos, M ignorados. data/raw/: K arquivos .parquet.` Ao final do **transform** aparece `Concluído: N processados, M falhas. data/processed/: K arquivos .parquet.` Assim você confere quantos dados entraram (downloaded → raw) e quantos foram processados (raw → processed).
 
