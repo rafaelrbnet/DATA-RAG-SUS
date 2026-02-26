@@ -24,6 +24,7 @@ datas-rag-sus/
 │   ├── 04-stack-tecnologica.md
 │   ├── 05-fluxo-funcionamento.md
 │   ├── 06-etapas-implementacao.md
+│   ├── 06.1-dominio-colunas-completas.md
 │   ├── 07-prompt-agente.md
 │   ├── 08-criterios-qualidade.md
 │   ├── 09-roadmap.md

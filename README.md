@@ -97,6 +97,7 @@ A documentação está em **modular** em `docs/`:
 | [04-stack-tecnologica](docs/04-stack-tecnologica.md) | Stack e dependências |
 | [05-fluxo-funcionamento](docs/05-fluxo-funcionamento.md) | Fluxo da pergunta ao resultado |
 | [06-etapas-implementacao](docs/06-etapas-implementacao.md) | Etapas de implementação |
+| [06.1-dominio-colunas-completas](docs/06.1-dominio-colunas-completas.md) | Lista completa de colunas SIA/SIH em `data/raw` |
 | [07-prompt-agente](docs/07-prompt-agente.md) | Prompt do agente SQL |
 | [08-criterios-qualidade](docs/08-criterios-qualidade.md) | Critérios de qualidade científica |
 | [09-roadmap](docs/09-roadmap.md) | Roadmap futuro |

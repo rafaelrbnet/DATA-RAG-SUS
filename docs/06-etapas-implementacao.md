@@ -52,6 +52,8 @@ Levantamento realizado sobre `data/raw/**/*.parquet` (3.224 arquivos; anos `2021
 
 > Observação: no SIH existem variantes de nomenclatura (ex.: maiúsculas/minúsculas e `munRes*` vs `mun_res_*`) já nos arquivos brutos, por isso o total de colunas únicas no sistema é maior.
 
+Para a lista integral das colunas e exemplo de linha preenchida por sistema, ver [06.1-dominio-colunas-completas.md](06.1-dominio-colunas-completas.md).
+
 
 **Ao final do processamento — data/processed/**/*.parquet - o que você deve ver:**
 | Estágio | Diretório | Conteúdo |
