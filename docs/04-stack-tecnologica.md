@@ -14,8 +14,14 @@
 - `duckdb` — consultas analíticas em Parquet
 - `pandas` — manipulação de dados
 - `pyarrow` — leitura/escrita Parquet
+- `datasus-dbc` + `dbfread` — ingestão DATASUS em Python (DBC -> DBF -> Parquet)
 - `fastapi` + `uvicorn` — API REST
 - `langchain` ou `llamaindex` — orquestração do agente
 - `python-dotenv` — variáveis de ambiente
+
+## Observação sobre ingestão
+
+- A ingestão padrão é Python (`python -m src.data.ingestion`).
+- Script R (`scripts/r/analise_ortopedia.R`) é mantido como fallback pontual.
 
 [← Voltar ao índice](README.md)

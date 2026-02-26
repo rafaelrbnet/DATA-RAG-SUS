@@ -16,10 +16,10 @@ __pycache__/
 *.swp
 *.swo
 
-# Dados (não versionar Parquet/CSV grandes)
-data/raw/*.parquet
-data/raw/*.csv
-data/processed/*.parquet
+# Dados (não versionar Parquet/CSV do pipeline)
+data/raw/**/*.parquet
+data/raw/**/*.csv
+data/processed/**/*.parquet
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 !data/schemas/.gitkeep
@@ -36,6 +36,10 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# Draft notes (personal notes / scraps — not versioned)
+draftnotes/*
+!draftnotes/.gitkeep
 
 # Logs
 *.log

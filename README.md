@@ -55,7 +55,7 @@ datas-rag-sus/
 ├── scripts/r/     # Scripts R do pipeline de dados
 ├── docs/          # Documentação modular (índice em docs/README.md)
 ├── src/rag/       # agent, sql_generator, executor, prompts
-├── src/data/      # ingest, transform, dictionary
+├── src/data/      # transform, dictionary
 ├── src/api/       # main (FastAPI)
 ├── notebooks/
 └── tests/
@@ -110,11 +110,20 @@ A documentação está em **modular** em `docs/`:
 2. Copiar `.env.example` para `.env` e configurar (ex.: chave OpenAI ou endpoint Ollama).
 3. Criar ambiente virtual e instalar dependências:
    ```bash
-   python -m venv .venv
+   python3 -m venv .venv
    source .venv/bin/activate   # ou .venv\Scripts\activate no Windows
    pip install -e .
    ```
-4. Colocar dados em `data/raw` (ou seguir o pipeline em `src/data/`).
+4. Pipeline de dados (ingestão Python → transform):
+   ```bash
+   # 1. Ingestão 100% Python: DATASUS (FTP/S3) + DBC→DBF + filtros
+   #    grava em data/raw/ (particionado)
+   python -m src.data.ingestion
+
+   # 2. Transform: data/raw → data/processed (colunas derivadas)
+   python -m src.data.transform
+   ```
+   Observação: a ingestão tenta Python primeiro e usa fallback via script R apenas quando o arquivo não é encontrado no FTP/S3.
 5. Rodar a API: `uvicorn src.api.main:app --reload`.
 
 **Próximo passo:** definir se o primeiro agente usará **OpenAI** ou **LLM local (Ollama)** para implementar a geração de SQL e a explicação.

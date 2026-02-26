@@ -1,1 +1,1 @@
-# Pipeline de dados: ingestão e transformação
+# Pipeline de dados: transform e dictionary
