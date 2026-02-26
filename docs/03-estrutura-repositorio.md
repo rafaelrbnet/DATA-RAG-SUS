@@ -14,7 +14,7 @@ datas-rag-sus/
 │   └── schemas/      # Dicionários de dados
 │
 ├── scripts/
-│   └── r/            # Scripts R do pipeline (download, tratamento DATASUS)
+│   └── r/            # Scripts R de fallback na ingestão (microdatasus)
 │
 ├── docs/             # Documentação modular
 │   ├── README.md     # Índice da documentação
@@ -37,6 +37,7 @@ datas-rag-sus/
 │   │   └── prompts.py      # Prompts do sistema
 │   │
 │   ├── data/
+│   │   ├── ingestion.py    # Ingestão DATASUS (FTP/S3, DBC->DBF->Parquet em raw)
 │   │   ├── transform.py    # Pipeline de transformação (raw → processed)
 │   │   └── dictionary.py   # CID, SIGTAP etc.
 │   │

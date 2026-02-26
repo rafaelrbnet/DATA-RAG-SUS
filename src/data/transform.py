@@ -7,6 +7,10 @@ data/raw/ é a fonte da verdade; data/processed/ é camada derivada.
 Os arquivos permanecem em raw — não são removidos. Qualquer reprocessamento
 (novas métricas, correções) deve ser feito a partir de raw.
 
+Estratégia "o que processar": diff entre data/raw e data/processed (não o log).
+Só processamos arquivos que existem em raw mas não têm correspondente em processed.
+Vantagens: fonte única de verdade (filesystem), idempotente, resistente a rotação de log.
+
 Para adicionar nova transformação ou métrica:
   1. Crie uma função (df: pd.DataFrame) -> pd.DataFrame que receba e retorne o DataFrame.
   2. Adicione-a à lista TRANSFORM_STEPS abaixo (ordem importa).
@@ -28,6 +32,12 @@ PROCESSED_BASE = _root() / "data" / "processed"
 
 QUEM = "Python"
 ONDE_BASE = "transform"
+
+
+def _processed_path_for_raw(raw_path: Path) -> Path:
+    """Caminho em data/processed/ correspondente ao arquivo em data/raw/ (estrutura espelhada)."""
+    rel = raw_path.relative_to(RAW_BASE)
+    return PROCESSED_BASE / rel
 
 # Faixas de idade (provisório). TODO: basear em artigo de referência para categorização.
 IDADE_GRUPOS = [
@@ -223,7 +233,7 @@ def transform_single_file(raw_path: Path) -> Path | None:
 
     dest_dir = PROCESSED_BASE / f"ano={ano}" / f"uf={uf}" / f"sistema={sistema}"
     dest_dir.mkdir(parents=True, exist_ok=True)
-    dest_path = dest_dir / raw_path.name
+    dest_path = dest_dir / raw_path.name  # mesmo nome que em raw (estrutura espelhada)
 
     try:
         df.to_parquet(dest_path, index=False)
@@ -235,23 +245,37 @@ def transform_single_file(raw_path: Path) -> Path | None:
         del df
 
 
-def run_transform() -> None:
+def run_transform(skip_existing: bool = True) -> None:
     """
-    Percorre data/raw/, aplica o pipeline a cada .parquet e grava em data/processed/
+    Processa Parquets de data/raw/ que ainda não têm correspondente em data/processed/
     (mesma estrutura de partições). Arquivos em raw permanecem (fonte da verdade).
+
+    Estratégia: diff raw vs processed — só processa se o arquivo em processed não existir.
+    Use skip_existing=False para forçar reprocessamento de todos os arquivos de raw.
     """
     if not RAW_BASE.is_dir():
         log(QUEM, ONDE_BASE, f"Diretório inexistente: {RAW_BASE}")
         print("ERRO: Diretório data/raw/ inexistente.", flush=True)
         return
 
-    raw_files = sorted(RAW_BASE.rglob("*.parquet"))
+    all_raw = sorted(RAW_BASE.rglob("*.parquet"))
+    if skip_existing:
+        raw_files = [p for p in all_raw if not _processed_path_for_raw(p).exists()]
+    else:
+        raw_files = all_raw
+
     if not raw_files:
-        log(QUEM, ONDE_BASE, f"Nenhum .parquet em {RAW_BASE}")
-        print("Nenhum .parquet em data/raw/. Execute o script R antes.", flush=True)
+        if not all_raw:
+            log(QUEM, ONDE_BASE, f"Nenhum .parquet em {RAW_BASE}")
+            print("Nenhum .parquet em data/raw/. Execute a ingestão antes.", flush=True)
+        else:
+            log(QUEM, ONDE_BASE, "Nenhum arquivo pendente para transform (raw já espelhado em processed).")
+            print("Nenhum arquivo pendente: todos os Parquets de data/raw/ já têm correspondente em data/processed/.", flush=True)
         return
 
     total = len(raw_files)
+    if skip_existing and len(all_raw) > total:
+        print(f"Pulando {len(all_raw) - total} já em data/processed/. Processando {total} pendente(s).", flush=True)
     print(f"Iniciando transform: {total} arquivo(s) em data/raw/", flush=True)
     ok = 0
     fail = 0

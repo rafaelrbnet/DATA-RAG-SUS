@@ -114,14 +114,16 @@ A documentação está em **modular** em `docs/`:
    source .venv/bin/activate   # ou .venv\Scripts\activate no Windows
    pip install -e .
    ```
-4. Pipeline de dados (R → transform):
+4. Pipeline de dados (ingestão Python → transform):
    ```bash
-   # 1. R: download do DATASUS → grava em data/raw/ (particionado)
-   Rscript scripts/r/analise_ortopedia.R
+   # 1. Ingestão 100% Python: DATASUS (FTP/S3) + DBC→DBF + filtros
+   #    grava em data/raw/ (particionado)
+   python -m src.data.ingestion
 
    # 2. Transform: data/raw → data/processed (colunas derivadas)
    python -m src.data.transform
    ```
+   Observação: a ingestão tenta Python primeiro e usa fallback via script R apenas quando o arquivo não é encontrado no FTP/S3.
 5. Rodar a API: `uvicorn src.api.main:app --reload`.
 
 **Próximo passo:** definir se o primeiro agente usará **OpenAI** ou **LLM local (Ollama)** para implementar a geração de SQL e a explicação.
