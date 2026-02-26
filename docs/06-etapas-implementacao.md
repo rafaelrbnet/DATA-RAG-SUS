@@ -26,11 +26,38 @@
 
 **Logs:** R e Python usam o mesmo arquivo `logs/erros.log`. Formato de cada linha: `quando (ISO) | quem (Script R ou Python) | onde (componente/caminho) | o que aconteceu`.
 
-**Ao final do processamento — o que você deve ver:**
+### Domínio de dados identificado nos arquivos `data/raw/*.parquet`
+
+Levantamento realizado sobre `data/raw/**/*.parquet` (3.224 arquivos; anos `2021` a `2025`; sistemas `SIA` e `SIH`).
+
+- **Variáveis únicas no conjunto:** `335` (considerando nomes distintos, case-sensitive).
+- **Variáveis comuns entre SIA e SIH (`16`):** `ano_cmpt`, `mes_cmpt`, `sistema`, `uf_origem`, `main_icd`, `icd_group`, `opm_flag`, `fisio_flag`, `mun_res_status`, `mun_res_tipo`, `mun_res_nome`, `mun_res_uf`, `mun_res_lat`, `mun_res_lon`, `mun_res_alt`, `mun_res_area`.
+- **Variáveis presentes em SIA:** `92` colunas (produção ambulatorial, procedimento, perfil do atendimento e valores brutos).
+- **Variáveis presentes em SIH:** `259` colunas (internação hospitalar, AIH, UTI, diagnósticos, permanência, desfecho, valores e auditoria/gestão).
+
+**Variáveis SIA (amostra representativa do domínio):**
+- Identificação e gestão: `pa_coduni`, `pa_gestao`, `pa_ufmun`, `pa_regct`, `pa_mvm`, `pa_cmp`.
+- Procedimento e produção: `pa_proc_id`, `pa_qtdpro`, `pa_qtdapr`, `pa_tpfin`, `pa_subfin`, `pa_grupo`, `pa_subgru`.
+- Profissional e estabelecimento: `pa_cnsmed`, `pa_cbocod`, `pa_cnpjcpf`, `pa_cnpjmnt`, `pa_nat_jur`.
+- Clínica e perfil: `pa_cidpri`, `pa_cidsec`, `pa_cidcas`, `pa_idade`, `pa_sexo`, `pa_racacor`, `pa_etnia`.
+- Valores: `pa_valpro`, `pa_valapr`, `pa_vl_cf`, `pa_vl_cl`, `pa_vl_inc`, `nu_vpa_tot`, `nu_pa_tot`, `pa_dif_val`.
+
+**Variáveis SIH (amostra representativa do domínio):**
+- Identificação da internação: `N_AIH`, `IDENT`, `CNES`, `CGC_HOSP`, `MUNIC_RES`, `MUNIC_MOV`.
+- Datas e permanência: `DT_INTER`, `DT_SAIDA`, `DIAS_PERM`, `QT_DIARIAS`, `UTI_MES_TO`, `UTI_INT_TO`.
+- Clínica e diagnóstico: `DIAG_PRINC`, `DIAG_SECUN`, `CID_PRINC`, `CID_ASSO`, `CID_MORTE`, `DIAGSEC1` ... `DIAGSEC9`.
+- Perfil do paciente: `IDADE`, `SEXO`, `RACA_COR`, `ETNIA`, `NASC`, `MORTE`.
+- Valores e faturamento: `VAL_SH`, `VAL_SP`, `VAL_SADT`, `VAL_UTI`, `VAL_TOT`, `VAL_SH_FED`, `VAL_SP_FED`, `VAL_SH_GES`, `VAL_SP_GES`.
+- Gestão e auditoria: `GESTAO`, `GESTOR_COD`, `GESTOR_TP`, `AUD_JUST`, `SIS_JUST`, `REMESSA`, `SEQUENCIA`.
+
+> Observação: no SIH existem variantes de nomenclatura (ex.: maiúsculas/minúsculas e `munRes*` vs `mun_res_*`) já nos arquivos brutos, por isso o total de colunas únicas no sistema é maior.
+
+
+**Ao final do processamento — data/processed/**/*.parquet - o que você deve ver:**
 | Estágio | Diretório | Conteúdo |
 |---------|-----------|----------|
 | **Fonte da verdade** | `data/raw/` | A ingestão Python grava direto em `ano=X/uf=Y/sistema=SIH|SIA/`. Arquivos não são removidos pelo transform. Todo reprocessamento parte daqui. |
-| **Camada derivada** | `data/processed/` | Resultado do pipeline (colunas padronizadas e derivadas). Sempre reconstruível a partir de raw. |
+| **Camada derivada** | `data/processed/` | Arquivos já agregados e transformados do pipeline (colunas padronizadas e derivadas). Sempre reconstruível a partir de raw. |
 
 Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> data/processed/**.
 
