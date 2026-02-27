@@ -1,20 +1,21 @@
-# Scripts R — Pipeline de dados
+# Scripts R — Fallback de Download
 
-Scripts em **R** que fazem parte do pipeline de dados do SUS Data RAG.
+Diretório reservado ao fallback R do pipeline Python.
 
-Coloque aqui, por exemplo:
+Atualmente existe apenas:
 
-- Download de dados do DATASUS (ex.: via `microdatasus`, `datasus` ou APIs)
-- Tratamento e limpeza em R antes de exportar para CSV/Parquet
-- Geração de dicionários ou metadados usados pelo pipeline Python
+- `fallback_download_only.R`: baixa o alvo DATASUS e grava cache bruto em
+  `.download_<arquivo>.parquet` dentro de `data/raw/ano=X/uf=Y/sistema=SIH|SIA/`.
 
-**Onde os dados são salvos (estrutura do projeto):**
+Uso (modo único):
 
-| Saída | Pasta | Exemplo |
-|-------|--------|---------|
-| Parquet processados (SIH/SIA) | `data/processed/` | `sih_SP_2024_01.parquet`, `sia_PA_2023_06.parquet` |
-| Log de erros | `logs/` | `logs/erros.log` |
+```bash
+Rscript scripts/r/fallback_download_only.R UF ANO MES SISTEMA
+# Exemplo:
+Rscript scripts/r/fallback_download_only.R SP 2024 08 SIA-PA
+```
 
-O script `analise_ortopedia.R` detecta a raiz do projeto automaticamente (rodando da raiz ou de `scripts/r/`).
+Observações:
 
-**Dependências R:** o script `analise_ortopedia.R` instala automaticamente, na primeira execução, os pacotes que faltam: `microdatasus`, `tidyverse`, `arrow`, `fs`, `janitor`. Opcional: use `renv` para ambiente reproduzível.
+- Esse script não aplica filtros nem transformações de negócio.
+- O processamento (filtros/chunks/parquet final) continua no `src/data/ingestion.py`.

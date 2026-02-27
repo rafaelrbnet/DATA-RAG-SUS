@@ -22,6 +22,6 @@
 ## Observação sobre ingestão
 
 - A ingestão padrão é Python (`python -m src.data.ingestion`).
-- Script R (`scripts/r/analise_ortopedia.R`) é mantido como fallback pontual.
+- Script R (`scripts/r/fallback_download_only.R`) é mantido como fallback pontual, apenas para download.
 
 [← Voltar ao índice](README.md)

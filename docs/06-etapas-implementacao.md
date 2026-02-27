@@ -13,8 +13,8 @@
 
 - **ingestion.py** (`python -m src.data.ingestion`): ingestão principal 100% Python. Faz diff da grade esperada com `data/raw/`, baixa DBC do DATASUS (FTP nativo com fallback S3), descompacta DBC->DBF, filtra em chunks e grava Parquet particionado em `data/raw/ano=X/uf=Y/sistema=SIH|SIA/`.
 - **Retentativa e resiliência:** pode incluir alvos vindos de `logs/erros.log`; aplica retries, backoff/jitter, circuit breaker para timeout e ignora arquivos com muitas falhas recorrentes no log.
-- **Fallback R (pontual):** quando o arquivo não existe no FTP/S3, o `ingestion.py` pode acionar `scripts/r/analise_ortopedia.R` para tentativa alternativa de obtenção do mesmo alvo.
-- **transform.py** (`python -m src.data.transform`): lê `data/raw/` (fonte da verdade), aplica transformações e grava em `data/processed/` (camada derivada). Os arquivos em raw permanecem; reprocessamentos partem sempre de raw. Um arquivo por vez para controle de memória. Para estender, adicionar nova função `(df) -> df` em `TRANSFORM_STEPS`.
+- **Fallback R (pontual):** quando o arquivo não existe no FTP/S3, o `ingestion.py` pode acionar `scripts/r/fallback_download_only.R` (somente download), e concluir o processamento no Python.
+- **transform.py** (`python -m src.data.transform`): lê `data/raw/` (origem bruta), aplica deduplicação/normalização de schema e grava em `data/processed/` (fonte de verdade analítica). Os arquivos em raw permanecem; reprocessamentos partem sempre de raw. Um arquivo por vez para controle de memória. Para estender, adicionar nova função `(df) -> df` em `TRANSFORM_STEPS`.
 
 **Colunas derivadas e padronizações:**
 - **custo_total:** normalização (não é soma). SIH e SIA têm colunas de valor com nomes diferentes; escolhemos a coluna apropriada por sistema e expomos como `custo_total` para visibilidade.
@@ -26,38 +26,25 @@
 
 **Logs:** R e Python usam o mesmo arquivo `logs/erros.log`. Formato de cada linha: `quando (ISO) | quem (Script R ou Python) | onde (componente/caminho) | o que aconteceu`.
 
-### Domínio de dados identificado nos arquivos `data/raw/*.parquet`
+### Domínio de dados canônico em `data/processed/*.parquet`
 
-Levantamento realizado sobre `data/raw/**/*.parquet` (3.224 arquivos; anos `2021` a `2025`; sistemas `SIA` e `SIH`).
+A camada analítica canônica passa a ser `data/processed/**/*.parquet`, com schema normalizado no `transform.py`:
 
-- **Variáveis únicas no conjunto:** `335` (considerando nomes distintos, case-sensitive).
-- **Variáveis comuns entre SIA e SIH (`16`):** `ano_cmpt`, `mes_cmpt`, `sistema`, `uf_origem`, `main_icd`, `icd_group`, `opm_flag`, `fisio_flag`, `mun_res_status`, `mun_res_tipo`, `mun_res_nome`, `mun_res_uf`, `mun_res_lat`, `mun_res_lon`, `mun_res_alt`, `mun_res_area`.
-- **Variáveis presentes em SIA:** `92` colunas (produção ambulatorial, procedimento, perfil do atendimento e valores brutos).
-- **Variáveis presentes em SIH:** `259` colunas (internação hospitalar, AIH, UTI, diagnósticos, permanência, desfecho, valores e auditoria/gestão).
+- **Colunas padrão comuns (SIA e SIH):** `16`
+- **Colunas padrão SIA (incluindo comuns):** `58`
+- **Colunas padrão SIH (incluindo comuns):** `71`
+- **Colunas derivadas comuns:** `4` (`custo_total`, `idade_grupo`, `cid_capitulo`, `ano_mes`)
+- **Total final por arquivo SIA (padrão + derivadas):** `62`
+- **Total final por arquivo SIH (padrão + derivadas):** `75`
 
-**Variáveis SIA (amostra representativa do domínio):**
-- Identificação e gestão: `pa_coduni`, `pa_gestao`, `pa_ufmun`, `pa_regct`, `pa_mvm`, `pa_cmp`.
-- Procedimento e produção: `pa_proc_id`, `pa_qtdpro`, `pa_qtdapr`, `pa_tpfin`, `pa_subfin`, `pa_grupo`, `pa_subgru`.
-- Profissional e estabelecimento: `pa_cnsmed`, `pa_cbocod`, `pa_cnpjcpf`, `pa_cnpjmnt`, `pa_nat_jur`.
-- Clínica e perfil: `pa_cidpri`, `pa_cidsec`, `pa_cidcas`, `pa_idade`, `pa_sexo`, `pa_racacor`, `pa_etnia`.
-- Valores: `pa_valpro`, `pa_valapr`, `pa_vl_cf`, `pa_vl_cl`, `pa_vl_inc`, `nu_vpa_tot`, `nu_pa_tot`, `pa_dif_val`.
-
-**Variáveis SIH (amostra representativa do domínio):**
-- Identificação da internação: `N_AIH`, `IDENT`, `CNES`, `CGC_HOSP`, `MUNIC_RES`, `MUNIC_MOV`.
-- Datas e permanência: `DT_INTER`, `DT_SAIDA`, `DIAS_PERM`, `QT_DIARIAS`, `UTI_MES_TO`, `UTI_INT_TO`.
-- Clínica e diagnóstico: `DIAG_PRINC`, `DIAG_SECUN`, `CID_PRINC`, `CID_ASSO`, `CID_MORTE`, `DIAGSEC1` ... `DIAGSEC9`.
-- Perfil do paciente: `IDADE`, `SEXO`, `RACA_COR`, `ETNIA`, `NASC`, `MORTE`.
-- Valores e faturamento: `VAL_SH`, `VAL_SP`, `VAL_SADT`, `VAL_UTI`, `VAL_TOT`, `VAL_SH_FED`, `VAL_SP_FED`, `VAL_SH_GES`, `VAL_SP_GES`.
-- Gestão e auditoria: `GESTAO`, `GESTOR_COD`, `GESTOR_TP`, `AUD_JUST`, `SIS_JUST`, `REMESSA`, `SEQUENCIA`.
-
-> Observação: no SIH existem variantes de nomenclatura (ex.: maiúsculas/minúsculas e `munRes*` vs `mun_res_*`) já nos arquivos brutos, por isso o total de colunas únicas no sistema é maior.
+Para a lista completa das colunas padrão e derivadas (com exemplos de linha), ver [06.1-dominio-colunas-completas.md](06.1-dominio-colunas-completas.md).
 
 
 **Ao final do processamento — data/processed/**/*.parquet - o que você deve ver:**
 | Estágio | Diretório | Conteúdo |
 |---------|-----------|----------|
-| **Fonte da verdade** | `data/raw/` | A ingestão Python grava direto em `ano=X/uf=Y/sistema=SIH|SIA/`. Arquivos não são removidos pelo transform. Todo reprocessamento parte daqui. |
-| **Camada derivada** | `data/processed/` | Arquivos já agregados e transformados do pipeline (colunas padronizadas e derivadas). Sempre reconstruível a partir de raw. |
+| **Origem bruta** | `data/raw/` | A ingestão Python grava direto em `ano=X/uf=Y/sistema=SIH|SIA/`. Arquivos não são removidos pelo transform. |
+| **Fonte de verdade analítica** | `data/processed/` | Camada normalizada usada por DuckDB/RAG, com schema canônico, deduplicado e colunas derivadas padronizadas. |
 
 Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> data/processed/**.
 

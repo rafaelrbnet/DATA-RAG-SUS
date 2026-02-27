@@ -58,7 +58,7 @@ FTP_BASE_HTTP = "https://ftp.datasus.gov.br/dissemin/publicos"
 
 # Padrões no log
 LOG_ERRO_PATTERN = re.compile(
-    r"(?:ERRO PROCESSAMENTO|FALHA DEFINITIVA DOWNLOAD):\s*(SIH-RD|SIA-PA)\s+([A-Z]{2})\s+(\d{4})\s+(\d{1,2})",
+    r"(?:ERRO PROCESSAMENTO|FALHA DEFINITIVA DOWNLOAD|ERRO ingestão)\s*:?\s*(SIH-RD|SIA-PA)\s+([A-Z]{2})\s+(\d{4})\s+(\d{1,2})",
     re.IGNORECASE,
 )
 
@@ -99,6 +99,28 @@ def _clean_name(s: str) -> str:
     return s or "unknown"
 
 
+def _coalesce_duplicate_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Coalesce de colunas com mesmo nome após normalização.
+    Ex.: VAL_TOT/val_tot -> val_tot.
+    Mantém a primeira não-nula por linha.
+    """
+    if df.empty:
+        return df
+    cols = list(df.columns)
+    if len(cols) == len(set(cols)):
+        return df
+    out: dict[str, pd.Series] = {}
+    for col in dict.fromkeys(cols):  # preserva ordem de aparição
+        idx = [i for i, c in enumerate(cols) if c == col]
+        if len(idx) == 1:
+            out[col] = df.iloc[:, idx[0]]
+        else:
+            block = df.iloc[:, idx]
+            out[col] = block.bfill(axis=1).iloc[:, 0]
+    return pd.DataFrame(out)
+
+
 def _classify_cid(cid: str) -> str:
     if not cid or (isinstance(cid, float) and pd.isna(cid)):
         return "Sem CID"
@@ -120,6 +142,12 @@ def _dest_path(sistema: Literal["SIH", "SIA"], uf: str, year: int, month: int) -
     dir_path = RAW_BASE / f"ano={year}" / f"uf={uf}" / f"sistema={sistema}"
     dir_path.mkdir(parents=True, exist_ok=True)
     return dir_path / name
+
+
+def _download_cache_path(sistema: Literal["SIH", "SIA"], uf: str, year: int, month: int) -> Path:
+    """Arquivo de cache do fallback R (somente etapa de download)."""
+    dest = _dest_path(sistema, uf, year, month)
+    return dest.parent / f".download_{dest.name}"
 
 
 def _system_to_label(system: str) -> Literal["SIH", "SIA"]:
@@ -281,11 +309,9 @@ def _records_to_clean_df(records: list[dict]) -> pd.DataFrame:
     """Lista de dict (DBF record) → DataFrame com colunas em snake_case."""
     if not records:
         return pd.DataFrame()
-    first = records[0]
-    clean = {_clean_name(k): v for k, v in first.items()}
     df = pd.DataFrame(records)
     df.columns = [_clean_name(c) for c in df.columns]
-    return df
+    return _coalesce_duplicate_columns(df)
 
 
 def _filter_sih(df: pd.DataFrame) -> pd.DataFrame:
@@ -527,16 +553,43 @@ def _r_stderr_to_log_message(returncode: int, stderr_chunks: list[str]) -> str:
 
 def _run_r_fallback(system: str, uf: str, year: int, month: int) -> tuple[bool, str]:
     """
-    Fallback: executa o script R (microdatasus) para este arquivo.
-    Timeout por atividade: só interrompe se não houver saída do R nem crescimento
-    do arquivo de destino por R_NO_PROGRESS_TIMEOUT; tempo total limitado por R_HARD_TIMEOUT.
-    Retorna (True, "") se o Parquet foi gravado; (False, msg) caso contrário.
+    Compatibilidade: fallback R agora é somente download.
+    Mantido como wrapper para evitar quebra de chamadas legadas.
+    """
+    return _run_r_download_only(system, uf, year, month)
+
+
+def _run_single(system: str, uf: str, year: int, month: int) -> tuple[bool, str]:
+    """Processa um arquivo em Python; se ausente no FTP/S3, usa R só para download e finaliza no Python."""
+    try:
+        success, err = _process_dbc_python(system, uf, year, month)
+        if success:
+            return True, ""
+        if _is_file_not_found_error(err):
+            print("       Arquivo não no FTP/S3; tentando fallback R (somente download).", flush=True)
+            log(QUEM, ONDE, f"Arquivo não encontrado (FTP/S3); fallback R download-only: {system} {uf} {year} {month:02d}")
+            ok, err_r = _run_r_download_only(system, uf, year, month)
+            if not ok:
+                return False, err_r
+            return _process_r_download_cache_python(system, uf, year, month)
+        return False, err
+    except ImportError as e:
+        return False, f"Dependências: pip install datasus-dbc dbfread — {e}"
+    except Exception as e:
+        return False, _classify_error(e)
+
+
+def _run_r_download_only(system: str, uf: str, year: int, month: int) -> tuple[bool, str]:
+    """
+    Executa R em modo download-only: gera .download_<arquivo>.parquet.
+    Não processa filtros/transform no R.
     """
     root = _root()
-    script = root / "scripts" / "r" / "analise_ortopedia.R"
+    script = root / "scripts" / "r" / "fallback_download_only.R"
     if not script.is_file():
-        return False, "Script R não encontrado (scripts/r/analise_ortopedia.R)."
+        return False, "Script R não encontrado (scripts/r/fallback_download_only.R)."
     dest = _dest_path(_system_to_label(system), uf, year, month)
+    cache = _download_cache_path(_system_to_label(system), uf, year, month)
     cmd = ["Rscript", str(script), uf.upper(), str(year), str(month), system]
     try:
         proc = subprocess.Popen(
@@ -548,7 +601,7 @@ def _run_r_fallback(system: str, uf: str, year: int, month: int) -> tuple[bool, 
             bufsize=1,
         )
         last_activity = [time.time()]
-        stderr_chunks = []
+        stderr_chunks: list[str] = []
 
         def read_stream(stream, is_stderr: bool):
             try:
@@ -557,11 +610,7 @@ def _run_r_fallback(system: str, uf: str, year: int, month: int) -> tuple[bool, 
                     stripped = line.strip()
                     if is_stderr:
                         stderr_chunks.append(line)
-                    # Exibe linhas de etapa do R (etapa, nome do temp, chunk); outras saídas = um ponto
-                    if stripped and (
-                        "[ETAPA]" in stripped or "[chunk]" in stripped.lower()
-                        or "Concluído" in stripped or "SALVO" in stripped or "BAIXANDO" in stripped
-                    ):
+                    if stripped and ("[ETAPA]" in stripped or "Concluído" in stripped or "BAIXANDO" in stripped):
                         print(f"\n       {stripped}", flush=True)
                     else:
                         print(".", end="", flush=True)
@@ -579,11 +628,7 @@ def _run_r_fallback(system: str, uf: str, year: int, month: int) -> tuple[bool, 
         t_stderr.start()
 
         start = time.time()
-        last_size = -1
-        last_mtime = -1.0
         last_printed_min = 0
-        download_marker_printed = False
-
         while proc.poll() is None:
             time.sleep(R_POLL_INTERVAL)
             now = time.time()
@@ -592,72 +637,92 @@ def _run_r_fallback(system: str, uf: str, year: int, month: int) -> tuple[bool, 
                 last_printed_min = elapsed_min
                 print(f"\n       (tempo decorrido: {elapsed_min} min)", flush=True)
 
-            # Atividade: marcador de download (R cria .downloading_<nome> durante etapa 1), .parquet.tmp ou arquivo final
-            download_marker = dest.parent / (".downloading_" + dest.name)
-            if download_marker.exists():
-                last_activity[0] = now
-                if not download_marker_printed:
-                    download_marker_printed = True
-                    print(f"\n       (download em andamento — {download_marker.name} em disco)", flush=True)
-                print(".", end="", flush=True)
-            else:
-                for p in (dest, dest.with_suffix(dest.suffix + ".tmp")):
-                    if p.exists():
-                        try:
-                            st = p.stat()
-                            if st.st_size != last_size or st.st_mtime != last_mtime:
-                                last_activity[0] = now
-                                last_size = st.st_size
-                                last_mtime = st.st_mtime
-                                print(".", end="", flush=True)
-                            break
-                        except OSError:
-                            pass
+            if cache.exists():
+                try:
+                    st = cache.stat()
+                    last_activity[0] = now
+                    if st.st_size > 0:
+                        print(".", end="", flush=True)
+                except OSError:
+                    pass
 
             if now - last_activity[0] > R_NO_PROGRESS_TIMEOUT:
                 proc.kill()
                 proc.wait()
                 return False, (
-                    f"Script R interrompido: sem atividade por {R_NO_PROGRESS_TIMEOUT // 60} min "
-                    "(nenhuma saída nem crescimento do arquivo)."
+                    f"R download-only interrompido: sem atividade por {R_NO_PROGRESS_TIMEOUT // 60} min "
+                    "(nenhuma saída nem progresso de download)."
                 )
             if now - start > R_HARD_TIMEOUT:
                 proc.kill()
                 proc.wait()
-                return False, (
-                    f"Script R interrompido: tempo total máximo de {R_HARD_TIMEOUT // 3600} h excedido."
-                )
+                return False, f"R download-only excedeu tempo máximo de {R_HARD_TIMEOUT // 3600} h."
 
         t_stdout.join(timeout=1.0)
         t_stderr.join(timeout=1.0)
         print(flush=True)
 
-        if dest.exists():
-            return True, ""
-        err_msg = _r_stderr_to_log_message(proc.returncode, stderr_chunks)
-        return False, err_msg
+        if proc.returncode != 0:
+            msg = _r_stderr_to_log_message(proc.returncode, stderr_chunks)
+            return False, msg
+        if not cache.exists():
+            return False, f"R download-only concluiu sem gerar cache: {cache.name}"
+        return True, ""
     except FileNotFoundError:
         return False, "Rscript não encontrado (instale R e coloque no PATH)."
     except Exception as e:
         return False, str(e)
 
 
-def _run_single(system: str, uf: str, year: int, month: int) -> tuple[bool, str]:
-    """Processa um arquivo: Python (FTP/S3 + DBC→Parquet); se falhar por 'arquivo inexistente', tenta R."""
+def _process_r_download_cache_python(system: str, uf: str, year: int, month: int) -> tuple[bool, str]:
+    """
+    Processa no Python um cache parquet gerado pelo R download-only.
+    Mantém os mesmos filtros e metadados da ingestão Python nativa.
+    """
+    sistema = _system_to_label(system)
+    dest = _dest_path(sistema, uf, year, month)
+    cache = _download_cache_path(sistema, uf, year, month)
+    if not cache.exists():
+        return False, f"Cache de download não encontrado: {cache}"
+
+    filter_fn = _filter_sih if system == "SIH-RD" else _filter_sia
+    meta_fn = _add_meta_sih if system == "SIH-RD" else _add_meta_sia
+
+    writer = None
+    schema = None
+    n_written = 0
     try:
-        success, err = _process_dbc_python(system, uf, year, month)
-        if success:
-            return True, ""
-        if _is_file_not_found_error(err):
-            print("       Arquivo não no FTP/S3; tentando script R (microdatasus).", flush=True)
-            print("       Etapas: 1=Download 2=Processamento 3=Chunks (.tmp_<nome>.parquet/) 4=União (<nome>.parquet.tmp → .parquet)", flush=True)
-            log(QUEM, ONDE, f"Arquivo não encontrado (FTP/S3); tentando fallback R: {system} {uf} {year} {month:02d}")
-            return _run_r_fallback(system, uf, year, month)
-        return False, err
-    except ImportError as e:
-        return False, f"Dependências: pip install datasus-dbc dbfread — {e}"
+        pf = pq.ParquetFile(str(cache))
+        for batch in pf.iter_batches(batch_size=CHUNK_SIZE):
+            df = batch.to_pandas()
+            df.columns = [_clean_name(c) for c in df.columns]
+            df = _coalesce_duplicate_columns(df)
+            df = filter_fn(df)
+            if df.empty:
+                continue
+            df = meta_fn(df, uf, year, month)
+            table = pa.Table.from_pandas(df, preserve_index=False)
+            if schema is None:
+                schema = table.schema
+                writer = pq.ParquetWriter(str(dest), schema)
+            writer.write_table(table)
+            n_written += len(df)
     except Exception as e:
-        return False, _classify_error(e)
+        return False, f"Processamento Python do cache R: {e}"
+    finally:
+        if writer is not None:
+            writer.close()
+        try:
+            if cache.exists():
+                cache.unlink()
+        except Exception:
+            pass
+
+    if schema is None or n_written == 0:
+        return False, "Nenhum registro passou no filtro (cache R)."
+    if not dest.exists():
+        return False, "Parquet final não foi gravado após processamento do cache R."
+    return True, ""
 
 
 def run_ingestion(

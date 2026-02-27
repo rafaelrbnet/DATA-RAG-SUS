@@ -32,6 +32,7 @@ Sistema de **RAG baseado em dados estruturados do SUS** (foco em **dados ortopé
 |------|------------|
 | **Objetivo** | Responder perguntas clínicas (ortopedia), assistenciais e financeiras sobre dados do SUS via linguagem natural, com SQL gerado por LLM e executado em DuckDB. |
 | **Arquitetura** | **Data RAG** (Code-Interpreter RAG): dados em Parquet, motor DuckDB, LLM para interpretar pergunta, gerar SQL e explicar resultado. |
+| **Schema analítico** | Camada canônica em `data/processed`: **SIA = 62 colunas** (58 padrão + 4 derivadas) e **SIH = 75 colunas** (71 padrão + 4 derivadas). |
 | **Finalidades** | Científica (pesquisa em saúde digital), tecnológica (arquitetura Data RAG), social (apoio à decisão em saúde pública). |
 
 O LLM **nunca lê os dados crus**; apenas gera SQL, recebe o resultado e produz a explicação.
@@ -97,6 +98,8 @@ A documentação está em **modular** em `docs/`:
 | [04-stack-tecnologica](docs/04-stack-tecnologica.md) | Stack e dependências |
 | [05-fluxo-funcionamento](docs/05-fluxo-funcionamento.md) | Fluxo da pergunta ao resultado |
 | [06-etapas-implementacao](docs/06-etapas-implementacao.md) | Etapas de implementação |
+| [06.1-dominio-colunas-completas](docs/06.1-dominio-colunas-completas.md) | Domínio canônico em `data/processed` (padrão + derivadas) |
+| [06.2-estatisticas-base-processada](docs/06.2-estatisticas-base-processada.md) | Estatísticas operacionais da base `data/processed` |
 | [07-prompt-agente](docs/07-prompt-agente.md) | Prompt do agente SQL |
 | [08-criterios-qualidade](docs/08-criterios-qualidade.md) | Critérios de qualidade científica |
 | [09-roadmap](docs/09-roadmap.md) | Roadmap futuro |
@@ -120,7 +123,7 @@ A documentação está em **modular** em `docs/`:
    #    grava em data/raw/ (particionado)
    python -m src.data.ingestion
 
-   # 2. Transform: data/raw → data/processed (colunas derivadas)
+   # 2. Transform: data/raw → data/processed (schema canônico: deduplicado + padrão + derivadas)
    python -m src.data.transform
    ```
    Observação: a ingestão tenta Python primeiro e usa fallback via script R apenas quando o arquivo não é encontrado no FTP/S3.
