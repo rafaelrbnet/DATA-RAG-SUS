@@ -17,6 +17,7 @@ Para adicionar nova transformação ou métrica:
 """
 
 from pathlib import Path
+import re
 from typing import Callable
 
 import pandas as pd
@@ -34,6 +35,20 @@ QUEM = "Python"
 ONDE_BASE = "transform"
 
 
+def _is_temporary_parquet_artifact(path: Path) -> bool:
+    """
+    Ignora artefatos temporários deixados durante ingestão/processamento:
+    .downloading_*.parquet, .download_*.parquet, .tmp_*.parquet e *.parquet.tmp
+    """
+    name = path.name
+    return (
+        name.startswith(".downloading_")
+        or name.startswith(".download_")
+        or name.startswith(".tmp_")
+        or name.endswith(".parquet.tmp")
+    )
+
+
 def _processed_path_for_raw(raw_path: Path) -> Path:
     """Caminho em data/processed/ correspondente ao arquivo em data/raw/ (estrutura espelhada)."""
     rel = raw_path.relative_to(RAW_BASE)
@@ -45,6 +60,110 @@ IDADE_GRUPOS = [
     (18, 59, "18-59"),
     (60, 120, "60+"),
 ]
+
+
+# Dicionário enxuto/coeso por sistema (saída em data/processed).
+# Mantemos um núcleo comum e um conjunto de colunas chave por sistema.
+COMMON_COLUMNS = [
+    "ano_cmpt", "mes_cmpt", "sistema", "uf_origem",
+    "main_icd", "icd_group", "opm_flag", "fisio_flag",
+    "mun_res_status", "mun_res_tipo", "mun_res_nome", "mun_res_uf",
+    "mun_res_lat", "mun_res_lon", "mun_res_alt", "mun_res_area",
+]
+
+SIA_COMPACT_COLUMNS = [
+    "pa_cmp", "pa_mvm", "pa_idade", "idademin", "idademax",
+    "pa_sexo", "pa_racacor", "pa_etnia",
+    "pa_ufmun", "pa_munpcn", "pa_ufdif", "pa_mndif",
+    "pa_coduni", "pa_cnpjcpf", "pa_cnpjmnt", "pa_nat_jur", "pa_cnsmed", "pa_cbocod",
+    "pa_proc_id", "nome_proced", "pa_grupo", "pa_subgru", "pa_cidpri", "pa_cidsec", "pa_cidcas",
+    "pa_qtdpro", "pa_qtdapr", "pa_valpro", "pa_valapr", "pa_vl_cf", "pa_vl_cl", "pa_vl_inc",
+    "nu_pa_tot", "nu_vpa_tot",
+    "pa_docorig", "pa_autoriz", "pa_catend", "pa_motsai", "pa_indica", "pa_tpfin", "pa_subfin", "pa_gestao",
+]
+
+SIH_COMPACT_COLUMNS = [
+    "n_aih", "cnes", "cgc_hosp", "cnpj_mant", "munic_res", "munic_mov", "uf_zi",
+    "idade", "cod_idade", "sexo", "nasc", "raca_cor", "etnia", "cep", "nacional",
+    "diag_princ", "diag_secun", "diagsec1", "diagsec2", "diagsec3", "diagsec4", "diagsec5",
+    "diagsec6", "diagsec7", "diagsec8", "diagsec9", "cid_morte", "cid_notif", "cid_asso", "cid_princ",
+    "proc_rea", "proc_solic", "uti_mes_to", "uti_int_to", "qt_diarias", "dias_perm",
+    "val_tot", "val_sh", "val_sp", "val_sadt", "val_ortp", "val_uti", "val_uci", "val_sangue", "val_acomp",
+    "dt_inter", "dt_saida", "morte",
+    "cobranca", "gestao", "financ", "faec_tp", "aud_just", "sis_just", "sequencia",
+]
+
+DERIVED_COLUMNS = ["custo_total", "idade_grupo", "cid_capitulo", "ano_mes"]
+
+
+# Aliases históricos/heterogêneos (após normalização do nome)
+ALIAS_TO_CANONICAL = {
+    "year_comp": "ano_cmpt",
+    "month_comp": "mes_cmpt",
+    "system": "sistema",
+    "uf": "uf_origem",
+    "cid_princ": "cid_princ",
+    "cid_grupo": "icd_group",
+    "munresstatus": "mun_res_status",
+    "munrestipo": "mun_res_tipo",
+    "munresnome": "mun_res_nome",
+    "munresuf": "mun_res_uf",
+    "munreslat": "mun_res_lat",
+    "munreslon": "mun_res_lon",
+    "munresalt": "mun_res_alt",
+    "munresarea": "mun_res_area",
+    "municip_res": "munic_res",
+    "municip_mov": "munic_mov",
+}
+
+
+def _normalize_col_name(name: str) -> str:
+    """Normaliza nome para snake_case estável, incluindo camelCase histórico."""
+    s = str(name).strip()
+    s = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", s)
+    s = s.lower()
+    s = re.sub(r"[^a-z0-9]+", "_", s)
+    s = re.sub(r"_+", "_", s).strip("_")
+    return ALIAS_TO_CANONICAL.get(s, s)
+
+
+def _coalesce_duplicate_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Coalesce de colunas por nome canônico:
+    - normaliza nomes (maiúsc/minúsc/camelCase),
+    - agrupa colisões,
+    - mantém o primeiro valor não-nulo por linha.
+    """
+    if df.empty:
+        return df
+    canonical = [_normalize_col_name(c) for c in df.columns]
+    groups: dict[str, list[int]] = {}
+    for idx, col in enumerate(canonical):
+        groups.setdefault(col, []).append(idx)
+
+    out: dict[str, pd.Series] = {}
+    for col, idxs in groups.items():
+        if len(idxs) == 1:
+            out[col] = df.iloc[:, idxs[0]]
+        else:
+            block = df.iloc[:, idxs]
+            out[col] = block.bfill(axis=1).iloc[:, 0]
+    return pd.DataFrame(out)
+
+
+def _project_compact_dictionary(df: pd.DataFrame, sistema: str) -> pd.DataFrame:
+    """Projeta para dicionário enxuto/coeso por sistema, preservando derivadas."""
+    target = list(COMMON_COLUMNS)
+    if sistema == "SIA":
+        target.extend(SIA_COMPACT_COLUMNS)
+    elif sistema == "SIH":
+        target.extend(SIH_COMPACT_COLUMNS)
+    target.extend(DERIVED_COLUMNS)
+
+    # Remover duplicatas mantendo ordem
+    target = list(dict.fromkeys(target))
+    keep = [c for c in target if c in df.columns]
+    return df.loc[:, keep].copy()
 
 
 def _ensure_numeric(series: pd.Series) -> pd.Series:
@@ -107,8 +226,8 @@ def _add_idade_grupo(df: pd.DataFrame) -> pd.DataFrame:
 def _add_cid_capitulo(df: pd.DataFrame) -> pd.DataFrame:
     """
     Coluna derivada cid_capitulo: primeiro caractere do CID (capítulo CID-10).
-    Grupos clínicos (icd_group) vêm do R (regex em analise_ortopedia.R); referenciar
-    dicionário de dados ou documentação/artigo na documentação do projeto.
+    Grupos clínicos (icd_group) são definidos no pipeline (ingest/transform) e devem
+    ser referenciados no dicionário de dados/documentação do projeto.
     """
     df = df.copy()
     for c in ["main_icd", "diag_princ", "pa_cidpri", "cid"]:
@@ -225,11 +344,15 @@ def transform_single_file(raw_path: Path) -> Path | None:
         log(QUEM, str(raw_path), f"ERRO ao ler Parquet: {e}")
         return None
 
+    # Passo 0: padronização canônica de schema para mitigar variação de arquivos.
+    df = _coalesce_duplicate_columns(df)
+
     if df.empty:
         pass  # grava vazio; sem log para não poluir
     else:
         for step in TRANSFORM_STEPS:
             df = step(df)
+        df = _project_compact_dictionary(df, sistema=sistema)
 
     dest_dir = PROCESSED_BASE / f"ano={ano}" / f"uf={uf}" / f"sistema={sistema}"
     dest_dir.mkdir(parents=True, exist_ok=True)
@@ -258,7 +381,10 @@ def run_transform(skip_existing: bool = True) -> None:
         print("ERRO: Diretório data/raw/ inexistente.", flush=True)
         return
 
-    all_raw = sorted(RAW_BASE.rglob("*.parquet"))
+    all_raw = sorted(
+        p for p in RAW_BASE.rglob("*.parquet")
+        if not _is_temporary_parquet_artifact(p)
+    )
     if skip_existing:
         raw_files = [p for p in all_raw if not _processed_path_for_raw(p).exists()]
     else:
