@@ -58,7 +58,7 @@ FTP_BASE_HTTP = "https://ftp.datasus.gov.br/dissemin/publicos"
 
 # Padrões no log
 LOG_ERRO_PATTERN = re.compile(
-    r"(?:ERRO PROCESSAMENTO|FALHA DEFINITIVA DOWNLOAD):\s*(SIH-RD|SIA-PA)\s+([A-Z]{2})\s+(\d{4})\s+(\d{1,2})",
+    r"(?:ERRO PROCESSAMENTO|FALHA DEFINITIVA DOWNLOAD|ERRO ingestão)\s*:?\s*(SIH-RD|SIA-PA)\s+([A-Z]{2})\s+(\d{4})\s+(\d{1,2})",
     re.IGNORECASE,
 )
 
