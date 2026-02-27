@@ -99,6 +99,7 @@ A documentação está em **modular** em `docs/`:
 | [05-fluxo-funcionamento](docs/05-fluxo-funcionamento.md) | Fluxo da pergunta ao resultado |
 | [06-etapas-implementacao](docs/06-etapas-implementacao.md) | Etapas de implementação |
 | [06.1-dominio-colunas-completas](docs/06.1-dominio-colunas-completas.md) | Domínio canônico em `data/processed` (padrão + derivadas) |
+| [06.2-estatisticas-base-processada](docs/06.2-estatisticas-base-processada.md) | Estatísticas operacionais da base `data/processed` |
 | [07-prompt-agente](docs/07-prompt-agente.md) | Prompt do agente SQL |
 | [08-criterios-qualidade](docs/08-criterios-qualidade.md) | Critérios de qualidade científica |
 | [09-roadmap](docs/09-roadmap.md) | Roadmap futuro |
