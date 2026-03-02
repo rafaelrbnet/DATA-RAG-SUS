@@ -30,10 +30,10 @@
 A camada analítica canônica passa a ser `data/processed/**/*.parquet`, com schema normalizado no `transform.py`:
 
 - **Colunas comuns:** `16`
-- **Colunas específicas SIA:** `42`
-- **Colunas específicas SIH:** `55`
+- **Colunas específicas SIA:** `33`
+- **Colunas específicas SIH:** `46`
 - **Colunas derivadas unificadas:** `10`
-- **Total do domínio canônico:** `123`
+- **Total do domínio canônico:** `105`
 - **Modelo de saída:** flat table única para SIA e SIH, com o mesmo schema em todos os arquivos.
 - **Tratamento de ausência:** campos sem equivalente na origem permanecem `null`.
 
