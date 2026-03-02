@@ -50,9 +50,14 @@ Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> 
 
 ## ETAPA 3 — Camada DuckDB
 
-- Função `query(sql: str) -> pd.DataFrame`
-- Ler diretamente `data/processed/*.parquet`
-- Sem banco externo; resposta em milissegundos
+**Status:** concluída.
+
+- **executor.py** (`src/rag/executor.py`): implementada função `query(sql: str) -> pd.DataFrame`.
+- **Leitura direta de Parquet:** a função cria view temporária `processed` usando `read_parquet('data/processed/**/*.parquet')`.
+- **Sem banco externo:** execução em DuckDB `:memory:` por chamada.
+- **Validações básicas:** SQL vazio inválido; `data_root` inexistente gera erro explícito.
+- **Testes da etapa:** `tests/test_queries.py` cobre agregação, filtro e cenários de erro básicos.
+- **Guia prático (Etapa 3.1):** passo a passo e exemplos em [06.3-consultas-duckdb.md](06.3-consultas-duckdb.md).
 
 ## ETAPA 4 — Agente LLM
 

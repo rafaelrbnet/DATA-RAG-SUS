@@ -1,1 +1,3 @@
-# RAG: agente LLM + SQL + DuckDB
+from .executor import query
+
+__all__ = ["query"]

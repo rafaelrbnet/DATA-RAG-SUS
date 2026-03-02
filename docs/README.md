@@ -12,6 +12,7 @@
 | 06 | [Etapas de Implementação](06-etapas-implementacao.md) | Setup, pipeline, DuckDB, agente, API |
 | 06.1 | [Domínio Completo de Colunas (SIA e SIH)](06.1-dominio-colunas-completas.md) | Domínio canônico em `data/processed` (colunas padrão + derivadas) |
 | 06.2 | [Estatísticas da Base Processada](06.2-estatisticas-base-processada.md) | Volume, cobertura temporal, qualidade e métricas principais da `data/processed` |
+| 06.3 | [Consultas DuckDB (Etapa 3.1)](06.3-consultas-duckdb.md) | Passo a passo da consulta e exemplos de SQL sobre `processed` |
 | 07 | [Prompt do Agente SQL](07-prompt-agente.md) | Papel, tarefas e restrições do LLM |
 | 08 | [Critérios de Qualidade](08-criterios-qualidade.md) | Reprodutibilidade, auditabilidade, transparência |
 | 09 | [Roadmap](09-roadmap.md) | Curto, médio e longo prazo |
