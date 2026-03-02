@@ -18,10 +18,10 @@ def _write_sample_parquet(base: Path) -> None:
             COPY (
               SELECT * FROM (
                 VALUES
-                  ('SIA', 'SP', 120.0),
-                  ('SIA', 'SP', 80.0),
-                  ('SIH', 'RJ', 50.0)
-              ) AS t(sistema, uf_origem, custo_total)
+                  ('M', 120.0),
+                  ('F', 80.0),
+                  ('M', 50.0)
+              ) AS t(sexo_paciente, custo_total)
             ) TO ? (FORMAT PARQUET)
             """,
             [str(file_path)],
@@ -42,11 +42,11 @@ def test_query_returns_dataframe(tmp_path: Path) -> None:
 def test_query_supports_filters(tmp_path: Path) -> None:
     _write_sample_parquet(tmp_path)
     df = query(
-        "SELECT SUM(custo_total) AS total FROM processed WHERE sistema = 'SIA'",
+        "SELECT SUM(custo_total) AS total FROM processed WHERE sexo_paciente = 'M'",
         data_root=tmp_path,
     )
     assert df.shape == (1, 1)
-    assert float(df.loc[0, "total"]) == 200.0
+    assert float(df.loc[0, "total"]) == 170.0
 
 
 def test_query_requires_non_empty_sql(tmp_path: Path) -> None:
@@ -72,24 +72,24 @@ def test_query_works_with_schema_mismatch_using_union_by_name(tmp_path: Path) ->
 
     with duckdb.connect(database=":memory:") as con:
         con.execute(
-            "COPY (SELECT 'A10' AS main_icd, 100.0 AS custo_total, 202501 AS ano_mes) TO ? (FORMAT PARQUET)",
+            "COPY (SELECT 'A10' AS cid_principal, 100.0 AS custo_total, 202501 AS competencia_ano_mes) TO ? (FORMAT PARQUET)",
             [str(f1)],
         )
         con.execute(
-            "COPY (SELECT 50.0 AS custo_total, 202501 AS ano_mes) TO ? (FORMAT PARQUET)",
+            "COPY (SELECT 50.0 AS custo_total, 202501 AS competencia_ano_mes) TO ? (FORMAT PARQUET)",
             [str(f2)],
         )
 
     df = query(
         """
         SELECT
-          SUM(CASE WHEN main_icd IS NULL OR TRIM(main_icd) = '' THEN 1 ELSE 0 END) AS nulos_main_icd,
+          SUM(CASE WHEN cid_principal IS NULL OR TRIM(cid_principal) = '' THEN 1 ELSE 0 END) AS nulos_cid_principal,
           SUM(CASE WHEN custo_total IS NULL THEN 1 ELSE 0 END) AS nulos_custo_total,
-          SUM(CASE WHEN ano_mes IS NULL THEN 1 ELSE 0 END) AS nulos_ano_mes
+          SUM(CASE WHEN competencia_ano_mes IS NULL THEN 1 ELSE 0 END) AS nulos_competencia_ano_mes
         FROM processed
         """,
         data_root=tmp_path,
     )
-    assert int(df.loc[0, "nulos_main_icd"]) == 1
+    assert int(df.loc[0, "nulos_cid_principal"]) == 1
     assert int(df.loc[0, "nulos_custo_total"]) == 0
-    assert int(df.loc[0, "nulos_ano_mes"]) == 0
+    assert int(df.loc[0, "nulos_competencia_ano_mes"]) == 0
