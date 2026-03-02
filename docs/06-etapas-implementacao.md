@@ -7,13 +7,19 @@
 - Criar projeto Python com `pyproject.toml`
 - Instalar: `duckdb`, `pandas`, `pyarrow`, `fastapi`, `uvicorn`, `langchain` (ou `llamaindex`), `python-dotenv`
 
-## ETAPA 2 — Pipeline de dados
+## ETAPA 2 — Pipeline de dados: ingestão
 
 **Status:** concluída.
 
 - **ingestion.py** (`python -m src.data.ingestion`): ingestão principal 100% Python. Faz diff da grade esperada com `data/raw/`, baixa DBC do DATASUS (FTP nativo com fallback S3), descompacta DBC->DBF, filtra em chunks e grava Parquet particionado em `data/raw/ano=X/uf=Y/sistema=SIH|SIA/`.
 - **Retentativa e resiliência:** pode incluir alvos vindos de `logs/erros.log`; aplica retries, backoff/jitter, circuit breaker para timeout e ignora arquivos com muitas falhas recorrentes no log.
 - **Fallback R (pontual):** quando o arquivo não existe no FTP/S3, o `ingestion.py` pode acionar `scripts/r/fallback_download_only.R` (somente download), e concluir o processamento no Python.
+- **Logs:** domínio operacional da ingestão (observabilidade e retentativas), usando `logs/erros.log`. O arquivo é compartilhado por R e Python (inclusive transformação). Formato de cada linha: `quando (ISO) | quem (Script R ou Python) | onde (componente/caminho) | o que aconteceu`.
+
+## ETAPA 3 — Pipeline de dados: transformação
+
+**Status:** concluída.
+
 - **transform.py** (`python -m src.data.transform`): lê `data/raw/` (origem bruta), aplica deduplicação/normalização de schema e grava em `data/processed/` (fonte de verdade analítica). Os arquivos em raw permanecem; reprocessamentos partem sempre de raw. Um arquivo por vez para controle de memória. Para estender, adicionar nova função `(df) -> df` em `TRANSFORM_STEPS`.
 
 **Colunas derivadas e padronizações:**
@@ -23,8 +29,6 @@
 - **ano_mes:** YYYYMM para competência. **Tipos:** colunas de valor/quantidade convertidas para numérico quando string. **UF:** padronizadas para 2 letras maiúsculas. **Strings:** trim e "nan"/"None" → vazio.
 
 **Demais informações relevantes (4.3):** criar primeiro uma visualização bruta dos dados para entender como estão; em seguida fazer perguntas e, com base nelas, escolher o tipo de análise. Como os dados alimentam o RAG, é o próprio RAG que decidirá qual cálculo estatístico é mais adequado para cada pergunta.
-
-**Logs:** R e Python usam o mesmo arquivo `logs/erros.log`. Formato de cada linha: `quando (ISO) | quem (Script R ou Python) | onde (componente/caminho) | o que aconteceu`.
 
 ### Domínio de dados canônico em `data/processed/*.parquet`
 
@@ -48,7 +52,7 @@ Para a lista completa das colunas padrão e derivadas (com exemplos de linha), v
 
 Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> data/processed/**.
 
-## ETAPA 3 — Camada DuckDB
+## ETAPA 4 — Camada DuckDB
 
 **Status:** concluída.
 
@@ -57,9 +61,9 @@ Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> 
 - **Sem banco externo:** execução em DuckDB `:memory:` por chamada.
 - **Validações básicas:** SQL vazio inválido; `data_root` inexistente gera erro explícito.
 - **Testes da etapa:** `tests/test_queries.py` cobre agregação, filtro e cenários de erro básicos.
-- **Guia prático (Etapa 3.1):** passo a passo e exemplos em [06.3-consultas-duckdb.md](06.3-consultas-duckdb.md).
+- **Guia prático (Etapa 4.1):** passo a passo e exemplos em [06.3-consultas-duckdb.md](06.3-consultas-duckdb.md).
 
-## ETAPA 4 — Agente LLM
+## ETAPA 5 — Agente LLM
 
 - Recebe pergunta em português
 - Analisa schema disponível
@@ -68,7 +72,7 @@ Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> 
 - Retorna resposta explicada
 - Restrições: nunca inventar colunas; nunca estimar valores; sempre SQL executável
 
-## ETAPA 5 — API
+## ETAPA 6 — API
 
 - Endpoint `POST /query`
 - Entrada: `{ "question": "..." }`
