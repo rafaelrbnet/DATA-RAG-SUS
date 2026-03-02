@@ -9,19 +9,23 @@ from src.rag.executor import query
 
 
 def _write_sample_parquet(base: Path) -> None:
-    target = base / "ano=2025" / "uf=SP" / "sistema=SIA"
+    target = base / "ano=2025" / "uf=SP"
     target.mkdir(parents=True, exist_ok=True)
-    file_path = target / "sia_SP_2025_01.parquet"
+    file_path = target / "sus_SP_2025_01.parquet"
     with duckdb.connect(database=":memory:") as con:
         con.execute(
             """
             COPY (
               SELECT * FROM (
                 VALUES
-                  ('M', 120.0),
-                  ('F', 80.0),
-                  ('M', 50.0)
-              ) AS t(sexo_paciente, custo_total)
+                  (34, 'M', '1', '3550308', '3550308', '1234', '030101', 'A10', 120.0, 202501),
+                  (51, 'F', '2', '3550308', '3550308', '1234', '030101', 'A10', 80.0, 202501),
+                  (29, 'M', '1', '3304557', '3304557', '5678', '040201', 'E11', 50.0, 202501)
+              ) AS t(
+                idade_paciente, sexo_paciente, raca_cor_paciente, cod_munic_residencia,
+                cod_munic_estabelecimento, cnes_estabelecimento, cod_procedimento,
+                cid_principal, custo_total, competencia_ano_mes
+              )
             ) TO ? (FORMAT PARQUET)
             """,
             [str(file_path)],
@@ -62,21 +66,37 @@ def test_query_requires_existing_data_root(tmp_path: Path) -> None:
 
 
 def test_query_works_with_schema_mismatch_using_union_by_name(tmp_path: Path) -> None:
-    s1 = tmp_path / "ano=2025" / "uf=SP" / "sistema=SIA"
-    s2 = tmp_path / "ano=2025" / "uf=SP" / "sistema=SIH"
+    s1 = tmp_path / "ano=2025" / "uf=SP"
+    s2 = tmp_path / "ano=2025" / "uf=RJ"
     s1.mkdir(parents=True, exist_ok=True)
     s2.mkdir(parents=True, exist_ok=True)
 
-    f1 = s1 / "sia_SP_2025_01.parquet"
-    f2 = s2 / "old-sih_SP_2025_01.parquet"
+    f1 = s1 / "sus_SP_2025_01.parquet"
+    f2 = s2 / "sus_RJ_2025_01.parquet"
 
     with duckdb.connect(database=":memory:") as con:
         con.execute(
-            "COPY (SELECT 'A10' AS cid_principal, 100.0 AS custo_total, 202501 AS competencia_ano_mes) TO ? (FORMAT PARQUET)",
+            """
+            COPY (
+                SELECT
+                  30 AS idade_paciente, 'M' AS sexo_paciente, '1' AS raca_cor_paciente,
+                  '3550308' AS cod_munic_residencia, '3550308' AS cod_munic_estabelecimento,
+                  '9999' AS cnes_estabelecimento, '030101' AS cod_procedimento,
+                  'A10' AS cid_principal, 100.0 AS custo_total, 202501 AS competencia_ano_mes
+            ) TO ? (FORMAT PARQUET)
+            """,
             [str(f1)],
         )
         con.execute(
-            "COPY (SELECT 50.0 AS custo_total, 202501 AS competencia_ano_mes) TO ? (FORMAT PARQUET)",
+            """
+            COPY (
+                SELECT
+                  50.0 AS custo_total, 202501 AS competencia_ano_mes,
+                  45 AS idade_paciente, 'F' AS sexo_paciente, '2' AS raca_cor_paciente,
+                  '3304557' AS cod_munic_residencia, '3304557' AS cod_munic_estabelecimento,
+                  '8888' AS cnes_estabelecimento, '040201' AS cod_procedimento
+            ) TO ? (FORMAT PARQUET)
+            """,
             [str(f2)],
         )
 
@@ -93,3 +113,16 @@ def test_query_works_with_schema_mismatch_using_union_by_name(tmp_path: Path) ->
     assert int(df.loc[0, "nulos_cid_principal"]) == 1
     assert int(df.loc[0, "nulos_custo_total"]) == 0
     assert int(df.loc[0, "nulos_competencia_ano_mes"]) == 0
+
+
+def test_query_fails_when_canonical_columns_are_missing(tmp_path: Path) -> None:
+    target = tmp_path / "ano=2025" / "uf=SP"
+    target.mkdir(parents=True, exist_ok=True)
+    file_path = target / "sus_SP_2025_01.parquet"
+    with duckdb.connect(database=":memory:") as con:
+        con.execute(
+            "COPY (SELECT 1 AS only_col) TO ? (FORMAT PARQUET)",
+            [str(file_path)],
+        )
+    with pytest.raises(ValueError):
+        query("SELECT 1", data_root=tmp_path)

@@ -53,9 +53,9 @@ Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> 
 **Status:** concluída.
 
 - **executor.py** (`src/rag/executor.py`): implementada função `query(sql: str) -> pd.DataFrame`.
-- **Leitura direta de Parquet:** a função cria view temporária `processed` usando `read_parquet('data/processed/**/*.parquet')`.
+- **Leitura direta de Parquet:** a função cria view temporária `processed` usando `read_parquet('data/processed/**/*.parquet')`, incluindo estrutura unificada sem pasta `sistema=`.
 - **Sem banco externo:** execução em DuckDB `:memory:` por chamada.
-- **Validações básicas:** SQL vazio inválido; `data_root` inexistente gera erro explícito.
+- **Validações básicas:** SQL vazio inválido; `data_root` inexistente gera erro explícito; ausência de arquivos Parquet em `data/processed` gera erro; schema canônico exige presença das 10 colunas derivadas unificadas.
 - **Testes da etapa:** `tests/test_queries.py` cobre agregação, filtro e cenários de erro básicos.
 - **Guia prático (Etapa 4.1):** passo a passo e exemplos em [06.3-consultas-duckdb.md](06.3-consultas-duckdb.md).
 
