@@ -8,6 +8,24 @@ import re
 import duckdb
 import pandas as pd
 
+DERIVED_CANONICAL_COLUMNS = (
+    "idade_paciente",
+    "sexo_paciente",
+    "raca_cor_paciente",
+    "etnia_paciente",
+    "cnpj_mantenedora",
+    "gestao_responsavel",
+    "tipo_financiamento",
+    "cid_secundario",
+    "cod_munic_residencia",
+    "cod_munic_estabelecimento",
+    "cnes_estabelecimento",
+    "cod_procedimento",
+    "cid_principal",
+    "custo_total",
+    "competencia_ano_mes",
+)
+
 
 def _project_root() -> Path:
     return Path(__file__).resolve().parent.parent.parent
@@ -34,6 +52,17 @@ def _validate_identifier(name: str) -> str:
     return name
 
 
+def _validate_canonical_columns(con: duckdb.DuckDBPyConnection, view: str) -> None:
+    rows = con.execute(f"SELECT * FROM {view} LIMIT 0").fetchdf()
+    cols = set(rows.columns)
+    missing = [c for c in DERIVED_CANONICAL_COLUMNS if c not in cols]
+    if missing:
+        raise ValueError(
+            "processed schema is missing canonical derived columns: "
+            + ", ".join(missing)
+        )
+
+
 def query(
     sql: str,
     *,
@@ -44,7 +73,8 @@ def query(
     Executa SQL em DuckDB lendo diretamente data/processed/**/*.parquet.
 
     A função cria uma view temporária (`processed` por padrão) apontando para
-    todos os Parquets da base processada e retorna o resultado como DataFrame.
+    todos os Parquets da base processada (modelo canônico unificado) e retorna
+    o resultado como DataFrame.
     """
     text = _validate_sql(sql)
     view = _validate_identifier(view_name)
@@ -56,8 +86,14 @@ def query(
     safe_glob = parquet_glob.replace("'", "''")
 
     with duckdb.connect(database=":memory:") as con:
+        n_files = con.execute(
+            f"SELECT COUNT(*) FROM glob('{safe_glob}')"
+        ).fetchone()[0]
+        if int(n_files) == 0:
+            raise FileNotFoundError(f"no parquet files found under: {base}")
         con.execute(
             f"CREATE OR REPLACE VIEW {view} AS "
             f"SELECT * FROM read_parquet('{safe_glob}', union_by_name=true)"
         )
+        _validate_canonical_columns(con, view)
         return con.execute(text).df()
