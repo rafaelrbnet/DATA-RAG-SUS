@@ -32,12 +32,12 @@ A camada analítica canônica passa a ser `data/processed/**/*.parquet`, com sch
 - **Colunas comuns:** `17`
 - **Colunas específicas SIA:** `33`
 - **Colunas específicas SIH:** `45`
-- **Colunas derivadas unificadas:** `11`
-- **Total do domínio canônico:** `106`
+- **Colunas derivadas unificadas:** `15`
+- **Total do domínio canônico:** `110`
 - **Modelo de saída:** flat table única para SIA e SIH, com o mesmo schema em todos os arquivos.
 - **Tratamento de ausência:** campos sem equivalente na origem permanecem `null`.
 
-Para a lista completa das colunas canônicas, ver [06.1-dominio-colunas-completas.md](06.1-dominio-colunas-completas.md).
+Para a fonte única de domínio e normalização das colunas canônicas, ver [06.1-dominio-colunas-completas.md](06.1-dominio-colunas-completas.md).
 
 
 **Ao final do processamento — data/processed/**/*.parquet - o que você deve ver:**
@@ -55,7 +55,7 @@ Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> 
 - **executor.py** (`src/rag/executor.py`): implementada função `query(sql: str) -> pd.DataFrame`.
 - **Leitura direta de Parquet:** a função cria view temporária `processed` usando `read_parquet('data/processed/**/*.parquet')`, incluindo estrutura unificada sem pasta `sistema=`.
 - **Sem banco externo:** execução em DuckDB `:memory:` por chamada.
-- **Validações básicas:** SQL vazio inválido; `data_root` inexistente gera erro explícito; ausência de arquivos Parquet em `data/processed` gera erro; schema canônico exige presença das 11 colunas derivadas unificadas.
+- **Validações básicas:** SQL vazio inválido; `data_root` inexistente gera erro explícito; ausência de arquivos Parquet em `data/processed` gera erro; schema canônico exige presença das 15 colunas derivadas unificadas.
 - **Testes da etapa:** `tests/test_queries.py` cobre agregação, filtro e cenários de erro básicos.
 - **Guia prático (Etapa 4.1):** passo a passo e exemplos em [06.3-consultas-duckdb.md](06.3-consultas-duckdb.md).
 

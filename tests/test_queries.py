@@ -18,11 +18,12 @@ def _write_sample_parquet(base: Path) -> None:
             COPY (
               SELECT * FROM (
                 VALUES
-                  (34, 'M', '1', '3550308', '3550308', '1234', '030101', 'A10', 120.0, 202501),
-                  (51, 'F', '2', '3550308', '3550308', '1234', '030101', 'A10', 80.0, 202501),
-                  (29, 'M', '1', '3304557', '3304557', '5678', '040201', 'E11', 50.0, 202501)
+                  (34, 'M', '1', NULL, '00123456789012', 'M', '04', 'B20', '3550308', '3550308', '1234', '030101', 'A10', 120.0, 202501),
+                  (51, 'F', '2', NULL, '00123456789012', 'E', '05', 'I10', '3550308', '3550308', '1234', '030101', 'A10', 80.0, 202501),
+                  (29, 'M', '1', NULL, '00987654321000', 'M', '04', 'J45', '3304557', '3304557', '5678', '040201', 'E11', 50.0, 202501)
               ) AS t(
-                idade_paciente, sexo_paciente, raca_cor_paciente, cod_munic_residencia,
+                idade_paciente, sexo_paciente, raca_cor_paciente, etnia_paciente,
+                cnpj_mantenedora, gestao_responsavel, tipo_financiamento, cid_secundario, cod_munic_residencia,
                 cod_munic_estabelecimento, cnes_estabelecimento, cod_procedimento,
                 cid_principal, custo_total, competencia_ano_mes
               )
@@ -80,6 +81,8 @@ def test_query_works_with_schema_mismatch_using_union_by_name(tmp_path: Path) ->
             COPY (
                 SELECT
                   30 AS idade_paciente, 'M' AS sexo_paciente, '1' AS raca_cor_paciente,
+                  NULL AS etnia_paciente, '00123456789012' AS cnpj_mantenedora, 'M' AS gestao_responsavel,
+                  '04' AS tipo_financiamento, 'B20' AS cid_secundario,
                   '3550308' AS cod_munic_residencia, '3550308' AS cod_munic_estabelecimento,
                   '9999' AS cnes_estabelecimento, '030101' AS cod_procedimento,
                   'A10' AS cid_principal, 100.0 AS custo_total, 202501 AS competencia_ano_mes
@@ -93,6 +96,8 @@ def test_query_works_with_schema_mismatch_using_union_by_name(tmp_path: Path) ->
                 SELECT
                   50.0 AS custo_total, 202501 AS competencia_ano_mes,
                   45 AS idade_paciente, 'F' AS sexo_paciente, '2' AS raca_cor_paciente,
+                  NULL AS etnia_paciente, '00123456789012' AS cnpj_mantenedora, 'E' AS gestao_responsavel,
+                  '05' AS tipo_financiamento, NULL AS cid_secundario,
                   '3304557' AS cod_munic_residencia, '3304557' AS cod_munic_estabelecimento,
                   '8888' AS cnes_estabelecimento, '040201' AS cod_procedimento
             ) TO ? (FORMAT PARQUET)

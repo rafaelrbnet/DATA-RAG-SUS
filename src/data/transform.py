@@ -137,6 +137,10 @@ DERIVED_COLUMNS = [
     "sexo_paciente",
     "raca_cor_paciente",
     "etnia_paciente",
+    "cnpj_mantenedora",
+    "gestao_responsavel",
+    "tipo_financiamento",
+    "cid_secundario",
     "cod_munic_residencia",
     "cod_munic_estabelecimento",
     "cnes_estabelecimento",
@@ -707,8 +711,8 @@ def _normalize_pa_ufdif(
     if cod_munic_residencia is not None and cod_munic_estabelecimento is not None:
         res = _as_clean_string(cod_munic_residencia, index=idx).str.replace(r"\D", "", regex=True).str[:6]
         est = _as_clean_string(cod_munic_estabelecimento, index=idx).str.replace(r"\D", "", regex=True).str[:6]
-        both = res.str.len().eq(6) & est.str.len().eq(6)
-        diff = res.str[:2] != est.str[:2]
+        both = res.str.len().eq(6).fillna(False) & est.str.len().eq(6).fillna(False)
+        diff = res.str[:2].ne(est.str[:2]).fillna(False)
         inferred = pd.Series(pd.NA, index=idx, dtype="string")
         inferred[both & diff] = "1"
         inferred[both & ~diff] = "0"
@@ -761,8 +765,8 @@ def _normalize_pa_mndif(
     if cod_munic_residencia is not None and cod_munic_estabelecimento is not None:
         res = _as_clean_string(cod_munic_residencia, index=idx).str.replace(r"\D", "", regex=True).str[:6]
         est = _as_clean_string(cod_munic_estabelecimento, index=idx).str.replace(r"\D", "", regex=True).str[:6]
-        both = res.str.len().eq(6) & est.str.len().eq(6)
-        diff = res != est
+        both = res.str.len().eq(6).fillna(False) & est.str.len().eq(6).fillna(False)
+        diff = res.ne(est).fillna(False)
         inferred = pd.Series(pd.NA, index=idx, dtype="string")
         inferred[both & diff] = "1"
         inferred[both & ~diff] = "0"
@@ -824,7 +828,9 @@ def _normalize_pa_cnsmed(series: pd.Series) -> pd.Series:
     # CNS válidos costumam iniciar com 1,2,7,8,9; permite zeros integrais como sentinel.
     valid_prefix = cns.str[0].isin(["1", "2", "7", "8", "9"])
     sentinel_zero = cns.eq("000000000000000")
-    valid = (cns.str.len() == 15) & (valid_prefix | sentinel_zero)
+    valid = cns.str.len().eq(15).fillna(False) & (
+        valid_prefix.fillna(False) | sentinel_zero.fillna(False)
+    )
 
     out = cns.mask(digits.isna() | digits.eq("") | ~valid, pd.NA)
     return out.astype("string")
@@ -1389,7 +1395,9 @@ def _normalize_sequencia(series: pd.Series) -> pd.Series:
     digits = s.str.replace(r"\D", "", regex=True)
     seq = digits.str[:3].str.zfill(3)
 
-    valid = seq.str.match(r"^[0-9]{3}$", na=False) & seq.ne("000")
+    is_three_digits = seq.str.match(r"^[0-9]{3}$", na=False)
+    not_zero = seq.fillna("").ne("000")
+    valid = is_three_digits & not_zero
     out = seq.where(valid, pd.NA)
     return out.astype("string")
 
@@ -1477,7 +1485,12 @@ def _normalize_pa_subfin(series: pd.Series, pa_tpfin: pd.Series | None = None) -
     if pa_tpfin is not None:
         tp = _as_clean_string(pa_tpfin, index=series.index).str.replace(r"\D", "", regex=True).str[:2].str.zfill(2)
         # 0000 permanece válido; demais devem casar com prefixo do tipo de financiamento.
-        mismatch = out.notna() & out.ne("0000") & tp.notna() & out.str[:2].ne(tp)
+        mismatch = (
+            out.notna()
+            & out.ne("0000")
+            & tp.notna()
+            & out.str[:2].ne(tp).fillna(False)
+        )
         out = out.mask(mismatch, pd.NA)
 
     return out.astype("string")
@@ -1525,7 +1538,14 @@ def _normalize_n_aih(series: pd.Series) -> pd.Series:
     valid_tipo = tipo.str.match(r"^\d$", na=False)
     valid_seqdv = seqdv.str.match(r"^\d{8}$", na=False)
 
-    valid = valid_uf & valid_ano & valid_tipo & valid_seqdv & aih.ne("0000000000000")
+    not_zero = aih.fillna("").ne("0000000000000")
+    valid = (
+        valid_uf.fillna(False)
+        & valid_ano.fillna(False)
+        & valid_tipo.fillna(False)
+        & valid_seqdv.fillna(False)
+        & not_zero
+    )
     out = aih.mask(digits.isna() | digits.eq("") | ~valid, pd.NA)
     return out.astype("string")
 
@@ -1630,6 +1650,18 @@ def _build_unified_table(df: pd.DataFrame, ano_part: str, mes_part: str) -> pd.D
     out["etnia_paciente"] = _as_clean_string(
         _pick_first_present(df, ["pa_etnia", "etnia"]), index=df.index
     )
+    out["cnpj_mantenedora"] = _as_clean_string(
+        _pick_first_present(df, ["pa_cnpjmnt", "cnpj_mant"]), index=df.index
+    )
+    out["gestao_responsavel"] = _as_clean_string(
+        _pick_first_present(df, ["pa_gestao", "gestao"]), index=df.index
+    )
+    out["tipo_financiamento"] = _as_clean_string(
+        _pick_first_present(df, ["pa_tpfin", "financ"]), index=df.index
+    )
+    out["cid_secundario"] = _as_clean_string(
+        _pick_first_present(df, ["pa_cidsec", "diag_secun"]), index=df.index
+    )
     out["cod_munic_residencia"] = _as_clean_string(
         _pick_first_present(df, ["pa_munpcn", "munic_res"]), index=df.index
     )
@@ -1722,6 +1754,14 @@ def _normalize_output_types(df: pd.DataFrame) -> pd.DataFrame:
         out["etnia_paciente"] = _normalize_etnia_indigena(
             out["etnia_paciente"], raca_cor_paciente=out["raca_cor_paciente"]
         )
+    if "cnpj_mantenedora" in out.columns:
+        out["cnpj_mantenedora"] = _normalize_cnpj14(out["cnpj_mantenedora"])
+    if "gestao_responsavel" in out.columns:
+        out["gestao_responsavel"] = _normalize_pa_gestao(out["gestao_responsavel"])
+    if "tipo_financiamento" in out.columns:
+        out["tipo_financiamento"] = _normalize_pa_tpfin(out["tipo_financiamento"])
+    if "cid_secundario" in out.columns:
+        out["cid_secundario"] = _normalize_cid_principal(out["cid_secundario"])
     out["cod_munic_residencia"] = _normalize_municipio_ibge6(out["cod_munic_residencia"])
     if "munic_mov" in out.columns:
         out["munic_mov"] = _normalize_municipio_ibge6(out["munic_mov"])
@@ -1868,10 +1908,7 @@ def _load_and_transform_raw(raw_path: Path, ano: str, mes: int) -> pd.DataFrame 
     mes_part = str(mes)
 
     try:
-        try:
-            df = pd.read_parquet(raw_path, dtype_backend="pyarrow")
-        except (TypeError, ValueError):
-            df = pd.read_parquet(raw_path)
+        df = pd.read_parquet(raw_path)
     except Exception as e:
         log(QUEM, str(raw_path), f"ERRO ao ler Parquet: {e}")
         return None
