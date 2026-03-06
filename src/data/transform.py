@@ -10,6 +10,7 @@ Estratégia:
 
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 import re
 
@@ -151,6 +152,8 @@ DERIVED_COLUMNS = [
 ]
 
 CANONICAL_OUTPUT_COLUMNS = COMMON_COLUMNS + SIA_SPECIFIC_COLUMNS + SIH_SPECIFIC_COLUMNS + DERIVED_COLUMNS
+TECHNICAL_OUTPUT_COLUMNS = ["row_id"]
+OUTPUT_COLUMNS = TECHNICAL_OUTPUT_COLUMNS + CANONICAL_OUTPUT_COLUMNS
 
 # Aliases históricos/heterogêneos após normalização.
 ALIAS_TO_CANONICAL = {
@@ -1627,8 +1630,27 @@ def _derive_competencia(df: pd.DataFrame, ano_part: str, mes_part: str) -> pd.Se
     return _valid_competencia(fallback).astype("Int64")
 
 
+def _derive_row_id(df: pd.DataFrame) -> pd.Series:
+    """
+    Gera identificador técnico estável por linha para link com camadas enriquecidas.
+    Base: caminho do arquivo bruto + índice da linha no arquivo.
+    """
+    idx = df.index
+    source_file = _as_clean_string(
+        _pick_first_present(df, ["__source_file", "source_file"]),
+        index=idx,
+    ).fillna("unknown_file")
+    source_row = _as_clean_string(
+        _pick_first_present(df, ["__source_row", "source_row"]),
+        index=idx,
+    ).fillna("-1")
+    base = source_file + "#" + source_row
+    return base.map(lambda v: hashlib.sha1(v.encode("utf-8")).hexdigest()).astype("string")
+
+
 def _build_unified_table(df: pd.DataFrame, ano_part: str, mes_part: str) -> pd.DataFrame:
     out = pd.DataFrame(index=df.index)
+    out["row_id"] = _derive_row_id(df)
 
     # Domínio amplo: comuns + específicas (SIA/SIH), preservando valores da origem.
     for col in COMMON_COLUMNS + SIA_SPECIFIC_COLUMNS + SIH_SPECIFIC_COLUMNS:
@@ -1682,13 +1704,13 @@ def _build_unified_table(df: pd.DataFrame, ano_part: str, mes_part: str) -> pd.D
     )
     out["competencia_ano_mes"] = _derive_competencia(df, ano_part=ano_part, mes_part=mes_part)
 
-    out = out.loc[:, CANONICAL_OUTPUT_COLUMNS]
+    out = out.loc[:, OUTPUT_COLUMNS]
     return _normalize_output_types(out)
 
 
 def _normalize_output_types(df: pd.DataFrame) -> pd.DataFrame:
     out = pd.DataFrame(index=df.index)
-    for col in CANONICAL_OUTPUT_COLUMNS:
+    for col in OUTPUT_COLUMNS:
         s = df[col] if col in df.columns else pd.Series(pd.NA, index=df.index)
         if col in BOOL_COLUMNS:
             out[col] = _as_clean_bool(s, index=df.index)
@@ -1913,6 +1935,8 @@ def _load_and_transform_raw(raw_path: Path, ano: str, mes: int) -> pd.DataFrame 
         log(QUEM, str(raw_path), f"ERRO ao ler Parquet: {e}")
         return None
 
+    df["__source_file"] = str(raw_path)
+    df["__source_row"] = pd.Series(range(len(df)), index=df.index, dtype="Int64")
     df = _coalesce_duplicate_columns(df)
     return _build_unified_table(df, ano_part=ano, mes_part=mes_part)
 

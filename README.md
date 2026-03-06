@@ -117,7 +117,7 @@ A documentação está em **modular** em `docs/`:
    source .venv/bin/activate   # ou .venv\Scripts\activate no Windows
    pip install -e .
    ```
-4. Pipeline de dados (ingestão Python → transform):
+4. Pipeline de dados (ingestão Python → transform → enriquecimento clínico):
    ```bash
    # 1. Ingestão 100% Python: DATASUS (FTP/S3) + DBC→DBF + filtros
    #    grava em data/raw/ (particionado)
@@ -125,6 +125,9 @@ A documentação está em **modular** em `docs/`:
 
    # 2. Transform: data/raw → data/processed (schema canônico: deduplicado + padrão + derivadas)
    python -m src.data.transform
+
+   # 3. Enriquecimento clínico: data/processed → data/enriched (AHEN + metadados de inferência)
+   python -m src.data.clinical_inference
    ```
    Observação: a ingestão tenta Python primeiro e usa fallback via script R apenas quando o arquivo não é encontrado no FTP/S3.
 5. Rodar a API: `uvicorn src.api.main:app --reload`.

@@ -1,1 +1,1 @@
-# Pipeline de dados: transform e dictionary
+# Pipeline de dados: ingestion, transform, clinical_inference e dictionary

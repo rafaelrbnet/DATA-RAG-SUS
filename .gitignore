@@ -20,8 +20,11 @@ __pycache__/
 data/raw/**/*.parquet
 data/raw/**/*.csv
 data/processed/**/*.parquet
+data/enriched/**/*.parquet
+data/enriched/**/*.csv
 !data/raw/.gitkeep
 !data/processed/.gitkeep
+!data/enriched/.gitkeep
 !data/schemas/.gitkeep
 
 # Build / dist
