@@ -25,7 +25,6 @@ datas-rag-sus/
 │   ├── 05-fluxo-funcionamento.md
 │   ├── 06-etapas-implementacao.md
 │   ├── 06.1-dominio-colunas-completas.md
-│   ├── 06.2-estatisticas-base-processada.md
 │   ├── 06.3-consultas-duckdb-processed.md
 │   ├── 07-prompt-agente.md
 │   ├── 08-criterios-qualidade.md
@@ -48,7 +47,7 @@ datas-rag-sus/
 │       └── main.py         # API FastAPI
 │
 ├── notebooks/
-│   ├── exploration.ipynb     # Fonte de verdade dos exemplos SQL sobre processed
+│   ├── exploration.ipynb     # Fonte de verdade dos exemplos SQL e estatisticas sobre processed
 │   └── event-narrative.ipynb # Fonte de verdade dos exemplos SQL sobre enriched e joins
 │
 └── tests/
