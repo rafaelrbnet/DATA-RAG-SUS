@@ -99,7 +99,6 @@ A documentação está em **modular** em `docs/`:
 | [05-fluxo-funcionamento](docs/05-fluxo-funcionamento.md) | Fluxo da pergunta ao resultado |
 | [06-etapas-implementacao](docs/06-etapas-implementacao.md) | Etapas de implementação |
 | [06.1-dominio-colunas-completas](docs/06.1-dominio-colunas-completas.md) | Domínio canônico em `data/processed` (padrão + derivadas) |
-| [06.2-estatisticas-base-processada](docs/06.2-estatisticas-base-processada.md) | Estatísticas operacionais da base `data/processed` |
 | [07-prompt-agente](docs/07-prompt-agente.md) | Prompt do agente SQL |
 | [08-criterios-qualidade](docs/08-criterios-qualidade.md) | Critérios de qualidade científica |
 | [09-roadmap](docs/09-roadmap.md) | Roadmap futuro |
@@ -117,7 +116,7 @@ A documentação está em **modular** em `docs/`:
    source .venv/bin/activate   # ou .venv\Scripts\activate no Windows
    pip install -e .
    ```
-4. Pipeline de dados (ingestão Python → transform):
+4. Pipeline de dados (ingestão Python → transform → enriquecimento clínico):
    ```bash
    # 1. Ingestão 100% Python: DATASUS (FTP/S3) + DBC→DBF + filtros
    #    grava em data/raw/ (particionado)
@@ -125,6 +124,9 @@ A documentação está em **modular** em `docs/`:
 
    # 2. Transform: data/raw → data/processed (schema canônico: deduplicado + padrão + derivadas)
    python -m src.data.transform
+
+   # 3. Enriquecimento clínico: data/processed → data/enriched (AHEN + metadados de inferência)
+   python -m src.data.clinical_inference
    ```
    Observação: a ingestão tenta Python primeiro e usa fallback via script R apenas quando o arquivo não é encontrado no FTP/S3.
 5. Rodar a API: `uvicorn src.api.main:app --reload`.

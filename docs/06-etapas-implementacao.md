@@ -18,7 +18,7 @@
 
 ## ETAPA 3 — Pipeline de dados: transformação
 
-**Status:** em andamento.
+**Status:** concluída.
 
 - **transform.py** (`python -m src.data.transform`): lê `data/raw/` (origem bruta), normaliza o schema e grava em `data/processed/` uma flat table única para SIA e SIH com domínio amplo (colunas comuns + específicas + derivadas unificadas). Os arquivos em raw permanecem; reprocessamentos partem sempre de raw. Um arquivo por vez para controle de memória.
 
@@ -48,7 +48,36 @@ Para a fonte única de domínio e normalização das colunas canônicas, ver [06
 
 Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> data/processed/**.
 
-## ETAPA 4 — Camada DuckDB
+**Observação operacional:** após mudanças no schema técnico da camada `processed` (por exemplo, inclusão/correção de `row_id`), é necessário reprocessar os arquivos legados para alinhar todos os parquets ao contrato canônico atual.
+
+## ETAPA 4 — Enriquecimento clínico determinístico
+
+**Status:** concluída.
+
+- **Decisão de arquitetura:** implementar como **nova etapa do pipeline** (não dentro de `transform.py`).
+- **Objetivo:** criar colunas inferidas para suporte a caso clínico e sugestão de templates, preservando `data/processed/` como camada canônica estável.
+- **Entrada:** `data/processed/**/*.parquet`.
+- **Saída:** `data/enriched/**/*.parquet` (mesmas partições `ano/uf/mês`).
+- **Chave de ligação entre camadas:** `row_id` (identificador técnico único por linha, gerado no `transform.py`).
+- **Implementação atual:** `src/data/clinical_inference.py` com motor de regras determinísticas versionadas.
+- **Execução da etapa:** `python -m src.data.clinical_inference`.
+- **Template adotado:** `AHEN` (*Assistive Health Event Narrative*), centrado em evento assistencial (não em caso clínico individual).
+- **Versão de inferência atual:** `ahen_v1.0.0`.
+- **Rastreabilidade:** para cada inferência, gravar:
+  - `row_id` (FK para `processed`)
+  - `clinical_template_id`
+  - `clinical_template_label`
+  - `clinical_inference_version`
+  - `clinical_inference_rule_id`
+  - `clinical_inference_confidence` (quando aplicável)
+  - `clinical_inference_reason` (resumo curto da regra aplicada)
+- **Saída mínima do enriquecimento:** `row_id` + narrativa clínica (`clinical_event_narrative`) + metadados de inferência.
+- **Pré-requisito operacional:** reprocessar `data/processed` após mudanças no `transform.py` para garantir `row_id` válido antes da execução desta etapa.
+- **Validação:** testes unitários das regras e testes de regressão por amostra.
+
+Fluxo recomendado: **ingestion -> transform -> enriched(clinical_inference) -> DuckDB -> LLM -> API**.
+
+## ETAPA 5 — Camada DuckDB
 
 **Status:** concluída.
 
@@ -57,9 +86,10 @@ Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> 
 - **Sem banco externo:** execução em DuckDB `:memory:` por chamada.
 - **Validações básicas:** SQL vazio inválido; `data_root` inexistente gera erro explícito; ausência de arquivos Parquet em `data/processed` gera erro; schema canônico exige presença das 15 colunas derivadas unificadas.
 - **Testes da etapa:** `tests/test_queries.py` cobre agregação, filtro e cenários de erro básicos.
-- **Guia prático (Etapa 4.1):** passo a passo e exemplos em [06.3-consultas-duckdb.md](06.3-consultas-duckdb.md).
+- **Guia prático (Etapa 5.1) — SIA/SIH (`processed`):** passo a passo em [06.3-consultas-duckdb-processed.md](06.3-consultas-duckdb-processed.md).
+- **Fonte de verdade dos exemplos SQL:** usar os notebooks [exploration.ipynb](../notebooks/exploration.ipynb) para `processed` e [event-narrative.ipynb](../notebooks/event-narrative.ipynb) para `enriched` e joins por `row_id`.
 
-## ETAPA 5 — Agente LLM
+## ETAPA 6 — Agente LLM
 
 - Recebe pergunta em português
 - Analisa schema disponível
@@ -68,7 +98,7 @@ Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> 
 - Retorna resposta explicada
 - Restrições: nunca inventar colunas; nunca estimar valores; sempre SQL executável
 
-## ETAPA 6 — API
+## ETAPA 7 — API
 
 - Endpoint `POST /query`
 - Entrada: `{ "question": "..." }`
