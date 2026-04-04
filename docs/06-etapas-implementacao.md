@@ -52,7 +52,7 @@ Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> 
 
 ## ETAPA 4 — Enriquecimento clínico determinístico
 
-**Status:** executando.
+**Status:** concluída.
 
 - **Decisão de arquitetura:** implementar como **nova etapa do pipeline** (não dentro de `transform.py`).
 - **Objetivo:** criar colunas inferidas para suporte a caso clínico e sugestão de templates, preservando `data/processed/` como camada canônica estável.
