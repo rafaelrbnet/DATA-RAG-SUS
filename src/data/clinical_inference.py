@@ -83,6 +83,21 @@ def _enriched_path_for_processed(processed_path: Path) -> Path | None:
     return dest_dir / f"sus_{uf}_{ano}_{mes:02d}.parquet"
 
 
+def _enriched_file_has_valid_row_id(path: Path) -> bool:
+    if not path.exists():
+        return False
+    try:
+        sample = pd.read_parquet(path, columns=["row_id"]).head(10)
+    except Exception:
+        return False
+    if "row_id" not in sample.columns:
+        return False
+    row_id = sample["row_id"].astype("string")
+    if row_id.isna().any():
+        return False
+    return not row_id.str.startswith("row_missing_", na=False).any()
+
+
 def _infer_interpretacao_clinica(icd_group: pd.Series) -> pd.Series:
     g = icd_group.astype("string").str.upper()
     out = pd.Series("condicoes clinicas diversas", index=icd_group.index, dtype="string")
@@ -300,7 +315,7 @@ def run_clinical_inference(skip_existing: bool = True) -> None:
             dest = _enriched_path_for_processed(p)
             if dest is None:
                 continue
-            if not dest.exists():
+            if not _enriched_file_has_valid_row_id(dest):
                 pending.append(p)
     else:
         pending = all_processed

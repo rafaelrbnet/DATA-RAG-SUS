@@ -1926,6 +1926,16 @@ def _processed_path_for_group(ano: str, uf: str, mes: int) -> Path:
     return dest_dir / f"sus_{uf}_{ano}_{mes:02d}.parquet"
 
 
+def _processed_file_has_valid_row_id(path: Path) -> bool:
+    if not path.exists():
+        return False
+    try:
+        sample = pd.read_parquet(path, columns=["row_id"]).head(1)
+    except Exception:
+        return False
+    return "row_id" in sample.columns
+
+
 def _load_and_transform_raw(raw_path: Path, ano: str, mes: int) -> pd.DataFrame | None:
     mes_part = str(mes)
 
@@ -2017,7 +2027,7 @@ def run_transform(skip_existing: bool = True) -> None:
     if skip_existing:
         groups = {
             k: v for k, v in grouped.items()
-            if not _processed_path_for_group(k[0], k[1], k[2]).exists()
+            if not _processed_file_has_valid_row_id(_processed_path_for_group(k[0], k[1], k[2]))
         }
     else:
         groups = grouped
