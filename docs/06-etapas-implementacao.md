@@ -18,7 +18,7 @@
 
 ## ETAPA 3 — Pipeline de dados: transformação
 
-**Status:** em andamento.
+**Status:** concluída.
 
 - **transform.py** (`python -m src.data.transform`): lê `data/raw/` (origem bruta), normaliza o schema e grava em `data/processed/` uma flat table única para SIA e SIH com domínio amplo (colunas comuns + específicas + derivadas unificadas). Os arquivos em raw permanecem; reprocessamentos partem sempre de raw. Um arquivo por vez para controle de memória.
 
@@ -47,6 +47,8 @@ Para a fonte única de domínio e normalização das colunas canônicas, ver [06
 | **Fonte de verdade analítica** | `data/processed/` | Flat table canônica usada por DuckDB/RAG, unificando SIA+SIH em um parquet por `ano/uf/mês` (sem pasta `sistema=`). |
 
 Fluxo: **ingestion (Python) -> data/raw/** (já particionado) **-> transform -> data/processed/**.
+
+**Observação operacional:** após mudanças no schema técnico da camada `processed` (por exemplo, inclusão/correção de `row_id`), é necessário reprocessar os arquivos legados para alinhar todos os parquets ao contrato canônico atual.
 
 ## ETAPA 4 — Enriquecimento clínico determinístico
 
