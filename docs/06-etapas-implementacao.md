@@ -91,17 +91,64 @@ Fluxo recomendado: **ingestion -> transform -> enriched(clinical_inference) -> D
 
 ## ETAPA 6 — Agente LLM
 
-- Recebe pergunta em português
-- Analisa schema disponível
-- Gera SQL seguro
-- Executa no DuckDB
-- Retorna resposta explicada
-- Restrições: nunca inventar colunas; nunca estimar valores; sempre SQL executável
+**Status:** concluída.
+
+**Componentes implementados:**
+
+| Arquivo | Responsabilidade |
+|---------|-----------------|
+| `src/rag/prompts.py` | `SCHEMA_CONTEXT` (110 colunas canônicas compactas), `SYSTEM_PROMPT` (role + schema + 13 regras), `EXPLAIN_PROMPT` (interpretação pós-execução) |
+| `src/rag/sql_generator.py` | `generate_sql(question) -> str` — chama GPT-4o, extrai SQL do bloco ```sql```, valida SELECT-only |
+| `src/rag/agent.py` | `run_query(question, *, data_root) -> dict` — orquestra generate_sql → executor.query → _explain |
+
+**Saída de `run_query`:**
+```python
+{
+  "sql":         str | None,   # SQL DuckDB gerado
+  "result":      list | None,  # linhas como lista de dicts (NaN → None)
+  "explanation": str | None,   # resposta em português
+  "row_count":   int,          # número de linhas
+  "error":       str | None,   # presente somente em falha
+}
+```
+
+**Restrições de segurança (sql_generator.py):**
+- Somente SELECT permitido — bloqueia DELETE, UPDATE, INSERT, DROP, CREATE, ALTER, TRUNCATE, EXEC, GRANT, REVOKE
+- Nunca inventar colunas — apenas as listadas em `SCHEMA_CONTEXT`
+- Nunca estimar valores — resultados vêm exclusivamente do DuckDB
+- SQL deve ser executável sem modificações na view `processed`
+
+**Pré-requisito:** `OPENAI_API_KEY` configurada em `.env` (nunca commitar).
+
+**Execução programática:**
+```python
+from src.rag.agent import run_query
+resultado = run_query("Total de internações por fratura de fêmur em SP em 2022")
+print(resultado["sql"])
+print(resultado["explanation"])
+```
+
+**Testes:** `tests/test_sql_generation.py` — 9 testes unitários (sem chamada real à API).
 
 ## ETAPA 7 — API
 
-- Endpoint `POST /query`
-- Entrada: `{ "question": "..." }`
-- Saída: `{ "sql": "...", "result": "...", "explanation": "..." }`
+**Status:** concluída.
+
+- **`src/api/main.py`** — FastAPI com CORS habilitado.
+- Endpoint `POST /query` — entrada `{ "question": "..." }`, saída `{ "sql", "result", "explanation", "row_count", "error" }`.
+- Endpoint `GET /health` — verificação de disponibilidade.
+- Documentação interativa em `/docs` (Swagger) e `/redoc`.
+
+**Execução:**
+```bash
+uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+**Exemplo de chamada:**
+```bash
+curl -X POST http://localhost:8000/query \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Quantas internações ortopédicas ocorreram em SP em 2022?"}'
+```
 
 [← Voltar ao índice](README.md)
