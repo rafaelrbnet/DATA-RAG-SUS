@@ -1,8 +1,23 @@
 #!/usr/bin/env Rscript
 
+# Incluir biblioteca do usuário (pacotes instalados sem admin)
+local({
+  user_lib <- file.path(Sys.getenv("USERPROFILE"), "R", "win-library",
+                        paste0(R.version$major, ".", substr(R.version$minor, 1, 1)))
+  if (dir.exists(user_lib) && !(user_lib %in% .libPaths())) {
+    .libPaths(c(user_lib, .libPaths()))
+  }
+})
+
 suppressPackageStartupMessages({
+  if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes", repos = "https://cloud.r-project.org/", quiet = TRUE)
+  }
+  if (!requireNamespace("read.dbc", quietly = TRUE)) {
+    remotes::install_github("danicat/read.dbc", quiet = TRUE, upgrade = "never")
+  }
   if (!requireNamespace("microdatasus", quietly = TRUE)) {
-    install.packages("microdatasus", repos = "https://cloud.r-project.org/", quiet = TRUE)
+    remotes::install_github("rfsaldanha/microdatasus", quiet = TRUE, upgrade = "never")
   }
   if (!requireNamespace("arrow", quietly = TRUE)) {
     install.packages("arrow", repos = "https://cloud.r-project.org/", quiet = TRUE)

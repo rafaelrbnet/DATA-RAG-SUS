@@ -32,6 +32,9 @@ from typing import Literal
 import pandas as pd
 import pyarrow as pa
 from pyarrow import parquet as pq
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from .log_util import log
 
@@ -84,6 +87,9 @@ CONNECT_TIMEOUT = 30  # timeout só para o teste de conexão inicial
 R_NO_PROGRESS_TIMEOUT = 600   # 10 min sem nenhuma atividade → interrompe
 R_HARD_TIMEOUT = 7200         # 2 h tempo total máximo
 R_POLL_INTERVAL = 15           # verificar a cada 15 s
+# Caminho do executável Rscript (sobrescrever via env RSCRIPT_PATH se não estiver no PATH do sistema)
+import os as _os
+RSCRIPT_EXE = _os.environ.get("RSCRIPT_PATH", "Rscript")
 # Contagem de falhas no log: se o mesmo arquivo falhar >= este valor, não tenta de novo nesta execução
 MAX_FAILURES_BEFORE_SKIP = 3
 # Circuit breaker (literatura): após N falhas por timeout, pausa X s antes de continuar
@@ -590,7 +596,7 @@ def _run_r_download_only(system: str, uf: str, year: int, month: int) -> tuple[b
         return False, "Script R não encontrado (scripts/r/fallback_download_only.R)."
     dest = _dest_path(_system_to_label(system), uf, year, month)
     cache = _download_cache_path(_system_to_label(system), uf, year, month)
-    cmd = ["Rscript", str(script), uf.upper(), str(year), str(month), system]
+    cmd = [RSCRIPT_EXE, str(script), uf.upper(), str(year), str(month), system]
     try:
         proc = subprocess.Popen(
             cmd,
