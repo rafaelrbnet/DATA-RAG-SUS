@@ -331,6 +331,25 @@ def _pick_first_present(df: pd.DataFrame, candidates: list[str]) -> pd.Series | 
 def _as_clean_string(series: pd.Series | None, index: pd.Index) -> pd.Series:
     if series is None:
         return pd.Series(pd.NA, index=index, dtype="string")
+    try:
+        import pyarrow as pa
+        import pyarrow.compute as pc
+        pa_arr = series.array._pa_array  # exists only on Arrow-backed arrays
+        if pa.types.is_string(pa_arr.type) or pa.types.is_large_string(pa_arr.type):
+            try:
+                # Slice from -1 forces PyArrow to count codepoints from the end, which
+                # validates UTF-8 on the full string. start=0 does NOT trigger validation.
+                pc.utf8_slice_codeunits(pa_arr, start=-1)
+            except pa.lib.ArrowInvalid:
+                # Invalid UTF-8 detected (Latin-1 bytes from DATASUS DBF stored in Parquet).
+                # Cast to binary (no UTF-8 check), decode as Latin-1 (every byte 0x00–0xFF
+                # maps to a valid Unicode codepoint), rebuild as clean UTF-8 string array.
+                raw = pa_arr.cast(pa.large_binary()).to_pylist()
+                decoded = [v.decode("latin-1") if v is not None else None for v in raw]
+                clean = pa.chunked_array([pa.array(decoded, type=pa.large_string())])
+                series = pd.Series(type(series.array)(clean), index=index, dtype=series.dtype)
+    except AttributeError:
+        pass  # non-Arrow-backed Series — no sanitization needed
     s = series.astype("string").str.strip()
     return s.replace(
         {
