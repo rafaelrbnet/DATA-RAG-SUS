@@ -1,4 +1,4 @@
-"""Geração de SQL DuckDB a partir de pergunta em português via GPT-4o."""
+"""Geração de SQL DuckDB a partir de pergunta em português via LLM (OpenAI ou Ollama local)."""
 
 from __future__ import annotations
 
@@ -51,11 +51,18 @@ def _validate_select_only(sql: str) -> None:
 
 
 def _get_llm() -> ChatOpenAI:
+    provider = os.getenv("LLM_PROVIDER", "openai").lower()
+
+    if provider == "ollama":
+        base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+        model = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:14b")
+        return ChatOpenAI(model=model, temperature=0, api_key="ollama", base_url=base_url)
+
     api_key = os.getenv("OPENAI_API_KEY", "")
     if not api_key or "COLOQUE" in api_key.upper():
         raise RuntimeError(
-            "OPENAI_API_KEY não configurada. "
-            "Abra C:\\Dev\\DATA-RAG-SUS\\.env e substitua o placeholder pela sua chave."
+            "Configure LLM_PROVIDER=ollama no .env para uso local, "
+            "ou forneça OPENAI_API_KEY para usar a OpenAI."
         )
     model = os.getenv("OPENAI_MODEL", "gpt-4o")
     return ChatOpenAI(model=model, temperature=0, api_key=api_key)
@@ -63,10 +70,10 @@ def _get_llm() -> ChatOpenAI:
 
 def generate_sql(question: str) -> str:
     """
-    Converte pergunta em português em SQL DuckDB válido via GPT-4o.
+    Converte pergunta em português em SQL DuckDB válido via LLM configurado.
 
     Raises:
-        RuntimeError: chave de API não configurada.
+        RuntimeError: provedor não configurado corretamente.
         ValueError: SQL extraído não é SELECT, ou contém operações proibidas.
     """
     llm = _get_llm()
