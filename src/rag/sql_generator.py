@@ -18,7 +18,10 @@ _FORBIDDEN = re.compile(
     re.IGNORECASE,
 )
 _SQL_BLOCK = re.compile(r"```sql\s*(.*?)```", re.DOTALL | re.IGNORECASE)
-_SQL_BARE_BLOCK = re.compile(r"```\s*(SELECT\b.*?)```", re.DOTALL | re.IGNORECASE)
+_SQL_BARE_BLOCK = re.compile(r"```\s*((WITH|SELECT)\b.*?)```", re.DOTALL | re.IGNORECASE)
+
+# SELECT válido = começa com SELECT ou WITH (CTE padrão SQL)
+_VALID_START = re.compile(r"(?i)^\s*(SELECT|WITH)\b")
 
 
 def _extract_sql(text: str) -> str:
@@ -29,7 +32,7 @@ def _extract_sql(text: str) -> str:
     if m:
         return m.group(1).strip()
     stripped = text.strip()
-    if re.match(r"(?i)^\s*SELECT\b", stripped):
+    if _VALID_START.match(stripped):
         return stripped
     raise ValueError(
         f"Não foi possível extrair SQL da resposta do modelo. "
@@ -47,9 +50,9 @@ def _strip_leading_comments(sql: str) -> str:
 
 def _validate_select_only(sql: str) -> None:
     effective = _strip_leading_comments(sql)
-    if not re.match(r"(?i)^\s*SELECT\b", effective):
+    if not _VALID_START.match(effective):
         raise ValueError(
-            f"Somente SELECT é permitido. SQL recebido começava com: {effective[:80]}"
+            f"Somente SELECT/WITH é permitido. SQL recebido começava com: {effective[:80]}"
         )
     m = _FORBIDDEN.search(sql)
     if m:
