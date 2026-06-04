@@ -5,7 +5,8 @@
 **Status:** concluída.
 
 - Criar projeto Python com `pyproject.toml`
-- Instalar: `duckdb`, `pandas`, `pyarrow`, `fastapi`, `uvicorn`, `langchain` (ou `llamaindex`), `python-dotenv`
+- Gerenciador de pacotes: `uv` (recomendado) — `uv venv --python 3.12 && uv pip install -e .`
+- Instalar: `duckdb`, `pandas`, `pyarrow`, `fastapi`, `uvicorn`, `langchain`, `langchain-openai`, `python-dotenv`
 
 ## ETAPA 2 — Pipeline de dados: ingestão
 
@@ -118,7 +119,12 @@ Fluxo recomendado: **ingestion -> transform -> enriched(clinical_inference) -> D
 - Nunca estimar valores — resultados vêm exclusivamente do DuckDB
 - SQL deve ser executável sem modificações na view `processed`
 
-**Pré-requisito:** `OPENAI_API_KEY` configurada em `.env` (nunca commitar).
+**Provedor LLM configurado em `.env`:**
+
+| Opção | Configuração mínima |
+|---|---|
+| Ollama (padrão) | `LLM_PROVIDER=ollama`, `OLLAMA_MODEL=qwen2.5-coder:14b` |
+| OpenAI | `LLM_PROVIDER=openai`, `OPENAI_API_KEY=sk-...` |
 
 **Execução programática:**
 ```python
@@ -128,7 +134,7 @@ print(resultado["sql"])
 print(resultado["explanation"])
 ```
 
-**Testes:** `tests/test_sql_generation.py` — 9 testes unitários (sem chamada real à API).
+**Testes:** `tests/test_sql_generation.py` — 9 testes unitários (sem chamada real ao LLM). Total do projeto: 26 testes.
 
 ## ETAPA 7 — API
 
@@ -141,14 +147,25 @@ print(resultado["explanation"])
 
 **Execução:**
 ```bash
-uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
+uv run uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 **Exemplo de chamada:**
 ```bash
 curl -X POST http://localhost:8000/query \
   -H "Content-Type: application/json" \
-  -d '{"question": "Quantas internações ortopédicas ocorreram em SP em 2022?"}'
+  -d '{"question": "Quantos procedimentos foram realizados em 2023?"}'
+```
+
+**Exemplo de resposta:**
+```json
+{
+  "sql": "SELECT COUNT(*) AS total_procedimentos FROM processed WHERE ano_cmpt = 2023;",
+  "result": [{"total_procedimentos": 4270507}],
+  "explanation": "Foram realizados 4.270.507 procedimentos em 2023...",
+  "row_count": 1,
+  "error": null
+}
 ```
 
 [← Voltar ao índice](README.md)

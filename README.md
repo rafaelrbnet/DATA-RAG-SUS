@@ -68,11 +68,11 @@ Detalhes em [docs/03-estrutura-repositorio.md](docs/03-estrutura-repositorio.md)
 
 ## Stack
 
-- **Python** 3.11+
+- **Python** 3.12 (gerenciado via `uv`)
 - **DuckDB** (consultas em Parquet)
 - **Parquet** (dados)
-- **LangChain** ou **LlamaIndex** (orquestração)
-- **OpenAI** ou **Ollama** (modelo)
+- **LangChain** + `langchain-openai` (orquestração)
+- **Ollama** (padrão local) ou **OpenAI** (alternativa via API)
 - **FastAPI** (API)
 
 ---
@@ -109,29 +109,46 @@ A documentação está em **modular** em `docs/`:
 ## Como começar
 
 1. Clonar o repositório e entrar na pasta do projeto.
-2. Copiar `.env.example` para `.env` e configurar (ex.: chave OpenAI ou endpoint Ollama).
-3. Criar ambiente virtual e instalar dependências:
+
+2. Instalar o [Ollama](https://ollama.com/download) (instalador oficial, não Homebrew) e baixar o modelo:
    ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate   # ou .venv\Scripts\activate no Windows
-   pip install -e .
+   ollama pull qwen2.5-coder:14b
    ```
-4. Pipeline de dados (ingestão Python → transform → enriquecimento clínico):
+
+3. Copiar `.env.example` para `.env` — a configuração padrão já aponta para Ollama local:
+   ```
+   LLM_PROVIDER=ollama
+   OLLAMA_BASE_URL=http://localhost:11434/v1
+   OLLAMA_MODEL=qwen2.5-coder:14b
+   ```
+   Para usar OpenAI em vez de Ollama, substitua por `LLM_PROVIDER=openai` e forneça `OPENAI_API_KEY`.
+
+4. Criar ambiente virtual e instalar dependências (requer [`uv`](https://docs.astral.sh/uv/)):
    ```bash
-   # 1. Ingestão 100% Python: DATASUS (FTP/S3) + DBC→DBF + filtros
-   #    grava em data/raw/ (particionado)
-   python -m src.data.ingestion
+   uv venv --python 3.12
+   source .venv/bin/activate   # ou .venv\Scripts\activate no Windows
+   uv pip install -e .
+   ```
 
-   # 2. Transform: data/raw → data/processed (schema canônico: deduplicado + padrão + derivadas)
-   python -m src.data.transform
-
-   # 3. Enriquecimento clínico: data/processed → data/enriched (AHEN + metadados de inferência)
-   python -m src.data.clinical_inference
+5. Pipeline de dados (ingestão Python → transform → enriquecimento clínico):
+   ```bash
+   uv run python -m src.data.ingestion       # data/raw/  (DBC → Parquet particionado)
+   uv run python -m src.data.transform       # data/processed/  (schema canônico)
+   uv run python -m src.data.clinical_inference  # data/enriched/  (AHEN)
    ```
    Observação: a ingestão tenta Python primeiro e usa fallback via script R apenas quando o arquivo não é encontrado no FTP/S3.
-5. Rodar a API: `uvicorn src.api.main:app --reload`.
 
-**Próximo passo:** definir se o primeiro agente usará **OpenAI** ou **LLM local (Ollama)** para implementar a geração de SQL e a explicação.
+6. Rodar a API:
+   ```bash
+   uv run uvicorn src.api.main:app --reload
+   ```
+
+7. Testar a integração:
+   ```bash
+   curl -X POST http://localhost:8000/query \
+     -H "Content-Type: application/json" \
+     -d '{"question": "Quantos procedimentos foram realizados em 2023?"}'
+   ```
 
 ---
 
