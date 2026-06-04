@@ -103,6 +103,7 @@ A documentação está em **modular** em `docs/`:
 | [08-criterios-qualidade](docs/08-criterios-qualidade.md) | Critérios de qualidade científica |
 | [09-roadmap](docs/09-roadmap.md) | Roadmap futuro |
 | [10-licenca](docs/10-licenca.md) | Licença |
+| [11-enriquecimento-orphacode](docs/11-enriquecimento-orphacode.md) | Plano de integração com Orphanet — doenças raras (**planejado**) |
 
 ---
 

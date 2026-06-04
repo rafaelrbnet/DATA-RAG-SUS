@@ -37,10 +37,19 @@ def _extract_sql(text: str) -> str:
     )
 
 
+def _strip_leading_comments(sql: str) -> str:
+    lines = sql.splitlines()
+    non_comment = next(
+        (l for l in lines if l.strip() and not l.strip().startswith("--")), ""
+    )
+    return non_comment if not non_comment else sql[sql.index(non_comment):]
+
+
 def _validate_select_only(sql: str) -> None:
-    if not re.match(r"(?i)^\s*SELECT\b", sql):
+    effective = _strip_leading_comments(sql)
+    if not re.match(r"(?i)^\s*SELECT\b", effective):
         raise ValueError(
-            f"Somente SELECT é permitido. SQL recebido começava com: {sql[:80]}"
+            f"Somente SELECT é permitido. SQL recebido começava com: {effective[:80]}"
         )
     m = _FORBIDDEN.search(sql)
     if m:

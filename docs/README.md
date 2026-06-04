@@ -16,6 +16,7 @@
 | 08 | [Critérios de Qualidade](08-criterios-qualidade.md) | Reprodutibilidade, auditabilidade, transparência |
 | 09 | [Roadmap](09-roadmap.md) | Curto, médio e longo prazo |
 | 10 | [Licença](10-licenca.md) | MIT ou Apache-2.0 |
+| 11 | [Enriquecimento ORPHAcode](11-enriquecimento-orphacode.md) | Plano de integração com Orphanet (doenças raras) — **planejado** |
 
 ---
 

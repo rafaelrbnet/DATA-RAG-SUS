@@ -1,4 +1,4 @@
-"""Execução de SQL em DuckDB sobre a camada canônica data/processed."""
+"""Execução de SQL em DuckDB sobre a camada canônica data/processed e data/enriched."""
 
 from __future__ import annotations
 
@@ -35,6 +35,10 @@ def _default_data_root() -> Path:
     return _project_root() / "data" / "processed"
 
 
+def _default_enriched_root() -> Path:
+    return _project_root() / "data" / "enriched"
+
+
 def _validate_sql(sql: str) -> str:
     if not isinstance(sql, str):
         raise TypeError("sql must be a string")
@@ -67,14 +71,14 @@ def query(
     sql: str,
     *,
     data_root: str | Path | None = None,
+    enriched_root: str | Path | None = None,
     view_name: str = "processed",
 ) -> pd.DataFrame:
     """
-    Executa SQL em DuckDB lendo diretamente data/processed/**/*.parquet.
+    Executa SQL em DuckDB lendo data/processed/**/*.parquet.
 
-    A função cria uma view temporária (`processed` por padrão) apontando para
-    todos os Parquets da base processada (modelo canônico unificado) e retorna
-    o resultado como DataFrame.
+    Cria também a view `enriched` (data/enriched/**/*.parquet) quando disponível,
+    permitindo JOINs via row_id para usar colunas de narrativa clínica (AHEN).
     """
     text = _validate_sql(sql)
     view = _validate_identifier(view_name)
@@ -84,6 +88,10 @@ def query(
 
     parquet_glob = str((base / "**" / "*.parquet").as_posix())
     safe_glob = parquet_glob.replace("'", "''")
+
+    enriched_base = Path(enriched_root) if enriched_root is not None else _default_enriched_root()
+    enriched_glob = str((enriched_base / "**" / "*.parquet").as_posix())
+    safe_enriched_glob = enriched_glob.replace("'", "''")
 
     with duckdb.connect(database=":memory:") as con:
         n_files = con.execute(
@@ -96,4 +104,14 @@ def query(
             f"SELECT * FROM read_parquet('{safe_glob}', union_by_name=true)"
         )
         _validate_canonical_columns(con, view)
+
+        n_enriched = con.execute(
+            f"SELECT COUNT(*) FROM glob('{safe_enriched_glob}')"
+        ).fetchone()[0]
+        if int(n_enriched) > 0:
+            con.execute(
+                f"CREATE OR REPLACE VIEW enriched AS "
+                f"SELECT * FROM read_parquet('{safe_enriched_glob}', union_by_name=true)"
+            )
+
         return con.execute(text).df()
