@@ -62,13 +62,13 @@ def _validate_select_only(sql: str) -> None:
         )
 
 
-def _get_llm() -> ChatOpenAI:
+def _get_llm(temperature: float = 0.0) -> ChatOpenAI:
     provider = os.getenv("LLM_PROVIDER", "openai").lower()
 
     if provider == "ollama":
         base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
         model = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:14b")
-        return ChatOpenAI(model=model, temperature=0, api_key="ollama", base_url=base_url)
+        return ChatOpenAI(model=model, temperature=temperature, api_key="ollama", base_url=base_url)
 
     api_key = os.getenv("OPENAI_API_KEY", "")
     if not api_key or "COLOQUE" in api_key.upper():
@@ -77,10 +77,10 @@ def _get_llm() -> ChatOpenAI:
             "ou forneça OPENAI_API_KEY para usar a OpenAI."
         )
     model = os.getenv("OPENAI_MODEL", "gpt-4o")
-    return ChatOpenAI(model=model, temperature=0, api_key=api_key)
+    return ChatOpenAI(model=model, temperature=temperature, api_key=api_key)
 
 
-def generate_sql(question: str) -> str:
+def generate_sql(question: str, *, temperature: float = 0.0) -> str:
     """
     Converte pergunta em português em SQL DuckDB válido via LLM configurado.
 
@@ -88,7 +88,7 @@ def generate_sql(question: str) -> str:
         RuntimeError: provedor não configurado corretamente.
         ValueError: SQL extraído não é SELECT, ou contém operações proibidas.
     """
-    llm = _get_llm()
+    llm = _get_llm(temperature=temperature)
     system_content = SYSTEM_PROMPT.format(schema=SCHEMA_CONTEXT)
     messages = [
         SystemMessage(content=system_content),

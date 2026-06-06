@@ -713,6 +713,27 @@ def call_api(question: str, timeout: int) -> dict:
         return {"error": str(exc), "elapsed_ms": round((time.time() - t0) * 1000)}
 
 
+def call_direct(question: str, timeout: int, temperature: float = 0.0) -> dict:
+    """Chama rag direto (sem API HTTP) — permite controlar temperatura por chamada."""
+    import json as _json
+    from src.rag.sql_generator import generate_sql
+    from src.rag.executor import query as execute_sql
+
+    t0 = time.time()
+    sql = None
+    try:
+        sql = generate_sql(question, temperature=temperature)
+    except Exception as exc:
+        return {"error": f"Falha SQL: {exc}", "elapsed_ms": round((time.time() - t0) * 1000)}
+
+    try:
+        df = execute_sql(sql)
+        result = _json.loads(df.to_json(orient="records", default_handler=str))
+        return {"sql": sql, "result": result, "elapsed_ms": round((time.time() - t0) * 1000)}
+    except Exception as exc:
+        return {"sql": sql, "error": f"Falha DuckDB: {exc}", "elapsed_ms": round((time.time() - t0) * 1000)}
+
+
 # ── Relatório Markdown ────────────────────────────────────────────────────────
 
 def render_report(model: str, run_ts: str, records: list[dict]) -> str:
@@ -817,37 +838,93 @@ def render_report(model: str, run_ts: str, records: list[dict]) -> str:
     return "\n".join(lines)
 
 
+# ── Relatório Agregado (multi-run) ────────────────────────────────────────────
+
+def render_aggregate_report(model: str, temperature: float, all_runs: list) -> str:
+    n_runs = len(all_runs)
+    n_queries = len(all_runs[0])
+
+    run_eas = [sum(1 for r in run if r["correct"]) / n_queries * 100 for run in all_runs]
+    mean_ea = sum(run_eas) / n_runs
+    if n_runs > 1:
+        var = sum((x - mean_ea) ** 2 for x in run_eas) / (n_runs - 1)
+        sd_ea = math.sqrt(var)
+    else:
+        sd_ea = 0.0
+
+    correct_total = round(mean_ea / 100 * n_queries)
+    p = correct_total / n_queries
+    z = 1.959964
+    center = (2 * n_queries * p + z**2) / (2 * (n_queries + z**2))
+    margin = z * math.sqrt(z**2 + 4 * n_queries * p * (1 - p)) / (2 * (n_queries + z**2))
+    ci_lo = round((center - margin) * 100, 1)
+    ci_hi = round((center + margin) * 100, 1)
+
+    cats_runs: dict = {}
+    for run in all_runs:
+        cat_counts: dict = {}
+        for r in run:
+            c = r["cat"]
+            if c not in cat_counts:
+                cat_counts[c] = {"total": 0, "correct": 0}
+            cat_counts[c]["total"] += 1
+            cat_counts[c]["correct"] += int(r["correct"])
+        for cat, v in cat_counts.items():
+            cats_runs.setdefault(cat, []).append(100 * v["correct"] / v["total"])
+
+    lines = [
+        "# Benchmark Aggregate Report — SUS Data RAG",
+        "",
+        f"**Model:** {model}  ",
+        f"**Runs:** {n_runs}  ",
+        f"**Temperature:** {temperature}  ",
+        f"**Queries per run:** {n_queries}  ",
+        "",
+        "## Resumo por Run",
+        "",
+        "| Run | Corretas | EA |",
+        "|---|---:|---:|",
+    ]
+    for i, (run, ea) in enumerate(zip(all_runs, run_eas), 1):
+        correct = sum(1 for r in run if r["correct"])
+        lines.append(f"| Run {i} | {correct}/{n_queries} | {ea:.1f}% |")
+
+    lines += [
+        f"| **Média** | — | **{mean_ea:.1f}%** |",
+        f"| **DP** | — | **{sd_ea:.1f}%** |",
+        "",
+        f"**Wilson IC 95% (média):** [{ci_lo}%, {ci_hi}%]",
+        "",
+        "## EA por Categoria (Média ± DP)",
+        "",
+        "| Categoria | Média EA | DP |",
+        "|---|---:|---:|",
+    ]
+    for cat, eas in cats_runs.items():
+        m = sum(eas) / len(eas)
+        sd = math.sqrt(sum((x - m) ** 2 for x in eas) / max(len(eas) - 1, 1)) if len(eas) > 1 else 0.0
+        lines.append(f"| {cat} | {m:.1f}% | {sd:.1f}% |")
+
+    if temperature == 0.0:
+        lines += [
+            "",
+            "> **Nota metodológica:** `temperature=0` (decodificação greedy) → outputs determinísticos.",
+            "> DP=0% entre runs confirma reprodutibilidade total. Registrado no Methods como garantia de rigor.",
+        ]
+
+    lines += ["", "---", "_Gerado por scripts/evaluate_benchmark.py — SUS Data RAG — USF/Mestrado_"]
+    return "\n".join(lines)
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Benchmark evaluation — SUS Data RAG")
-    parser.add_argument("--model",   default="ollama", help="ollama | openai")
-    parser.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT)
-    parser.add_argument("--out",     default=None, help="Caminho do JSON de saída")
-    parser.add_argument("--start",   type=int, default=1, help="Query inicial (1-50)")
-    parser.add_argument("--end",     type=int, default=50, help="Query final (1-50)")
-    args = parser.parse_args()
-
-    # Verificar API
-    try:
-        health = requests.get(f"{API_URL}/health", timeout=5)
-        assert health.json().get("status") == "ok"
-        print(f"✅ API disponível em {API_URL}")
-    except Exception:
-        print(f"❌ API não responde em {API_URL}")
-        print(f"   Inicie com: uv run uvicorn src.api.main:app --reload")
-        sys.exit(1)
-
-    run_ts = datetime.now().strftime("%Y-%m-%d %H:%M")
-    queries = [q for q in BENCHMARK if args.start <= int(q["id"][1:]) <= args.end]
-
-    print(f"\n🚀 Avaliando {len(queries)} queries com modelo: {args.model}")
-    print(f"   Timeout por query: {args.timeout}s\n")
-
+def _run_one(queries: list, caller, timeout: int) -> list:
+    """Executa uma passagem pelo benchmark. caller(question, timeout) → dict."""
     records = []
+    n = len(queries)
     for i, q in enumerate(queries, 1):
-        print(f"[{i:02d}/{len(queries)}] {q['id']} — {q['q'][:65]}...", end=" ", flush=True)
-        resp = call_api(q["q"], args.timeout)
+        print(f"[{i:02d}/{n}] {q['id']} — {q['q'][:60]}...", end=" ", flush=True)
+        resp = caller(q["q"], timeout)
         if resp.get("error"):
             correct, reason, flexible = False, resp["error"], False
         else:
@@ -868,43 +945,110 @@ def main() -> None:
             "api_error": resp.get("error"),
             "elapsed_ms": resp["elapsed_ms"],
         })
+    return records
 
-    # Salvar JSON
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Benchmark evaluation — SUS Data RAG")
+    parser.add_argument("--model",       default="ollama", help="ollama | openai")
+    parser.add_argument("--timeout",     type=int,   default=DEFAULT_TIMEOUT)
+    parser.add_argument("--out",         default=None, help="Caminho base do JSON de saída")
+    parser.add_argument("--start",       type=int,   default=1,   help="Query inicial (1-50)")
+    parser.add_argument("--end",         type=int,   default=50,  help="Query final (1-50)")
+    parser.add_argument("--runs",        type=int,   default=1,   help="Número de execuções (multi-run)")
+    parser.add_argument("--temperature", type=float, default=0.0, help="Temperatura LLM (0=greedy, >0=estocástico)")
+    parser.add_argument("--direct",      action="store_true",     help="Bypass API: chama rag direto (suporta --temperature)")
+    args = parser.parse_args()
+
     out_dir = Path("results")
     out_dir.mkdir(exist_ok=True)
-    ts_slug = datetime.now().strftime("%Y%m%d_%H%M")
-    json_path = Path(args.out) if args.out else out_dir / f"eval_{args.model}_{ts_slug}.json"
-    json_path.write_text(json.dumps(records, ensure_ascii=False, indent=2, default=str))
-
-    # Salvar relatório Markdown
-    md_path = json_path.with_suffix(".md")
-    md_path.write_text(render_report(args.model, run_ts, records))
-
-    # Copiar para pasta do Mestrado
     mestrado_dir = Path("/Users/rbnet/Library/CloudStorage/Dropbox/Docs/MestradoUSF/ProjetoDataRag/Projeto")
-    if mestrado_dir.exists():
-        dest = mestrado_dir / f"eval_{args.model}_{ts_slug}.md"
-        dest.write_text(md_path.read_text())
-        print(f"\n📄 Relatório copiado para: {dest}")
 
-    # Resumo no terminal
-    correct = sum(1 for r in records if r["correct"])
-    flexible_ct = sum(1 for r in records if r.get("flexible_match"))
-    ea = round(100 * correct / len(records), 1)
-    import math
-    p = correct / len(records)
-    z = 1.959964
-    center = (2 * len(records) * p + z**2) / (2 * (len(records) + z**2))
-    margin = z * math.sqrt(z**2 + 4 * len(records) * p * (1 - p)) / (2 * (len(records) + z**2))
-    ci_lo = round((center - margin) * 100, 1)
-    ci_hi = round((center + margin) * 100, 1)
-    print(f"\n{'='*60}")
-    print(f"  Execution Accuracy ({args.model}): {correct}/{len(records)} = {ea}%")
-    print(f"  Wilson IC 95%: [{ci_lo}%, {ci_hi}%]")
-    print(f"  Matches flexíveis (alias diferente): {flexible_ct}")
-    print(f"  JSON: {json_path}")
-    print(f"  MD:   {md_path}")
-    print(f"{'='*60}\n")
+    if args.direct:
+        print(f"⚡ Modo direto (bypass API) — temperature={args.temperature}")
+        caller = lambda q, t: call_direct(q, t, temperature=args.temperature)
+    else:
+        try:
+            health = requests.get(f"{API_URL}/health", timeout=5)
+            assert health.json().get("status") == "ok"
+            print(f"✅ API disponível em {API_URL}")
+        except Exception:
+            print(f"❌ API não responde em {API_URL}")
+            print(f"   Inicie com: uv run uvicorn src.api.main:app --reload")
+            print(f"   Ou use --direct para bypass da API.")
+            sys.exit(1)
+        caller = lambda q, t: call_api(q, t)
+
+    queries = [q for q in BENCHMARK if args.start <= int(q["id"][1:]) <= args.end]
+    print(f"\n🚀 {args.runs} run(s) × {len(queries)} queries — modelo: {args.model} — temp: {args.temperature}")
+    print(f"   Timeout por query: {args.timeout}s\n")
+
+    all_runs = []
+    ts_slug_base = datetime.now().strftime("%Y%m%d_%H%M")
+
+    for run_idx in range(1, args.runs + 1):
+        if args.runs > 1:
+            print(f"\n{'─'*60}")
+            print(f"  RUN {run_idx}/{args.runs}")
+            print(f"{'─'*60}\n")
+
+        run_ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+        records = _run_one(queries, caller, args.timeout)
+        all_runs.append(records)
+
+        # Salvar JSON individual
+        if args.out and args.runs == 1:
+            json_path = Path(args.out)
+        else:
+            suffix = f"_r{run_idx}" if args.runs > 1 else ""
+            json_path = out_dir / f"eval_{args.model}_{ts_slug_base}{suffix}.json"
+        json_path.write_text(json.dumps(records, ensure_ascii=False, indent=2, default=str))
+
+        # Salvar relatório MD individual
+        md_path = json_path.with_suffix(".md")
+        md_path.write_text(render_report(args.model, run_ts, records))
+
+        # Copiar para Mestrado
+        if mestrado_dir.exists():
+            dest = mestrado_dir / md_path.name
+            dest.write_text(md_path.read_text())
+            print(f"\n📄 Relatório copiado para: {dest}")
+
+        # Resumo do run
+        correct = sum(1 for r in records if r["correct"])
+        flexible_ct = sum(1 for r in records if r.get("flexible_match"))
+        ea = round(100 * correct / len(records), 1)
+        p = correct / len(records)
+        z = 1.959964
+        center = (2 * len(records) * p + z**2) / (2 * (len(records) + z**2))
+        margin = z * math.sqrt(z**2 + 4 * len(records) * p * (1 - p)) / (2 * (len(records) + z**2))
+        ci_lo = round((center - margin) * 100, 1)
+        ci_hi = round((center + margin) * 100, 1)
+        print(f"\n{'='*60}")
+        print(f"  Run {run_idx} — EA ({args.model}): {correct}/{len(records)} = {ea}%")
+        print(f"  Wilson IC 95%: [{ci_lo}%, {ci_hi}%]")
+        print(f"  Matches flexíveis: {flexible_ct}")
+        print(f"  JSON: {json_path}")
+        print(f"{'='*60}")
+
+    # Relatório agregado quando runs > 1
+    if args.runs > 1:
+        agg_md = render_aggregate_report(args.model, args.temperature, all_runs)
+        agg_path = out_dir / f"eval_{args.model}_{ts_slug_base}_aggregate.md"
+        agg_path.write_text(agg_md)
+        if mestrado_dir.exists():
+            dest = mestrado_dir / agg_path.name
+            dest.write_text(agg_md)
+            print(f"\n📊 Relatório agregado: {dest}")
+        run_eas = [sum(1 for r in run if r["correct"]) / len(queries) * 100 for run in all_runs]
+        mean_ea = sum(run_eas) / args.runs
+        if args.runs > 1:
+            sd_ea = math.sqrt(sum((x - mean_ea) ** 2 for x in run_eas) / (args.runs - 1))
+        else:
+            sd_ea = 0.0
+        print(f"\n{'='*60}")
+        print(f"  AGREGADO {args.runs} runs — Média EA: {mean_ea:.1f}% ± {sd_ea:.1f}% DP")
+        print(f"{'='*60}\n")
 
 
 if __name__ == "__main__":

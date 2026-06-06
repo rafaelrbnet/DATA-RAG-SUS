@@ -18,7 +18,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 30189
+    "elapsed_ms": 7117
   },
   {
     "id": "Q02",
@@ -39,7 +39,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 29396
+    "elapsed_ms": 6531
   },
   {
     "id": "Q03",
@@ -60,7 +60,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 25455
+    "elapsed_ms": 5711
   },
   {
     "id": "Q04",
@@ -81,7 +81,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 33161
+    "elapsed_ms": 6452
   },
   {
     "id": "Q05",
@@ -102,7 +102,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 26395
+    "elapsed_ms": 7550
   },
   {
     "id": "Q06",
@@ -123,7 +123,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 24537
+    "elapsed_ms": 5961
   },
   {
     "id": "Q07",
@@ -144,7 +144,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 23275
+    "elapsed_ms": 5915
   },
   {
     "id": "Q08",
@@ -165,7 +165,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 31228
+    "elapsed_ms": 7842
   },
   {
     "id": "Q09",
@@ -174,7 +174,7 @@
     "correct": true,
     "flexible_match": true,
     "score_reason": "got=40123 exp=40123",
-    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes_homens\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'M'\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes_homens\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND sexo_paciente = 'M';",
     "llm_result": [
       {
         "total_internacoes_homens": 40123
@@ -186,7 +186,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 29400
+    "elapsed_ms": 7811
   },
   {
     "id": "Q10",
@@ -207,7 +207,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 29197
+    "elapsed_ms": 7962
   },
   {
     "id": "Q11",
@@ -228,7 +228,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 24431
+    "elapsed_ms": 7324
   },
   {
     "id": "Q12",
@@ -249,7 +249,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 26531
+    "elapsed_ms": 7322
   },
   {
     "id": "Q13",
@@ -270,7 +270,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 30212
+    "elapsed_ms": 7656
   },
   {
     "id": "Q14",
@@ -279,10 +279,10 @@
     "correct": true,
     "flexible_match": true,
     "score_reason": "got=3 exp=3",
-    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes_com_uti\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND uti_int_to > 0;",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes_uti\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND uti_int_to > 0;",
     "llm_result": [
       {
-        "total_internacoes_com_uti": 3
+        "total_internacoes_uti": 3
       }
     ],
     "gold_result": [
@@ -291,7 +291,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 27416
+    "elapsed_ms": 7922
   },
   {
     "id": "Q15",
@@ -312,7 +312,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 25490
+    "elapsed_ms": 6478
   },
   {
     "id": "Q16",
@@ -407,7 +407,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 32809
+    "elapsed_ms": 8699
   },
   {
     "id": "Q17",
@@ -462,7 +462,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 41223
+    "elapsed_ms": 9061
   },
   {
     "id": "Q18",
@@ -471,7 +471,7 @@
     "correct": false,
     "flexible_match": false,
     "score_reason": "Linha não encontrada: {'faixa_etaria': '0-17', 'total': 3619}",
-    "sql": "SELECT \n  CASE \n    WHEN idade_paciente BETWEEN 0 AND 17 THEN '0-17'\n    WHEN idade_paciente BETWEEN 18 AND 59 THEN '18-59'\n    ELSE '60+'\n  END AS faixa_etaria,\n  COUNT(DISTINCT n_aih) AS total_internacoes,\n  ROUND(100.0 * COUNT(DISTINCT n_aih) / SUM(COUNT(DISTINCT n_aih)) OVER (), 1) AS pct\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY faixa_etaria\nORDER BY total_internacoes DESC;",
+    "sql": "SELECT \n  CASE \n    WHEN idade_paciente >= 0 AND idade_paciente <= 17 THEN '0-17'\n    WHEN idade_paciente >= 18 AND idade_paciente <= 59 THEN '18-59'\n    ELSE '60+'\n  END AS faixa_etaria,\n  COUNT(DISTINCT n_aih) AS total_internacoes,\n  ROUND(100.0 * COUNT(DISTINCT n_aih) / SUM(COUNT(DISTINCT n_aih)) OVER (), 1) AS pct\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY faixa_etaria\nORDER BY total_internacoes DESC;",
     "llm_result": [
       {
         "faixa_etaria": "18-59",
@@ -504,7 +504,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 36906
+    "elapsed_ms": 16119
   },
   {
     "id": "Q19",
@@ -512,27 +512,9 @@
     "question": "Taxa de mortalidade hospitalar por CID ortopédico (top 5) em SP em 2022",
     "correct": false,
     "flexible_match": false,
-    "score_reason": "Linha 1: got={'cid_principal': 'T509', 'total_obitos': 1, 'total_internacoes': 1, 'taxa_mortalidade': 100.0} exp={'cid_principal': 'S062', 'total_internacoes': 70, 'total_obitos': 21, 'taxa_mortalidade_pct': 30.0}",
+    "score_reason": "Linha 1: got={'cid_principal': 'T056', 'total_obitos': 1, 'total_internacoes': 1, 'taxa_mortalidade': 100.0} exp={'cid_principal': 'S062', 'total_internacoes': 70, 'total_obitos': 21, 'taxa_mortalidade_pct': 30.0}",
     "sql": "SELECT \n  cid_principal,\n  COUNT(CASE WHEN morte = 1 THEN n_aih END) AS total_obitos,\n  COUNT(DISTINCT n_aih) AS total_internacoes,\n  ROUND(100.0 * COUNT(CASE WHEN morte = 1 THEN n_aih END) / COUNT(DISTINCT n_aih), 2) AS taxa_mortalidade\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  cid_principal\nORDER BY \n  taxa_mortalidade DESC\nLIMIT 5;",
     "llm_result": [
-      {
-        "cid_principal": "T509",
-        "total_obitos": 1,
-        "total_internacoes": 1,
-        "taxa_mortalidade": 100.0
-      },
-      {
-        "cid_principal": "S279",
-        "total_obitos": 2,
-        "total_internacoes": 2,
-        "taxa_mortalidade": 100.0
-      },
-      {
-        "cid_principal": "T008",
-        "total_obitos": 1,
-        "total_internacoes": 1,
-        "taxa_mortalidade": 100.0
-      },
       {
         "cid_principal": "T056",
         "total_obitos": 1,
@@ -540,7 +522,25 @@
         "taxa_mortalidade": 100.0
       },
       {
+        "cid_principal": "S45",
+        "total_obitos": 1,
+        "total_internacoes": 1,
+        "taxa_mortalidade": 100.0
+      },
+      {
         "cid_principal": "T181",
+        "total_obitos": 1,
+        "total_internacoes": 1,
+        "taxa_mortalidade": 100.0
+      },
+      {
+        "cid_principal": "T509",
+        "total_obitos": 1,
+        "total_internacoes": 1,
+        "taxa_mortalidade": 100.0
+      },
+      {
+        "cid_principal": "T008",
         "total_obitos": 1,
         "total_internacoes": 1,
         "taxa_mortalidade": 100.0
@@ -579,7 +579,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 36613
+    "elapsed_ms": 14087
   },
   {
     "id": "Q20",
@@ -588,7 +588,7 @@
     "correct": true,
     "flexible_match": true,
     "score_reason": "10 linhas corretas (flexível)",
-    "sql": "SELECT \n  cid_principal,\n  COUNT(*) AS total_producao\nFROM \n  processed\nWHERE \n  sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  cid_principal\nORDER BY \n  total_producao DESC\nLIMIT 10;",
+    "sql": "SELECT \n    cid_principal,\n    COUNT(*) AS total_producao\nFROM \n    processed\nWHERE \n    sistema = 'SIA'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n    cid_principal\nORDER BY \n    total_producao DESC\nLIMIT 10;",
     "llm_result": [
       {
         "cid_principal": "S720",
@@ -674,7 +674,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 34851
+    "elapsed_ms": 9011
   },
   {
     "id": "Q21",
@@ -709,7 +709,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 38461
+    "elapsed_ms": 11472
   },
   {
     "id": "Q22",
@@ -733,7 +733,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 29615
+    "elapsed_ms": 8027
   },
   {
     "id": "Q23",
@@ -742,7 +742,7 @@
     "correct": false,
     "flexible_match": false,
     "score_reason": "Linha 1: got={'cid_principal': 'T918', 'permanencia_media_dias': 68.0} exp={'cid_principal': 'S063', 'total_internacoes': 78, 'permanencia_media_dias': 16.4}",
-    "sql": "SELECT \n  cid_principal,\n  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY permanencia_media_dias DESC\nLIMIT 5;",
+    "sql": "SELECT \n    cid_principal,\n    ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n    cid_principal\nORDER BY \n    permanencia_media_dias DESC\nLIMIT 5;",
     "llm_result": [
       {
         "cid_principal": "T918",
@@ -793,7 +793,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 34224
+    "elapsed_ms": 9837
   },
   {
     "id": "Q24",
@@ -848,7 +848,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 40666
+    "elapsed_ms": 8863
   },
   {
     "id": "Q25",
@@ -923,7 +923,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 33183
+    "elapsed_ms": 11510
   },
   {
     "id": "Q26",
@@ -1379,11 +1379,11 @@
         "total_dias_internacao": 339.0
       },
       {
-        "cid_principal": "T023",
+        "cid_principal": "S526",
         "total_dias_internacao": 332.0
       },
       {
-        "cid_principal": "S526",
+        "cid_principal": "T023",
         "total_dias_internacao": 332.0
       },
       {
@@ -1475,11 +1475,11 @@
         "total_dias_internacao": 253.0
       },
       {
-        "cid_principal": "M008",
+        "cid_principal": "S810",
         "total_dias_internacao": 251.0
       },
       {
-        "cid_principal": "S810",
+        "cid_principal": "M008",
         "total_dias_internacao": 251.0
       },
       {
@@ -1503,11 +1503,11 @@
         "total_dias_internacao": 239.0
       },
       {
-        "cid_principal": "S273",
+        "cid_principal": "S625",
         "total_dias_internacao": 238.0
       },
       {
-        "cid_principal": "S625",
+        "cid_principal": "S273",
         "total_dias_internacao": 238.0
       },
       {
@@ -1547,11 +1547,11 @@
         "total_dias_internacao": 205.0
       },
       {
-        "cid_principal": "T290",
+        "cid_principal": "T292",
         "total_dias_internacao": 202.0
       },
       {
-        "cid_principal": "T292",
+        "cid_principal": "T290",
         "total_dias_internacao": 202.0
       },
       {
@@ -1627,11 +1627,11 @@
         "total_dias_internacao": 178.0
       },
       {
-        "cid_principal": "S311",
+        "cid_principal": "S730",
         "total_dias_internacao": 177.0
       },
       {
-        "cid_principal": "S730",
+        "cid_principal": "S311",
         "total_dias_internacao": 177.0
       },
       {
@@ -1663,11 +1663,11 @@
         "total_dias_internacao": 166.0
       },
       {
-        "cid_principal": "T018",
+        "cid_principal": "S662",
         "total_dias_internacao": 164.0
       },
       {
-        "cid_principal": "S662",
+        "cid_principal": "T018",
         "total_dias_internacao": 164.0
       },
       {
@@ -1731,11 +1731,11 @@
         "total_dias_internacao": 140.0
       },
       {
-        "cid_principal": "M242",
+        "cid_principal": "S927",
         "total_dias_internacao": 139.0
       },
       {
-        "cid_principal": "S927",
+        "cid_principal": "M242",
         "total_dias_internacao": 139.0
       },
       {
@@ -1747,10 +1747,6 @@
         "total_dias_internacao": 136.0
       },
       {
-        "cid_principal": "T858",
-        "total_dias_internacao": 135.0
-      },
-      {
         "cid_principal": "S667",
         "total_dias_internacao": 135.0
       },
@@ -1759,11 +1755,15 @@
         "total_dias_internacao": 135.0
       },
       {
+        "cid_principal": "T858",
+        "total_dias_internacao": 135.0
+      },
+      {
         "cid_principal": "M201",
         "total_dias_internacao": 134.0
       },
       {
-        "cid_principal": "S925",
+        "cid_principal": "M509",
         "total_dias_internacao": 131.0
       },
       {
@@ -1771,15 +1771,15 @@
         "total_dias_internacao": 131.0
       },
       {
-        "cid_principal": "M509",
+        "cid_principal": "S925",
         "total_dias_internacao": 131.0
       },
       {
-        "cid_principal": "T793",
+        "cid_principal": "T902",
         "total_dias_internacao": 129.0
       },
       {
-        "cid_principal": "T902",
+        "cid_principal": "T793",
         "total_dias_internacao": 129.0
       },
       {
@@ -1791,19 +1791,19 @@
         "total_dias_internacao": 126.0
       },
       {
-        "cid_principal": "T812",
-        "total_dias_internacao": 124.0
-      },
-      {
         "cid_principal": "S781",
         "total_dias_internacao": 124.0
       },
       {
-        "cid_principal": "S610",
-        "total_dias_internacao": 123.0
+        "cid_principal": "T812",
+        "total_dias_internacao": 124.0
       },
       {
         "cid_principal": "M501",
+        "total_dias_internacao": 123.0
+      },
+      {
+        "cid_principal": "S610",
         "total_dias_internacao": 123.0
       },
       {
@@ -1811,11 +1811,11 @@
         "total_dias_internacao": 121.0
       },
       {
-        "cid_principal": "T311",
+        "cid_principal": "T068",
         "total_dias_internacao": 119.0
       },
       {
-        "cid_principal": "T068",
+        "cid_principal": "T311",
         "total_dias_internacao": 119.0
       },
       {
@@ -1867,11 +1867,11 @@
         "total_dias_internacao": 102.0
       },
       {
-        "cid_principal": "S157",
+        "cid_principal": "T817",
         "total_dias_internacao": 100.0
       },
       {
-        "cid_principal": "T817",
+        "cid_principal": "S157",
         "total_dias_internacao": 100.0
       },
       {
@@ -1883,11 +1883,11 @@
         "total_dias_internacao": 98.0
       },
       {
-        "cid_principal": "S52",
+        "cid_principal": "M235",
         "total_dias_internacao": 97.0
       },
       {
-        "cid_principal": "M235",
+        "cid_principal": "S52",
         "total_dias_internacao": 97.0
       },
       {
@@ -1895,11 +1895,11 @@
         "total_dias_internacao": 96.0
       },
       {
-        "cid_principal": "S817",
+        "cid_principal": "S36",
         "total_dias_internacao": 95.0
       },
       {
-        "cid_principal": "S36",
+        "cid_principal": "S817",
         "total_dias_internacao": 95.0
       },
       {
@@ -1927,19 +1927,19 @@
         "total_dias_internacao": 90.0
       },
       {
-        "cid_principal": "S421",
-        "total_dias_internacao": 89.0
-      },
-      {
         "cid_principal": "T141",
         "total_dias_internacao": 89.0
       },
       {
-        "cid_principal": "S368",
+        "cid_principal": "S421",
         "total_dias_internacao": 89.0
       },
       {
         "cid_principal": "T009",
+        "total_dias_internacao": 89.0
+      },
+      {
+        "cid_principal": "S368",
         "total_dias_internacao": 89.0
       },
       {
@@ -1979,6 +1979,10 @@
         "total_dias_internacao": 84.0
       },
       {
+        "cid_principal": "T819",
+        "total_dias_internacao": 82.0
+      },
+      {
         "cid_principal": "S110",
         "total_dias_internacao": 82.0
       },
@@ -1987,15 +1991,11 @@
         "total_dias_internacao": 82.0
       },
       {
-        "cid_principal": "T819",
-        "total_dias_internacao": 82.0
-      },
-      {
-        "cid_principal": "S678",
+        "cid_principal": "S851",
         "total_dias_internacao": 81.0
       },
       {
-        "cid_principal": "S851",
+        "cid_principal": "S678",
         "total_dias_internacao": 81.0
       },
       {
@@ -2003,12 +2003,16 @@
         "total_dias_internacao": 80.0
       },
       {
+        "cid_principal": "T959",
+        "total_dias_internacao": 78.0
+      },
+      {
         "cid_principal": "S399",
         "total_dias_internacao": 78.0
       },
       {
-        "cid_principal": "T959",
-        "total_dias_internacao": 78.0
+        "cid_principal": "M968",
+        "total_dias_internacao": 77.0
       },
       {
         "cid_principal": "S317",
@@ -2019,11 +2023,7 @@
         "total_dias_internacao": 77.0
       },
       {
-        "cid_principal": "M968",
-        "total_dias_internacao": 77.0
-      },
-      {
-        "cid_principal": "M214",
+        "cid_principal": "T796",
         "total_dias_internacao": 76.0
       },
       {
@@ -2031,15 +2031,15 @@
         "total_dias_internacao": 76.0
       },
       {
-        "cid_principal": "S862",
-        "total_dias_internacao": 76.0
-      },
-      {
         "cid_principal": "S680",
         "total_dias_internacao": 76.0
       },
       {
-        "cid_principal": "T796",
+        "cid_principal": "S862",
+        "total_dias_internacao": 76.0
+      },
+      {
+        "cid_principal": "M214",
         "total_dias_internacao": 76.0
       },
       {
@@ -2055,12 +2055,16 @@
         "total_dias_internacao": 74.0
       },
       {
+        "cid_principal": "T922",
+        "total_dias_internacao": 73.0
+      },
+      {
         "cid_principal": "T140",
         "total_dias_internacao": 73.0
       },
       {
-        "cid_principal": "T922",
-        "total_dias_internacao": 73.0
+        "cid_principal": "T873",
+        "total_dias_internacao": 72.0
       },
       {
         "cid_principal": "S660",
@@ -2071,15 +2075,11 @@
         "total_dias_internacao": 72.0
       },
       {
-        "cid_principal": "T873",
-        "total_dias_internacao": 72.0
-      },
-      {
         "cid_principal": "S159",
         "total_dias_internacao": 71.0
       },
       {
-        "cid_principal": "M431",
+        "cid_principal": "M002",
         "total_dias_internacao": 70.0
       },
       {
@@ -2087,7 +2087,7 @@
         "total_dias_internacao": 70.0
       },
       {
-        "cid_principal": "M002",
+        "cid_principal": "M431",
         "total_dias_internacao": 70.0
       },
       {
@@ -2099,15 +2099,15 @@
         "total_dias_internacao": 69.0
       },
       {
+        "cid_principal": "T918",
+        "total_dias_internacao": 68.0
+      },
+      {
         "cid_principal": "M170",
         "total_dias_internacao": 68.0
       },
       {
         "cid_principal": "T029",
-        "total_dias_internacao": 68.0
-      },
-      {
-        "cid_principal": "T918",
         "total_dias_internacao": 68.0
       },
       {
@@ -2139,19 +2139,19 @@
         "total_dias_internacao": 62.0
       },
       {
-        "cid_principal": "M253",
-        "total_dias_internacao": 61.0
-      },
-      {
         "cid_principal": "S711",
         "total_dias_internacao": 61.0
       },
       {
-        "cid_principal": "M219",
-        "total_dias_internacao": 60.0
+        "cid_principal": "M253",
+        "total_dias_internacao": 61.0
       },
       {
         "cid_principal": "M878",
+        "total_dias_internacao": 60.0
+      },
+      {
+        "cid_principal": "M464",
         "total_dias_internacao": 60.0
       },
       {
@@ -2159,11 +2159,11 @@
         "total_dias_internacao": 60.0
       },
       {
-        "cid_principal": "T81",
+        "cid_principal": "M219",
         "total_dias_internacao": 60.0
       },
       {
-        "cid_principal": "M464",
+        "cid_principal": "T81",
         "total_dias_internacao": 60.0
       },
       {
@@ -2191,11 +2191,15 @@
         "total_dias_internacao": 54.0
       },
       {
-        "cid_principal": "T130",
+        "cid_principal": "S61",
         "total_dias_internacao": 53.0
       },
       {
         "cid_principal": "S357",
+        "total_dias_internacao": 53.0
+      },
+      {
+        "cid_principal": "T130",
         "total_dias_internacao": 53.0
       },
       {
@@ -2207,12 +2211,16 @@
         "total_dias_internacao": 53.0
       },
       {
-        "cid_principal": "S61",
+        "cid_principal": "S819",
         "total_dias_internacao": 53.0
       },
       {
-        "cid_principal": "S819",
-        "total_dias_internacao": 53.0
+        "cid_principal": "S355",
+        "total_dias_internacao": 52.0
+      },
+      {
+        "cid_principal": "S611",
+        "total_dias_internacao": 52.0
       },
       {
         "cid_principal": "S74",
@@ -2227,23 +2235,15 @@
         "total_dias_internacao": 52.0
       },
       {
-        "cid_principal": "S611",
-        "total_dias_internacao": 52.0
-      },
-      {
-        "cid_principal": "S355",
-        "total_dias_internacao": 52.0
+        "cid_principal": "S30",
+        "total_dias_internacao": 51.0
       },
       {
         "cid_principal": "T871",
         "total_dias_internacao": 51.0
       },
       {
-        "cid_principal": "S30",
-        "total_dias_internacao": 51.0
-      },
-      {
-        "cid_principal": "M503",
+        "cid_principal": "S932",
         "total_dias_internacao": 50.0
       },
       {
@@ -2251,24 +2251,16 @@
         "total_dias_internacao": 50.0
       },
       {
-        "cid_principal": "S81",
+        "cid_principal": "M503",
         "total_dias_internacao": 50.0
       },
       {
-        "cid_principal": "S932",
+        "cid_principal": "S81",
         "total_dias_internacao": 50.0
       },
       {
         "cid_principal": "M995",
         "total_dias_internacao": 49.0
-      },
-      {
-        "cid_principal": "T94",
-        "total_dias_internacao": 48.0
-      },
-      {
-        "cid_principal": "T850",
-        "total_dias_internacao": 48.0
       },
       {
         "cid_principal": "S313",
@@ -2279,11 +2271,19 @@
         "total_dias_internacao": 48.0
       },
       {
-        "cid_principal": "T822",
-        "total_dias_internacao": 47.0
+        "cid_principal": "T850",
+        "total_dias_internacao": 48.0
+      },
+      {
+        "cid_principal": "T94",
+        "total_dias_internacao": 48.0
       },
       {
         "cid_principal": "S373",
+        "total_dias_internacao": 47.0
+      },
+      {
+        "cid_principal": "T822",
         "total_dias_internacao": 47.0
       },
       {
@@ -2307,7 +2307,11 @@
         "total_dias_internacao": 45.0
       },
       {
-        "cid_principal": "S117",
+        "cid_principal": "S550",
+        "total_dias_internacao": 44.0
+      },
+      {
+        "cid_principal": "S275",
         "total_dias_internacao": 44.0
       },
       {
@@ -2319,15 +2323,15 @@
         "total_dias_internacao": 44.0
       },
       {
+        "cid_principal": "M544",
+        "total_dias_internacao": 44.0
+      },
+      {
         "cid_principal": "S058",
         "total_dias_internacao": 44.0
       },
       {
-        "cid_principal": "S550",
-        "total_dias_internacao": 44.0
-      },
-      {
-        "cid_principal": "M544",
+        "cid_principal": "S117",
         "total_dias_internacao": 44.0
       },
       {
@@ -2335,19 +2339,11 @@
         "total_dias_internacao": 44.0
       },
       {
-        "cid_principal": "S275",
-        "total_dias_internacao": 44.0
-      },
-      {
         "cid_principal": "M969",
         "total_dias_internacao": 44.0
       },
       {
-        "cid_principal": "S411",
-        "total_dias_internacao": 43.0
-      },
-      {
-        "cid_principal": "M688",
+        "cid_principal": "S458",
         "total_dias_internacao": 43.0
       },
       {
@@ -2355,11 +2351,11 @@
         "total_dias_internacao": 43.0
       },
       {
-        "cid_principal": "T543",
+        "cid_principal": "S411",
         "total_dias_internacao": 43.0
       },
       {
-        "cid_principal": "M873",
+        "cid_principal": "M688",
         "total_dias_internacao": 43.0
       },
       {
@@ -2371,15 +2367,19 @@
         "total_dias_internacao": 43.0
       },
       {
-        "cid_principal": "S458",
+        "cid_principal": "T543",
         "total_dias_internacao": 43.0
       },
       {
-        "cid_principal": "S067",
+        "cid_principal": "M873",
+        "total_dias_internacao": 43.0
+      },
+      {
+        "cid_principal": "T835",
         "total_dias_internacao": 42.0
       },
       {
-        "cid_principal": "S380",
+        "cid_principal": "S067",
         "total_dias_internacao": 42.0
       },
       {
@@ -2387,28 +2387,8 @@
         "total_dias_internacao": 42.0
       },
       {
-        "cid_principal": "T835",
+        "cid_principal": "S380",
         "total_dias_internacao": 42.0
-      },
-      {
-        "cid_principal": "S958",
-        "total_dias_internacao": 41.0
-      },
-      {
-        "cid_principal": "S900",
-        "total_dias_internacao": 41.0
-      },
-      {
-        "cid_principal": "S198",
-        "total_dias_internacao": 41.0
-      },
-      {
-        "cid_principal": "S63",
-        "total_dias_internacao": 41.0
-      },
-      {
-        "cid_principal": "S141",
-        "total_dias_internacao": 41.0
       },
       {
         "cid_principal": "M796",
@@ -2419,11 +2399,31 @@
         "total_dias_internacao": 41.0
       },
       {
-        "cid_principal": "S022",
-        "total_dias_internacao": 40.0
+        "cid_principal": "S141",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "S198",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "S900",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "S63",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "S958",
+        "total_dias_internacao": 41.0
       },
       {
         "cid_principal": "S518",
+        "total_dias_internacao": 40.0
+      },
+      {
+        "cid_principal": "S022",
         "total_dias_internacao": 40.0
       },
       {
@@ -2439,7 +2439,7 @@
         "total_dias_internacao": 39.0
       },
       {
-        "cid_principal": "S933",
+        "cid_principal": "S868",
         "total_dias_internacao": 39.0
       },
       {
@@ -2447,7 +2447,7 @@
         "total_dias_internacao": 39.0
       },
       {
-        "cid_principal": "S868",
+        "cid_principal": "S933",
         "total_dias_internacao": 39.0
       },
       {
@@ -2463,11 +2463,7 @@
         "total_dias_internacao": 38.0
       },
       {
-        "cid_principal": "M216",
-        "total_dias_internacao": 37.0
-      },
-      {
-        "cid_principal": "T212",
+        "cid_principal": "T010",
         "total_dias_internacao": 37.0
       },
       {
@@ -2475,11 +2471,7 @@
         "total_dias_internacao": 37.0
       },
       {
-        "cid_principal": "T010",
-        "total_dias_internacao": 37.0
-      },
-      {
-        "cid_principal": "T913",
+        "cid_principal": "T212",
         "total_dias_internacao": 37.0
       },
       {
@@ -2487,11 +2479,23 @@
         "total_dias_internacao": 37.0
       },
       {
+        "cid_principal": "T913",
+        "total_dias_internacao": 37.0
+      },
+      {
+        "cid_principal": "M216",
+        "total_dias_internacao": 37.0
+      },
+      {
         "cid_principal": "S898",
         "total_dias_internacao": 37.0
       },
       {
-        "cid_principal": "M79",
+        "cid_principal": "M653",
+        "total_dias_internacao": 36.0
+      },
+      {
+        "cid_principal": "S150",
         "total_dias_internacao": 36.0
       },
       {
@@ -2499,7 +2503,7 @@
         "total_dias_internacao": 36.0
       },
       {
-        "cid_principal": "S150",
+        "cid_principal": "S06",
         "total_dias_internacao": 36.0
       },
       {
@@ -2511,23 +2515,23 @@
         "total_dias_internacao": 36.0
       },
       {
-        "cid_principal": "S06",
-        "total_dias_internacao": 36.0
-      },
-      {
-        "cid_principal": "M653",
-        "total_dias_internacao": 36.0
-      },
-      {
         "cid_principal": "M233",
         "total_dias_internacao": 36.0
+      },
+      {
+        "cid_principal": "M79",
+        "total_dias_internacao": 36.0
+      },
+      {
+        "cid_principal": "S978",
+        "total_dias_internacao": 35.0
       },
       {
         "cid_principal": "M036",
         "total_dias_internacao": 35.0
       },
       {
-        "cid_principal": "S519",
+        "cid_principal": "T925",
         "total_dias_internacao": 35.0
       },
       {
@@ -2539,35 +2543,15 @@
         "total_dias_internacao": 35.0
       },
       {
+        "cid_principal": "S519",
+        "total_dias_internacao": 35.0
+      },
+      {
         "cid_principal": "S969",
         "total_dias_internacao": 35.0
       },
       {
-        "cid_principal": "T925",
-        "total_dias_internacao": 35.0
-      },
-      {
-        "cid_principal": "S978",
-        "total_dias_internacao": 35.0
-      },
-      {
-        "cid_principal": "M139",
-        "total_dias_internacao": 34.0
-      },
-      {
-        "cid_principal": "S018",
-        "total_dias_internacao": 34.0
-      },
-      {
-        "cid_principal": "T953",
-        "total_dias_internacao": 34.0
-      },
-      {
         "cid_principal": "T216",
-        "total_dias_internacao": 34.0
-      },
-      {
-        "cid_principal": "S457",
         "total_dias_internacao": 34.0
       },
       {
@@ -2575,8 +2559,20 @@
         "total_dias_internacao": 34.0
       },
       {
-        "cid_principal": "S009",
-        "total_dias_internacao": 33.0
+        "cid_principal": "M139",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "T953",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "S018",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "S457",
+        "total_dias_internacao": 34.0
       },
       {
         "cid_principal": "S934",
@@ -2587,15 +2583,11 @@
         "total_dias_internacao": 33.0
       },
       {
-        "cid_principal": "S870",
-        "total_dias_internacao": 33.0
-      },
-      {
         "cid_principal": "M729",
         "total_dias_internacao": 33.0
       },
       {
-        "cid_principal": "M241",
+        "cid_principal": "S870",
         "total_dias_internacao": 33.0
       },
       {
@@ -2603,19 +2595,23 @@
         "total_dias_internacao": 33.0
       },
       {
+        "cid_principal": "M241",
+        "total_dias_internacao": 33.0
+      },
+      {
         "cid_principal": "S011",
         "total_dias_internacao": 33.0
       },
       {
-        "cid_principal": "M622",
-        "total_dias_internacao": 32.0
+        "cid_principal": "S009",
+        "total_dias_internacao": 33.0
       },
       {
         "cid_principal": "T905",
         "total_dias_internacao": 32.0
       },
       {
-        "cid_principal": "S052",
+        "cid_principal": "M622",
         "total_dias_internacao": 32.0
       },
       {
@@ -2623,11 +2619,15 @@
         "total_dias_internacao": 32.0
       },
       {
+        "cid_principal": "S052",
+        "total_dias_internacao": 32.0
+      },
+      {
         "cid_principal": "S83",
         "total_dias_internacao": 32.0
       },
       {
-        "cid_principal": "S557",
+        "cid_principal": "M62",
         "total_dias_internacao": 31.0
       },
       {
@@ -2635,11 +2635,11 @@
         "total_dias_internacao": 31.0
       },
       {
-        "cid_principal": "S878",
+        "cid_principal": "S557",
         "total_dias_internacao": 31.0
       },
       {
-        "cid_principal": "M62",
+        "cid_principal": "S878",
         "total_dias_internacao": 31.0
       },
       {
@@ -2651,11 +2651,11 @@
         "total_dias_internacao": 30.0
       },
       {
-        "cid_principal": "M471",
+        "cid_principal": "S098",
         "total_dias_internacao": 30.0
       },
       {
-        "cid_principal": "S098",
+        "cid_principal": "M872",
         "total_dias_internacao": 30.0
       },
       {
@@ -2667,23 +2667,19 @@
         "total_dias_internacao": 30.0
       },
       {
+        "cid_principal": "M471",
+        "total_dias_internacao": 30.0
+      },
+      {
         "cid_principal": "M468",
         "total_dias_internacao": 30.0
       },
       {
-        "cid_principal": "M872",
-        "total_dias_internacao": 30.0
-      },
-      {
-        "cid_principal": "T856",
-        "total_dias_internacao": 29.0
-      },
-      {
-        "cid_principal": "S140",
-        "total_dias_internacao": 29.0
-      },
-      {
         "cid_principal": "M665",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "S832",
         "total_dias_internacao": 29.0
       },
       {
@@ -2699,7 +2695,7 @@
         "total_dias_internacao": 29.0
       },
       {
-        "cid_principal": "S832",
+        "cid_principal": "S332",
         "total_dias_internacao": 29.0
       },
       {
@@ -2707,28 +2703,12 @@
         "total_dias_internacao": 29.0
       },
       {
-        "cid_principal": "S332",
+        "cid_principal": "T856",
         "total_dias_internacao": 29.0
       },
       {
-        "cid_principal": "S362",
-        "total_dias_internacao": 28.0
-      },
-      {
-        "cid_principal": "S143",
-        "total_dias_internacao": 28.0
-      },
-      {
-        "cid_principal": "M855",
-        "total_dias_internacao": 28.0
-      },
-      {
-        "cid_principal": "S683",
-        "total_dias_internacao": 28.0
-      },
-      {
-        "cid_principal": "S861",
-        "total_dias_internacao": 28.0
+        "cid_principal": "S140",
+        "total_dias_internacao": 29.0
       },
       {
         "cid_principal": "S224",
@@ -2739,27 +2719,27 @@
         "total_dias_internacao": 28.0
       },
       {
-        "cid_principal": "S460",
-        "total_dias_internacao": 27.0
+        "cid_principal": "S143",
+        "total_dias_internacao": 28.0
       },
       {
-        "cid_principal": "S600",
-        "total_dias_internacao": 27.0
+        "cid_principal": "S362",
+        "total_dias_internacao": 28.0
       },
       {
-        "cid_principal": "M311",
-        "total_dias_internacao": 27.0
+        "cid_principal": "S683",
+        "total_dias_internacao": 28.0
       },
       {
-        "cid_principal": "S960",
-        "total_dias_internacao": 27.0
+        "cid_principal": "M855",
+        "total_dias_internacao": 28.0
+      },
+      {
+        "cid_principal": "S861",
+        "total_dias_internacao": 28.0
       },
       {
         "cid_principal": "M463",
-        "total_dias_internacao": 27.0
-      },
-      {
-        "cid_principal": "M704",
         "total_dias_internacao": 27.0
       },
       {
@@ -2767,15 +2747,55 @@
         "total_dias_internacao": 27.0
       },
       {
+        "cid_principal": "M704",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "M311",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "S600",
+        "total_dias_internacao": 27.0
+      },
+      {
         "cid_principal": "S310",
         "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "S960",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "S460",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "T784",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "M462",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "M72",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "S259",
+        "total_dias_internacao": 26.0
       },
       {
         "cid_principal": "S500",
         "total_dias_internacao": 26.0
       },
       {
-        "cid_principal": "S259",
+        "cid_principal": "S20",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "S302",
         "total_dias_internacao": 26.0
       },
       {
@@ -2791,35 +2811,23 @@
         "total_dias_internacao": 26.0
       },
       {
-        "cid_principal": "S20",
-        "total_dias_internacao": 26.0
-      },
-      {
         "cid_principal": "S223",
         "total_dias_internacao": 26.0
       },
       {
-        "cid_principal": "S302",
-        "total_dias_internacao": 26.0
+        "cid_principal": "T182",
+        "total_dias_internacao": 25.0
       },
       {
-        "cid_principal": "T784",
-        "total_dias_internacao": 26.0
-      },
-      {
-        "cid_principal": "M462",
-        "total_dias_internacao": 26.0
-      },
-      {
-        "cid_principal": "M72",
-        "total_dias_internacao": 26.0
+        "cid_principal": "M232",
+        "total_dias_internacao": 25.0
       },
       {
         "cid_principal": "S097",
         "total_dias_internacao": 25.0
       },
       {
-        "cid_principal": "S055",
+        "cid_principal": "M819",
         "total_dias_internacao": 25.0
       },
       {
@@ -2831,23 +2839,15 @@
         "total_dias_internacao": 25.0
       },
       {
-        "cid_principal": "T182",
+        "cid_principal": "S055",
         "total_dias_internacao": 25.0
       },
       {
-        "cid_principal": "M819",
-        "total_dias_internacao": 25.0
-      },
-      {
-        "cid_principal": "M232",
-        "total_dias_internacao": 25.0
-      },
-      {
-        "cid_principal": "M918",
+        "cid_principal": "S91",
         "total_dias_internacao": 24.0
       },
       {
-        "cid_principal": "S32",
+        "cid_principal": "T185",
         "total_dias_internacao": 24.0
       },
       {
@@ -2855,15 +2855,11 @@
         "total_dias_internacao": 24.0
       },
       {
-        "cid_principal": "S91",
+        "cid_principal": "M918",
         "total_dias_internacao": 24.0
       },
       {
-        "cid_principal": "M624",
-        "total_dias_internacao": 24.0
-      },
-      {
-        "cid_principal": "T185",
+        "cid_principal": "S017",
         "total_dias_internacao": 24.0
       },
       {
@@ -2875,7 +2871,11 @@
         "total_dias_internacao": 24.0
       },
       {
-        "cid_principal": "S017",
+        "cid_principal": "M624",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "S32",
         "total_dias_internacao": 24.0
       },
       {
@@ -2887,6 +2887,14 @@
         "total_dias_internacao": 24.0
       },
       {
+        "cid_principal": "S212",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "M069",
+        "total_dias_internacao": 23.0
+      },
+      {
         "cid_principal": "S228",
         "total_dias_internacao": 23.0
       },
@@ -2895,19 +2903,7 @@
         "total_dias_internacao": 23.0
       },
       {
-        "cid_principal": "M069",
-        "total_dias_internacao": 23.0
-      },
-      {
-        "cid_principal": "S212",
-        "total_dias_internacao": 23.0
-      },
-      {
-        "cid_principal": "T013",
-        "total_dias_internacao": 22.0
-      },
-      {
-        "cid_principal": "M125",
+        "cid_principal": "T317",
         "total_dias_internacao": 22.0
       },
       {
@@ -2915,11 +2911,7 @@
         "total_dias_internacao": 22.0
       },
       {
-        "cid_principal": "S276",
-        "total_dias_internacao": 22.0
-      },
-      {
-        "cid_principal": "T011",
+        "cid_principal": "M125",
         "total_dias_internacao": 22.0
       },
       {
@@ -2935,11 +2927,11 @@
         "total_dias_internacao": 22.0
       },
       {
-        "cid_principal": "S400",
+        "cid_principal": "T011",
         "total_dias_internacao": 22.0
       },
       {
-        "cid_principal": "M798",
+        "cid_principal": "S276",
         "total_dias_internacao": 22.0
       },
       {
@@ -2947,7 +2939,15 @@
         "total_dias_internacao": 22.0
       },
       {
-        "cid_principal": "T317",
+        "cid_principal": "M798",
+        "total_dias_internacao": 22.0
+      },
+      {
+        "cid_principal": "T013",
+        "total_dias_internacao": 22.0
+      },
+      {
+        "cid_principal": "S400",
         "total_dias_internacao": 22.0
       },
       {
@@ -2963,6 +2963,10 @@
         "total_dias_internacao": 21.0
       },
       {
+        "cid_principal": "S999",
+        "total_dias_internacao": 21.0
+      },
+      {
         "cid_principal": "S459",
         "total_dias_internacao": 21.0
       },
@@ -2975,51 +2979,11 @@
         "total_dias_internacao": 21.0
       },
       {
-        "cid_principal": "S999",
-        "total_dias_internacao": 21.0
-      },
-      {
         "cid_principal": "S208",
         "total_dias_internacao": 21.0
       },
       {
-        "cid_principal": "T941",
-        "total_dias_internacao": 20.0
-      },
-      {
-        "cid_principal": "S66",
-        "total_dias_internacao": 20.0
-      },
-      {
-        "cid_principal": "T815",
-        "total_dias_internacao": 20.0
-      },
-      {
-        "cid_principal": "T08",
-        "total_dias_internacao": 20.0
-      },
-      {
-        "cid_principal": "S397",
-        "total_dias_internacao": 20.0
-      },
-      {
-        "cid_principal": "T829",
-        "total_dias_internacao": 20.0
-      },
-      {
-        "cid_principal": "S697",
-        "total_dias_internacao": 20.0
-      },
-      {
-        "cid_principal": "M999",
-        "total_dias_internacao": 20.0
-      },
-      {
-        "cid_principal": "S911",
-        "total_dias_internacao": 20.0
-      },
-      {
-        "cid_principal": "M210",
+        "cid_principal": "S45",
         "total_dias_internacao": 20.0
       },
       {
@@ -3027,7 +2991,11 @@
         "total_dias_internacao": 20.0
       },
       {
-        "cid_principal": "S45",
+        "cid_principal": "S66",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "M502",
         "total_dias_internacao": 20.0
       },
       {
@@ -3039,11 +3007,55 @@
         "total_dias_internacao": 20.0
       },
       {
-        "cid_principal": "M502",
+        "cid_principal": "S397",
         "total_dias_internacao": 20.0
       },
       {
-        "cid_principal": "S351",
+        "cid_principal": "T815",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "T08",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "M999",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "T829",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "S697",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "S911",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "T941",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "M210",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "M958",
+        "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "T952",
+        "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "S354",
+        "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "S834",
         "total_dias_internacao": 19.0
       },
       {
@@ -3055,23 +3067,7 @@
         "total_dias_internacao": 19.0
       },
       {
-        "cid_principal": "T952",
-        "total_dias_internacao": 19.0
-      },
-      {
-        "cid_principal": "S834",
-        "total_dias_internacao": 19.0
-      },
-      {
-        "cid_principal": "S354",
-        "total_dias_internacao": 19.0
-      },
-      {
-        "cid_principal": "S971",
-        "total_dias_internacao": 19.0
-      },
-      {
-        "cid_principal": "M259",
+        "cid_principal": "S351",
         "total_dias_internacao": 19.0
       },
       {
@@ -3083,12 +3079,48 @@
         "total_dias_internacao": 19.0
       },
       {
-        "cid_principal": "M958",
+        "cid_principal": "M259",
+        "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "S971",
         "total_dias_internacao": 19.0
       },
       {
         "cid_principal": "S634",
         "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "M771",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "M206",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "M198",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "M621",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "T110",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "S899",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "M204",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "T297",
+        "total_dias_internacao": 18.0
       },
       {
         "cid_principal": "S551",
@@ -3099,79 +3131,11 @@
         "total_dias_internacao": 18.0
       },
       {
-        "cid_principal": "M204",
-        "total_dias_internacao": 18.0
-      },
-      {
-        "cid_principal": "S899",
-        "total_dias_internacao": 18.0
-      },
-      {
-        "cid_principal": "T297",
-        "total_dias_internacao": 18.0
-      },
-      {
-        "cid_principal": "M771",
-        "total_dias_internacao": 18.0
-      },
-      {
-        "cid_principal": "T110",
-        "total_dias_internacao": 18.0
-      },
-      {
-        "cid_principal": "M206",
-        "total_dias_internacao": 18.0
-      },
-      {
-        "cid_principal": "M621",
-        "total_dias_internacao": 18.0
-      },
-      {
-        "cid_principal": "M198",
-        "total_dias_internacao": 18.0
-      },
-      {
-        "cid_principal": "M930",
-        "total_dias_internacao": 17.0
-      },
-      {
-        "cid_principal": "T111",
-        "total_dias_internacao": 17.0
-      },
-      {
         "cid_principal": "T939",
         "total_dias_internacao": 17.0
       },
       {
-        "cid_principal": "M190",
-        "total_dias_internacao": 17.0
-      },
-      {
-        "cid_principal": "S501",
-        "total_dias_internacao": 17.0
-      },
-      {
-        "cid_principal": "M758",
-        "total_dias_internacao": 17.0
-      },
-      {
-        "cid_principal": "T291",
-        "total_dias_internacao": 17.0
-      },
-      {
-        "cid_principal": "M419",
-        "total_dias_internacao": 17.0
-      },
-      {
-        "cid_principal": "S560",
-        "total_dias_internacao": 17.0
-      },
-      {
-        "cid_principal": "M713",
-        "total_dias_internacao": 17.0
-      },
-      {
-        "cid_principal": "S132",
+        "cid_principal": "T111",
         "total_dias_internacao": 17.0
       },
       {
@@ -3183,15 +3147,43 @@
         "total_dias_internacao": 17.0
       },
       {
-        "cid_principal": "S644",
-        "total_dias_internacao": 16.0
+        "cid_principal": "S560",
+        "total_dias_internacao": 17.0
       },
       {
-        "cid_principal": "S450",
-        "total_dias_internacao": 16.0
+        "cid_principal": "M190",
+        "total_dias_internacao": 17.0
       },
       {
-        "cid_principal": "S290",
+        "cid_principal": "M713",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "M419",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "S501",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "M758",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "S132",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "T291",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "M930",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "M950",
         "total_dias_internacao": 16.0
       },
       {
@@ -3199,23 +3191,19 @@
         "total_dias_internacao": 16.0
       },
       {
+        "cid_principal": "T612",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "S644",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "S290",
+        "total_dias_internacao": 16.0
+      },
+      {
         "cid_principal": "T854",
-        "total_dias_internacao": 16.0
-      },
-      {
-        "cid_principal": "M950",
-        "total_dias_internacao": 16.0
-      },
-      {
-        "cid_principal": "M870",
-        "total_dias_internacao": 16.0
-      },
-      {
-        "cid_principal": "M766",
-        "total_dias_internacao": 16.0
-      },
-      {
-        "cid_principal": "T174",
         "total_dias_internacao": 16.0
       },
       {
@@ -3223,19 +3211,23 @@
         "total_dias_internacao": 16.0
       },
       {
-        "cid_principal": "T612",
+        "cid_principal": "T174",
         "total_dias_internacao": 16.0
       },
       {
-        "cid_principal": "T741",
-        "total_dias_internacao": 15.0
+        "cid_principal": "M870",
+        "total_dias_internacao": 16.0
       },
       {
-        "cid_principal": "S510",
-        "total_dias_internacao": 15.0
+        "cid_principal": "S450",
+        "total_dias_internacao": 16.0
       },
       {
-        "cid_principal": "M17",
+        "cid_principal": "M766",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "M202",
         "total_dias_internacao": 15.0
       },
       {
@@ -3243,23 +3235,19 @@
         "total_dias_internacao": 15.0
       },
       {
-        "cid_principal": "M222",
+        "cid_principal": "M17",
         "total_dias_internacao": 15.0
       },
       {
-        "cid_principal": "T369",
+        "cid_principal": "T349",
         "total_dias_internacao": 15.0
       },
       {
-        "cid_principal": "S534",
+        "cid_principal": "T741",
         "total_dias_internacao": 15.0
       },
       {
-        "cid_principal": "M256",
-        "total_dias_internacao": 15.0
-      },
-      {
-        "cid_principal": "S93",
+        "cid_principal": "M229",
         "total_dias_internacao": 15.0
       },
       {
@@ -3267,11 +3255,23 @@
         "total_dias_internacao": 15.0
       },
       {
-        "cid_principal": "T912",
+        "cid_principal": "M256",
         "total_dias_internacao": 15.0
       },
       {
-        "cid_principal": "M229",
+        "cid_principal": "S534",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "M222",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "S93",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "T912",
         "total_dias_internacao": 15.0
       },
       {
@@ -3283,7 +3283,11 @@
         "total_dias_internacao": 15.0
       },
       {
-        "cid_principal": "T147",
+        "cid_principal": "T369",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "S510",
         "total_dias_internacao": 15.0
       },
       {
@@ -3291,31 +3295,11 @@
         "total_dias_internacao": 15.0
       },
       {
-        "cid_principal": "M202",
+        "cid_principal": "T147",
         "total_dias_internacao": 15.0
-      },
-      {
-        "cid_principal": "T349",
-        "total_dias_internacao": 15.0
-      },
-      {
-        "cid_principal": "M400",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "S800",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "S330",
-        "total_dias_internacao": 14.0
       },
       {
         "cid_principal": "S640",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "S568",
         "total_dias_internacao": 14.0
       },
       {
@@ -3323,43 +3307,11 @@
         "total_dias_internacao": 14.0
       },
       {
-        "cid_principal": "S609",
+        "cid_principal": "T928",
         "total_dias_internacao": 14.0
       },
       {
-        "cid_principal": "S70",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "S998",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "M220",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "T202",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "S903",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "S664",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "M244",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "S841",
-        "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "S565",
+        "cid_principal": "S800",
         "total_dias_internacao": 14.0
       },
       {
@@ -3367,48 +3319,60 @@
         "total_dias_internacao": 14.0
       },
       {
-        "cid_principal": "T928",
+        "cid_principal": "S609",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S565",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S568",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "T202",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "M220",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S330",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S903",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S998",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S70",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "M400",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S841",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "M244",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S664",
         "total_dias_internacao": 14.0
       },
       {
         "cid_principal": "S398",
         "total_dias_internacao": 14.0
-      },
-      {
-        "cid_principal": "M493",
-        "total_dias_internacao": 13.0
-      },
-      {
-        "cid_principal": "S758",
-        "total_dias_internacao": 13.0
-      },
-      {
-        "cid_principal": "T951",
-        "total_dias_internacao": 13.0
-      },
-      {
-        "cid_principal": "M761",
-        "total_dias_internacao": 13.0
-      },
-      {
-        "cid_principal": "T659",
-        "total_dias_internacao": 13.0
-      },
-      {
-        "cid_principal": "T232",
-        "total_dias_internacao": 13.0
-      },
-      {
-        "cid_principal": "S564",
-        "total_dias_internacao": 13.0
-      },
-      {
-        "cid_principal": "M768",
-        "total_dias_internacao": 13.0
-      },
-      {
-        "cid_principal": "M638",
-        "total_dias_internacao": 13.0
       },
       {
         "cid_principal": "M410",
@@ -3423,7 +3387,51 @@
         "total_dias_internacao": 13.0
       },
       {
-        "cid_principal": "T184",
+        "cid_principal": "S758",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M493",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M638",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "T659",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "T232",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M761",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "T951",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "S564",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M768",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "S50",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S350",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "T237",
         "total_dias_internacao": 12.0
       },
       {
@@ -3431,15 +3439,31 @@
         "total_dias_internacao": 12.0
       },
       {
-        "cid_principal": "S071",
+        "cid_principal": "M494",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S759",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "M728",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S02",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S859",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S197",
         "total_dias_internacao": 12.0
       },
       {
         "cid_principal": "M472",
-        "total_dias_internacao": 12.0
-      },
-      {
-        "cid_principal": "T237",
         "total_dias_internacao": 12.0
       },
       {
@@ -3451,23 +3475,11 @@
         "total_dias_internacao": 12.0
       },
       {
-        "cid_principal": "S197",
+        "cid_principal": "S071",
         "total_dias_internacao": 12.0
       },
       {
-        "cid_principal": "S759",
-        "total_dias_internacao": 12.0
-      },
-      {
-        "cid_principal": "M494",
-        "total_dias_internacao": 12.0
-      },
-      {
-        "cid_principal": "M728",
-        "total_dias_internacao": 12.0
-      },
-      {
-        "cid_principal": "S859",
+        "cid_principal": "T184",
         "total_dias_internacao": 12.0
       },
       {
@@ -3475,23 +3487,23 @@
         "total_dias_internacao": 12.0
       },
       {
-        "cid_principal": "S350",
-        "total_dias_internacao": 12.0
-      },
-      {
-        "cid_principal": "S02",
-        "total_dias_internacao": 12.0
-      },
-      {
-        "cid_principal": "S50",
-        "total_dias_internacao": 12.0
-      },
-      {
         "cid_principal": "T178",
         "total_dias_internacao": 12.0
       },
       {
-        "cid_principal": "S665",
+        "cid_principal": "M230",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S396",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "M631",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S118",
         "total_dias_internacao": 11.0
       },
       {
@@ -3503,19 +3515,7 @@
         "total_dias_internacao": 11.0
       },
       {
-        "cid_principal": "M549",
-        "total_dias_internacao": 11.0
-      },
-      {
-        "cid_principal": "M631",
-        "total_dias_internacao": 11.0
-      },
-      {
-        "cid_principal": "M230",
-        "total_dias_internacao": 11.0
-      },
-      {
-        "cid_principal": "S118",
+        "cid_principal": "S012",
         "total_dias_internacao": 11.0
       },
       {
@@ -3523,7 +3523,7 @@
         "total_dias_internacao": 11.0
       },
       {
-        "cid_principal": "S129",
+        "cid_principal": "M211",
         "total_dias_internacao": 11.0
       },
       {
@@ -3531,7 +3531,15 @@
         "total_dias_internacao": 11.0
       },
       {
-        "cid_principal": "S480",
+        "cid_principal": "M549",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S129",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S665",
         "total_dias_internacao": 11.0
       },
       {
@@ -3539,75 +3547,15 @@
         "total_dias_internacao": 11.0
       },
       {
+        "cid_principal": "S480",
+        "total_dias_internacao": 11.0
+      },
+      {
         "cid_principal": "M401",
         "total_dias_internacao": 11.0
       },
       {
-        "cid_principal": "S012",
-        "total_dias_internacao": 11.0
-      },
-      {
-        "cid_principal": "M211",
-        "total_dias_internacao": 11.0
-      },
-      {
-        "cid_principal": "S396",
-        "total_dias_internacao": 11.0
-      },
-      {
-        "cid_principal": "S019",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "T136",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "M240",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "S312",
-        "total_dias_internacao": 10.0
-      },
-      {
         "cid_principal": "S09",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "S081",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "M434",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "M932",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "T296",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "M90",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "M541",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "T936",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "S840",
-        "total_dias_internacao": 10.0
-      },
-      {
-        "cid_principal": "S688",
         "total_dias_internacao": 10.0
       },
       {
@@ -3615,11 +3563,19 @@
         "total_dias_internacao": 10.0
       },
       {
-        "cid_principal": "S833",
+        "cid_principal": "S858",
         "total_dias_internacao": 10.0
       },
       {
-        "cid_principal": "S858",
+        "cid_principal": "M434",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "T296",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S019",
         "total_dias_internacao": 10.0
       },
       {
@@ -3627,11 +3583,55 @@
         "total_dias_internacao": 10.0
       },
       {
-        "cid_principal": "S279",
+        "cid_principal": "M240",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "T136",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S833",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S081",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "M90",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "M932",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S688",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "M541",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S840",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "T936",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S312",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "M165",
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "M415",
+        "cid_principal": "S497",
         "total_dias_internacao": 9.0
       },
       {
@@ -3639,11 +3639,15 @@
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "T828",
+        "cid_principal": "S649",
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "S010",
+        "cid_principal": "M954",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "T019",
         "total_dias_internacao": 9.0
       },
       {
@@ -3655,15 +3659,7 @@
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "M165",
-        "total_dias_internacao": 9.0
-      },
-      {
-        "cid_principal": "S158",
-        "total_dias_internacao": 9.0
-      },
-      {
-        "cid_principal": "M703",
+        "cid_principal": "M481",
         "total_dias_internacao": 9.0
       },
       {
@@ -3675,23 +3671,23 @@
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "M180",
-        "total_dias_internacao": 9.0
-      },
-      {
         "cid_principal": "T099",
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "S649",
+        "cid_principal": "S010",
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "S497",
+        "cid_principal": "T828",
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "T020",
+        "cid_principal": "S158",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "M180",
         "total_dias_internacao": 9.0
       },
       {
@@ -3699,11 +3695,11 @@
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "M150",
+        "cid_principal": "T020",
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "S301",
+        "cid_principal": "M703",
         "total_dias_internacao": 9.0
       },
       {
@@ -3711,35 +3707,27 @@
         "total_dias_internacao": 9.0
       },
       {
+        "cid_principal": "S279",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "S301",
+        "total_dias_internacao": 9.0
+      },
+      {
         "cid_principal": "T342",
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "M481",
+        "cid_principal": "M150",
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "T019",
+        "cid_principal": "M415",
         "total_dias_internacao": 9.0
       },
       {
-        "cid_principal": "M954",
-        "total_dias_internacao": 9.0
-      },
-      {
-        "cid_principal": "S562",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "S807",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "S489",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "S092",
+        "cid_principal": "S054",
         "total_dias_internacao": 8.0
       },
       {
@@ -3747,43 +3735,7 @@
         "total_dias_internacao": 8.0
       },
       {
-        "cid_principal": "S890",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "M809",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "S608",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "M671",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "T30",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "S015",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "M228",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "T797",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "M319",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "M802",
+        "cid_principal": "S092",
         "total_dias_internacao": 8.0
       },
       {
@@ -3791,35 +3743,67 @@
         "total_dias_internacao": 8.0
       },
       {
-        "cid_principal": "T935",
-        "total_dias_internacao": 8.0
-      },
-      {
-        "cid_principal": "S054",
-        "total_dias_internacao": 8.0
-      },
-      {
         "cid_principal": "S336",
         "total_dias_internacao": 8.0
       },
       {
-        "cid_principal": "S636",
-        "total_dias_internacao": 7.0
+        "cid_principal": "M228",
+        "total_dias_internacao": 8.0
       },
       {
-        "cid_principal": "S637",
-        "total_dias_internacao": 7.0
+        "cid_principal": "T935",
+        "total_dias_internacao": 8.0
       },
       {
-        "cid_principal": "M460",
-        "total_dias_internacao": 7.0
+        "cid_principal": "S489",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S807",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M802",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M809",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S890",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S015",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S608",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "T30",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M671",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S562",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M319",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "T797",
+        "total_dias_internacao": 8.0
       },
       {
         "cid_principal": "M167",
-        "total_dias_internacao": 7.0
-      },
-      {
-        "cid_principal": "S341",
         "total_dias_internacao": 7.0
       },
       {
@@ -3827,47 +3811,15 @@
         "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "T230",
+        "cid_principal": "M22",
         "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "T22",
+        "cid_principal": "M460",
         "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "M994",
-        "total_dias_internacao": 7.0
-      },
-      {
-        "cid_principal": "M664",
-        "total_dias_internacao": 7.0
-      },
-      {
-        "cid_principal": "M313",
-        "total_dias_internacao": 7.0
-      },
-      {
-        "cid_principal": "M218",
-        "total_dias_internacao": 7.0
-      },
-      {
-        "cid_principal": "T910",
-        "total_dias_internacao": 7.0
-      },
-      {
-        "cid_principal": "M709",
-        "total_dias_internacao": 7.0
-      },
-      {
-        "cid_principal": "M490",
-        "total_dias_internacao": 7.0
-      },
-      {
-        "cid_principal": "M710",
-        "total_dias_internacao": 7.0
-      },
-      {
-        "cid_principal": "M795",
+        "cid_principal": "T021",
         "total_dias_internacao": 7.0
       },
       {
@@ -3879,79 +3831,63 @@
         "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "M22",
+        "cid_principal": "M709",
         "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "T021",
+        "cid_principal": "M490",
         "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "T002",
-        "total_dias_internacao": 6.0
+        "cid_principal": "S341",
+        "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "M013",
-        "total_dias_internacao": 6.0
+        "cid_principal": "M710",
+        "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "T424",
-        "total_dias_internacao": 6.0
+        "cid_principal": "M994",
+        "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "M16",
-        "total_dias_internacao": 6.0
+        "cid_principal": "T22",
+        "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "M898",
-        "total_dias_internacao": 6.0
+        "cid_principal": "T230",
+        "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "S579",
-        "total_dias_internacao": 6.0
+        "cid_principal": "S637",
+        "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "S552",
-        "total_dias_internacao": 6.0
+        "cid_principal": "M218",
+        "total_dias_internacao": 7.0
       },
       {
-        "cid_principal": "S561",
-        "total_dias_internacao": 6.0
+        "cid_principal": "M313",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "M664",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "T910",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S636",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "M795",
+        "total_dias_internacao": 7.0
       },
       {
         "cid_principal": "S540",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "M939",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "M754",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "S532",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "M158",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "S050",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "T114",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "S718",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "T824",
         "total_dias_internacao": 6.0
       },
       {
@@ -3959,51 +3895,7 @@
         "total_dias_internacao": 6.0
       },
       {
-        "cid_principal": "T923",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "S481",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "S346",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "S255",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "S684",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "S650",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "M531",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "S601",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "S689",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "T12",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "T222",
-        "total_dias_internacao": 6.0
-      },
-      {
-        "cid_principal": "T00",
+        "cid_principal": "M898",
         "total_dias_internacao": 6.0
       },
       {
@@ -4015,7 +3907,15 @@
         "total_dias_internacao": 6.0
       },
       {
-        "cid_principal": "S801",
+        "cid_principal": "M013",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T923",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S346",
         "total_dias_internacao": 6.0
       },
       {
@@ -4023,15 +3923,147 @@
         "total_dias_internacao": 6.0
       },
       {
+        "cid_principal": "T222",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T12",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S601",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S561",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S689",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S579",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S532",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M939",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M754",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S481",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T824",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M158",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S718",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S552",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T114",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S050",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S255",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T002",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M16",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S684",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S650",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T424",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M531",
+        "total_dias_internacao": 6.0
+      },
+      {
         "cid_principal": "M811",
         "total_dias_internacao": 6.0
       },
       {
-        "cid_principal": "T15",
+        "cid_principal": "S801",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T00",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M719",
         "total_dias_internacao": 5.0
       },
       {
-        "cid_principal": "M166",
+        "cid_principal": "S21",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S308",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S070",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S947",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S809",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T042",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M131",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T84",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T15",
         "total_dias_internacao": 5.0
       },
       {
@@ -4039,7 +4071,31 @@
         "total_dias_internacao": 5.0
       },
       {
+        "cid_principal": "T14",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T199",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T242",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M203",
+        "total_dias_internacao": 5.0
+      },
+      {
         "cid_principal": "S432",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S757",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M109",
         "total_dias_internacao": 5.0
       },
       {
@@ -4051,31 +4107,7 @@
         "total_dias_internacao": 5.0
       },
       {
-        "cid_principal": "S21",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "M719",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "S809",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "T242",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "T14",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "S947",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "M203",
+        "cid_principal": "M921",
         "total_dias_internacao": 5.0
       },
       {
@@ -4087,27 +4119,7 @@
         "total_dias_internacao": 5.0
       },
       {
-        "cid_principal": "M921",
-        "total_dias_internacao": 5.0
-      },
-      {
         "cid_principal": "M75",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "M109",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "S757",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "T84",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "T042",
         "total_dias_internacao": 5.0
       },
       {
@@ -4115,15 +4127,7 @@
         "total_dias_internacao": 5.0
       },
       {
-        "cid_principal": "M911",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "T027",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "S907",
+        "cid_principal": "T830",
         "total_dias_internacao": 5.0
       },
       {
@@ -4131,11 +4135,19 @@
         "total_dias_internacao": 5.0
       },
       {
-        "cid_principal": "T830",
+        "cid_principal": "M215",
         "total_dias_internacao": 5.0
       },
       {
-        "cid_principal": "M215",
+        "cid_principal": "M166",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S907",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M911",
         "total_dias_internacao": 5.0
       },
       {
@@ -4143,15 +4155,7 @@
         "total_dias_internacao": 5.0
       },
       {
-        "cid_principal": "S308",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "T199",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "S070",
+        "cid_principal": "T027",
         "total_dias_internacao": 5.0
       },
       {
@@ -4167,43 +4171,7 @@
         "total_dias_internacao": 5.0
       },
       {
-        "cid_principal": "M131",
-        "total_dias_internacao": 5.0
-      },
-      {
-        "cid_principal": "M118",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "S548",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "M779",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "S381",
-        "total_dias_internacao": 4.0
-      },
-      {
         "cid_principal": "T115",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "M412",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "M163",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "S56",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "S717",
         "total_dias_internacao": 4.0
       },
       {
@@ -4211,11 +4179,75 @@
         "total_dias_internacao": 4.0
       },
       {
+        "cid_principal": "S959",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M778",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M412",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M772",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M924",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M779",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S548",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M791",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S717",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M231",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M163",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "T001",
+        "total_dias_internacao": 4.0
+      },
+      {
         "cid_principal": "S580",
         "total_dias_internacao": 4.0
       },
       {
-        "cid_principal": "M715",
+        "cid_principal": "S56",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "T02",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M706",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S67",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S709",
         "total_dias_internacao": 4.0
       },
       {
@@ -4227,27 +4259,7 @@
         "total_dias_internacao": 4.0
       },
       {
-        "cid_principal": "M706",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "S709",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "T02",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "S67",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "S517",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "M924",
+        "cid_principal": "M715",
         "total_dias_internacao": 4.0
       },
       {
@@ -4255,31 +4267,19 @@
         "total_dias_internacao": 4.0
       },
       {
+        "cid_principal": "S517",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S381",
+        "total_dias_internacao": 4.0
+      },
+      {
         "cid_principal": "S025",
         "total_dias_internacao": 4.0
       },
       {
-        "cid_principal": "T001",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "S959",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "M772",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "M231",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "M778",
-        "total_dias_internacao": 4.0
-      },
-      {
-        "cid_principal": "T924",
+        "cid_principal": "M118",
         "total_dias_internacao": 4.0
       },
       {
@@ -4287,59 +4287,11 @@
         "total_dias_internacao": 4.0
       },
       {
-        "cid_principal": "M791",
+        "cid_principal": "T924",
         "total_dias_internacao": 4.0
       },
       {
-        "cid_principal": "M538",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "S377",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "S848",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "M998",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "M858",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "T006",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "M997",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "M663",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "S98",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "M810",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "S842",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "S136",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "S808",
+        "cid_principal": "M906",
         "total_dias_internacao": 3.0
       },
       {
@@ -4347,7 +4299,83 @@
         "total_dias_internacao": 3.0
       },
       {
+        "cid_principal": "S808",
+        "total_dias_internacao": 3.0
+      },
+      {
         "cid_principal": "T92",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M70",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "T852",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S848",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M764",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M997",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "T919",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M062",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M192",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M858",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S059",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S136",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S658",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M411",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "T926",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S98",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S842",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M663",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M213",
         "total_dias_internacao": 3.0
       },
       {
@@ -4359,15 +4387,7 @@
         "total_dias_internacao": 3.0
       },
       {
-        "cid_principal": "M213",
-        "total_dias_internacao": 3.0
-      },
-      {
         "cid_principal": "M654",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "T926",
         "total_dias_internacao": 3.0
       },
       {
@@ -4375,27 +4395,11 @@
         "total_dias_internacao": 3.0
       },
       {
-        "cid_principal": "S013",
-        "total_dias_internacao": 3.0
-      },
-      {
         "cid_principal": "M341",
         "total_dias_internacao": 3.0
       },
       {
-        "cid_principal": "M062",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "M764",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "M70",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "T919",
+        "cid_principal": "S013",
         "total_dias_internacao": 3.0
       },
       {
@@ -4403,23 +4407,7 @@
         "total_dias_internacao": 3.0
       },
       {
-        "cid_principal": "M411",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "M773",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "S912",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "M248",
-        "total_dias_internacao": 3.0
-      },
-      {
-        "cid_principal": "M153",
+        "cid_principal": "M810",
         "total_dias_internacao": 3.0
       },
       {
@@ -4431,23 +4419,35 @@
         "total_dias_internacao": 3.0
       },
       {
-        "cid_principal": "S658",
+        "cid_principal": "S377",
         "total_dias_internacao": 3.0
       },
       {
-        "cid_principal": "M906",
+        "cid_principal": "T006",
         "total_dias_internacao": 3.0
       },
       {
-        "cid_principal": "S059",
+        "cid_principal": "M153",
         "total_dias_internacao": 3.0
       },
       {
-        "cid_principal": "M192",
+        "cid_principal": "M538",
         "total_dias_internacao": 3.0
       },
       {
-        "cid_principal": "T852",
+        "cid_principal": "M998",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M773",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M248",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S912",
         "total_dias_internacao": 3.0
       },
       {
@@ -4463,43 +4463,15 @@
         "total_dias_internacao": 3.0
       },
       {
-        "cid_principal": "S080",
+        "cid_principal": "T190",
         "total_dias_internacao": 2.0
       },
       {
-        "cid_principal": "S942",
+        "cid_principal": "M625",
         "total_dias_internacao": 2.0
       },
       {
-        "cid_principal": "T343",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M84",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S69",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S88",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M674",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S229",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M328",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "T116",
+        "cid_principal": "S452",
         "total_dias_internacao": 2.0
       },
       {
@@ -4507,7 +4479,51 @@
         "total_dias_internacao": 2.0
       },
       {
+        "cid_principal": "M89",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M959",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M064",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M154",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S533",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M234",
+        "total_dias_internacao": 2.0
+      },
+      {
         "cid_principal": "S68",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S69",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S508",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M358",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M996",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S030",
         "total_dias_internacao": 2.0
       },
       {
@@ -4519,103 +4535,7 @@
         "total_dias_internacao": 2.0
       },
       {
-        "cid_principal": "M89",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M181",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "T825",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M753",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S698",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M794",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S12",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S378",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S030",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "T306",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S437",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "T319",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S651",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S950",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S322",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M130",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "T920",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M625",
-        "total_dias_internacao": 2.0
-      },
-      {
         "cid_principal": "S598",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M234",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "T190",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M064",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "M959",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S533",
-        "total_dias_internacao": 2.0
-      },
-      {
-        "cid_principal": "S452",
         "total_dias_internacao": 2.0
       },
       {
@@ -4623,23 +4543,99 @@
         "total_dias_internacao": 2.0
       },
       {
-        "cid_principal": "M154",
+        "cid_principal": "M328",
         "total_dias_internacao": 2.0
       },
       {
-        "cid_principal": "M358",
+        "cid_principal": "T116",
         "total_dias_internacao": 2.0
       },
       {
-        "cid_principal": "T901",
+        "cid_principal": "S12",
         "total_dias_internacao": 2.0
       },
       {
-        "cid_principal": "S508",
+        "cid_principal": "M794",
         "total_dias_internacao": 2.0
       },
       {
-        "cid_principal": "M996",
+        "cid_principal": "S698",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S229",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T306",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S378",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T825",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M674",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M181",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S437",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M753",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S651",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S88",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T319",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M84",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T920",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T343",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S322",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S950",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M130",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S080",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S942",
         "total_dias_internacao": 2.0
       },
       {
@@ -4647,51 +4643,31 @@
         "total_dias_internacao": 2.0
       },
       {
+        "cid_principal": "T901",
+        "total_dias_internacao": 2.0
+      },
+      {
         "cid_principal": "S935",
         "total_dias_internacao": 2.0
       },
       {
-        "cid_principal": "S46",
+        "cid_principal": "S599",
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "T16",
+        "cid_principal": "M926",
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "M146",
+        "cid_principal": "S567",
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "M85",
+        "cid_principal": "M949",
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "T003",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S053",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M609",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M652",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M871",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "T97",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S207",
+        "cid_principal": "S563",
         "total_dias_internacao": 1.0
       },
       {
@@ -4699,11 +4675,7 @@
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "T34",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S599",
+        "cid_principal": "S632",
         "total_dias_internacao": 1.0
       },
       {
@@ -4711,79 +4683,19 @@
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "T938",
+        "cid_principal": "S867",
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "S578",
+        "cid_principal": "T16",
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "S936",
+        "cid_principal": "S46",
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "T200",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M755",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S863",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "T872",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M620",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M257",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S144",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M718",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S469",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S251",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "T092",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M830",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M790",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M224",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S80",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S498",
+        "cid_principal": "S433",
         "total_dias_internacao": 1.0
       },
       {
@@ -4795,75 +4707,35 @@
         "total_dias_internacao": 1.0
       },
       {
+        "cid_principal": "M85",
+        "total_dias_internacao": 1.0
+      },
+      {
         "cid_principal": "T170",
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "S51",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "T256",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "T235",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S41",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S657",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M762",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S542",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S647",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "T118",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M949",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S461",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S563",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S632",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M926",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "T058",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S567",
-        "total_dias_internacao": 1.0
-      },
-      {
         "cid_principal": "M21",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M790",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M224",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S498",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S80",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S607",
         "total_dias_internacao": 1.0
       },
       {
@@ -4875,23 +4747,147 @@
         "total_dias_internacao": 1.0
       },
       {
+        "cid_principal": "S461",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T938",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T34",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S207",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T058",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M830",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S469",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S863",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S144",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M620",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M718",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S51",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M652",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T97",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M609",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M871",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S936",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S578",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M257",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M755",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T200",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T092",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T872",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S251",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S657",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S053",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S41",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T003",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T256",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S647",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S542",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M146",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T118",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T235",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M762",
+        "total_dias_internacao": 1.0
+      },
+      {
         "cid_principal": "S94",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "M769",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S433",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S607",
-        "total_dias_internacao": 1.0
-      },
-      {
-        "cid_principal": "S867",
         "total_dias_internacao": 1.0
       },
       {
@@ -4899,39 +4895,11 @@
         "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "T868",
-        "total_dias_internacao": 0.0
+        "cid_principal": "M769",
+        "total_dias_internacao": 1.0
       },
       {
-        "cid_principal": "M894",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "T183",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "T509",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "S014",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "T231",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "T008",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "S274",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "M128",
+        "cid_principal": "S045",
         "total_dias_internacao": 0.0
       },
       {
@@ -4943,11 +4911,59 @@
         "total_dias_internacao": 0.0
       },
       {
+        "cid_principal": "T851",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "M128",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T183",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T868",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T171",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "M856",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T345",
+        "total_dias_internacao": 0.0
+      },
+      {
         "cid_principal": "M189",
         "total_dias_internacao": 0.0
       },
       {
-        "cid_principal": "T851",
+        "cid_principal": "T315",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "S274",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T231",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T008",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "S014",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T509",
         "total_dias_internacao": 0.0
       },
       {
@@ -4959,27 +4975,11 @@
         "total_dias_internacao": 0.0
       },
       {
-        "cid_principal": "M856",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "T171",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "T345",
+        "cid_principal": "M894",
         "total_dias_internacao": 0.0
       },
       {
         "cid_principal": "M612",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "S045",
-        "total_dias_internacao": 0.0
-      },
-      {
-        "cid_principal": "T315",
         "total_dias_internacao": 0.0
       },
       {
@@ -5048,7 +5048,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 33322
+    "elapsed_ms": 8434
   },
   {
     "id": "Q27",
@@ -5103,7 +5103,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 46787
+    "elapsed_ms": 8301
   },
   {
     "id": "Q28",
@@ -5111,11 +5111,11 @@
     "question": "Proporção de internações ortopédicas com paciente de outro município em SP em 2022",
     "correct": false,
     "flexible_match": false,
-    "score_reason": "Linha 1: got={'proporcao_internacoes_outro_municipio': 56.4} exp={'total_internacoes': 65970, 'deslocamento_intermunicipal': 37219, 'pct_deslocamento': 56.4}",
-    "sql": "SELECT \n  ROUND(100.0 * COUNT(CASE WHEN cod_munic_residencia != cod_munic_estabelecimento THEN n_aih END) / COUNT(DISTINCT n_aih), 1) AS proporcao_internacoes_outro_municipio\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "score_reason": "Linha 1: got={'proporcao_internacoes_externas': 56.4} exp={'total_internacoes': 65970, 'deslocamento_intermunicipal': 37219, 'pct_deslocamento': 56.4}",
+    "sql": "SELECT \n  ROUND(100.0 * COUNT(CASE WHEN cod_munic_residencia <> cod_munic_estabelecimento THEN n_aih END) / COUNT(DISTINCT n_aih), 1) AS proporcao_internacoes_externas\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
     "llm_result": [
       {
-        "proporcao_internacoes_outro_municipio": 56.4
+        "proporcao_internacoes_externas": 56.4
       }
     ],
     "gold_result": [
@@ -5126,76 +5126,136 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 31707
+    "elapsed_ms": 10269
   },
   {
     "id": "Q29",
     "cat": "Epidemiológica Complexa",
     "question": "Comparativo de volume mensal SIA vs SIH ortopédico em SP em 2022",
-    "correct": false,
-    "flexible_match": false,
-    "score_reason": "Número de linhas: got=12 exp=24",
-    "sql": "SELECT \n  mes_cmpt,\n  COUNT(*) AS total_sia,\n  (SELECT COUNT(DISTINCT n_aih) FROM processed WHERE sistema = 'SIH' AND uf_origem = 'SP' AND ano_cmpt = 2022 AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98') AND mes_cmpt = p.mes_cmpt) AS total_sih\nFROM processed p\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "24 linhas corretas (flexível)",
+    "sql": "SELECT \n  mes_cmpt,\n  sistema,\n  COUNT(*) AS total_procedimentos\nFROM processed\nWHERE uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt, sistema\nORDER BY mes_cmpt, sistema;",
     "llm_result": [
       {
         "mes_cmpt": 1,
-        "total_sia": 5898,
-        "total_sih": 5209
+        "sistema": "SIA",
+        "total_procedimentos": 5898
+      },
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIH",
+        "total_procedimentos": 5212
       },
       {
         "mes_cmpt": 2,
-        "total_sia": 7116,
-        "total_sih": 5021
+        "sistema": "SIA",
+        "total_procedimentos": 7116
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIH",
+        "total_procedimentos": 5022
       },
       {
         "mes_cmpt": 3,
-        "total_sia": 8509,
-        "total_sih": 5604
+        "sistema": "SIA",
+        "total_procedimentos": 8509
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIH",
+        "total_procedimentos": 5608
       },
       {
         "mes_cmpt": 4,
-        "total_sia": 8352,
-        "total_sih": 5136
+        "sistema": "SIA",
+        "total_procedimentos": 8352
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIH",
+        "total_procedimentos": 5136
       },
       {
         "mes_cmpt": 5,
-        "total_sia": 9535,
-        "total_sih": 5416
+        "sistema": "SIA",
+        "total_procedimentos": 9535
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIH",
+        "total_procedimentos": 5416
       },
       {
         "mes_cmpt": 6,
-        "total_sia": 9264,
-        "total_sih": 5202
+        "sistema": "SIA",
+        "total_procedimentos": 9264
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIH",
+        "total_procedimentos": 5202
       },
       {
         "mes_cmpt": 7,
-        "total_sia": 9042,
-        "total_sih": 5852
+        "sistema": "SIA",
+        "total_procedimentos": 9042
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIH",
+        "total_procedimentos": 5852
       },
       {
         "mes_cmpt": 8,
-        "total_sia": 10993,
-        "total_sih": 6006
+        "sistema": "SIA",
+        "total_procedimentos": 10993
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIH",
+        "total_procedimentos": 6010
       },
       {
         "mes_cmpt": 9,
-        "total_sia": 9421,
-        "total_sih": 5752
+        "sistema": "SIA",
+        "total_procedimentos": 9421
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIH",
+        "total_procedimentos": 5752
       },
       {
         "mes_cmpt": 10,
-        "total_sia": 9197,
-        "total_sih": 5772
+        "sistema": "SIA",
+        "total_procedimentos": 9197
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIH",
+        "total_procedimentos": 5772
       },
       {
         "mes_cmpt": 11,
-        "total_sia": 9297,
-        "total_sih": 5351
+        "sistema": "SIA",
+        "total_procedimentos": 9297
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIH",
+        "total_procedimentos": 5353
       },
       {
         "mes_cmpt": 12,
-        "total_sia": 8392,
-        "total_sih": 5676
+        "sistema": "SIA",
+        "total_procedimentos": 8392
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIH",
+        "total_procedimentos": 5676
       }
     ],
     "gold_result": [
@@ -5321,7 +5381,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 43196
+    "elapsed_ms": 7950
   },
   {
     "id": "Q30",
@@ -5344,7 +5404,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 26428
+    "elapsed_ms": 5863
   },
   {
     "id": "Q31",
@@ -5365,7 +5425,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 29340
+    "elapsed_ms": 7590
   },
   {
     "id": "Q32",
@@ -5386,7 +5446,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 34512
+    "elapsed_ms": 7962
   },
   {
     "id": "Q33",
@@ -5407,7 +5467,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 33322
+    "elapsed_ms": 6337
   },
   {
     "id": "Q34",
@@ -5467,7 +5527,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 35039
+    "elapsed_ms": 9224
   },
   {
     "id": "Q35",
@@ -5489,7 +5549,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 34539
+    "elapsed_ms": 8676
   },
   {
     "id": "Q36",
@@ -5510,7 +5570,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 24061
+    "elapsed_ms": 7839
   },
   {
     "id": "Q37",
@@ -5519,7 +5579,7 @@
     "correct": false,
     "flexible_match": false,
     "score_reason": "got=441.95 exp=432.54",
-    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)) / SUM(dias_perm), 2) AS custo_medio_por_dia\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "sql": "SELECT \n  ROUND(SUM(COALESCE(custo_total, 0)) / SUM(dias_perm), 2) AS custo_medio_por_dia\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
     "llm_result": [
       {
         "custo_medio_por_dia": 441.95
@@ -5531,7 +5591,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 29529
+    "elapsed_ms": 8733
   },
   {
     "id": "Q38",
@@ -5591,7 +5651,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 42046
+    "elapsed_ms": 9989
   },
   {
     "id": "Q39",
@@ -5612,7 +5672,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 35584
+    "elapsed_ms": 8006
   },
   {
     "id": "Q40",
@@ -5620,12 +5680,12 @@
     "question": "Proporção custo serviço hospitalar vs honorários em internações ortopédicas em SP em 2022",
     "correct": false,
     "flexible_match": false,
-    "score_reason": "Linha 1: got={'pct_val_sh': 82.5, 'pct_val_sp': 17.5} exp={'custo_servico_hospitalar': 144636796.74, 'honorarios_profissionais': 30640001.52, 'pct_hospitalar': 82.5}",
-    "sql": "SELECT \n  ROUND(100.0 * SUM(COALESCE(val_sh, 0)) / (SUM(COALESCE(val_sh, 0)) + SUM(COALESCE(val_sp, 0))), 1) AS pct_val_sh,\n  ROUND(100.0 * SUM(COALESCE(val_sp, 0)) / (SUM(COALESCE(val_sh, 0)) + SUM(COALESCE(val_sp, 0))), 1) AS pct_val_sp\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "score_reason": "Linha 1: got={'pct_val_sh': 82.52, 'pct_val_sp': 17.48} exp={'custo_servico_hospitalar': 144636796.74, 'honorarios_profissionais': 30640001.52, 'pct_hospitalar': 82.5}",
+    "sql": "SELECT \n  ROUND(100.0 * SUM(COALESCE(val_sh, 0)) / SUM(COALESCE(custo_total, 0)), 2) AS pct_val_sh,\n  ROUND(100.0 * SUM(COALESCE(val_sp, 0)) / SUM(COALESCE(custo_total, 0)), 2) AS pct_val_sp\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
     "llm_result": [
       {
-        "pct_val_sh": 82.5,
-        "pct_val_sp": 17.5
+        "pct_val_sh": 82.52,
+        "pct_val_sp": 17.48
       }
     ],
     "gold_result": [
@@ -5636,7 +5696,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 45192
+    "elapsed_ms": 12894
   },
   {
     "id": "Q41",
@@ -5759,7 +5819,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 34403
+    "elapsed_ms": 11448
   },
   {
     "id": "Q42",
@@ -5882,7 +5942,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 31598
+    "elapsed_ms": 9856
   },
   {
     "id": "Q43",
@@ -5905,7 +5965,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 24031
+    "elapsed_ms": 7415
   },
   {
     "id": "Q44",
@@ -6016,7 +6076,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 37633
+    "elapsed_ms": 9230
   },
   {
     "id": "Q45",
@@ -6025,67 +6085,67 @@
     "correct": false,
     "flexible_match": false,
     "score_reason": "Número de linhas: got=12 exp=24",
-    "sql": "SELECT \n  mes_cmpt,\n  COUNT(DISTINCT CASE WHEN icd_group = 'S00-T98' THEN n_aih END) AS internacoes_trauma,\n  COUNT(DISTINCT CASE WHEN icd_group = 'M00-M99' THEN n_aih END) AS internacoes_musculoesqueletica\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "sql": "SELECT \n  mes_cmpt,\n  COUNT(CASE WHEN icd_group = 'S00-T98' THEN n_aih END) AS internacoes_trauma,\n  COUNT(CASE WHEN icd_group = 'M00-M99' THEN n_aih END) AS internacoes_musculoesqueletico\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
     "llm_result": [
       {
         "mes_cmpt": 1,
         "internacoes_trauma": 4733,
-        "internacoes_musculoesqueletica": 476
+        "internacoes_musculoesqueletico": 479
       },
       {
         "mes_cmpt": 2,
         "internacoes_trauma": 4560,
-        "internacoes_musculoesqueletica": 461
+        "internacoes_musculoesqueletico": 462
       },
       {
         "mes_cmpt": 3,
         "internacoes_trauma": 5093,
-        "internacoes_musculoesqueletica": 511
+        "internacoes_musculoesqueletico": 515
       },
       {
         "mes_cmpt": 4,
         "internacoes_trauma": 4669,
-        "internacoes_musculoesqueletica": 467
+        "internacoes_musculoesqueletico": 467
       },
       {
         "mes_cmpt": 5,
         "internacoes_trauma": 4849,
-        "internacoes_musculoesqueletica": 567
+        "internacoes_musculoesqueletico": 567
       },
       {
         "mes_cmpt": 6,
         "internacoes_trauma": 4690,
-        "internacoes_musculoesqueletica": 512
+        "internacoes_musculoesqueletico": 512
       },
       {
         "mes_cmpt": 7,
         "internacoes_trauma": 5279,
-        "internacoes_musculoesqueletica": 573
+        "internacoes_musculoesqueletico": 573
       },
       {
         "mes_cmpt": 8,
         "internacoes_trauma": 5443,
-        "internacoes_musculoesqueletica": 563
+        "internacoes_musculoesqueletico": 567
       },
       {
         "mes_cmpt": 9,
         "internacoes_trauma": 5164,
-        "internacoes_musculoesqueletica": 588
+        "internacoes_musculoesqueletico": 588
       },
       {
         "mes_cmpt": 10,
         "internacoes_trauma": 5188,
-        "internacoes_musculoesqueletica": 584
+        "internacoes_musculoesqueletico": 584
       },
       {
         "mes_cmpt": 11,
         "internacoes_trauma": 4821,
-        "internacoes_musculoesqueletica": 530
+        "internacoes_musculoesqueletico": 532
       },
       {
         "mes_cmpt": 12,
         "internacoes_trauma": 5182,
-        "internacoes_musculoesqueletica": 494
+        "internacoes_musculoesqueletico": 494
       }
     ],
     "gold_result": [
@@ -6211,64 +6271,64 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 34934
+    "elapsed_ms": 10159
   },
   {
     "id": "Q46",
     "cat": "Temporal/Comparativa",
     "question": "Evolução mensal de óbitos em internações ortopédicas em SP em 2022",
     "correct": true,
-    "flexible_match": false,
-    "score_reason": "12 linhas corretas (exato)",
-    "sql": "SELECT \n  mes_cmpt,\n  COUNT(DISTINCT CASE WHEN morte = 1 THEN n_aih END) AS total_obitos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT \n  mes_cmpt,\n  COUNT(DISTINCT CASE WHEN morte = 1 THEN n_aih END) AS obitos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
     "llm_result": [
       {
         "mes_cmpt": 1,
-        "total_obitos": 179
+        "obitos": 179
       },
       {
         "mes_cmpt": 2,
-        "total_obitos": 182
+        "obitos": 182
       },
       {
         "mes_cmpt": 3,
-        "total_obitos": 167
+        "obitos": 167
       },
       {
         "mes_cmpt": 4,
-        "total_obitos": 156
+        "obitos": 156
       },
       {
         "mes_cmpt": 5,
-        "total_obitos": 187
+        "obitos": 187
       },
       {
         "mes_cmpt": 6,
-        "total_obitos": 182
+        "obitos": 182
       },
       {
         "mes_cmpt": 7,
-        "total_obitos": 212
+        "obitos": 212
       },
       {
         "mes_cmpt": 8,
-        "total_obitos": 217
+        "obitos": 217
       },
       {
         "mes_cmpt": 9,
-        "total_obitos": 183
+        "obitos": 183
       },
       {
         "mes_cmpt": 10,
-        "total_obitos": 224
+        "obitos": 224
       },
       {
         "mes_cmpt": 11,
-        "total_obitos": 144
+        "obitos": 144
       },
       {
         "mes_cmpt": 12,
-        "total_obitos": 190
+        "obitos": 190
       }
     ],
     "gold_result": [
@@ -6322,7 +6382,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 35553
+    "elapsed_ms": 9190
   },
   {
     "id": "Q47",
@@ -6369,7 +6429,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 41069
+    "elapsed_ms": 13177
   },
   {
     "id": "Q48",
@@ -6378,7 +6438,7 @@
     "correct": true,
     "flexible_match": false,
     "score_reason": "got=10 exp=10",
-    "sql": "SELECT mes_cmpt,\n       ROUND(AVG(custo_total), 2) AS custo_medio_por_internacao\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY custo_medio_por_internacao DESC\nLIMIT 1;",
+    "sql": "SELECT mes_cmpt,\n  ROUND(AVG(custo_total), 2) AS custo_medio_por_internacao\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY custo_medio_por_internacao DESC\nLIMIT 1;",
     "llm_result": [
       {
         "mes_cmpt": 10,
@@ -6392,7 +6452,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 32207
+    "elapsed_ms": 9539
   },
   {
     "id": "Q49",
@@ -6401,7 +6461,7 @@
     "correct": true,
     "flexible_match": true,
     "score_reason": "12 linhas corretas (flexível)",
-    "sql": "SELECT \n  mes_cmpt,\n  COUNT(*) AS total_fraturas_femur\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "sql": "SELECT \n  mes_cmpt,\n  COUNT(*) AS total_fraturas_femur\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%'\nGROUP BY \n  mes_cmpt\nORDER BY \n  mes_cmpt;",
     "llm_result": [
       {
         "mes_cmpt": 1,
@@ -6503,7 +6563,7 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 31675
+    "elapsed_ms": 7443
   },
   {
     "id": "Q50",
@@ -6614,6 +6674,6 @@
       }
     ],
     "api_error": null,
-    "elapsed_ms": 31542
+    "elapsed_ms": 9280
   }
 ]
