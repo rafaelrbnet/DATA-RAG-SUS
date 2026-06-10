@@ -98,8 +98,8 @@ Fluxo recomendado: **ingestion -> transform -> enriched(clinical_inference) -> D
 
 | Arquivo | Responsabilidade |
 |---------|-----------------|
-| `src/rag/prompts.py` | `SCHEMA_CONTEXT` (110 colunas canônicas compactas), `SYSTEM_PROMPT` (role + schema + 13 regras), `EXPLAIN_PROMPT` (interpretação pós-execução) |
-| `src/rag/sql_generator.py` | `generate_sql(question) -> str` — chama GPT-4o, extrai SQL do bloco ```sql```, valida SELECT-only |
+| `src/rag/prompts.py` | `SCHEMA_CONTEXT` (110 colunas canônicas compactas), `SYSTEM_PROMPT` v2 (definição clínica obrigatória + 17 regras + 5 exemplos few-shot), `EXPLAIN_PROMPT` (interpretação pós-execução) |
+| `src/rag/sql_generator.py` | `generate_sql(question, *, temperature=0.0) -> str` — chama LLM configurado (Ollama ou OpenAI), extrai SQL do bloco ```sql``` ou ```WITH```, valida SELECT/WITH-only |
 | `src/rag/agent.py` | `run_query(question, *, data_root) -> dict` — orquestra generate_sql → executor.query → _explain |
 
 **Saída de `run_query`:**

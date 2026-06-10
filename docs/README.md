@@ -4,6 +4,7 @@
 
 | # | Documento | Conteúdo |
 |---|-----------|----------|
+| 00 | [Diagramas de Arquitetura](00-diagramas.md) | Pipeline end-to-end, ingestão, views e decisão de design |
 | 01 | [Objetivo do Projeto](01-objetivo.md) | Visão, finalidades e caracterização do sistema |
 | 02 | [Arquitetura](02-arquitetura.md) | Princípios: o que fazer e o que não fazer |
 | 03 | [Estrutura do Repositório](03-estrutura-repositorio.md) | Árvore de pastas e arquivos |
