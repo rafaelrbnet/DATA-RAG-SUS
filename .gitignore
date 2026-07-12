@@ -16,10 +16,11 @@ __pycache__/
 *.swp
 *.swo
 
-# Dados (não versionar Parquet/CSV do pipeline)
+# Dados (não versionar Parquet/CSV/DuckDB do pipeline)
 data/raw/**/*.parquet
 data/raw/**/*.csv
 data/processed/**/*.parquet
+data/processed/*.duckdb
 data/enriched/**/*.parquet
 data/enriched/**/*.csv
 !data/raw/.gitkeep
