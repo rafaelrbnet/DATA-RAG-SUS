@@ -1,0 +1,6295 @@
+[
+  {
+    "id": "Q01",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações ortopédicas (M00-M99 e S00-S99) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28471, Requested 2671. Please try again in 2.284s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 69487
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28471, Requested 2671. Please try again in 2.284s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11421
+  },
+  {
+    "id": "Q02",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=105364 exp=105364",
+    "sql": "SELECT COUNT(*) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_procedimentos": 105364
+      }
+    ],
+    "gold_result": [
+      {
+        "total_procedimentos": 105364
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4438
+  },
+  {
+    "id": "Q03",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=30272 exp=30272",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'",
+    "llm_result": [
+      {
+        "total_internacoes": 30272
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 30272
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 11341
+  },
+  {
+    "id": "Q04",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por osteoartrose (M16, M17) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29123, Requested 2669. Please try again in 3.584s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 165
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29123, Requested 2669. Please try again in 3.584s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11374
+  },
+  {
+    "id": "Q05",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de óbitos em internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=2274 exp=2274",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_obitos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND morte = 1;",
+    "llm_result": [
+      {
+        "total_obitos": 2274
+      }
+    ],
+    "gold_result": [
+      {
+        "total_obitos": 2274
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5979
+  },
+  {
+    "id": "Q06",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por traumatismos (S00-T98) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29027, Requested 2669. Please try again in 3.392s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 62607
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29027, Requested 2669. Please try again in 3.392s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11351
+  },
+  {
+    "id": "Q07",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por doenças osteomusculares (M00-M99) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=6880 exp=6880",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND icd_group = 'M00-M99';",
+    "llm_result": [
+      {
+        "total_internacoes": 6880
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 6880
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5351
+  },
+  {
+    "id": "Q08",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de mulheres internadas por causa ortopédica em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=27027 exp=27027",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND sexo_paciente = 'F'\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_internacoes": 27027
+      }
+    ],
+    "gold_result": [
+      {
+        "total_mulheres_internadas": 27027
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 11607
+  },
+  {
+    "id": "Q09",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de homens internados por causa ortopédica em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29150, Requested 2669. Please try again in 3.638s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_homens_internados": 42460
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29150, Requested 2669. Please try again in 3.638s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11343
+  },
+  {
+    "id": "Q10",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas de idosos (60 anos ou mais) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=28165 exp=28165",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND idade_paciente >= 60\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_internacoes": 28165
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 28165
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5793
+  },
+  {
+    "id": "Q11",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de municípios distintos com internação ortopédica registrada em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=215 exp=215",
+    "sql": "SELECT COUNT(DISTINCT cod_munic_estabelecimento) AS num_municipios\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "num_municipios": 215
+      }
+    ],
+    "gold_result": [
+      {
+        "num_municipios": 215
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6226
+  },
+  {
+    "id": "Q12",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de estabelecimentos distintos com internação ortopédica em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28965, Requested 2673. Please try again in 3.276s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "num_estabelecimentos": 385
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28965, Requested 2673. Please try again in 3.276s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11348
+  },
+  {
+    "id": "Q13",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência superior a 7 dias em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2675. Please try again in 5.35s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 17778
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2675. Please try again in 5.35s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 8752
+  },
+  {
+    "id": "Q14",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com uso de UTI em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=1 exp=1",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes_uti\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND uti_int_to > 0;",
+    "llm_result": [
+      {
+        "total_internacoes_uti": 1
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes_uti": 1
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8001
+  },
+  {
+    "id": "Q15",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de quadril (S72) em pacientes com 70 anos ou mais em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29316, Requested 2678. Please try again in 3.987s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 15626
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29316, Requested 2678. Please try again in 3.987s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11423
+  },
+  {
+    "id": "Q16",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 CIDs ortopédicos por volume de internação em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "10 linhas corretas (flexível)",
+    "sql": "SELECT cid_principal,\n  COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY total_internacoes DESC\nLIMIT 10;",
+    "llm_result": [
+      {
+        "cid_principal": "S720",
+        "total_internacoes": 9059
+      },
+      {
+        "cid_principal": "S721",
+        "total_internacoes": 6780
+      },
+      {
+        "cid_principal": "S723",
+        "total_internacoes": 5398
+      },
+      {
+        "cid_principal": "T813",
+        "total_internacoes": 3998
+      },
+      {
+        "cid_principal": "S722",
+        "total_internacoes": 2513
+      },
+      {
+        "cid_principal": "S729",
+        "total_internacoes": 2303
+      },
+      {
+        "cid_principal": "S822",
+        "total_internacoes": 1833
+      },
+      {
+        "cid_principal": "S728",
+        "total_internacoes": 1580
+      },
+      {
+        "cid_principal": "S724",
+        "total_internacoes": 1565
+      },
+      {
+        "cid_principal": "T814",
+        "total_internacoes": 1290
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_internacoes": 9059
+      },
+      {
+        "cid_principal": "S721",
+        "total_internacoes": 6780
+      },
+      {
+        "cid_principal": "S723",
+        "total_internacoes": 5398
+      },
+      {
+        "cid_principal": "T813",
+        "total_internacoes": 3998
+      },
+      {
+        "cid_principal": "S722",
+        "total_internacoes": 2513
+      },
+      {
+        "cid_principal": "S729",
+        "total_internacoes": 2303
+      },
+      {
+        "cid_principal": "S822",
+        "total_internacoes": 1833
+      },
+      {
+        "cid_principal": "S728",
+        "total_internacoes": 1580
+      },
+      {
+        "cid_principal": "S724",
+        "total_internacoes": 1565
+      },
+      {
+        "cid_principal": "T814",
+        "total_internacoes": 1290
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6846
+  },
+  {
+    "id": "Q17",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 municípios de SP com maior número de internações ortopédicas em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28864, Requested 2673. Please try again in 3.074s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "350000",
+        "internacoes": 32140
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "internacoes": 6158
+      },
+      {
+        "cod_munic_estabelecimento": "354870",
+        "internacoes": 1284
+      },
+      {
+        "cod_munic_estabelecimento": "350950",
+        "internacoes": 1253
+      },
+      {
+        "cod_munic_estabelecimento": "355170",
+        "internacoes": 1122
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28864, Requested 2673. Please try again in 3.074s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11378
+  },
+  {
+    "id": "Q18",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa etária (0-17, 18-59, 60+) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'faixa_etaria': '0-17', 'total': 4040}",
+    "sql": "SELECT \n  CASE\n    WHEN idade_paciente < 18 THEN '0-17'\n    WHEN idade_paciente BETWEEN 18 AND 59 THEN '18-59'\n    ELSE '60+'\n  END AS faixa_etaria,\n  COUNT(DISTINCT n_aih) AS total_internacoes,\n  ROUND(100.0 * COUNT(DISTINCT n_aih) / SUM(COUNT(DISTINCT n_aih)) OVER (), 1) AS pct\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY faixa_etaria\nORDER BY total_internacoes DESC;",
+    "llm_result": [
+      {
+        "faixa_etaria": "18-59",
+        "total_internacoes": 37282,
+        "pct": 53.7
+      },
+      {
+        "faixa_etaria": "60+",
+        "total_internacoes": 28165,
+        "pct": 40.5
+      },
+      {
+        "faixa_etaria": "0-17",
+        "total_internacoes": 4040,
+        "pct": 5.8
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 4040
+      },
+      {
+        "faixa_etaria": "18-59",
+        "total": 37282
+      },
+      {
+        "faixa_etaria": "60+",
+        "total": 28165
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6133
+  },
+  {
+    "id": "Q19",
+    "cat": "Epidemiológica Complexa",
+    "question": "Taxa de mortalidade hospitalar por CID ortopédico (top 5) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'S379', 'taxa_mortalidade': 100.0} exp={'cid_principal': 'S062', 'total_internacoes': 58, 'total_obitos': 20.0, 'taxa_mortalidade_pct': 34.48}",
+    "sql": "SELECT cid_principal,\n  ROUND(100.0 * SUM(morte) / COUNT(DISTINCT n_aih), 2) AS taxa_mortalidade\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY taxa_mortalidade DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "S379",
+        "taxa_mortalidade": 100.0
+      },
+      {
+        "cid_principal": "T181",
+        "taxa_mortalidade": 100.0
+      },
+      {
+        "cid_principal": "T901",
+        "taxa_mortalidade": 100.0
+      },
+      {
+        "cid_principal": "S350",
+        "taxa_mortalidade": 100.0
+      },
+      {
+        "cid_principal": "T098",
+        "taxa_mortalidade": 100.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S062",
+        "total_internacoes": 58,
+        "total_obitos": 20.0,
+        "taxa_mortalidade_pct": 34.48
+      },
+      {
+        "cid_principal": "S272",
+        "total_internacoes": 49,
+        "total_obitos": 14.0,
+        "taxa_mortalidade_pct": 28.57
+      },
+      {
+        "cid_principal": "S065",
+        "total_internacoes": 732,
+        "total_obitos": 156.0,
+        "taxa_mortalidade_pct": 21.31
+      },
+      {
+        "cid_principal": "S270",
+        "total_internacoes": 139,
+        "total_obitos": 25.0,
+        "taxa_mortalidade_pct": 17.99
+      },
+      {
+        "cid_principal": "S063",
+        "total_internacoes": 108,
+        "total_obitos": 19.0,
+        "taxa_mortalidade_pct": 17.59
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 11811
+  },
+  {
+    "id": "Q20",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 CIDs ambulatoriais ortopédicos por volume de produção em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28679, Requested 2673. Please try again in 2.704s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_procedimentos": 17325
+      },
+      {
+        "cid_principal": "S729",
+        "total_procedimentos": 12083
+      },
+      {
+        "cid_principal": "S723",
+        "total_procedimentos": 10787
+      },
+      {
+        "cid_principal": "S881",
+        "total_procedimentos": 8845
+      },
+      {
+        "cid_principal": "S781",
+        "total_procedimentos": 7622
+      },
+      {
+        "cid_principal": "S398",
+        "total_procedimentos": 7082
+      },
+      {
+        "cid_principal": "M216",
+        "total_procedimentos": 5349
+      },
+      {
+        "cid_principal": "S889",
+        "total_procedimentos": 4660
+      },
+      {
+        "cid_principal": "S721",
+        "total_procedimentos": 2902
+      },
+      {
+        "cid_principal": "S724",
+        "total_procedimentos": 2731
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28679, Requested 2673. Please try again in 2.704s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11353
+  },
+  {
+    "id": "Q21",
+    "cat": "Epidemiológica Complexa",
+    "question": "Proporção de internações ortopédicas por sexo em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "2 linhas corretas, ordem livre (flexível)",
+    "sql": "SELECT sexo_paciente,\n  COUNT(DISTINCT n_aih) AS total_internacoes,\n  ROUND(100.0 * COUNT(DISTINCT n_aih) / SUM(COUNT(DISTINCT n_aih)) OVER (), 1) AS pct\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY sexo_paciente\nORDER BY total_internacoes DESC;",
+    "llm_result": [
+      {
+        "sexo_paciente": "M",
+        "total_internacoes": 42460,
+        "pct": 61.1
+      },
+      {
+        "sexo_paciente": "F",
+        "total_internacoes": 27027,
+        "pct": 38.9
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "M",
+        "total_internacoes": 42460,
+        "pct": 61.1
+      },
+      {
+        "sexo_paciente": "F",
+        "total_internacoes": 27027,
+        "pct": 38.9
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5738
+  },
+  {
+    "id": "Q22",
+    "cat": "Epidemiológica Complexa",
+    "question": "Número de internações por fratura de fêmur (S72) em idosos (60+) comparado ao total em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28898, Requested 2679. Please try again in 3.154s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_s72": 30272,
+        "s72_idosos": 19598.0,
+        "pct_idosos": 64.7
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28898, Requested 2679. Please try again in 3.154s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11414
+  },
+  {
+    "id": "Q23",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 CIDs ortopédicos com maior permanência média hospitalar em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'S141', 'permanencia_media_dias': 73.0} exp={'cid_principal': 'S272', 'total_internacoes': 49, 'permanencia_media_dias': 14.3}",
+    "sql": "SELECT cid_principal,\n  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY permanencia_media_dias DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "S141",
+        "permanencia_media_dias": 73.0
+      },
+      {
+        "cid_principal": "S281",
+        "permanencia_media_dias": 71.0
+      },
+      {
+        "cid_principal": "M412",
+        "permanencia_media_dias": 60.0
+      },
+      {
+        "cid_principal": "T751",
+        "permanencia_media_dias": 42.0
+      },
+      {
+        "cid_principal": "S97",
+        "permanencia_media_dias": 38.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S272",
+        "total_internacoes": 49,
+        "permanencia_media_dias": 14.3
+      },
+      {
+        "cid_principal": "S122",
+        "total_internacoes": 44,
+        "permanencia_media_dias": 13.0
+      },
+      {
+        "cid_principal": "S063",
+        "total_internacoes": 108,
+        "permanencia_media_dias": 12.2
+      },
+      {
+        "cid_principal": "S062",
+        "total_internacoes": 58,
+        "permanencia_media_dias": 11.8
+      },
+      {
+        "cid_principal": "T845",
+        "total_internacoes": 98,
+        "permanencia_media_dias": 11.4
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5986
+  },
+  {
+    "id": "Q24",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 estabelecimentos com maior volume de internação ortopédica em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28867, Requested 2674. Please try again in 3.082s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2078015",
+        "internacoes": 2257
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "internacoes": 1652
+      },
+      {
+        "cnes_estabelecimento": "2091399",
+        "internacoes": 1489
+      },
+      {
+        "cnes_estabelecimento": "2077477",
+        "internacoes": 1270
+      },
+      {
+        "cnes_estabelecimento": "2082187",
+        "internacoes": 1263
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28867, Requested 2674. Please try again in 3.082s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11383
+  },
+  {
+    "id": "Q25",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por raça/cor do paciente em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2674. Please try again in 5.348s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "raca_cor_paciente": "01",
+        "total": 42626,
+        "pct": 61.3
+      },
+      {
+        "raca_cor_paciente": "03",
+        "total": 22198,
+        "pct": 31.9
+      },
+      {
+        "raca_cor_paciente": "02",
+        "total": 3802,
+        "pct": 5.5
+      },
+      {
+        "raca_cor_paciente": "04",
+        "total": 487,
+        "pct": 0.7
+      },
+      {
+        "raca_cor_paciente": "99",
+        "total": 362,
+        "pct": 0.5
+      },
+      {
+        "raca_cor_paciente": "05",
+        "total": 12,
+        "pct": 0.0
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2674. Please try again in 5.348s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 8938
+  },
+  {
+    "id": "Q26",
+    "cat": "Epidemiológica Complexa",
+    "question": "CIDs ortopédicos com maior número de dias totais de internação em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=1040 exp=10",
+    "sql": "SELECT cid_principal,\n  SUM(dias_perm) AS total_dias_internacao\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY total_dias_internacao DESC",
+    "llm_result": [
+      {
+        "cid_principal": "S720",
+        "total_dias_internacao": 65515.0
+      },
+      {
+        "cid_principal": "S721",
+        "total_dias_internacao": 45929.0
+      },
+      {
+        "cid_principal": "T813",
+        "total_dias_internacao": 32775.0
+      },
+      {
+        "cid_principal": "S723",
+        "total_dias_internacao": 30575.0
+      },
+      {
+        "cid_principal": "S722",
+        "total_dias_internacao": 16678.0
+      },
+      {
+        "cid_principal": "S729",
+        "total_dias_internacao": 14207.0
+      },
+      {
+        "cid_principal": "T814",
+        "total_dias_internacao": 11071.0
+      },
+      {
+        "cid_principal": "S724",
+        "total_dias_internacao": 10175.0
+      },
+      {
+        "cid_principal": "S728",
+        "total_dias_internacao": 10088.0
+      },
+      {
+        "cid_principal": "S822",
+        "total_dias_internacao": 9307.0
+      },
+      {
+        "cid_principal": "S065",
+        "total_dias_internacao": 7816.0
+      },
+      {
+        "cid_principal": "M861",
+        "total_dias_internacao": 6546.0
+      },
+      {
+        "cid_principal": "S828",
+        "total_dias_internacao": 5243.0
+      },
+      {
+        "cid_principal": "M869",
+        "total_dias_internacao": 4866.0
+      },
+      {
+        "cid_principal": "S72",
+        "total_dias_internacao": 4613.0
+      },
+      {
+        "cid_principal": "M866",
+        "total_dias_internacao": 4547.0
+      },
+      {
+        "cid_principal": "S821",
+        "total_dias_internacao": 3987.0
+      },
+      {
+        "cid_principal": "S727",
+        "total_dias_internacao": 3680.0
+      },
+      {
+        "cid_principal": "S823",
+        "total_dias_internacao": 3377.0
+      },
+      {
+        "cid_principal": "T07",
+        "total_dias_internacao": 3282.0
+      },
+      {
+        "cid_principal": "S525",
+        "total_dias_internacao": 2525.0
+      },
+      {
+        "cid_principal": "T144",
+        "total_dias_internacao": 2236.0
+      },
+      {
+        "cid_principal": "S068",
+        "total_dias_internacao": 2207.0
+      },
+      {
+        "cid_principal": "S826",
+        "total_dias_internacao": 2080.0
+      },
+      {
+        "cid_principal": "M86",
+        "total_dias_internacao": 1939.0
+      },
+      {
+        "cid_principal": "S829",
+        "total_dias_internacao": 1918.0
+      },
+      {
+        "cid_principal": "T874",
+        "total_dias_internacao": 1883.0
+      },
+      {
+        "cid_principal": "S423",
+        "total_dias_internacao": 1866.0
+      },
+      {
+        "cid_principal": "S422",
+        "total_dias_internacao": 1822.0
+      },
+      {
+        "cid_principal": "M868",
+        "total_dias_internacao": 1771.0
+      },
+      {
+        "cid_principal": "S064",
+        "total_dias_internacao": 1754.0
+      },
+      {
+        "cid_principal": "M841",
+        "total_dias_internacao": 1751.0
+      },
+      {
+        "cid_principal": "S827",
+        "total_dias_internacao": 1697.0
+      },
+      {
+        "cid_principal": "M864",
+        "total_dias_internacao": 1644.0
+      },
+      {
+        "cid_principal": "S069",
+        "total_dias_internacao": 1640.0
+      },
+      {
+        "cid_principal": "S626",
+        "total_dias_internacao": 1507.0
+      },
+      {
+        "cid_principal": "S424",
+        "total_dias_internacao": 1462.0
+      },
+      {
+        "cid_principal": "M860",
+        "total_dias_internacao": 1408.0
+      },
+      {
+        "cid_principal": "S820",
+        "total_dias_internacao": 1396.0
+      },
+      {
+        "cid_principal": "T818",
+        "total_dias_internacao": 1321.0
+      },
+      {
+        "cid_principal": "S063",
+        "total_dias_internacao": 1314.0
+      },
+      {
+        "cid_principal": "S026",
+        "total_dias_internacao": 1304.0
+      },
+      {
+        "cid_principal": "S82",
+        "total_dias_internacao": 1244.0
+      },
+      {
+        "cid_principal": "T847",
+        "total_dias_internacao": 1198.0
+      },
+      {
+        "cid_principal": "S825",
+        "total_dias_internacao": 1194.0
+      },
+      {
+        "cid_principal": "S270",
+        "total_dias_internacao": 1183.0
+      },
+      {
+        "cid_principal": "M009",
+        "total_dias_internacao": 1170.0
+      },
+      {
+        "cid_principal": "T845",
+        "total_dias_internacao": 1121.0
+      },
+      {
+        "cid_principal": "S520",
+        "total_dias_internacao": 1045.0
+      },
+      {
+        "cid_principal": "T300",
+        "total_dias_internacao": 1042.0
+      },
+      {
+        "cid_principal": "T243",
+        "total_dias_internacao": 1019.0
+      },
+      {
+        "cid_principal": "T213",
+        "total_dias_internacao": 999.0
+      },
+      {
+        "cid_principal": "S521",
+        "total_dias_internacao": 992.0
+      },
+      {
+        "cid_principal": "T846",
+        "total_dias_internacao": 992.0
+      },
+      {
+        "cid_principal": "M511",
+        "total_dias_internacao": 982.0
+      },
+      {
+        "cid_principal": "S923",
+        "total_dias_internacao": 948.0
+      },
+      {
+        "cid_principal": "S360",
+        "total_dias_internacao": 940.0
+      },
+      {
+        "cid_principal": "S367",
+        "total_dias_internacao": 928.0
+      },
+      {
+        "cid_principal": "S324",
+        "total_dias_internacao": 910.0
+      },
+      {
+        "cid_principal": "S364",
+        "total_dias_internacao": 879.0
+      },
+      {
+        "cid_principal": "S365",
+        "total_dias_internacao": 831.0
+      },
+      {
+        "cid_principal": "T849",
+        "total_dias_internacao": 818.0
+      },
+      {
+        "cid_principal": "T876",
+        "total_dias_internacao": 811.0
+      },
+      {
+        "cid_principal": "S920",
+        "total_dias_internacao": 796.0
+      },
+      {
+        "cid_principal": "S024",
+        "total_dias_internacao": 770.0
+      },
+      {
+        "cid_principal": "T840",
+        "total_dias_internacao": 758.0
+      },
+      {
+        "cid_principal": "S420",
+        "total_dias_internacao": 758.0
+      },
+      {
+        "cid_principal": "S983",
+        "total_dias_internacao": 735.0
+      },
+      {
+        "cid_principal": "S528",
+        "total_dias_internacao": 734.0
+      },
+      {
+        "cid_principal": "S271",
+        "total_dias_internacao": 720.0
+      },
+      {
+        "cid_principal": "S272",
+        "total_dias_internacao": 699.0
+      },
+      {
+        "cid_principal": "S062",
+        "total_dias_internacao": 685.0
+      },
+      {
+        "cid_principal": "T223",
+        "total_dias_internacao": 682.0
+      },
+      {
+        "cid_principal": "T841",
+        "total_dias_internacao": 669.0
+      },
+      {
+        "cid_principal": "S334",
+        "total_dias_internacao": 650.0
+      },
+      {
+        "cid_principal": "M840",
+        "total_dias_internacao": 649.0
+      },
+      {
+        "cid_principal": "S523",
+        "total_dias_internacao": 636.0
+      },
+      {
+        "cid_principal": "M862",
+        "total_dias_internacao": 611.0
+      },
+      {
+        "cid_principal": "S623",
+        "total_dias_internacao": 603.0
+      },
+      {
+        "cid_principal": "S913",
+        "total_dias_internacao": 600.0
+      },
+      {
+        "cid_principal": "S122",
+        "total_dias_internacao": 574.0
+      },
+      {
+        "cid_principal": "T293",
+        "total_dias_internacao": 572.0
+      },
+      {
+        "cid_principal": "S328",
+        "total_dias_internacao": 566.0
+      },
+      {
+        "cid_principal": "S320",
+        "total_dias_internacao": 541.0
+      },
+      {
+        "cid_principal": "T012",
+        "total_dias_internacao": 530.0
+      },
+      {
+        "cid_principal": "S524",
+        "total_dias_internacao": 523.0
+      },
+      {
+        "cid_principal": "T932",
+        "total_dias_internacao": 520.0
+      },
+      {
+        "cid_principal": "S027",
+        "total_dias_internacao": 517.0
+      },
+      {
+        "cid_principal": "M500",
+        "total_dias_internacao": 516.0
+      },
+      {
+        "cid_principal": "T821",
+        "total_dias_internacao": 510.0
+      },
+      {
+        "cid_principal": "S889",
+        "total_dias_internacao": 498.0
+      },
+      {
+        "cid_principal": "S531",
+        "total_dias_internacao": 493.0
+      },
+      {
+        "cid_principal": "M726",
+        "total_dias_internacao": 487.0
+      },
+      {
+        "cid_principal": "T233",
+        "total_dias_internacao": 481.0
+      },
+      {
+        "cid_principal": "M518",
+        "total_dias_internacao": 472.0
+      },
+      {
+        "cid_principal": "T313",
+        "total_dias_internacao": 467.0
+      },
+      {
+        "cid_principal": "S661",
+        "total_dias_internacao": 465.0
+      },
+      {
+        "cid_principal": "S220",
+        "total_dias_internacao": 464.0
+      },
+      {
+        "cid_principal": "S526",
+        "total_dias_internacao": 461.0
+      },
+      {
+        "cid_principal": "M865",
+        "total_dias_internacao": 460.0
+      },
+      {
+        "cid_principal": "S522",
+        "total_dias_internacao": 452.0
+      },
+      {
+        "cid_principal": "S930",
+        "total_dias_internacao": 441.0
+      },
+      {
+        "cid_principal": "S221",
+        "total_dias_internacao": 441.0
+      },
+      {
+        "cid_principal": "T888",
+        "total_dias_internacao": 437.0
+      },
+      {
+        "cid_principal": "S663",
+        "total_dias_internacao": 417.0
+      },
+      {
+        "cid_principal": "S730",
+        "total_dias_internacao": 415.0
+      },
+      {
+        "cid_principal": "T848",
+        "total_dias_internacao": 410.0
+      },
+      {
+        "cid_principal": "S361",
+        "total_dias_internacao": 409.0
+      },
+      {
+        "cid_principal": "T857",
+        "total_dias_internacao": 407.0
+      },
+      {
+        "cid_principal": "S327",
+        "total_dias_internacao": 402.0
+      },
+      {
+        "cid_principal": "T253",
+        "total_dias_internacao": 397.0
+      },
+      {
+        "cid_principal": "S981",
+        "total_dias_internacao": 393.0
+      },
+      {
+        "cid_principal": "M863",
+        "total_dias_internacao": 388.0
+      },
+      {
+        "cid_principal": "M510",
+        "total_dias_internacao": 374.0
+      },
+      {
+        "cid_principal": "S824",
+        "total_dias_internacao": 366.0
+      },
+      {
+        "cid_principal": "T931",
+        "total_dias_internacao": 361.0
+      },
+      {
+        "cid_principal": "S431",
+        "total_dias_internacao": 353.0
+      },
+      {
+        "cid_principal": "S910",
+        "total_dias_internacao": 350.0
+      },
+      {
+        "cid_principal": "T844",
+        "total_dias_internacao": 337.0
+      },
+      {
+        "cid_principal": "T149",
+        "total_dias_internacao": 325.0
+      },
+      {
+        "cid_principal": "S370",
+        "total_dias_internacao": 323.0
+      },
+      {
+        "cid_principal": "T203",
+        "total_dias_internacao": 321.0
+      },
+      {
+        "cid_principal": "S020",
+        "total_dias_internacao": 311.0
+      },
+      {
+        "cid_principal": "S628",
+        "total_dias_internacao": 292.0
+      },
+      {
+        "cid_principal": "T875",
+        "total_dias_internacao": 290.0
+      },
+      {
+        "cid_principal": "T810",
+        "total_dias_internacao": 290.0
+      },
+      {
+        "cid_principal": "S925",
+        "total_dias_internacao": 289.0
+      },
+      {
+        "cid_principal": "S317",
+        "total_dias_internacao": 284.0
+      },
+      {
+        "cid_principal": "S921",
+        "total_dias_internacao": 282.0
+      },
+      {
+        "cid_principal": "M169",
+        "total_dias_internacao": 281.0
+      },
+      {
+        "cid_principal": "S810",
+        "total_dias_internacao": 278.0
+      },
+      {
+        "cid_principal": "T889",
+        "total_dias_internacao": 273.0
+      },
+      {
+        "cid_principal": "S835",
+        "total_dias_internacao": 265.0
+      },
+      {
+        "cid_principal": "T819",
+        "total_dias_internacao": 259.0
+      },
+      {
+        "cid_principal": "M751",
+        "total_dias_internacao": 258.0
+      },
+      {
+        "cid_principal": "S625",
+        "total_dias_internacao": 256.0
+      },
+      {
+        "cid_principal": "S066",
+        "total_dias_internacao": 253.0
+      },
+      {
+        "cid_principal": "M848",
+        "total_dias_internacao": 253.0
+      },
+      {
+        "cid_principal": "S530",
+        "total_dias_internacao": 252.0
+      },
+      {
+        "cid_principal": "T018",
+        "total_dias_internacao": 252.0
+      },
+      {
+        "cid_principal": "T859",
+        "total_dias_internacao": 251.0
+      },
+      {
+        "cid_principal": "S831",
+        "total_dias_internacao": 250.0
+      },
+      {
+        "cid_principal": "S372",
+        "total_dias_internacao": 247.0
+      },
+      {
+        "cid_principal": "S363",
+        "total_dias_internacao": 238.0
+      },
+      {
+        "cid_principal": "S529",
+        "total_dias_internacao": 238.0
+      },
+      {
+        "cid_principal": "S681",
+        "total_dias_internacao": 236.0
+      },
+      {
+        "cid_principal": "S929",
+        "total_dias_internacao": 234.0
+      },
+      {
+        "cid_principal": "S927",
+        "total_dias_internacao": 227.0
+      },
+      {
+        "cid_principal": "T292",
+        "total_dias_internacao": 226.0
+      },
+      {
+        "cid_principal": "S127",
+        "total_dias_internacao": 223.0
+      },
+      {
+        "cid_principal": "S666",
+        "total_dias_internacao": 220.0
+      },
+      {
+        "cid_principal": "M468",
+        "total_dias_internacao": 216.0
+      },
+      {
+        "cid_principal": "S881",
+        "total_dias_internacao": 214.0
+      },
+      {
+        "cid_principal": "S627",
+        "total_dias_internacao": 214.0
+      },
+      {
+        "cid_principal": "M842",
+        "total_dias_internacao": 206.0
+      },
+      {
+        "cid_principal": "M966",
+        "total_dias_internacao": 203.0
+      },
+      {
+        "cid_principal": "S669",
+        "total_dias_internacao": 199.0
+      },
+      {
+        "cid_principal": "S982",
+        "total_dias_internacao": 197.0
+      },
+      {
+        "cid_principal": "T858",
+        "total_dias_internacao": 197.0
+      },
+      {
+        "cid_principal": "S219",
+        "total_dias_internacao": 192.0
+      },
+      {
+        "cid_principal": "S818",
+        "total_dias_internacao": 192.0
+      },
+      {
+        "cid_principal": "S311",
+        "total_dias_internacao": 191.0
+      },
+      {
+        "cid_principal": "T850",
+        "total_dias_internacao": 191.0
+      },
+      {
+        "cid_principal": "M480",
+        "total_dias_internacao": 190.0
+      },
+      {
+        "cid_principal": "S980",
+        "total_dias_internacao": 188.0
+      },
+      {
+        "cid_principal": "S682",
+        "total_dias_internacao": 184.0
+      },
+      {
+        "cid_principal": "M501",
+        "total_dias_internacao": 184.0
+      },
+      {
+        "cid_principal": "M508",
+        "total_dias_internacao": 183.0
+      },
+      {
+        "cid_principal": "S92",
+        "total_dias_internacao": 181.0
+      },
+      {
+        "cid_principal": "S668",
+        "total_dias_internacao": 181.0
+      },
+      {
+        "cid_principal": "S278",
+        "total_dias_internacao": 181.0
+      },
+      {
+        "cid_principal": "S527",
+        "total_dias_internacao": 180.0
+      },
+      {
+        "cid_principal": "S52",
+        "total_dias_internacao": 179.0
+      },
+      {
+        "cid_principal": "S42",
+        "total_dias_internacao": 179.0
+      },
+      {
+        "cid_principal": "S203",
+        "total_dias_internacao": 178.0
+      },
+      {
+        "cid_principal": "M000",
+        "total_dias_internacao": 174.0
+      },
+      {
+        "cid_principal": "S618",
+        "total_dias_internacao": 173.0
+      },
+      {
+        "cid_principal": "S028",
+        "total_dias_internacao": 172.0
+      },
+      {
+        "cid_principal": "S325",
+        "total_dias_internacao": 169.0
+      },
+      {
+        "cid_principal": "S924",
+        "total_dias_internacao": 169.0
+      },
+      {
+        "cid_principal": "S021",
+        "total_dias_internacao": 166.0
+      },
+      {
+        "cid_principal": "T812",
+        "total_dias_internacao": 164.0
+      },
+      {
+        "cid_principal": "S860",
+        "total_dias_internacao": 163.0
+      },
+      {
+        "cid_principal": "T068",
+        "total_dias_internacao": 162.0
+      },
+      {
+        "cid_principal": "T013",
+        "total_dias_internacao": 162.0
+      },
+      {
+        "cid_principal": "M199",
+        "total_dias_internacao": 161.0
+      },
+      {
+        "cid_principal": "T312",
+        "total_dias_internacao": 160.0
+      },
+      {
+        "cid_principal": "S321",
+        "total_dias_internacao": 158.0
+      },
+      {
+        "cid_principal": "S837",
+        "total_dias_internacao": 157.0
+      },
+      {
+        "cid_principal": "S922",
+        "total_dias_internacao": 155.0
+      },
+      {
+        "cid_principal": "S620",
+        "total_dias_internacao": 154.0
+      },
+      {
+        "cid_principal": "M008",
+        "total_dias_internacao": 154.0
+      },
+      {
+        "cid_principal": "T028",
+        "total_dias_internacao": 154.0
+      },
+      {
+        "cid_principal": "S617",
+        "total_dias_internacao": 154.0
+      },
+      {
+        "cid_principal": "T902",
+        "total_dias_internacao": 153.0
+      },
+      {
+        "cid_principal": "S819",
+        "total_dias_internacao": 148.0
+      },
+      {
+        "cid_principal": "S369",
+        "total_dias_internacao": 148.0
+      },
+      {
+        "cid_principal": "M201",
+        "total_dias_internacao": 147.0
+      },
+      {
+        "cid_principal": "S662",
+        "total_dias_internacao": 146.0
+      },
+      {
+        "cid_principal": "M235",
+        "total_dias_internacao": 146.0
+      },
+      {
+        "cid_principal": "M796",
+        "total_dias_internacao": 145.0
+      },
+      {
+        "cid_principal": "S218",
+        "total_dias_internacao": 144.0
+      },
+      {
+        "cid_principal": "S332",
+        "total_dias_internacao": 144.0
+      },
+      {
+        "cid_principal": "M002",
+        "total_dias_internacao": 143.0
+      },
+      {
+        "cid_principal": "M844",
+        "total_dias_internacao": 141.0
+      },
+      {
+        "cid_principal": "S62",
+        "total_dias_internacao": 140.0
+      },
+      {
+        "cid_principal": "M878",
+        "total_dias_internacao": 137.0
+      },
+      {
+        "cid_principal": "T303",
+        "total_dias_internacao": 136.0
+      },
+      {
+        "cid_principal": "S029",
+        "total_dias_internacao": 135.0
+      },
+      {
+        "cid_principal": "T843",
+        "total_dias_internacao": 134.0
+      },
+      {
+        "cid_principal": "M179",
+        "total_dias_internacao": 134.0
+      },
+      {
+        "cid_principal": "T141",
+        "total_dias_internacao": 133.0
+      },
+      {
+        "cid_principal": "S880",
+        "total_dias_internacao": 133.0
+      },
+      {
+        "cid_principal": "S667",
+        "total_dias_internacao": 133.0
+      },
+      {
+        "cid_principal": "T911",
+        "total_dias_internacao": 129.0
+      },
+      {
+        "cid_principal": "S619",
+        "total_dias_internacao": 124.0
+      },
+      {
+        "cid_principal": "M431",
+        "total_dias_internacao": 123.0
+      },
+      {
+        "cid_principal": "S624",
+        "total_dias_internacao": 118.0
+      },
+      {
+        "cid_principal": "S368",
+        "total_dias_internacao": 117.0
+      },
+      {
+        "cid_principal": "M238",
+        "total_dias_internacao": 117.0
+      },
+      {
+        "cid_principal": "S131",
+        "total_dias_internacao": 116.0
+      },
+      {
+        "cid_principal": "S060",
+        "total_dias_internacao": 116.0
+      },
+      {
+        "cid_principal": "T922",
+        "total_dias_internacao": 113.0
+      },
+      {
+        "cid_principal": "M239",
+        "total_dias_internacao": 113.0
+      },
+      {
+        "cid_principal": "S273",
+        "total_dias_internacao": 112.0
+      },
+      {
+        "cid_principal": "T022",
+        "total_dias_internacao": 110.0
+      },
+      {
+        "cid_principal": "S61",
+        "total_dias_internacao": 110.0
+      },
+      {
+        "cid_principal": "T029",
+        "total_dias_internacao": 110.0
+      },
+      {
+        "cid_principal": "T921",
+        "total_dias_internacao": 110.0
+      },
+      {
+        "cid_principal": "S630",
+        "total_dias_internacao": 109.0
+      },
+      {
+        "cid_principal": "T884",
+        "total_dias_internacao": 109.0
+      },
+      {
+        "cid_principal": "T873",
+        "total_dias_internacao": 109.0
+      },
+      {
+        "cid_principal": "S224",
+        "total_dias_internacao": 109.0
+      },
+      {
+        "cid_principal": "T796",
+        "total_dias_internacao": 107.0
+      },
+      {
+        "cid_principal": "S862",
+        "total_dias_internacao": 106.0
+      },
+      {
+        "cid_principal": "S680",
+        "total_dias_internacao": 106.0
+      },
+      {
+        "cid_principal": "T290",
+        "total_dias_internacao": 106.0
+      },
+      {
+        "cid_principal": "M218",
+        "total_dias_internacao": 105.0
+      },
+      {
+        "cid_principal": "S761",
+        "total_dias_internacao": 105.0
+      },
+      {
+        "cid_principal": "T023",
+        "total_dias_internacao": 104.0
+      },
+      {
+        "cid_principal": "T797",
+        "total_dias_internacao": 103.0
+      },
+      {
+        "cid_principal": "S099",
+        "total_dias_internacao": 103.0
+      },
+      {
+        "cid_principal": "S023",
+        "total_dias_internacao": 103.0
+      },
+      {
+        "cid_principal": "S789",
+        "total_dias_internacao": 103.0
+      },
+      {
+        "cid_principal": "M545",
+        "total_dias_internacao": 103.0
+      },
+      {
+        "cid_principal": "M659",
+        "total_dias_internacao": 103.0
+      },
+      {
+        "cid_principal": "S152",
+        "total_dias_internacao": 102.0
+      },
+      {
+        "cid_principal": "M519",
+        "total_dias_internacao": 100.0
+      },
+      {
+        "cid_principal": "S621",
+        "total_dias_internacao": 100.0
+      },
+      {
+        "cid_principal": "S140",
+        "total_dias_internacao": 100.0
+      },
+      {
+        "cid_principal": "M464",
+        "total_dias_internacao": 99.0
+      },
+      {
+        "cid_principal": "M465",
+        "total_dias_internacao": 99.0
+      },
+      {
+        "cid_principal": "S430",
+        "total_dias_internacao": 98.0
+      },
+      {
+        "cid_principal": "S358",
+        "total_dias_internacao": 98.0
+      },
+      {
+        "cid_principal": "S610",
+        "total_dias_internacao": 98.0
+      },
+      {
+        "cid_principal": "T952",
+        "total_dias_internacao": 97.0
+      },
+      {
+        "cid_principal": "S622",
+        "total_dias_internacao": 97.0
+      },
+      {
+        "cid_principal": "T026",
+        "total_dias_internacao": 97.0
+      },
+      {
+        "cid_principal": "S428",
+        "total_dias_internacao": 97.0
+      },
+      {
+        "cid_principal": "M471",
+        "total_dias_internacao": 97.0
+      },
+      {
+        "cid_principal": "T827",
+        "total_dias_internacao": 96.0
+      },
+      {
+        "cid_principal": "M600",
+        "total_dias_internacao": 94.0
+      },
+      {
+        "cid_principal": "T019",
+        "total_dias_internacao": 93.0
+      },
+      {
+        "cid_principal": "S318",
+        "total_dias_internacao": 93.0
+      },
+      {
+        "cid_principal": "S323",
+        "total_dias_internacao": 92.0
+      },
+      {
+        "cid_principal": "S933",
+        "total_dias_internacao": 92.0
+      },
+      {
+        "cid_principal": "S781",
+        "total_dias_internacao": 91.0
+      },
+      {
+        "cid_principal": "S333",
+        "total_dias_internacao": 90.0
+      },
+      {
+        "cid_principal": "S832",
+        "total_dias_internacao": 89.0
+      },
+      {
+        "cid_principal": "T831",
+        "total_dias_internacao": 88.0
+      },
+      {
+        "cid_principal": "S660",
+        "total_dias_internacao": 88.0
+      },
+      {
+        "cid_principal": "M658",
+        "total_dias_internacao": 88.0
+      },
+      {
+        "cid_principal": "M216",
+        "total_dias_internacao": 88.0
+      },
+      {
+        "cid_principal": "S06",
+        "total_dias_internacao": 87.0
+      },
+      {
+        "cid_principal": "S36",
+        "total_dias_internacao": 87.0
+      },
+      {
+        "cid_principal": "S899",
+        "total_dias_internacao": 87.0
+      },
+      {
+        "cid_principal": "S799",
+        "total_dias_internacao": 87.0
+      },
+      {
+        "cid_principal": "M509",
+        "total_dias_internacao": 86.0
+      },
+      {
+        "cid_principal": "S110",
+        "total_dias_internacao": 85.0
+      },
+      {
+        "cid_principal": "M462",
+        "total_dias_internacao": 85.0
+      },
+      {
+        "cid_principal": "S061",
+        "total_dias_internacao": 82.0
+      },
+      {
+        "cid_principal": "M799",
+        "total_dias_internacao": 82.0
+      },
+      {
+        "cid_principal": "S017",
+        "total_dias_internacao": 81.0
+      },
+      {
+        "cid_principal": "S269",
+        "total_dias_internacao": 81.0
+      },
+      {
+        "cid_principal": "M219",
+        "total_dias_internacao": 81.0
+      },
+      {
+        "cid_principal": "M242",
+        "total_dias_internacao": 80.0
+      },
+      {
+        "cid_principal": "S31",
+        "total_dias_internacao": 79.0
+      },
+      {
+        "cid_principal": "S711",
+        "total_dias_internacao": 77.0
+      },
+      {
+        "cid_principal": "S313",
+        "total_dias_internacao": 76.0
+      },
+      {
+        "cid_principal": "T314",
+        "total_dias_internacao": 76.0
+      },
+      {
+        "cid_principal": "M068",
+        "total_dias_internacao": 74.0
+      },
+      {
+        "cid_principal": "S451",
+        "total_dias_internacao": 74.0
+      },
+      {
+        "cid_principal": "M463",
+        "total_dias_internacao": 74.0
+      },
+      {
+        "cid_principal": "M16",
+        "total_dias_internacao": 74.0
+      },
+      {
+        "cid_principal": "S141",
+        "total_dias_internacao": 73.0
+      },
+      {
+        "cid_principal": "S018",
+        "total_dias_internacao": 73.0
+      },
+      {
+        "cid_principal": "S611",
+        "total_dias_internacao": 73.0
+      },
+      {
+        "cid_principal": "T011",
+        "total_dias_internacao": 72.0
+      },
+      {
+        "cid_principal": "T302",
+        "total_dias_internacao": 72.0
+      },
+      {
+        "cid_principal": "S830",
+        "total_dias_internacao": 72.0
+      },
+      {
+        "cid_principal": "S281",
+        "total_dias_internacao": 71.0
+      },
+      {
+        "cid_principal": "T020",
+        "total_dias_internacao": 70.0
+      },
+      {
+        "cid_principal": "M622",
+        "total_dias_internacao": 70.0
+      },
+      {
+        "cid_principal": "T191",
+        "total_dias_internacao": 70.0
+      },
+      {
+        "cid_principal": "S130",
+        "total_dias_internacao": 70.0
+      },
+      {
+        "cid_principal": "T630",
+        "total_dias_internacao": 69.0
+      },
+      {
+        "cid_principal": "M960",
+        "total_dias_internacao": 69.0
+      },
+      {
+        "cid_principal": "T817",
+        "total_dias_internacao": 69.0
+      },
+      {
+        "cid_principal": "M993",
+        "total_dias_internacao": 69.0
+      },
+      {
+        "cid_principal": "T131",
+        "total_dias_internacao": 69.0
+      },
+      {
+        "cid_principal": "S984",
+        "total_dias_internacao": 69.0
+      },
+      {
+        "cid_principal": "S890",
+        "total_dias_internacao": 68.0
+      },
+      {
+        "cid_principal": "T136",
+        "total_dias_internacao": 67.0
+      },
+      {
+        "cid_principal": "M720",
+        "total_dias_internacao": 67.0
+      },
+      {
+        "cid_principal": "S961",
+        "total_dias_internacao": 66.0
+      },
+      {
+        "cid_principal": "T925",
+        "total_dias_internacao": 66.0
+      },
+      {
+        "cid_principal": "S932",
+        "total_dias_internacao": 65.0
+      },
+      {
+        "cid_principal": "S836",
+        "total_dias_internacao": 65.0
+      },
+      {
+        "cid_principal": "S518",
+        "total_dias_internacao": 64.0
+      },
+      {
+        "cid_principal": "M895",
+        "total_dias_internacao": 64.0
+      },
+      {
+        "cid_principal": "M230",
+        "total_dias_internacao": 64.0
+      },
+      {
+        "cid_principal": "S53",
+        "total_dias_internacao": 64.0
+      },
+      {
+        "cid_principal": "T81",
+        "total_dias_internacao": 63.0
+      },
+      {
+        "cid_principal": "S098",
+        "total_dias_internacao": 63.0
+      },
+      {
+        "cid_principal": "T930",
+        "total_dias_internacao": 63.0
+      },
+      {
+        "cid_principal": "S500",
+        "total_dias_internacao": 63.0
+      },
+      {
+        "cid_principal": "T145",
+        "total_dias_internacao": 63.0
+      },
+      {
+        "cid_principal": "S429",
+        "total_dias_internacao": 62.0
+      },
+      {
+        "cid_principal": "S362",
+        "total_dias_internacao": 62.0
+      },
+      {
+        "cid_principal": "S917",
+        "total_dias_internacao": 62.0
+      },
+      {
+        "cid_principal": "S260",
+        "total_dias_internacao": 62.0
+      },
+      {
+        "cid_principal": "S217",
+        "total_dias_internacao": 62.0
+      },
+      {
+        "cid_principal": "M542",
+        "total_dias_internacao": 61.0
+      },
+      {
+        "cid_principal": "M412",
+        "total_dias_internacao": 60.0
+      },
+      {
+        "cid_principal": "T871",
+        "total_dias_internacao": 60.0
+      },
+      {
+        "cid_principal": "M236",
+        "total_dias_internacao": 60.0
+      },
+      {
+        "cid_principal": "T842",
+        "total_dias_internacao": 60.0
+      },
+      {
+        "cid_principal": "T009",
+        "total_dias_internacao": 59.0
+      },
+      {
+        "cid_principal": "S689",
+        "total_dias_internacao": 59.0
+      },
+      {
+        "cid_principal": "S66",
+        "total_dias_internacao": 58.0
+      },
+      {
+        "cid_principal": "S633",
+        "total_dias_internacao": 58.0
+      },
+      {
+        "cid_principal": "S999",
+        "total_dias_internacao": 58.0
+      },
+      {
+        "cid_principal": "T02",
+        "total_dias_internacao": 57.0
+      },
+      {
+        "cid_principal": "S421",
+        "total_dias_internacao": 57.0
+      },
+      {
+        "cid_principal": "M170",
+        "total_dias_internacao": 56.0
+      },
+      {
+        "cid_principal": "T065",
+        "total_dias_internacao": 56.0
+      },
+      {
+        "cid_principal": "S198",
+        "total_dias_internacao": 56.0
+      },
+      {
+        "cid_principal": "S371",
+        "total_dias_internacao": 56.0
+      },
+      {
+        "cid_principal": "T820",
+        "total_dias_internacao": 56.0
+      },
+      {
+        "cid_principal": "M544",
+        "total_dias_internacao": 55.0
+      },
+      {
+        "cid_principal": "T793",
+        "total_dias_internacao": 55.0
+      },
+      {
+        "cid_principal": "M214",
+        "total_dias_internacao": 55.0
+      },
+      {
+        "cid_principal": "M679",
+        "total_dias_internacao": 55.0
+      },
+      {
+        "cid_principal": "M512",
+        "total_dias_internacao": 54.0
+      },
+      {
+        "cid_principal": "M628",
+        "total_dias_internacao": 54.0
+      },
+      {
+        "cid_principal": "S211",
+        "total_dias_internacao": 53.0
+      },
+      {
+        "cid_principal": "S678",
+        "total_dias_internacao": 52.0
+      },
+      {
+        "cid_principal": "S366",
+        "total_dias_internacao": 52.0
+      },
+      {
+        "cid_principal": "T928",
+        "total_dias_internacao": 51.0
+      },
+      {
+        "cid_principal": "T039",
+        "total_dias_internacao": 51.0
+      },
+      {
+        "cid_principal": "M318",
+        "total_dias_internacao": 51.0
+      },
+      {
+        "cid_principal": "S934",
+        "total_dias_internacao": 51.0
+      },
+      {
+        "cid_principal": "S427",
+        "total_dias_internacao": 51.0
+      },
+      {
+        "cid_principal": "T345",
+        "total_dias_internacao": 50.0
+      },
+      {
+        "cid_principal": "S517",
+        "total_dias_internacao": 50.0
+      },
+      {
+        "cid_principal": "S274",
+        "total_dias_internacao": 50.0
+      },
+      {
+        "cid_principal": "T297",
+        "total_dias_internacao": 50.0
+      },
+      {
+        "cid_principal": "T140",
+        "total_dias_internacao": 50.0
+      },
+      {
+        "cid_principal": "S460",
+        "total_dias_internacao": 50.0
+      },
+      {
+        "cid_principal": "M245",
+        "total_dias_internacao": 49.0
+      },
+      {
+        "cid_principal": "M968",
+        "total_dias_internacao": 49.0
+      },
+      {
+        "cid_principal": "S98",
+        "total_dias_internacao": 49.0
+      },
+      {
+        "cid_principal": "T202",
+        "total_dias_internacao": 48.0
+      },
+      {
+        "cid_principal": "S800",
+        "total_dias_internacao": 48.0
+      },
+      {
+        "cid_principal": "M469",
+        "total_dias_internacao": 48.0
+      },
+      {
+        "cid_principal": "S968",
+        "total_dias_internacao": 46.0
+      },
+      {
+        "cid_principal": "S359",
+        "total_dias_internacao": 46.0
+      },
+      {
+        "cid_principal": "S91",
+        "total_dias_internacao": 46.0
+      },
+      {
+        "cid_principal": "M191",
+        "total_dias_internacao": 46.0
+      },
+      {
+        "cid_principal": "M911",
+        "total_dias_internacao": 45.0
+      },
+      {
+        "cid_principal": "S602",
+        "total_dias_internacao": 45.0
+      },
+      {
+        "cid_principal": "S834",
+        "total_dias_internacao": 45.0
+      },
+      {
+        "cid_principal": "S199",
+        "total_dias_internacao": 45.0
+      },
+      {
+        "cid_principal": "M879",
+        "total_dias_internacao": 45.0
+      },
+      {
+        "cid_principal": "T18",
+        "total_dias_internacao": 45.0
+      },
+      {
+        "cid_principal": "M490",
+        "total_dias_internacao": 45.0
+      },
+      {
+        "cid_principal": "S997",
+        "total_dias_internacao": 45.0
+      },
+      {
+        "cid_principal": "T301",
+        "total_dias_internacao": 44.0
+      },
+      {
+        "cid_principal": "T933",
+        "total_dias_internacao": 44.0
+      },
+      {
+        "cid_principal": "M488",
+        "total_dias_internacao": 44.0
+      },
+      {
+        "cid_principal": "S868",
+        "total_dias_internacao": 44.0
+      },
+      {
+        "cid_principal": "T12",
+        "total_dias_internacao": 43.0
+      },
+      {
+        "cid_principal": "S900",
+        "total_dias_internacao": 43.0
+      },
+      {
+        "cid_principal": "S399",
+        "total_dias_internacao": 43.0
+      },
+      {
+        "cid_principal": "M211",
+        "total_dias_internacao": 43.0
+      },
+      {
+        "cid_principal": "T751",
+        "total_dias_internacao": 42.0
+      },
+      {
+        "cid_principal": "S631",
+        "total_dias_internacao": 42.0
+      },
+      {
+        "cid_principal": "S058",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "S797",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "S550",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "M849",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "S967",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "M139",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "M738",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "S817",
+        "total_dias_internacao": 41.0
+      },
+      {
+        "cid_principal": "S850",
+        "total_dias_internacao": 40.0
+      },
+      {
+        "cid_principal": "S120",
+        "total_dias_internacao": 40.0
+      },
+      {
+        "cid_principal": "M87",
+        "total_dias_internacao": 40.0
+      },
+      {
+        "cid_principal": "M160",
+        "total_dias_internacao": 40.0
+      },
+      {
+        "cid_principal": "S112",
+        "total_dias_internacao": 39.0
+      },
+      {
+        "cid_principal": "T091",
+        "total_dias_internacao": 39.0
+      },
+      {
+        "cid_principal": "S212",
+        "total_dias_internacao": 39.0
+      },
+      {
+        "cid_principal": "M171",
+        "total_dias_internacao": 38.0
+      },
+      {
+        "cid_principal": "S97",
+        "total_dias_internacao": 38.0
+      },
+      {
+        "cid_principal": "S081",
+        "total_dias_internacao": 38.0
+      },
+      {
+        "cid_principal": "T84",
+        "total_dias_internacao": 37.0
+      },
+      {
+        "cid_principal": "M65",
+        "total_dias_internacao": 37.0
+      },
+      {
+        "cid_principal": "M00",
+        "total_dias_internacao": 37.0
+      },
+      {
+        "cid_principal": "T347",
+        "total_dias_internacao": 37.0
+      },
+      {
+        "cid_principal": "S670",
+        "total_dias_internacao": 37.0
+      },
+      {
+        "cid_principal": "T348",
+        "total_dias_internacao": 37.0
+      },
+      {
+        "cid_principal": "S962",
+        "total_dias_internacao": 37.0
+      },
+      {
+        "cid_principal": "M705",
+        "total_dias_internacao": 36.0
+      },
+      {
+        "cid_principal": "T829",
+        "total_dias_internacao": 36.0
+      },
+      {
+        "cid_principal": "S83",
+        "total_dias_internacao": 36.0
+      },
+      {
+        "cid_principal": "S059",
+        "total_dias_internacao": 36.0
+      },
+      {
+        "cid_principal": "S88",
+        "total_dias_internacao": 36.0
+      },
+      {
+        "cid_principal": "S268",
+        "total_dias_internacao": 35.0
+      },
+      {
+        "cid_principal": "S851",
+        "total_dias_internacao": 35.0
+      },
+      {
+        "cid_principal": "T08",
+        "total_dias_internacao": 35.0
+      },
+      {
+        "cid_principal": "M253",
+        "total_dias_internacao": 35.0
+      },
+      {
+        "cid_principal": "M651",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "M21",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "S869",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "M995",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "T212",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "S121",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "M795",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "M514",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "M724",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "T182",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "M23",
+        "total_dias_internacao": 34.0
+      },
+      {
+        "cid_principal": "T953",
+        "total_dias_internacao": 33.0
+      },
+      {
+        "cid_principal": "S780",
+        "total_dias_internacao": 33.0
+      },
+      {
+        "cid_principal": "T116",
+        "total_dias_internacao": 33.0
+      },
+      {
+        "cid_principal": "M513",
+        "total_dias_internacao": 33.0
+      },
+      {
+        "cid_principal": "M233",
+        "total_dias_internacao": 33.0
+      },
+      {
+        "cid_principal": "S32",
+        "total_dias_internacao": 33.0
+      },
+      {
+        "cid_principal": "T188",
+        "total_dias_internacao": 32.0
+      },
+      {
+        "cid_principal": "S20",
+        "total_dias_internacao": 32.0
+      },
+      {
+        "cid_principal": "S568",
+        "total_dias_internacao": 32.0
+      },
+      {
+        "cid_principal": "T939",
+        "total_dias_internacao": 32.0
+      },
+      {
+        "cid_principal": "S489",
+        "total_dias_internacao": 32.0
+      },
+      {
+        "cid_principal": "S683",
+        "total_dias_internacao": 32.0
+      },
+      {
+        "cid_principal": "S071",
+        "total_dias_internacao": 32.0
+      },
+      {
+        "cid_principal": "M704",
+        "total_dias_internacao": 31.0
+      },
+      {
+        "cid_principal": "M678",
+        "total_dias_internacao": 31.0
+      },
+      {
+        "cid_principal": "M220",
+        "total_dias_internacao": 31.0
+      },
+      {
+        "cid_principal": "T351",
+        "total_dias_internacao": 31.0
+      },
+      {
+        "cid_principal": "M999",
+        "total_dias_internacao": 31.0
+      },
+      {
+        "cid_principal": "T025",
+        "total_dias_internacao": 31.0
+      },
+      {
+        "cid_principal": "S143",
+        "total_dias_internacao": 31.0
+      },
+      {
+        "cid_principal": "S998",
+        "total_dias_internacao": 31.0
+      },
+      {
+        "cid_principal": "S302",
+        "total_dias_internacao": 31.0
+      },
+      {
+        "cid_principal": "M232",
+        "total_dias_internacao": 30.0
+      },
+      {
+        "cid_principal": "M492",
+        "total_dias_internacao": 30.0
+      },
+      {
+        "cid_principal": "M872",
+        "total_dias_internacao": 30.0
+      },
+      {
+        "cid_principal": "S519",
+        "total_dias_internacao": 30.0
+      },
+      {
+        "cid_principal": "S459",
+        "total_dias_internacao": 30.0
+      },
+      {
+        "cid_principal": "M650",
+        "total_dias_internacao": 30.0
+      },
+      {
+        "cid_principal": "M190",
+        "total_dias_internacao": 30.0
+      },
+      {
+        "cid_principal": "M415",
+        "total_dias_internacao": 30.0
+      },
+      {
+        "cid_principal": "S351",
+        "total_dias_internacao": 30.0
+      },
+      {
+        "cid_principal": "M254",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "M200",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "S357",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "M898",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "S609",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "M255",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "S373",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "M729",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "M319",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "S598",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "T828",
+        "total_dias_internacao": 29.0
+      },
+      {
+        "cid_principal": "T983",
+        "total_dias_internacao": 28.0
+      },
+      {
+        "cid_principal": "T230",
+        "total_dias_internacao": 28.0
+      },
+      {
+        "cid_principal": "S978",
+        "total_dias_internacao": 28.0
+      },
+      {
+        "cid_principal": "T784",
+        "total_dias_internacao": 28.0
+      },
+      {
+        "cid_principal": "T958",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "S647",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "M241",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "M17",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "S462",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "T242",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "M818",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "T130",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "S93",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "S510",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "S312",
+        "total_dias_internacao": 27.0
+      },
+      {
+        "cid_principal": "S532",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "S73",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "M109",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "S688",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "T148",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "S411",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "M310",
+        "total_dias_internacao": 26.0
+      },
+      {
+        "cid_principal": "T185",
+        "total_dias_internacao": 25.0
+      },
+      {
+        "cid_principal": "S558",
+        "total_dias_internacao": 25.0
+      },
+      {
+        "cid_principal": "S701",
+        "total_dias_internacao": 25.0
+      },
+      {
+        "cid_principal": "S458",
+        "total_dias_internacao": 25.0
+      },
+      {
+        "cid_principal": "T926",
+        "total_dias_internacao": 25.0
+      },
+      {
+        "cid_principal": "T14",
+        "total_dias_internacao": 25.0
+      },
+      {
+        "cid_principal": "M768",
+        "total_dias_internacao": 25.0
+      },
+      {
+        "cid_principal": "S750",
+        "total_dias_internacao": 25.0
+      },
+      {
+        "cid_principal": "T909",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "S397",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "M489",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "S861",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "T935",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "S634",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "S014",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "T856",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "T861",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "T016",
+        "total_dias_internacao": 24.0
+      },
+      {
+        "cid_principal": "S859",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "M210",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "S840",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "M711",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "M873",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "S597",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "S599",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "T920",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "S699",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "S117",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "T010",
+        "total_dias_internacao": 23.0
+      },
+      {
+        "cid_principal": "S51",
+        "total_dias_internacao": 22.0
+      },
+      {
+        "cid_principal": "M653",
+        "total_dias_internacao": 22.0
+      },
+      {
+        "cid_principal": "M662",
+        "total_dias_internacao": 22.0
+      },
+      {
+        "cid_principal": "S857",
+        "total_dias_internacao": 22.0
+      },
+      {
+        "cid_principal": "M531",
+        "total_dias_internacao": 22.0
+      },
+      {
+        "cid_principal": "S022",
+        "total_dias_internacao": 22.0
+      },
+      {
+        "cid_principal": "T10",
+        "total_dias_internacao": 22.0
+      },
+      {
+        "cid_principal": "M670",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "T13",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "S759",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "S867",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "T950",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "M502",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "T316",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "S056",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "S030",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "S931",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "T868",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "T294",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "M503",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "M175",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "S153",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "M709",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "M688",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "S450",
+        "total_dias_internacao": 21.0
+      },
+      {
+        "cid_principal": "M198",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "T633",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "T959",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "S798",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "M680",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "S767",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "S942",
+        "total_dias_internacao": 20.0
+      },
+      {
+        "cid_principal": "M918",
+        "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "S299",
+        "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "S561",
+        "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "M418",
+        "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "S400",
+        "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "S012",
+        "total_dias_internacao": 19.0
+      },
+      {
+        "cid_principal": "S559",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "T341",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "T111",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "S469",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "S641",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "S644",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "T139",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "M251",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "T854",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "M470",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "M138",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "M761",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "S551",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "S159",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "M79",
+        "total_dias_internacao": 18.0
+      },
+      {
+        "cid_principal": "M541",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "T189",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "T138",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "M75",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "M419",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "S29",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "S70",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "M624",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "M258",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "S352",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "M631",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "S969",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "S275",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "S380",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "S054",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "M949",
+        "total_dias_internacao": 17.0
+      },
+      {
+        "cid_principal": "S223",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "T024",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "T794",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "S150",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "T04",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "M229",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "M759",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "S298",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "M549",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "M222",
+        "total_dias_internacao": 16.0
+      },
+      {
+        "cid_principal": "M702",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "M215",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "S157",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "T883",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "S808",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "T232",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "T34",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "S757",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "S011",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "M256",
+        "total_dias_internacao": 15.0
+      },
+      {
+        "cid_principal": "M015",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "T01",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "M752",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S67",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "M202",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "T981",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S097",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "T808",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "T30",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S013",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S02",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "M958",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S051",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "T924",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "M205",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S010",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S396",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S562",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "T908",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "T549",
+        "total_dias_internacao": 14.0
+      },
+      {
+        "cid_principal": "S751",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "T042",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "S499",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M72",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "S129",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "T291",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "S771",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M939",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "S600",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M495",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M950",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "S118",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "S664",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M762",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M244",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "T929",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M608",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "S01",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "M472",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "S960",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "T863",
+        "total_dias_internacao": 13.0
+      },
+      {
+        "cid_principal": "T923",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "T093",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S878",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "T936",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "M856",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "T310",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "M240",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "T305",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "M311",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "T543",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S341",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "M665",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S207",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S277",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "M248",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "T174",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S81",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S552",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "T343",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "M430",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "S665",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "M722",
+        "total_dias_internacao": 12.0
+      },
+      {
+        "cid_principal": "M206",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S858",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "M539",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "M131",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "T758",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "M420",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S481",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "M938",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S758",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S640",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S090",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S912",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S197",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S801",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S958",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S637",
+        "total_dias_internacao": 11.0
+      },
+      {
+        "cid_principal": "S407",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "M321",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "M192",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "T823",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "T864",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S233",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S410",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "T872",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S936",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "M630",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S540",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "M203",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "T09",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "M671",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S158",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "T178",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "T853",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "T000",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S119",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S567",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S355",
+        "total_dias_internacao": 10.0
+      },
+      {
+        "cid_principal": "S99",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "S971",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "S457",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "S14",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "M758",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "T252",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "T304",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "T311",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "S60",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "S707",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "M961",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "M165",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "M66",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "M13",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "M899",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "T110",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "T250",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "S432",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "S009",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "S452",
+        "total_dias_internacao": 9.0
+      },
+      {
+        "cid_principal": "M713",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "T216",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M411",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M161",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S607",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "T406",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "T815",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S259",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M19",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M543",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M766",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S322",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "T200",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "T632",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S146",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S697",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S001",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M948",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S898",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S222",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M969",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "M089",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S534",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S563",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "S632",
+        "total_dias_internacao": 8.0
+      },
+      {
+        "cid_principal": "T349",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "M790",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "T054",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "M06",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S549",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "M629",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "M801",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S019",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "T135",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S809",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S807",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S005",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S907",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S378",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S398",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S65",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S417",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "S463",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "M243",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "M891",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "T280",
+        "total_dias_internacao": 7.0
+      },
+      {
+        "cid_principal": "T513",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M664",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M68",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M728",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M754",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M859",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M620",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M018",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M779",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M013",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M673",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S27",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T825",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S608",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M858",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M719",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S21",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S903",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T027",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M712",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T901",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S310",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S22",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S440",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M892",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S331",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M663",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S230",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M433",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "S636",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T173",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "M930",
+        "total_dias_internacao": 6.0
+      },
+      {
+        "cid_principal": "T049",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S39",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T824",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S015",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S468",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S541",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S863",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S547",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T940",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S870",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S63",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M217",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M546",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T146",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M870",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M50",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S034",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S315",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S700",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S382",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S564",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M174",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S76",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S601",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S461",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S253",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M069",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S833",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S280",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S314",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T639",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T199",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M212",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S330",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S557",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T184",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "S533",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M410",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "T838",
+        "total_dias_internacao": 5.0
+      },
+      {
+        "cid_principal": "M798",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M51",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S435",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S132",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S354",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "T170",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S008",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M221",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S764",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M921",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "T099",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "T227",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S710",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S379",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "T63",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S908",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M703",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M100",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "T134",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "T274",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M316",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S353",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "S300",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M154",
+        "total_dias_internacao": 4.0
+      },
+      {
+        "cid_principal": "M479",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S650",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S911",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S408",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S542",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M228",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S508",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "T852",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M250",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S548",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S709",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S202",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S409",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S052",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S698",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M54",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S501",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M163",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M001",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M774",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S68",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M128",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S560",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S901",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M20",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "T79",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "T198",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S57",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M088",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S909",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M769",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S579",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M964",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M998",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M164",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S377",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "S080",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M926",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "M84",
+        "total_dias_internacao": 3.0
+      },
+      {
+        "cid_principal": "T222",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T246",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T919",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S231",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S59",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M357",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S731",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S442",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S970",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S635",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S949",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M101",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M767",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M181",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M478",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M931",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S56",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M611",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M204",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S717",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M328",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T115",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T240",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T319",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M153",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T114",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S19",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M770",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S79",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S565",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M231",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M721",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T638",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S658",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S467",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S86",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M708",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M765",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M548",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S959",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T048",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "S045",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "M234",
+        "total_dias_internacao": 2.0
+      },
+      {
+        "cid_principal": "T181",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T296",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M996",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T143",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T340",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S80",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T060",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M439",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S437",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T159",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T798",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M997",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M223",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T183",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S032",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T295",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T905",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S760",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M955",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S852",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S43",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M619",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M125",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T113",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M25",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M755",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M654",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M060",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M059",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S050",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M773",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S935",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M811",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S648",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T210",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "T904",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M775",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M674",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M301",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M626",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M623",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M625",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "S752",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M064",
+        "total_dias_internacao": 1.0
+      },
+      {
+        "cid_principal": "M602",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "S441",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T052",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T29",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "S649",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "S509",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "M912",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T322",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T799",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T870",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T041",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T833",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "S90",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T207",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "M259",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T982",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "M888",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "M753",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T098",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T342",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "S30",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T315",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "S252",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "M710",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "M053",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "S434",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "T241",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "M771",
+        "total_dias_internacao": 0.0
+      },
+      {
+        "cid_principal": "S350",
+        "total_dias_internacao": 0.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 9059,
+        "total_dias_internacao": 65515.0
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 6780,
+        "total_dias_internacao": 45929.0
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 3998,
+        "total_dias_internacao": 32775.0
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 5398,
+        "total_dias_internacao": 30575.0
+      },
+      {
+        "cid_principal": "S722",
+        "internacoes": 2513,
+        "total_dias_internacao": 16678.0
+      },
+      {
+        "cid_principal": "S729",
+        "internacoes": 2303,
+        "total_dias_internacao": 14207.0
+      },
+      {
+        "cid_principal": "T814",
+        "internacoes": 1290,
+        "total_dias_internacao": 11071.0
+      },
+      {
+        "cid_principal": "S724",
+        "internacoes": 1565,
+        "total_dias_internacao": 10175.0
+      },
+      {
+        "cid_principal": "S728",
+        "internacoes": 1580,
+        "total_dias_internacao": 10088.0
+      },
+      {
+        "cid_principal": "S822",
+        "internacoes": 1833,
+        "total_dias_internacao": 9307.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8299
+  },
+  {
+    "id": "Q27",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 procedimentos ambulatoriais ortopédicos mais realizados em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28851, Requested 2672. Please try again in 3.046s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cod_procedimento": "0302050019",
+        "total_procedimentos": 72108
+      },
+      {
+        "cod_procedimento": "0701050047",
+        "total_procedimentos": 3953
+      },
+      {
+        "cod_procedimento": "0701060018",
+        "total_procedimentos": 3505
+      },
+      {
+        "cod_procedimento": "0701010142",
+        "total_procedimentos": 2239
+      },
+      {
+        "cod_procedimento": "0701060034",
+        "total_procedimentos": 1777
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28851, Requested 2672. Please try again in 3.046s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11436
+  },
+  {
+    "id": "Q28",
+    "cat": "Epidemiológica Complexa",
+    "question": "Proporção de internações ortopédicas com paciente de outro município em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2675. Please try again in 5.35s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 69487,
+        "deslocamento_intermunicipal": 39611.0,
+        "pct_deslocamento": 57.0
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2675. Please try again in 5.35s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 8588
+  },
+  {
+    "id": "Q29",
+    "cat": "Epidemiológica Complexa",
+    "question": "Comparativo de volume mensal SIA vs SIH ortopédico em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=24",
+    "sql": "SELECT mes_cmpt,\n  SUM(CASE WHEN sistema = 'SIA' THEN 1 ELSE 0 END) AS sia_volume,\n  SUM(CASE WHEN sistema = 'SIH' THEN 1 ELSE 0 END) AS sih_volume\nFROM processed\nWHERE uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "sia_volume": 8415.0,
+        "sih_volume": 5667.0
+      },
+      {
+        "mes_cmpt": 2,
+        "sia_volume": 8530.0,
+        "sih_volume": 5121.0
+      },
+      {
+        "mes_cmpt": 3,
+        "sia_volume": 9867.0,
+        "sih_volume": 5777.0
+      },
+      {
+        "mes_cmpt": 4,
+        "sia_volume": 9694.0,
+        "sih_volume": 5440.0
+      },
+      {
+        "mes_cmpt": 5,
+        "sia_volume": 9533.0,
+        "sih_volume": 5918.0
+      },
+      {
+        "mes_cmpt": 6,
+        "sia_volume": 3733.0,
+        "sih_volume": 5830.0
+      },
+      {
+        "mes_cmpt": 7,
+        "sia_volume": 9079.0,
+        "sih_volume": 5824.0
+      },
+      {
+        "mes_cmpt": 8,
+        "sia_volume": 10300.0,
+        "sih_volume": 6396.0
+      },
+      {
+        "mes_cmpt": 9,
+        "sia_volume": 9071.0,
+        "sih_volume": 5830.0
+      },
+      {
+        "mes_cmpt": 10,
+        "sia_volume": 9863.0,
+        "sih_volume": 5887.0
+      },
+      {
+        "mes_cmpt": 11,
+        "sia_volume": 8870.0,
+        "sih_volume": 5677.0
+      },
+      {
+        "mes_cmpt": 12,
+        "sia_volume": 8409.0,
+        "sih_volume": 6151.0
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIA",
+        "total": 8415
+      },
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIH",
+        "total": 5667
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIA",
+        "total": 8530
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIH",
+        "total": 5121
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIA",
+        "total": 9867
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIH",
+        "total": 5777
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIA",
+        "total": 9694
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIH",
+        "total": 5440
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIA",
+        "total": 9533
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIH",
+        "total": 5917
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIA",
+        "total": 3733
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIH",
+        "total": 5830
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIA",
+        "total": 9079
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIH",
+        "total": 5824
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIA",
+        "total": 10300
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIH",
+        "total": 6396
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIA",
+        "total": 9071
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIH",
+        "total": 5830
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIA",
+        "total": 9863
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIH",
+        "total": 5887
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIA",
+        "total": 8870
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIH",
+        "total": 5677
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIA",
+        "total": 8409
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIH",
+        "total": 6151
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8107
+  },
+  {
+    "id": "Q30",
+    "cat": "Epidemiológica Complexa",
+    "question": "Idade média dos pacientes internados por fratura de fêmur (S72) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29199, Requested 2673. Please try again in 3.744s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "idade_media": 62.4,
+        "idade_minima": 0.0,
+        "idade_maxima": 99.0
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29199, Requested 2673. Please try again in 3.744s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11398
+  },
+  {
+    "id": "Q31",
+    "cat": "Financeira",
+    "question": "Custo total de todas as internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=187220821.79 exp=187220821.79",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_total": 187220821.79
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 187220821.79
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6275
+  },
+  {
+    "id": "Q32",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28905, Requested 2667. Please try again in 3.144s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "custo_medio": 2693.13
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28905, Requested 2667. Please try again in 3.144s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11421
+  },
+  {
+    "id": "Q33",
+    "cat": "Financeira",
+    "question": "Custo total de internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=82692089.44 exp=82692089.44",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%';",
+    "llm_result": [
+      {
+        "custo_total": 82692089.44
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 82692089.44
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5335
+  },
+  {
+    "id": "Q34",
+    "cat": "Financeira",
+    "question": "Top 5 CIDs ortopédicos com maior custo total de internação em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29192, Requested 2672. Please try again in 3.728s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 9059,
+        "custo_total": 30400546.73
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 6780,
+        "custo_total": 17784405.42
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 5398,
+        "custo_total": 13813655.09
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 3998,
+        "custo_total": 7188065.64
+      },
+      {
+        "cid_principal": "S722",
+        "internacoes": 2513,
+        "custo_total": 6256179.73
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29192, Requested 2672. Please try again in 3.728s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11352
+  },
+  {
+    "id": "Q35",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas com uso de OPME (val_ortp > 0) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'custo_total': None} exp={'internacoes_com_opme': 0, 'custo_total_opme': None}",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND val_ortp > 0;",
+    "llm_result": [
+      {
+        "custo_total": null
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_com_opme": 0,
+        "custo_total_opme": null
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5752
+  },
+  {
+    "id": "Q36",
+    "cat": "Financeira",
+    "question": "Valor total de honorários profissionais (val_sp) em internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29250, Requested 2677. Please try again in 3.854s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_honorarios_profissionais": 32810269.18
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29250, Requested 2677. Please try again in 3.854s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11396
+  },
+  {
+    "id": "Q37",
+    "cat": "Financeira",
+    "question": "Custo médio por dia de internação ortopédica em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=441.21 exp=441.21",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)) / SUM(dias_perm), 2) AS custo_medio_por_dia\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')",
+    "llm_result": [
+      {
+        "custo_medio_por_dia": 441.21
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_por_dia": 441.21
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6869
+  },
+  {
+    "id": "Q38",
+    "cat": "Financeira",
+    "question": "Top 5 estabelecimentos com maior custo total de internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28780, Requested 2675. Please try again in 2.91s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2078015",
+        "internacoes": 2257,
+        "custo_total": 11295149.42
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "internacoes": 1652,
+        "custo_total": 7048588.75
+      },
+      {
+        "cnes_estabelecimento": "2077477",
+        "internacoes": 1270,
+        "custo_total": 4787468.91
+      },
+      {
+        "cnes_estabelecimento": "2748029",
+        "internacoes": 985,
+        "custo_total": 4282682.44
+      },
+      {
+        "cnes_estabelecimento": "2082187",
+        "internacoes": 1263,
+        "custo_total": 4099918.47
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28780, Requested 2675. Please try again in 2.91s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11420
+  },
+  {
+    "id": "Q39",
+    "cat": "Financeira",
+    "question": "Custo total de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=9092221.75 exp=9092221.75",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_total": 9092221.75
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 9092221.75
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6463
+  },
+  {
+    "id": "Q40",
+    "cat": "Financeira",
+    "question": "Proporção custo serviço hospitalar vs honorários em internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28503, Requested 2677. Please try again in 2.36s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "custo_servico_hospitalar": 153782049.46,
+        "honorarios_profissionais": 32810269.18,
+        "pct_hospitalar": 82.4
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28503, Requested 2677. Please try again in 2.36s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11418
+  },
+  {
+    "id": "Q41",
+    "cat": "Temporal/Comparativa",
+    "question": "Distribuição mensal de internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT mes_cmpt,\n  COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "total_internacoes": 5667
+      },
+      {
+        "mes_cmpt": 2,
+        "total_internacoes": 5121
+      },
+      {
+        "mes_cmpt": 3,
+        "total_internacoes": 5777
+      },
+      {
+        "mes_cmpt": 4,
+        "total_internacoes": 5440
+      },
+      {
+        "mes_cmpt": 5,
+        "total_internacoes": 5917
+      },
+      {
+        "mes_cmpt": 6,
+        "total_internacoes": 5830
+      },
+      {
+        "mes_cmpt": 7,
+        "total_internacoes": 5824
+      },
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 6396
+      },
+      {
+        "mes_cmpt": 9,
+        "total_internacoes": 5830
+      },
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 5887
+      },
+      {
+        "mes_cmpt": 11,
+        "total_internacoes": 5677
+      },
+      {
+        "mes_cmpt": 12,
+        "total_internacoes": 6151
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_internacoes": 5667
+      },
+      {
+        "mes_cmpt": 2,
+        "total_internacoes": 5121
+      },
+      {
+        "mes_cmpt": 3,
+        "total_internacoes": 5777
+      },
+      {
+        "mes_cmpt": 4,
+        "total_internacoes": 5440
+      },
+      {
+        "mes_cmpt": 5,
+        "total_internacoes": 5917
+      },
+      {
+        "mes_cmpt": 6,
+        "total_internacoes": 5830
+      },
+      {
+        "mes_cmpt": 7,
+        "total_internacoes": 5824
+      },
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 6396
+      },
+      {
+        "mes_cmpt": 9,
+        "total_internacoes": 5830
+      },
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 5887
+      },
+      {
+        "mes_cmpt": 11,
+        "total_internacoes": 5677
+      },
+      {
+        "mes_cmpt": 12,
+        "total_internacoes": 6151
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5907
+  },
+  {
+    "id": "Q42",
+    "cat": "Temporal/Comparativa",
+    "question": "Distribuição mensal de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29940, Requested 2673. Please try again in 5.226s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "procedimentos": 8415
+      },
+      {
+        "mes_cmpt": 2,
+        "procedimentos": 8530
+      },
+      {
+        "mes_cmpt": 3,
+        "procedimentos": 9867
+      },
+      {
+        "mes_cmpt": 4,
+        "procedimentos": 9694
+      },
+      {
+        "mes_cmpt": 5,
+        "procedimentos": 9533
+      },
+      {
+        "mes_cmpt": 6,
+        "procedimentos": 3733
+      },
+      {
+        "mes_cmpt": 7,
+        "procedimentos": 9079
+      },
+      {
+        "mes_cmpt": 8,
+        "procedimentos": 10300
+      },
+      {
+        "mes_cmpt": 9,
+        "procedimentos": 9071
+      },
+      {
+        "mes_cmpt": 10,
+        "procedimentos": 9863
+      },
+      {
+        "mes_cmpt": 11,
+        "procedimentos": 8870
+      },
+      {
+        "mes_cmpt": 12,
+        "procedimentos": 8409
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29940, Requested 2673. Please try again in 5.226s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 8133
+  },
+  {
+    "id": "Q43",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior número de internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=8 exp=8",
+    "sql": "SELECT mes_cmpt,\n  COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY total_internacoes DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 2816
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 2816
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 2682
+  },
+  {
+    "id": "Q44",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal do custo total de internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28874, Requested 2672. Please try again in 3.092s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 16004871.37
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 13762388.36
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 15269201.32
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 14662611.92
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 15420504.69
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 15070372.92
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 16158159.96
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 17202950.64
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 15443485.25
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 15738389.56
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 15428177.15
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 17059708.65
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28874, Requested 2672. Please try again in 3.092s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11358
+  },
+  {
+    "id": "Q45",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por trauma (S00-T98) vs doenças musculoesqueléticas (M00-M99) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 27336, Requested 2680. Please try again in 32ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "icd_group": "M00-M99",
+        "internacoes": 507
+      },
+      {
+        "mes_cmpt": 1,
+        "icd_group": "S00-T98",
+        "internacoes": 5160
+      },
+      {
+        "mes_cmpt": 2,
+        "icd_group": "M00-M99",
+        "internacoes": 561
+      },
+      {
+        "mes_cmpt": 2,
+        "icd_group": "S00-T98",
+        "internacoes": 4560
+      },
+      {
+        "mes_cmpt": 3,
+        "icd_group": "M00-M99",
+        "internacoes": 611
+      },
+      {
+        "mes_cmpt": 3,
+        "icd_group": "S00-T98",
+        "internacoes": 5166
+      },
+      {
+        "mes_cmpt": 4,
+        "icd_group": "M00-M99",
+        "internacoes": 566
+      },
+      {
+        "mes_cmpt": 4,
+        "icd_group": "S00-T98",
+        "internacoes": 4874
+      },
+      {
+        "mes_cmpt": 5,
+        "icd_group": "M00-M99",
+        "internacoes": 609
+      },
+      {
+        "mes_cmpt": 5,
+        "icd_group": "S00-T98",
+        "internacoes": 5308
+      },
+      {
+        "mes_cmpt": 6,
+        "icd_group": "M00-M99",
+        "internacoes": 576
+      },
+      {
+        "mes_cmpt": 6,
+        "icd_group": "S00-T98",
+        "internacoes": 5254
+      },
+      {
+        "mes_cmpt": 7,
+        "icd_group": "M00-M99",
+        "internacoes": 625
+      },
+      {
+        "mes_cmpt": 7,
+        "icd_group": "S00-T98",
+        "internacoes": 5199
+      },
+      {
+        "mes_cmpt": 8,
+        "icd_group": "M00-M99",
+        "internacoes": 612
+      },
+      {
+        "mes_cmpt": 8,
+        "icd_group": "S00-T98",
+        "internacoes": 5784
+      },
+      {
+        "mes_cmpt": 9,
+        "icd_group": "M00-M99",
+        "internacoes": 606
+      },
+      {
+        "mes_cmpt": 9,
+        "icd_group": "S00-T98",
+        "internacoes": 5224
+      },
+      {
+        "mes_cmpt": 10,
+        "icd_group": "M00-M99",
+        "internacoes": 555
+      },
+      {
+        "mes_cmpt": 10,
+        "icd_group": "S00-T98",
+        "internacoes": 5332
+      },
+      {
+        "mes_cmpt": 11,
+        "icd_group": "M00-M99",
+        "internacoes": 522
+      },
+      {
+        "mes_cmpt": 11,
+        "icd_group": "S00-T98",
+        "internacoes": 5155
+      },
+      {
+        "mes_cmpt": 12,
+        "icd_group": "M00-M99",
+        "internacoes": 551
+      },
+      {
+        "mes_cmpt": 12,
+        "icd_group": "S00-T98",
+        "internacoes": 5600
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 27336, Requested 2680. Please try again in 32ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 8778
+  },
+  {
+    "id": "Q46",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal de óbitos em internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "12 linhas corretas (exato)",
+    "sql": "SELECT mes_cmpt,\n  COUNT(*) AS total_obitos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND morte = 1\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "total_obitos": 198
+      },
+      {
+        "mes_cmpt": 2,
+        "total_obitos": 142
+      },
+      {
+        "mes_cmpt": 3,
+        "total_obitos": 170
+      },
+      {
+        "mes_cmpt": 4,
+        "total_obitos": 188
+      },
+      {
+        "mes_cmpt": 5,
+        "total_obitos": 202
+      },
+      {
+        "mes_cmpt": 6,
+        "total_obitos": 196
+      },
+      {
+        "mes_cmpt": 7,
+        "total_obitos": 201
+      },
+      {
+        "mes_cmpt": 8,
+        "total_obitos": 201
+      },
+      {
+        "mes_cmpt": 9,
+        "total_obitos": 183
+      },
+      {
+        "mes_cmpt": 10,
+        "total_obitos": 199
+      },
+      {
+        "mes_cmpt": 11,
+        "total_obitos": 209
+      },
+      {
+        "mes_cmpt": 12,
+        "total_obitos": 185
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_obitos": 198
+      },
+      {
+        "mes_cmpt": 2,
+        "total_obitos": 142
+      },
+      {
+        "mes_cmpt": 3,
+        "total_obitos": 170
+      },
+      {
+        "mes_cmpt": 4,
+        "total_obitos": 188
+      },
+      {
+        "mes_cmpt": 5,
+        "total_obitos": 202
+      },
+      {
+        "mes_cmpt": 6,
+        "total_obitos": 196
+      },
+      {
+        "mes_cmpt": 7,
+        "total_obitos": 201
+      },
+      {
+        "mes_cmpt": 8,
+        "total_obitos": 201
+      },
+      {
+        "mes_cmpt": 9,
+        "total_obitos": 183
+      },
+      {
+        "mes_cmpt": 10,
+        "total_obitos": 199
+      },
+      {
+        "mes_cmpt": 11,
+        "total_obitos": 209
+      },
+      {
+        "mes_cmpt": 12,
+        "total_obitos": 185
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 3118
+  },
+  {
+    "id": "Q47",
+    "cat": "Temporal/Comparativa",
+    "question": "Permanência média por trimestre nas internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "4 linhas corretas, ordem livre (exato)",
+    "sql": "SELECT\n  CASE\n    WHEN mes_cmpt BETWEEN 1 AND 3 THEN 'Q1'\n    WHEN mes_cmpt BETWEEN 4 AND 6 THEN 'Q2'\n    WHEN mes_cmpt BETWEEN 7 AND 9 THEN 'Q3'\n    ELSE 'Q4'\n  END AS trimestre,\n  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY trimestre\nORDER BY trimestre;",
+    "llm_result": [
+      {
+        "trimestre": "Q1",
+        "permanencia_media_dias": 6.1
+      },
+      {
+        "trimestre": "Q2",
+        "permanencia_media_dias": 6.0
+      },
+      {
+        "trimestre": "Q3",
+        "permanencia_media_dias": 6.1
+      },
+      {
+        "trimestre": "Q4",
+        "permanencia_media_dias": 6.2
+      }
+    ],
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "permanencia_media_dias": 6.1
+      },
+      {
+        "trimestre": "Q2",
+        "permanencia_media_dias": 6.0
+      },
+      {
+        "trimestre": "Q3",
+        "permanencia_media_dias": 6.1
+      },
+      {
+        "trimestre": "Q4",
+        "permanencia_media_dias": 6.2
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 10824
+  },
+  {
+    "id": "Q48",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior custo médio por internação ortopédica em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=1 exp=1",
+    "sql": "SELECT mes_cmpt,\n  ROUND(SUM(COALESCE(custo_total, 0)) / COUNT(DISTINCT n_aih), 2) AS custo_medio\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY custo_medio DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_medio": 2824.22
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_medio": 2824.22
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6517
+  },
+  {
+    "id": "Q49",
+    "cat": "Temporal/Comparativa",
+    "question": "Sazonalidade mensal de fraturas de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT mes_cmpt,\n  COUNT(DISTINCT n_aih) AS total_fraturas\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "total_fraturas": 2467
+      },
+      {
+        "mes_cmpt": 2,
+        "total_fraturas": 2238
+      },
+      {
+        "mes_cmpt": 3,
+        "total_fraturas": 2453
+      },
+      {
+        "mes_cmpt": 4,
+        "total_fraturas": 2338
+      },
+      {
+        "mes_cmpt": 5,
+        "total_fraturas": 2607
+      },
+      {
+        "mes_cmpt": 6,
+        "total_fraturas": 2614
+      },
+      {
+        "mes_cmpt": 7,
+        "total_fraturas": 2646
+      },
+      {
+        "mes_cmpt": 8,
+        "total_fraturas": 2816
+      },
+      {
+        "mes_cmpt": 9,
+        "total_fraturas": 2488
+      },
+      {
+        "mes_cmpt": 10,
+        "total_fraturas": 2488
+      },
+      {
+        "mes_cmpt": 11,
+        "total_fraturas": 2449
+      },
+      {
+        "mes_cmpt": 12,
+        "total_fraturas": 2677
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_fraturas": 2467
+      },
+      {
+        "mes_cmpt": 2,
+        "total_fraturas": 2238
+      },
+      {
+        "mes_cmpt": 3,
+        "total_fraturas": 2453
+      },
+      {
+        "mes_cmpt": 4,
+        "total_fraturas": 2338
+      },
+      {
+        "mes_cmpt": 5,
+        "total_fraturas": 2607
+      },
+      {
+        "mes_cmpt": 6,
+        "total_fraturas": 2614
+      },
+      {
+        "mes_cmpt": 7,
+        "total_fraturas": 2646
+      },
+      {
+        "mes_cmpt": 8,
+        "total_fraturas": 2816
+      },
+      {
+        "mes_cmpt": 9,
+        "total_fraturas": 2488
+      },
+      {
+        "mes_cmpt": 10,
+        "total_fraturas": 2488
+      },
+      {
+        "mes_cmpt": 11,
+        "total_fraturas": 2449
+      },
+      {
+        "mes_cmpt": 12,
+        "total_fraturas": 2677
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5583
+  },
+  {
+    "id": "Q50",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações ortopédicas de idosos (60 anos ou mais) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT mes_cmpt,\n  COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND idade_paciente >= 60\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "total_internacoes": 2318
+      },
+      {
+        "mes_cmpt": 2,
+        "total_internacoes": 2080
+      },
+      {
+        "mes_cmpt": 3,
+        "total_internacoes": 2269
+      },
+      {
+        "mes_cmpt": 4,
+        "total_internacoes": 2222
+      },
+      {
+        "mes_cmpt": 5,
+        "total_internacoes": 2436
+      },
+      {
+        "mes_cmpt": 6,
+        "total_internacoes": 2481
+      },
+      {
+        "mes_cmpt": 7,
+        "total_internacoes": 2499
+      },
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 2574
+      },
+      {
+        "mes_cmpt": 9,
+        "total_internacoes": 2321
+      },
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 2313
+      },
+      {
+        "mes_cmpt": 11,
+        "total_internacoes": 2204
+      },
+      {
+        "mes_cmpt": 12,
+        "total_internacoes": 2469
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_internacoes": 2318
+      },
+      {
+        "mes_cmpt": 2,
+        "total_internacoes": 2080
+      },
+      {
+        "mes_cmpt": 3,
+        "total_internacoes": 2269
+      },
+      {
+        "mes_cmpt": 4,
+        "total_internacoes": 2222
+      },
+      {
+        "mes_cmpt": 5,
+        "total_internacoes": 2436
+      },
+      {
+        "mes_cmpt": 6,
+        "total_internacoes": 2481
+      },
+      {
+        "mes_cmpt": 7,
+        "total_internacoes": 2499
+      },
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 2574
+      },
+      {
+        "mes_cmpt": 9,
+        "total_internacoes": 2321
+      },
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 2313
+      },
+      {
+        "mes_cmpt": 11,
+        "total_internacoes": 2204
+      },
+      {
+        "mes_cmpt": 12,
+        "total_internacoes": 2469
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5934
+  }
+]

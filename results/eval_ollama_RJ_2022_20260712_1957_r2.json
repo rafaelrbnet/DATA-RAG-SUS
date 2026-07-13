@@ -1,0 +1,1997 @@
+[
+  {
+    "id": "Q01",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações ortopédicas (M00-M99 e S00-S99) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=28056 exp=28056",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_internacoes": 28056
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 28056
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 11443
+  },
+  {
+    "id": "Q02",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2669. Please try again in 5.338s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_procedimentos": 27201
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2669. Please try again in 5.338s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11402
+  },
+  {
+    "id": "Q03",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29954, Requested 2669. Please try again in 5.246s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 9945
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29954, Requested 2669. Please try again in 5.246s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 8870
+  },
+  {
+    "id": "Q04",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por osteoartrose (M16, M17) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=102 exp=102",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M16%' OR cid_principal LIKE 'M17%')",
+    "llm_result": [
+      {
+        "total_internacoes": 102
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 102
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 2169
+  },
+  {
+    "id": "Q05",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de óbitos em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29811, Requested 2669. Please try again in 4.96s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_obitos": 965
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29811, Requested 2669. Please try again in 4.96s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 9398
+  },
+  {
+    "id": "Q06",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por traumatismos (S00-T98) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=25731 exp=25731",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND icd_group = 'S00-T98';",
+    "llm_result": [
+      {
+        "total_internacoes": 25731
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 25731
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 2241
+  },
+  {
+    "id": "Q07",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por doenças osteomusculares (M00-M99) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28839, Requested 2672. Please try again in 3.022s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 2325
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28839, Requested 2672. Please try again in 3.022s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11414
+  },
+  {
+    "id": "Q08",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de mulheres internadas por causa ortopédica em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=10444 exp=10444",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'F'\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_internacoes": 10444
+      }
+    ],
+    "gold_result": [
+      {
+        "total_mulheres_internadas": 10444
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5309
+  },
+  {
+    "id": "Q09",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de homens internados por causa ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29037, Requested 2669. Please try again in 3.412s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_homens_internados": 17612
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29037, Requested 2669. Please try again in 3.412s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11409
+  },
+  {
+    "id": "Q10",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas de idosos (60 anos ou mais) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=10149 exp=10149",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 60\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_internacoes": 10149
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 10149
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6723
+  },
+  {
+    "id": "Q11",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de municípios distintos com internação ortopédica registrada em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28581, Requested 2675. Please try again in 2.512s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "num_municipios": 63
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28581, Requested 2675. Please try again in 2.512s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11392
+  },
+  {
+    "id": "Q12",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de estabelecimentos distintos com internação ortopédica em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=135 exp=135",
+    "sql": "SELECT COUNT(DISTINCT cnes_estabelecimento) AS num_estabelecimentos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "num_estabelecimentos": 135
+      }
+    ],
+    "gold_result": [
+      {
+        "num_estabelecimentos": 135
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5580
+  },
+  {
+    "id": "Q13",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência superior a 7 dias em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28631, Requested 2675. Please try again in 2.612s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 9244
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28631, Requested 2675. Please try again in 2.612s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11441
+  },
+  {
+    "id": "Q14",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com uso de UTI em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=0",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes_uti\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND uti_int_to > 0;",
+    "llm_result": [
+      {
+        "total_internacoes_uti": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes_uti": 0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6090
+  },
+  {
+    "id": "Q15",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de quadril (S72) em pacientes com 70 anos ou mais em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28500, Requested 2678. Please try again in 2.356s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 5140
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28500, Requested 2678. Please try again in 2.356s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11401
+  },
+  {
+    "id": "Q16",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 CIDs ortopédicos por volume de internação em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "10 linhas corretas (flexível)",
+    "sql": "SELECT cid_principal,\n  COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY total_internacoes DESC\nLIMIT 10;",
+    "llm_result": [
+      {
+        "cid_principal": "S720",
+        "total_internacoes": 3502
+      },
+      {
+        "cid_principal": "T813",
+        "total_internacoes": 2823
+      },
+      {
+        "cid_principal": "S721",
+        "total_internacoes": 1697
+      },
+      {
+        "cid_principal": "S723",
+        "total_internacoes": 1243
+      },
+      {
+        "cid_principal": "S728",
+        "total_internacoes": 886
+      },
+      {
+        "cid_principal": "S822",
+        "total_internacoes": 793
+      },
+      {
+        "cid_principal": "S722",
+        "total_internacoes": 757
+      },
+      {
+        "cid_principal": "S828",
+        "total_internacoes": 610
+      },
+      {
+        "cid_principal": "S525",
+        "total_internacoes": 596
+      },
+      {
+        "cid_principal": "S729",
+        "total_internacoes": 587
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_internacoes": 3502
+      },
+      {
+        "cid_principal": "T813",
+        "total_internacoes": 2823
+      },
+      {
+        "cid_principal": "S721",
+        "total_internacoes": 1697
+      },
+      {
+        "cid_principal": "S723",
+        "total_internacoes": 1243
+      },
+      {
+        "cid_principal": "S728",
+        "total_internacoes": 886
+      },
+      {
+        "cid_principal": "S822",
+        "total_internacoes": 793
+      },
+      {
+        "cid_principal": "S722",
+        "total_internacoes": 757
+      },
+      {
+        "cid_principal": "S828",
+        "total_internacoes": 610
+      },
+      {
+        "cid_principal": "S525",
+        "total_internacoes": 596
+      },
+      {
+        "cid_principal": "S729",
+        "total_internacoes": 587
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4977
+  },
+  {
+    "id": "Q17",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 municípios de RJ com maior número de internações ortopédicas em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28884, Requested 2673. Please try again in 3.114s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "330000",
+        "internacoes": 9878
+      },
+      {
+        "cod_munic_estabelecimento": "330455",
+        "internacoes": 5163
+      },
+      {
+        "cod_munic_estabelecimento": "330170",
+        "internacoes": 4574
+      },
+      {
+        "cod_munic_estabelecimento": "330350",
+        "internacoes": 991
+      },
+      {
+        "cod_munic_estabelecimento": "330390",
+        "internacoes": 878
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28884, Requested 2673. Please try again in 3.114s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11375
+  },
+  {
+    "id": "Q18",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa etária (0-17, 18-59, 60+) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2677. Please try again in 5.354s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 2380
+      },
+      {
+        "faixa_etaria": "18-59",
+        "total": 15527
+      },
+      {
+        "faixa_etaria": "60+",
+        "total": 10149
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2677. Please try again in 5.354s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 8765
+  },
+  {
+    "id": "Q19",
+    "cat": "Epidemiológica Complexa",
+    "question": "Taxa de mortalidade hospitalar por CID ortopédico (top 5) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'S260', 'taxa_mortalidade': 100.0} exp={'cid_principal': 'T203', 'total_internacoes': 44, 'total_obitos': 26.0, 'taxa_mortalidade_pct': 59.09}",
+    "sql": "SELECT cid_principal,\n  ROUND(100.0 * SUM(CASE WHEN morte = 1 THEN 1 ELSE 0 END) / COUNT(DISTINCT n_aih), 2) AS taxa_mortalidade\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY taxa_mortalidade DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "S260",
+        "taxa_mortalidade": 100.0
+      },
+      {
+        "cid_principal": "T119",
+        "taxa_mortalidade": 100.0
+      },
+      {
+        "cid_principal": "M858",
+        "taxa_mortalidade": 100.0
+      },
+      {
+        "cid_principal": "S014",
+        "taxa_mortalidade": 100.0
+      },
+      {
+        "cid_principal": "T794",
+        "taxa_mortalidade": 100.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "T203",
+        "total_internacoes": 44,
+        "total_obitos": 26.0,
+        "taxa_mortalidade_pct": 59.09
+      },
+      {
+        "cid_principal": "S367",
+        "total_internacoes": 91,
+        "total_obitos": 24.0,
+        "taxa_mortalidade_pct": 26.37
+      },
+      {
+        "cid_principal": "S065",
+        "total_internacoes": 295,
+        "total_obitos": 74.0,
+        "taxa_mortalidade_pct": 25.08
+      },
+      {
+        "cid_principal": "S360",
+        "total_internacoes": 65,
+        "total_obitos": 14.0,
+        "taxa_mortalidade_pct": 21.54
+      },
+      {
+        "cid_principal": "S068",
+        "total_internacoes": 55,
+        "total_obitos": 11.0,
+        "taxa_mortalidade_pct": 20.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 9412
+  },
+  {
+    "id": "Q20",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 CIDs ambulatoriais ortopédicos por volume de produção em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29855, Requested 2673. Please try again in 5.056s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_procedimentos": 5570
+      },
+      {
+        "cid_principal": "S369",
+        "total_procedimentos": 5026
+      },
+      {
+        "cid_principal": "S729",
+        "total_procedimentos": 2692
+      },
+      {
+        "cid_principal": "S781",
+        "total_procedimentos": 2331
+      },
+      {
+        "cid_principal": "M216",
+        "total_procedimentos": 1963
+      },
+      {
+        "cid_principal": "S881",
+        "total_procedimentos": 1137
+      },
+      {
+        "cid_principal": "S723",
+        "total_procedimentos": 1048
+      },
+      {
+        "cid_principal": "S727",
+        "total_procedimentos": 1001
+      },
+      {
+        "cid_principal": "S880",
+        "total_procedimentos": 786
+      },
+      {
+        "cid_principal": "S889",
+        "total_procedimentos": 704
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29855, Requested 2673. Please try again in 5.056s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 8407
+  },
+  {
+    "id": "Q21",
+    "cat": "Epidemiológica Complexa",
+    "question": "Proporção de internações ortopédicas por sexo em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 27552, Requested 2669. Please try again in 442ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "sexo_paciente": "M",
+        "total_internacoes": 17612,
+        "pct": 62.8
+      },
+      {
+        "sexo_paciente": "F",
+        "total_internacoes": 10444,
+        "pct": 37.2
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 27552, Requested 2669. Please try again in 442ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 10877
+  },
+  {
+    "id": "Q22",
+    "cat": "Epidemiológica Complexa",
+    "question": "Número de internações por fratura de fêmur (S72) em idosos (60+) comparado ao total em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'internacoes_idosos': 6628.0, 'internacoes_totais': 9945} exp={'total_s72': 9945, 's72_idosos': 6628.0, 'pct_idosos': 66.6}",
+    "sql": "SELECT\n  SUM(CASE WHEN idade_paciente >= 60 THEN 1 ELSE 0 END) AS internacoes_idosos,\n  COUNT(DISTINCT n_aih) AS internacoes_totais\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%'",
+    "llm_result": [
+      {
+        "internacoes_idosos": 6628.0,
+        "internacoes_totais": 9945
+      }
+    ],
+    "gold_result": [
+      {
+        "total_s72": 9945,
+        "s72_idosos": 6628.0,
+        "pct_idosos": 66.6
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 3553
+  },
+  {
+    "id": "Q23",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 CIDs ortopédicos com maior permanência média hospitalar em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'T142', 'permanencia_media_dias': 59.0} exp={'cid_principal': 'T203', 'total_internacoes': 44, 'permanencia_media_dias': 30.1}",
+    "sql": "SELECT cid_principal,\n  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY permanencia_media_dias DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "T142",
+        "permanencia_media_dias": 59.0
+      },
+      {
+        "cid_principal": "M463",
+        "permanencia_media_dias": 57.5
+      },
+      {
+        "cid_principal": "S718",
+        "permanencia_media_dias": 50.0
+      },
+      {
+        "cid_principal": "M321",
+        "permanencia_media_dias": 48.0
+      },
+      {
+        "cid_principal": "S358",
+        "permanencia_media_dias": 44.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "T203",
+        "total_internacoes": 44,
+        "permanencia_media_dias": 30.1
+      },
+      {
+        "cid_principal": "M861",
+        "total_internacoes": 182,
+        "permanencia_media_dias": 20.8
+      },
+      {
+        "cid_principal": "T845",
+        "total_internacoes": 53,
+        "permanencia_media_dias": 18.7
+      },
+      {
+        "cid_principal": "M866",
+        "total_internacoes": 120,
+        "permanencia_media_dias": 15.2
+      },
+      {
+        "cid_principal": "T840",
+        "total_internacoes": 46,
+        "permanencia_media_dias": 13.8
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 11475
+  },
+  {
+    "id": "Q24",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 estabelecimentos com maior volume de internação ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28838, Requested 2674. Please try again in 3.024s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2290227",
+        "internacoes": 5043
+      },
+      {
+        "cnes_estabelecimento": "2298031",
+        "internacoes": 2710
+      },
+      {
+        "cnes_estabelecimento": "2270234",
+        "internacoes": 1717
+      },
+      {
+        "cnes_estabelecimento": "5478898",
+        "internacoes": 1583
+      },
+      {
+        "cnes_estabelecimento": "0012521",
+        "internacoes": 1156
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28838, Requested 2674. Please try again in 3.024s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11391
+  },
+  {
+    "id": "Q25",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por raça/cor do paciente em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29851, Requested 2674. Please try again in 5.05s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "raca_cor_paciente": "03",
+        "total": 11890,
+        "pct": 42.4
+      },
+      {
+        "raca_cor_paciente": "99",
+        "total": 6657,
+        "pct": 23.7
+      },
+      {
+        "raca_cor_paciente": "01",
+        "total": 6021,
+        "pct": 21.5
+      },
+      {
+        "raca_cor_paciente": "02",
+        "total": 3401,
+        "pct": 12.1
+      },
+      {
+        "raca_cor_paciente": "04",
+        "total": 84,
+        "pct": 0.3
+      },
+      {
+        "raca_cor_paciente": "05",
+        "total": 3,
+        "pct": 0.0
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29851, Requested 2674. Please try again in 5.05s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 3669
+  },
+  {
+    "id": "Q26",
+    "cat": "Epidemiológica Complexa",
+    "question": "CIDs ortopédicos com maior número de dias totais de internação em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 27532, Requested 2673. Please try again in 410ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 3502,
+        "total_dias_internacao": 36557.0
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 2823,
+        "total_dias_internacao": 19569.0
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 1697,
+        "total_dias_internacao": 17625.0
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 1243,
+        "total_dias_internacao": 10832.0
+      },
+      {
+        "cid_principal": "S722",
+        "internacoes": 757,
+        "total_dias_internacao": 8453.0
+      },
+      {
+        "cid_principal": "S728",
+        "internacoes": 886,
+        "total_dias_internacao": 7143.0
+      },
+      {
+        "cid_principal": "S822",
+        "internacoes": 793,
+        "total_dias_internacao": 5714.0
+      },
+      {
+        "cid_principal": "S729",
+        "internacoes": 587,
+        "total_dias_internacao": 5058.0
+      },
+      {
+        "cid_principal": "S724",
+        "internacoes": 495,
+        "total_dias_internacao": 4796.0
+      },
+      {
+        "cid_principal": "S727",
+        "internacoes": 463,
+        "total_dias_internacao": 3819.0
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 27532, Requested 2673. Please try again in 410ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 10843
+  },
+  {
+    "id": "Q27",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 procedimentos ambulatoriais ortopédicos mais realizados em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "5 linhas corretas (flexível)",
+    "sql": "SELECT cod_procedimento,\n  COUNT(*) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cod_procedimento\nORDER BY total_procedimentos DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_procedimento": "0302050019",
+        "total_procedimentos": 15646
+      },
+      {
+        "cod_procedimento": "0701050020",
+        "total_procedimentos": 3026
+      },
+      {
+        "cod_procedimento": "0701060018",
+        "total_procedimentos": 1900
+      },
+      {
+        "cod_procedimento": "0701010053",
+        "total_procedimentos": 1093
+      },
+      {
+        "cod_procedimento": "0701050047",
+        "total_procedimentos": 799
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_procedimento": "0302050019",
+        "total_procedimentos": 15646
+      },
+      {
+        "cod_procedimento": "0701050020",
+        "total_procedimentos": 3026
+      },
+      {
+        "cod_procedimento": "0701060018",
+        "total_procedimentos": 1900
+      },
+      {
+        "cod_procedimento": "0701010053",
+        "total_procedimentos": 1093
+      },
+      {
+        "cod_procedimento": "0701050047",
+        "total_procedimentos": 799
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 3770
+  },
+  {
+    "id": "Q28",
+    "cat": "Epidemiológica Complexa",
+    "question": "Proporção de internações ortopédicas com paciente de outro município em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28647, Requested 2675. Please try again in 2.644s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 28056,
+        "deslocamento_intermunicipal": 14192.0,
+        "pct_deslocamento": 50.6
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28647, Requested 2675. Please try again in 2.644s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11424
+  },
+  {
+    "id": "Q29",
+    "cat": "Epidemiológica Complexa",
+    "question": "Comparativo de volume mensal SIA vs SIH ortopédico em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=24",
+    "sql": "SELECT mes_cmpt,\n  SUM(CASE WHEN sistema = 'SIA' THEN 1 ELSE 0 END) AS sia_volume,\n  SUM(CASE WHEN sistema = 'SIH' THEN 1 ELSE 0 END) AS sih_volume\nFROM processed\nWHERE uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "sia_volume": 1647.0,
+        "sih_volume": 1998.0
+      },
+      {
+        "mes_cmpt": 2,
+        "sia_volume": 1674.0,
+        "sih_volume": 1959.0
+      },
+      {
+        "mes_cmpt": 3,
+        "sia_volume": 2078.0,
+        "sih_volume": 1781.0
+      },
+      {
+        "mes_cmpt": 4,
+        "sia_volume": 1710.0,
+        "sih_volume": 2034.0
+      },
+      {
+        "mes_cmpt": 5,
+        "sia_volume": 2401.0,
+        "sih_volume": 1844.0
+      },
+      {
+        "mes_cmpt": 6,
+        "sia_volume": 1921.0,
+        "sih_volume": 2601.0
+      },
+      {
+        "mes_cmpt": 7,
+        "sia_volume": 3009.0,
+        "sih_volume": 2502.0
+      },
+      {
+        "mes_cmpt": 8,
+        "sia_volume": 3490.0,
+        "sih_volume": 2657.0
+      },
+      {
+        "mes_cmpt": 9,
+        "sia_volume": 2642.0,
+        "sih_volume": 2427.0
+      },
+      {
+        "mes_cmpt": 10,
+        "sia_volume": 2409.0,
+        "sih_volume": 2853.0
+      },
+      {
+        "mes_cmpt": 11,
+        "sia_volume": 1921.0,
+        "sih_volume": 2568.0
+      },
+      {
+        "mes_cmpt": 12,
+        "sia_volume": 2299.0,
+        "sih_volume": 2844.0
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIA",
+        "total": 1647
+      },
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIH",
+        "total": 1998
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIA",
+        "total": 1674
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIH",
+        "total": 1959
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIA",
+        "total": 2078
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIH",
+        "total": 1781
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIA",
+        "total": 1710
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIH",
+        "total": 2034
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIA",
+        "total": 2401
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIH",
+        "total": 1844
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIA",
+        "total": 1921
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIH",
+        "total": 2601
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIA",
+        "total": 3009
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIH",
+        "total": 2502
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIA",
+        "total": 3490
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIH",
+        "total": 2657
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIA",
+        "total": 2642
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIH",
+        "total": 2427
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIA",
+        "total": 2409
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIH",
+        "total": 2853
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIA",
+        "total": 1921
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIH",
+        "total": 2567
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIA",
+        "total": 2299
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIH",
+        "total": 2844
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5886
+  },
+  {
+    "id": "Q30",
+    "cat": "Epidemiológica Complexa",
+    "question": "Idade média dos pacientes internados por fratura de fêmur (S72) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28678, Requested 2673. Please try again in 2.702s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "idade_media": 63.3,
+        "idade_minima": 0.0,
+        "idade_maxima": 99.0
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28678, Requested 2673. Please try again in 2.702s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11386
+  },
+  {
+    "id": "Q31",
+    "cat": "Financeira",
+    "question": "Custo total de todas as internações ortopédicas em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=70893354.22 exp=70893354.22",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_total": 70893354.22
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 70893354.22
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5248
+  },
+  {
+    "id": "Q32",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28995, Requested 2667. Please try again in 3.324s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "custo_medio": 2525.77
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28995, Requested 2667. Please try again in 3.324s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11351
+  },
+  {
+    "id": "Q33",
+    "cat": "Financeira",
+    "question": "Custo total de internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=26337280.38 exp=26337280.38",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%';",
+    "llm_result": [
+      {
+        "custo_total": 26337280.38
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 26337280.38
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6124
+  },
+  {
+    "id": "Q34",
+    "cat": "Financeira",
+    "question": "Top 5 CIDs ortopédicos com maior custo total de internação em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28836, Requested 2672. Please try again in 3.016s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 3502,
+        "custo_total": 10821184.25
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 1697,
+        "custo_total": 4550070.08
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 2823,
+        "custo_total": 4177324.45
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 1243,
+        "custo_total": 2940866.06
+      },
+      {
+        "cid_principal": "S822",
+        "internacoes": 793,
+        "custo_total": 2284002.03
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28836, Requested 2672. Please try again in 3.016s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11392
+  },
+  {
+    "id": "Q35",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas com uso de OPME (val_ortp > 0) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2675. Please try again in 5.35s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "internacoes_com_opme": 0,
+        "custo_total_opme": null
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2675. Please try again in 5.35s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 8654
+  },
+  {
+    "id": "Q36",
+    "cat": "Financeira",
+    "question": "Valor total de honorários profissionais (val_sp) em internações ortopédicas em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=13402482.02 exp=13402482.02",
+    "sql": "SELECT ROUND(SUM(COALESCE(val_sp, 0)), 2) AS total_honorarios_profissionais\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')",
+    "llm_result": [
+      {
+        "total_honorarios_profissionais": 13402482.02
+      }
+    ],
+    "gold_result": [
+      {
+        "total_honorarios_profissionais": 13402482.02
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8575
+  },
+  {
+    "id": "Q37",
+    "cat": "Financeira",
+    "question": "Custo médio por dia de internação ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28748, Requested 2669. Please try again in 2.834s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "custo_por_dia": 321.98
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28748, Requested 2669. Please try again in 2.834s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11658
+  },
+  {
+    "id": "Q38",
+    "cat": "Financeira",
+    "question": "Top 5 estabelecimentos com maior custo total de internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cnes_estabelecimento': '2290227', 'custo_total': 9418220.5} exp={'cnes_estabelecimento': '2290227', 'internacoes': 5043, 'custo_total': 9418220.5}",
+    "sql": "SELECT cnes_estabelecimento,\n  ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cnes_estabelecimento\nORDER BY custo_total DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cnes_estabelecimento": "2290227",
+        "custo_total": 9418220.5
+      },
+      {
+        "cnes_estabelecimento": "2298031",
+        "custo_total": 7695080.67
+      },
+      {
+        "cnes_estabelecimento": "2270234",
+        "custo_total": 5114853.92
+      },
+      {
+        "cnes_estabelecimento": "2278855",
+        "custo_total": 4001446.6
+      },
+      {
+        "cnes_estabelecimento": "0012521",
+        "custo_total": 3202913.54
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2290227",
+        "internacoes": 5043,
+        "custo_total": 9418220.5
+      },
+      {
+        "cnes_estabelecimento": "2298031",
+        "internacoes": 2710,
+        "custo_total": 7695080.67
+      },
+      {
+        "cnes_estabelecimento": "2270234",
+        "internacoes": 1717,
+        "custo_total": 5114853.92
+      },
+      {
+        "cnes_estabelecimento": "2278855",
+        "internacoes": 832,
+        "custo_total": 4001446.6
+      },
+      {
+        "cnes_estabelecimento": "0012521",
+        "internacoes": 1156,
+        "custo_total": 3202913.54
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5925
+  },
+  {
+    "id": "Q39",
+    "cat": "Financeira",
+    "question": "Custo total de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28829, Requested 2671. Please try again in 3s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "custo_total": 4149578.04
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28829, Requested 2671. Please try again in 3s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11357
+  },
+  {
+    "id": "Q40",
+    "cat": "Financeira",
+    "question": "Proporção custo serviço hospitalar vs honorários em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'custo_servico_hospitalar': 57490872.2, 'custo_honorarios': 13402482.02, 'pct_servico_hospitalar': 81.1, 'pct_honorarios': 18.9} exp={'custo_servico_hospitalar': 57490872.2, 'honorarios_profissionais': 13402482.02, 'pct_hospitalar': 81.1}",
+    "sql": "SELECT\n  ROUND(SUM(COALESCE(val_sh, 0)), 2) AS custo_servico_hospitalar,\n  ROUND(SUM(COALESCE(val_sp, 0)), 2) AS custo_honorarios,\n  ROUND(100.0 * SUM(COALESCE(val_sh, 0)) / NULLIF(SUM(COALESCE(val_sh, 0)) + SUM(COALESCE(val_sp, 0)), 0), 1) AS pct_servico_hospitalar,\n  ROUND(100.0 * SUM(COALESCE(val_sp, 0)) / NULLIF(SUM(COALESCE(val_sh, 0)) + SUM(COALESCE(val_sp, 0)), 0), 1) AS pct_honorarios\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_servico_hospitalar": 57490872.2,
+        "custo_honorarios": 13402482.02,
+        "pct_servico_hospitalar": 81.1,
+        "pct_honorarios": 18.9
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_servico_hospitalar": 57490872.2,
+        "honorarios_profissionais": 13402482.02,
+        "pct_hospitalar": 81.1
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7124
+  },
+  {
+    "id": "Q41",
+    "cat": "Temporal/Comparativa",
+    "question": "Distribuição mensal de internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28344, Requested 2670. Please try again in 2.027s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_internacoes": 1998
+      },
+      {
+        "mes_cmpt": 2,
+        "total_internacoes": 1959
+      },
+      {
+        "mes_cmpt": 3,
+        "total_internacoes": 1781
+      },
+      {
+        "mes_cmpt": 4,
+        "total_internacoes": 2034
+      },
+      {
+        "mes_cmpt": 5,
+        "total_internacoes": 1844
+      },
+      {
+        "mes_cmpt": 6,
+        "total_internacoes": 2601
+      },
+      {
+        "mes_cmpt": 7,
+        "total_internacoes": 2502
+      },
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 2657
+      },
+      {
+        "mes_cmpt": 9,
+        "total_internacoes": 2427
+      },
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 2853
+      },
+      {
+        "mes_cmpt": 11,
+        "total_internacoes": 2567
+      },
+      {
+        "mes_cmpt": 12,
+        "total_internacoes": 2844
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28344, Requested 2670. Please try again in 2.027s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11351
+  },
+  {
+    "id": "Q42",
+    "cat": "Temporal/Comparativa",
+    "question": "Distribuição mensal de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2673. Please try again in 5.346s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "procedimentos": 1647
+      },
+      {
+        "mes_cmpt": 2,
+        "procedimentos": 1674
+      },
+      {
+        "mes_cmpt": 3,
+        "procedimentos": 2078
+      },
+      {
+        "mes_cmpt": 4,
+        "procedimentos": 1710
+      },
+      {
+        "mes_cmpt": 5,
+        "procedimentos": 2401
+      },
+      {
+        "mes_cmpt": 6,
+        "procedimentos": 1921
+      },
+      {
+        "mes_cmpt": 7,
+        "procedimentos": 3009
+      },
+      {
+        "mes_cmpt": 8,
+        "procedimentos": 3490
+      },
+      {
+        "mes_cmpt": 9,
+        "procedimentos": 2642
+      },
+      {
+        "mes_cmpt": 10,
+        "procedimentos": 2409
+      },
+      {
+        "mes_cmpt": 11,
+        "procedimentos": 1921
+      },
+      {
+        "mes_cmpt": 12,
+        "procedimentos": 2299
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2673. Please try again in 5.346s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 7666
+  },
+  {
+    "id": "Q43",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior número de internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=10 exp=10",
+    "sql": "SELECT mes_cmpt,\n  COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY total_internacoes DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 941
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 941
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8523
+  },
+  {
+    "id": "Q44",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal do custo total de internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29003, Requested 2672. Please try again in 3.35s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 4528720.12
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 4220345.99
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 4421241.72
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 4977036.46
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 4826770.48
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 6860376.5
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 5959520.47
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 6966100.36
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 6489344.92
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 7436999.19
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 7031604.58
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 7175293.43
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 29003, Requested 2672. Please try again in 3.35s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11345
+  },
+  {
+    "id": "Q45",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por trauma (S00-T98) vs doenças musculoesqueléticas (M00-M99) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=24",
+    "sql": "SELECT mes_cmpt,\n  SUM(CASE WHEN icd_group = 'S00-T98' THEN 1 ELSE 0 END) AS internacoes_trauma,\n  SUM(CASE WHEN icd_group = 'M00-M99' THEN 1 ELSE 0 END) AS internacoes_musculoesqueleticas\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes_trauma": 1877.0,
+        "internacoes_musculoesqueleticas": 121.0
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes_trauma": 1818.0,
+        "internacoes_musculoesqueleticas": 141.0
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes_trauma": 1654.0,
+        "internacoes_musculoesqueleticas": 127.0
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes_trauma": 1923.0,
+        "internacoes_musculoesqueleticas": 111.0
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes_trauma": 1672.0,
+        "internacoes_musculoesqueleticas": 172.0
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes_trauma": 2385.0,
+        "internacoes_musculoesqueleticas": 216.0
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes_trauma": 2297.0,
+        "internacoes_musculoesqueleticas": 205.0
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes_trauma": 2421.0,
+        "internacoes_musculoesqueleticas": 236.0
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes_trauma": 2198.0,
+        "internacoes_musculoesqueleticas": 229.0
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes_trauma": 2580.0,
+        "internacoes_musculoesqueleticas": 273.0
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes_trauma": 2341.0,
+        "internacoes_musculoesqueleticas": 227.0
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes_trauma": 2565.0,
+        "internacoes_musculoesqueleticas": 279.0
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "icd_group": "M00-M99",
+        "internacoes": 121
+      },
+      {
+        "mes_cmpt": 1,
+        "icd_group": "S00-T98",
+        "internacoes": 1877
+      },
+      {
+        "mes_cmpt": 2,
+        "icd_group": "M00-M99",
+        "internacoes": 141
+      },
+      {
+        "mes_cmpt": 2,
+        "icd_group": "S00-T98",
+        "internacoes": 1818
+      },
+      {
+        "mes_cmpt": 3,
+        "icd_group": "M00-M99",
+        "internacoes": 127
+      },
+      {
+        "mes_cmpt": 3,
+        "icd_group": "S00-T98",
+        "internacoes": 1654
+      },
+      {
+        "mes_cmpt": 4,
+        "icd_group": "M00-M99",
+        "internacoes": 111
+      },
+      {
+        "mes_cmpt": 4,
+        "icd_group": "S00-T98",
+        "internacoes": 1923
+      },
+      {
+        "mes_cmpt": 5,
+        "icd_group": "M00-M99",
+        "internacoes": 172
+      },
+      {
+        "mes_cmpt": 5,
+        "icd_group": "S00-T98",
+        "internacoes": 1672
+      },
+      {
+        "mes_cmpt": 6,
+        "icd_group": "M00-M99",
+        "internacoes": 216
+      },
+      {
+        "mes_cmpt": 6,
+        "icd_group": "S00-T98",
+        "internacoes": 2385
+      },
+      {
+        "mes_cmpt": 7,
+        "icd_group": "M00-M99",
+        "internacoes": 205
+      },
+      {
+        "mes_cmpt": 7,
+        "icd_group": "S00-T98",
+        "internacoes": 2297
+      },
+      {
+        "mes_cmpt": 8,
+        "icd_group": "M00-M99",
+        "internacoes": 236
+      },
+      {
+        "mes_cmpt": 8,
+        "icd_group": "S00-T98",
+        "internacoes": 2421
+      },
+      {
+        "mes_cmpt": 9,
+        "icd_group": "M00-M99",
+        "internacoes": 229
+      },
+      {
+        "mes_cmpt": 9,
+        "icd_group": "S00-T98",
+        "internacoes": 2198
+      },
+      {
+        "mes_cmpt": 10,
+        "icd_group": "M00-M99",
+        "internacoes": 273
+      },
+      {
+        "mes_cmpt": 10,
+        "icd_group": "S00-T98",
+        "internacoes": 2580
+      },
+      {
+        "mes_cmpt": 11,
+        "icd_group": "M00-M99",
+        "internacoes": 226
+      },
+      {
+        "mes_cmpt": 11,
+        "icd_group": "S00-T98",
+        "internacoes": 2341
+      },
+      {
+        "mes_cmpt": 12,
+        "icd_group": "M00-M99",
+        "internacoes": 279
+      },
+      {
+        "mes_cmpt": 12,
+        "icd_group": "S00-T98",
+        "internacoes": 2565
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6795
+  },
+  {
+    "id": "Q46",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal de óbitos em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28696, Requested 2671. Please try again in 2.734s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_obitos": 104
+      },
+      {
+        "mes_cmpt": 2,
+        "total_obitos": 72
+      },
+      {
+        "mes_cmpt": 3,
+        "total_obitos": 84
+      },
+      {
+        "mes_cmpt": 4,
+        "total_obitos": 77
+      },
+      {
+        "mes_cmpt": 5,
+        "total_obitos": 88
+      },
+      {
+        "mes_cmpt": 6,
+        "total_obitos": 76
+      },
+      {
+        "mes_cmpt": 7,
+        "total_obitos": 81
+      },
+      {
+        "mes_cmpt": 8,
+        "total_obitos": 81
+      },
+      {
+        "mes_cmpt": 9,
+        "total_obitos": 96
+      },
+      {
+        "mes_cmpt": 10,
+        "total_obitos": 66
+      },
+      {
+        "mes_cmpt": 11,
+        "total_obitos": 79
+      },
+      {
+        "mes_cmpt": 12,
+        "total_obitos": 61
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28696, Requested 2671. Please try again in 2.734s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11368
+  },
+  {
+    "id": "Q47",
+    "cat": "Temporal/Comparativa",
+    "question": "Permanência média por trimestre nas internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2673. Please try again in 5.346s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "permanencia_media_dias": 8.8
+      },
+      {
+        "trimestre": "Q2",
+        "permanencia_media_dias": 7.9
+      },
+      {
+        "trimestre": "Q3",
+        "permanencia_media_dias": 7.4
+      },
+      {
+        "trimestre": "Q4",
+        "permanencia_media_dias": 7.5
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2673. Please try again in 5.346s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 8597
+  },
+  {
+    "id": "Q48",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior custo médio por internação ortopédica em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=11 exp=11",
+    "sql": "SELECT mes_cmpt,\n  ROUND(SUM(COALESCE(custo_total, 0)) / COUNT(DISTINCT n_aih), 2) AS custo_medio\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY custo_medio DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 11,
+        "custo_medio": 2739.23
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 11,
+        "custo_medio": 2739.23
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 9167
+  },
+  {
+    "id": "Q49",
+    "cat": "Temporal/Comparativa",
+    "question": "Sazonalidade mensal de fraturas de fêmur (S72) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28465, Requested 2669. Please try again in 2.268s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_fraturas": 770
+      },
+      {
+        "mes_cmpt": 2,
+        "total_fraturas": 685
+      },
+      {
+        "mes_cmpt": 3,
+        "total_fraturas": 705
+      },
+      {
+        "mes_cmpt": 4,
+        "total_fraturas": 774
+      },
+      {
+        "mes_cmpt": 5,
+        "total_fraturas": 716
+      },
+      {
+        "mes_cmpt": 6,
+        "total_fraturas": 907
+      },
+      {
+        "mes_cmpt": 7,
+        "total_fraturas": 922
+      },
+      {
+        "mes_cmpt": 8,
+        "total_fraturas": 888
+      },
+      {
+        "mes_cmpt": 9,
+        "total_fraturas": 897
+      },
+      {
+        "mes_cmpt": 10,
+        "total_fraturas": 941
+      },
+      {
+        "mes_cmpt": 11,
+        "total_fraturas": 868
+      },
+      {
+        "mes_cmpt": 12,
+        "total_fraturas": 872
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 28465, Requested 2669. Please try again in 2.268s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 11381
+  },
+  {
+    "id": "Q50",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações ortopédicas de idosos (60 anos ou mais) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2675. Please try again in 5.35s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "sql": null,
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_internacoes": 731
+      },
+      {
+        "mes_cmpt": 2,
+        "total_internacoes": 697
+      },
+      {
+        "mes_cmpt": 3,
+        "total_internacoes": 661
+      },
+      {
+        "mes_cmpt": 4,
+        "total_internacoes": 713
+      },
+      {
+        "mes_cmpt": 5,
+        "total_internacoes": 716
+      },
+      {
+        "mes_cmpt": 6,
+        "total_internacoes": 933
+      },
+      {
+        "mes_cmpt": 7,
+        "total_internacoes": 927
+      },
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 943
+      },
+      {
+        "mes_cmpt": 9,
+        "total_internacoes": 930
+      },
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 1043
+      },
+      {
+        "mes_cmpt": 11,
+        "total_internacoes": 868
+      },
+      {
+        "mes_cmpt": 12,
+        "total_internacoes": 987
+      }
+    ],
+    "api_error": "Falha SQL: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-aK8aWLtYpE9ckhsyipz78Ewp on tokens per min (TPM): Limit 30000, Used 30000, Requested 2675. Please try again in 5.35s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+    "elapsed_ms": 7831
+  }
+]

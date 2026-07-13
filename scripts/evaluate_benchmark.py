@@ -565,6 +565,418 @@ BENCHMARK: list[dict] = [
         ],
         "match": "ordered_rows", "key_cols": ["mes_cmpt", "internacoes_idosos"],
     },
+    # ── Epidemiológica Simples (Q51–Q68) ─────────────────────────────────────
+    {
+        "id": "Q51", "cat": "Epidemiológica Simples",
+        "q": "Número de internações por fratura de fêmur (S72) em mulheres em SP em 2022",
+        "gold": [{"total_mulheres_s72": 15359}],
+        "match": "scalar", "col": "total_mulheres_s72",
+    },
+    {
+        "id": "Q52", "cat": "Epidemiológica Simples",
+        "q": "Número de internações por fratura de fêmur (S72) em homens em SP em 2022",
+        "gold": [{"total_homens_s72": 13997}],
+        "match": "scalar", "col": "total_homens_s72",
+    },
+    {
+        "id": "Q53", "cat": "Epidemiológica Simples",
+        "q": "Número de internações ortopédicas com permanência de 1 dia ou menos em SP em 2022",
+        "gold": [{"internacoes_curtas": 13928}],
+        "match": "scalar", "col": "internacoes_curtas",
+    },
+    {
+        "id": "Q54", "cat": "Epidemiológica Simples",
+        "q": "Número de procedimentos ambulatoriais ortopédicos realizados em mulheres em SP em 2022",
+        "gold": [{"procedimentos_mulheres": 45579}],
+        "match": "scalar", "col": "procedimentos_mulheres",
+    },
+    {
+        "id": "Q55", "cat": "Epidemiológica Simples",
+        "q": "Número de procedimentos ambulatoriais ortopédicos realizados por idosos (60 anos ou mais) em SP em 2022",
+        "gold": [{"procedimentos_idosos": 53666}],
+        "match": "scalar", "col": "procedimentos_idosos",
+    },
+    {
+        "id": "Q56", "cat": "Epidemiológica Simples",
+        "q": "Número de internações por fratura de tíbia e perônio (S82) em SP em 2022",
+        "gold": [{"internacoes_fratura_tibia": 6261}],
+        "match": "scalar", "col": "internacoes_fratura_tibia",
+    },
+    {
+        "id": "Q57", "cat": "Epidemiológica Simples",
+        "q": "Número de internações por fratura de antebraço (S52) em SP em 2022",
+        "gold": [{"internacoes_fratura_punho": 1970}],
+        "match": "scalar", "col": "internacoes_fratura_punho",
+    },
+    {
+        "id": "Q58", "cat": "Epidemiológica Simples",
+        "q": "Número de internações por fratura de ombro e úmero (S42) em SP em 2022",
+        "gold": [{"internacoes_fratura_ombro": 1248}],
+        "match": "scalar", "col": "internacoes_fratura_ombro",
+    },
+    {
+        "id": "Q59", "cat": "Epidemiológica Simples",
+        "q": "Número de internações ortopédicas em crianças (menores de 18 anos) em SP em 2022",
+        "gold": [{"internacoes_criancas": 3619}],
+        "match": "scalar", "col": "internacoes_criancas",
+    },
+    {
+        "id": "Q60", "cat": "Epidemiológica Simples",
+        "q": "Número de internações ortopédicas com permanência entre 8 e 30 dias em SP em 2022",
+        "gold": [{"internacoes": 15489}],
+        "match": "scalar", "col": "internacoes",
+    },
+    {
+        "id": "Q61", "cat": "Epidemiológica Simples",
+        "q": "Número de internações por artrose de quadril e joelho (M16 e M17) em idosos (60 anos ou mais) em SP em 2022",
+        "gold": [{"internacoes_artrose_idosos": 89}],
+        "match": "scalar", "col": "internacoes_artrose_idosos",
+    },
+    {
+        "id": "Q62", "cat": "Epidemiológica Simples",
+        "q": "Número de internações por fratura de fêmur (S72) em mulheres com 70 anos ou mais em SP em 2022",
+        "gold": [{"internacoes_s72_mulheres_idosas": 10944}],
+        "match": "scalar", "col": "internacoes_s72_mulheres_idosas",
+    },
+    {
+        "id": "Q63", "cat": "Epidemiológica Simples",
+        "q": "Número de internações ortopédicas com permanência superior a 30 dias em SP em 2022",
+        "gold": [{"internacoes_longa_permanencia": 975}],
+        "match": "scalar", "col": "internacoes_longa_permanencia",
+    },
+    {
+        "id": "Q64", "cat": "Epidemiológica Simples",
+        "q": "Número de procedimentos ambulatoriais ortopédicos realizados em homens em SP em 2022",
+        "gold": [{"procedimentos_homens": 59437}],
+        "match": "scalar", "col": "procedimentos_homens",
+    },
+    {
+        "id": "Q65", "cat": "Epidemiológica Simples",
+        "q": "Número de internações por traumatismos (grupo S00-T98) em idosos (60 anos ou mais) em SP em 2022",
+        "gold": [{"internacoes_trauma_idosos": 24981}],
+        "match": "scalar", "col": "internacoes_trauma_idosos",
+    },
+    {
+        "id": "Q66", "cat": "Epidemiológica Simples",
+        "q": "Número de internações por doenças osteomusculares (grupo M00-M99) em mulheres em SP em 2022",
+        "gold": [{"internacoes_m_mulheres": 2327}],
+        "match": "scalar", "col": "internacoes_m_mulheres",
+    },
+    {
+        "id": "Q67", "cat": "Epidemiológica Simples",
+        "q": "Número de óbitos em internações por fratura de fêmur (S72) em SP em 2022",
+        "gold": [{"obitos_s72": 1216}],
+        "match": "scalar", "col": "obitos_s72",
+    },
+    {
+        "id": "Q68", "cat": "Epidemiológica Simples",
+        "q": "Número de municípios distintos com registro de procedimentos ambulatoriais ortopédicos em SP em 2022",
+        "gold": [{"municipios_sia": 399}],
+        "match": "scalar", "col": "municipios_sia",
+    },
+    # ── Epidemiológica Complexa (Q69–Q84) ────────────────────────────────────
+    {
+        "id": "Q69", "cat": "Epidemiológica Complexa",
+        "q": "Top 5 municípios por volume de procedimentos ambulatoriais ortopédicos em SP em 2022",
+        "gold": [{"cod_munic_estabelecimento": "355030", "total": 33846}, {"cod_munic_estabelecimento": "354980", "total": 4658}, {"cod_munic_estabelecimento": "355220", "total": 2971}, {"cod_munic_estabelecimento": "354850", "total": 2819}, {"cod_munic_estabelecimento": "350600", "total": 2409}],
+        "match": "ordered_rows", "key_cols": ["cod_munic_estabelecimento", "total"],
+    },
+    {
+        "id": "Q70", "cat": "Epidemiológica Complexa",
+        "q": "Distribuição de procedimentos ambulatoriais ortopédicos por faixa etária em SP em 2022",
+        "gold": [{"faixa_etaria": "0-17", "total": 4868}, {"faixa_etaria": "18-59", "total": 46482}, {"faixa_etaria": "60+", "total": 53666}],
+        "match": "unordered_rows", "key_cols": ["faixa_etaria", "total"],
+    },
+    {
+        "id": "Q71", "cat": "Epidemiológica Complexa",
+        "q": "Top 5 diagnósticos com maior número de óbitos em internações ortopédicas em SP em 2022",
+        "gold": [{"cid_principal": "S720", "total_internacoes": 8980, "total_obitos": 455.0}, {"cid_principal": "S721", "total_internacoes": 6610, "total_obitos": 342.0}, {"cid_principal": "S065", "total_internacoes": 706, "total_obitos": 152.0}, {"cid_principal": "T813", "total_internacoes": 3860, "total_obitos": 132.0}, {"cid_principal": "S722", "total_internacoes": 2424, "total_obitos": 114.0}],
+        "match": "ordered_rows", "key_cols": ["cid_principal", "total_internacoes", "total_obitos"],
+    },
+    {
+        "id": "Q72", "cat": "Epidemiológica Complexa",
+        "q": "Permanência hospitalar média por sexo em internações ortopédicas em SP em 2022",
+        "gold": [{"sexo_paciente": "F", "permanencia_media": 6.3}, {"sexo_paciente": "M", "permanencia_media": 5.8}],
+        "match": "unordered_rows", "key_cols": ["sexo_paciente", "permanencia_media"],
+    },
+    {
+        "id": "Q73", "cat": "Epidemiológica Complexa",
+        "q": "Top 10 estabelecimentos por volume de procedimentos ambulatoriais ortopédicos em SP em 2022",
+        "gold": [{"cnes_estabelecimento": "2068974", "total": 9214}, {"cnes_estabelecimento": "2078015", "total": 5158}, {"cnes_estabelecimento": "2077574", "total": 3994}, {"cnes_estabelecimento": "3060322", "total": 2899}, {"cnes_estabelecimento": "9642927", "total": 2614}, {"cnes_estabelecimento": "7536917", "total": 2304}, {"cnes_estabelecimento": "2091399", "total": 2241}, {"cnes_estabelecimento": "6859186", "total": 1748}, {"cnes_estabelecimento": "2792168", "total": 1491}, {"cnes_estabelecimento": "2077655", "total": 1311}],
+        "match": "ordered_rows", "key_cols": ["cnes_estabelecimento", "total"],
+    },
+    {
+        "id": "Q74", "cat": "Epidemiológica Complexa",
+        "q": "Taxa de mortalidade por sexo em internações ortopédicas em SP em 2022",
+        "gold": [{"sexo_paciente": "F", "total_obitos": 1081.0, "taxa_mortalidade": 4.18}, {"sexo_paciente": "M", "total_obitos": 1142.0, "taxa_mortalidade": 2.85}],
+        "match": "unordered_rows", "key_cols": ["sexo_paciente", "total_obitos", "taxa_mortalidade"],
+    },
+    {
+        "id": "Q75", "cat": "Epidemiológica Complexa",
+        "q": "Distribuição de internações ortopédicas por grupo diagnóstico (M e S) e faixa etária em SP em 2022",
+        "gold": [{"icd_group": "M00-M99", "faixa_etaria": "0-17", "total": 481}, {"icd_group": "M00-M99", "faixa_etaria": "18-59", "total": 4136}, {"icd_group": "M00-M99", "faixa_etaria": "60+", "total": 1685}, {"icd_group": "S00-T98", "faixa_etaria": "0-17", "total": 3138}, {"icd_group": "S00-T98", "faixa_etaria": "18-59", "total": 31549}, {"icd_group": "S00-T98", "faixa_etaria": "60+", "total": 24981}],
+        "match": "unordered_rows", "key_cols": ["icd_group", "faixa_etaria", "total"],
+    },
+    {
+        "id": "Q76", "cat": "Epidemiológica Complexa",
+        "q": "Top 5 diagnósticos de traumatismo com maior permanência média em SP em 2022 (mínimo 40 internações)",
+        "gold": [{"cid_principal": "S063", "internacoes": 78, "permanencia_media": 16.4}, {"cid_principal": "S122", "internacoes": 46, "permanencia_media": 15.9}, {"cid_principal": "S320", "internacoes": 48, "permanencia_media": 14.1}, {"cid_principal": "S062", "internacoes": 70, "permanencia_media": 14.0}, {"cid_principal": "S221", "internacoes": 41, "permanencia_media": 13.7}],
+        "match": "ordered_rows", "key_cols": ["cid_principal", "internacoes", "permanencia_media"],
+    },
+    {
+        "id": "Q77", "cat": "Epidemiológica Complexa",
+        "q": "Distribuição de internações ortopédicas por faixa etária (0-17, 18-39, 40-59, 60-79, 80+) em SP em 2022",
+        "gold": [{"faixa_etaria": "0-17", "total": 3619}, {"faixa_etaria": "18-39", "total": 19967}, {"faixa_etaria": "40-59", "total": 15718}, {"faixa_etaria": "60-79", "total": 16937}, {"faixa_etaria": "80+", "total": 9729}],
+        "match": "unordered_rows", "key_cols": ["faixa_etaria", "total"],
+    },
+    {
+        "id": "Q78", "cat": "Epidemiológica Complexa",
+        "q": "Top 5 estabelecimentos com maior volume de internações por fratura de fêmur (S72) em SP em 2022",
+        "gold": [{"cnes_estabelecimento": "2091399", "internacoes": 816}, {"cnes_estabelecimento": "2081695", "internacoes": 577}, {"cnes_estabelecimento": "2077396", "internacoes": 573}, {"cnes_estabelecimento": "2786435", "internacoes": 499}, {"cnes_estabelecimento": "0009628", "internacoes": 470}],
+        "match": "ordered_rows", "key_cols": ["cnes_estabelecimento", "internacoes"],
+    },
+    {
+        "id": "Q79", "cat": "Epidemiológica Complexa",
+        "q": "Permanência hospitalar média por faixa etária em internações ortopédicas em SP em 2022",
+        "gold": [{"faixa_etaria": "0-17", "permanencia_media": 4.4}, {"faixa_etaria": "18-59", "permanencia_media": 5.4}, {"faixa_etaria": "60+", "permanencia_media": 7.0}],
+        "match": "unordered_rows", "key_cols": ["faixa_etaria", "permanencia_media"],
+    },
+    {
+        "id": "Q80", "cat": "Epidemiológica Complexa",
+        "q": "Top 5 diagnósticos de doença osteomuscular (M00-M99) por número de internações em SP em 2022",
+        "gold": [{"cid_principal": "M861", "total": 912}, {"cid_principal": "M869", "total": 474}, {"cid_principal": "M866", "total": 458}, {"cid_principal": "M841", "total": 366}, {"cid_principal": "M868", "total": 204}],
+        "match": "ordered_rows", "key_cols": ["cid_principal", "total"],
+    },
+    {
+        "id": "Q81", "cat": "Epidemiológica Complexa",
+        "q": "Número de internações ortopédicas com permanência entre 3 e 7 dias em SP em 2022",
+        "gold": [{"internacoes": 25807}],
+        "match": "scalar", "col": "internacoes",
+    },
+    {
+        "id": "Q82", "cat": "Epidemiológica Complexa",
+        "q": "Top 5 diagnósticos ambulatoriais ortopédicos em idosos (60 anos ou mais) em SP em 2022",
+        "gold": [{"cid_principal": "S720", "total": 11096}, {"cid_principal": "S729", "total": 6750}, {"cid_principal": "S398", "total": 4485}, {"cid_principal": "S881", "total": 4170}, {"cid_principal": "S723", "total": 4151}],
+        "match": "ordered_rows", "key_cols": ["cid_principal", "total"],
+    },
+    {
+        "id": "Q83", "cat": "Epidemiológica Complexa",
+        "q": "Média de internações ortopédicas por estabelecimento em SP em 2022",
+        "gold": [{"media_internacoes_por_estabelecimento": 173.1}],
+        "match": "scalar", "col": "media_internacoes_por_estabelecimento",
+    },
+    {
+        "id": "Q84", "cat": "Epidemiológica Complexa",
+        "q": "Distribuição de internações ortopédicas por faixa de permanência em SP em 2022",
+        "gold": [{"faixa_permanencia": "1-3 dias", "total": 27844}, {"faixa_permanencia": "15+ dias", "total": 8508}, {"faixa_permanencia": "4-7 dias", "total": 18697}, {"faixa_permanencia": "8-14 dias", "total": 10929}],
+        "match": "unordered_rows", "key_cols": ["faixa_permanencia", "total"],
+    },
+    # ── Financeira (Q85–Q100) ─────────────────────────────────────────────────
+    {
+        "id": "Q85", "cat": "Financeira",
+        "q": "Custo total de internações ortopédicas de idosos (60 anos ou mais) em SP em 2022",
+        "gold": [{"custo_total_idosos": 78009817.26}],
+        "match": "scalar", "col": "custo_total_idosos",
+    },
+    {
+        "id": "Q86", "cat": "Financeira",
+        "q": "Custo médio por internação por fratura de fêmur (S72) em SP em 2022",
+        "gold": [{"custo_medio_s72": 2700.27}],
+        "match": "scalar", "col": "custo_medio_s72",
+    },
+    {
+        "id": "Q87", "cat": "Financeira",
+        "q": "Custo total de internações ortopédicas com passagem por UTI em SP em 2022",
+        "gold": [{"custo_total_uti": 15904.56}],
+        "match": "scalar", "col": "custo_total_uti",
+    },
+    {
+        "id": "Q88", "cat": "Financeira",
+        "q": "Custo médio por internação ortopédica por sexo do paciente em SP em 2022",
+        "gold": [{"sexo_paciente": "F", "custo_medio": 2684.14}, {"sexo_paciente": "M", "custo_medio": 2636.83}],
+        "match": "unordered_rows", "key_cols": ["sexo_paciente", "custo_medio"],
+    },
+    {
+        "id": "Q89", "cat": "Financeira",
+        "q": "Custo total de internações ortopédicas em crianças (menores de 18 anos) em SP em 2022",
+        "gold": [{"custo_total_criancas": 7450877.25}],
+        "match": "scalar", "col": "custo_total_criancas",
+    },
+    {
+        "id": "Q90", "cat": "Financeira",
+        "q": "Custo médio por internação ortopédica com permanência superior a 7 dias em SP em 2022",
+        "gold": [{"custo_medio_longa_perm": 4423.19}],
+        "match": "scalar", "col": "custo_medio_longa_perm",
+    },
+    {
+        "id": "Q91", "cat": "Financeira",
+        "q": "Top 3 municípios com maior custo total em internações ortopédicas em SP em 2022",
+        "gold": [{"cod_munic_estabelecimento": "350000", "custo_total": 91002293.78}, {"cod_munic_estabelecimento": "355030", "custo_total": 12755298.09}, {"cod_munic_estabelecimento": "354870", "custo_total": 3588394.3}],
+        "match": "ordered_rows", "key_cols": ["cod_munic_estabelecimento", "custo_total"],
+    },
+    {
+        "id": "Q92", "cat": "Financeira",
+        "q": "Valor total de serviço hospitalar em internações ortopédicas em SP em 2022",
+        "gold": [{"custo_hospitalar_total": 144636796.74}],
+        "match": "scalar", "col": "custo_hospitalar_total",
+    },
+    {
+        "id": "Q93", "cat": "Financeira",
+        "q": "Custo médio por internação ortopédica por faixa etária em SP em 2022",
+        "gold": [{"faixa_etaria": "0-17", "custo_medio": 2058.82}, {"faixa_etaria": "18-59", "custo_medio": 2514.7}, {"faixa_etaria": "60+", "custo_medio": 2924.67}],
+        "match": "unordered_rows", "key_cols": ["faixa_etaria", "custo_medio"],
+    },
+    {
+        "id": "Q94", "cat": "Financeira",
+        "q": "Valor total de UTI em internações ortopédicas em SP em 2022",
+        "gold": [{"custo_uti_total": 37073666.92}],
+        "match": "scalar", "col": "custo_uti_total",
+    },
+    {
+        "id": "Q95", "cat": "Financeira",
+        "q": "Custo total de internações por doenças osteomusculares (M00-M99) em SP em 2022",
+        "gold": [{"custo_total_m": 13990374.04}],
+        "match": "scalar", "col": "custo_total_m",
+    },
+    {
+        "id": "Q96", "cat": "Financeira",
+        "q": "Custo total de internações por traumatismos (S00-T98) em SP em 2022",
+        "gold": [{"custo_total_s": 161293054.73}],
+        "match": "scalar", "col": "custo_total_s",
+    },
+    {
+        "id": "Q97", "cat": "Financeira",
+        "q": "Top 5 diagnósticos com maior custo médio por internação ortopédica em SP em 2022 (mínimo 40 internações)",
+        "gold": [{"cid_principal": "S221", "internacoes": 41, "custo_medio": 14053.88}, {"cid_principal": "S122", "internacoes": 46, "custo_medio": 12936.88}, {"cid_principal": "S062", "internacoes": 70, "custo_medio": 11559.05}, {"cid_principal": "S069", "internacoes": 219, "custo_medio": 10739.3}, {"cid_principal": "S063", "internacoes": 78, "custo_medio": 10701.76}],
+        "match": "ordered_rows", "key_cols": ["cid_principal", "internacoes", "custo_medio"],
+    },
+    {
+        "id": "Q98", "cat": "Financeira",
+        "q": "Custo médio por procedimento ambulatorial ortopédico em SP em 2022",
+        "gold": [{"custo_medio_sia": 83.05}],
+        "match": "scalar", "col": "custo_medio_sia",
+    },
+    {
+        "id": "Q99", "cat": "Financeira",
+        "q": "Top 5 procedimentos ambulatoriais com maior custo total em SP em 2022",
+        "gold": [{"cod_procedimento": "0701020369", "custo_total": 1201460.4}, {"cod_procedimento": "0701050047", "custo_total": 768834.0}, {"cod_procedimento": "0302050019", "custo_total": 738314.5}, {"cod_procedimento": "0701010053", "custo_total": 714316.8}, {"cod_procedimento": "0701020415", "custo_total": 484653.0}],
+        "match": "ordered_rows", "key_cols": ["cod_procedimento", "custo_total"],
+    },
+    {
+        "id": "Q100", "cat": "Financeira",
+        "q": "Custo total de internações ortopédicas de idosos (60+) com permanência superior a 7 dias em SP em 2022",
+        "gold": [{"custo_total": 35943333.49}],
+        "match": "scalar", "col": "custo_total",
+    },
+    # ── Temporal / Comparativa (Q101–Q118) ───────────────────────────────────
+    {
+        "id": "Q101", "cat": "Temporal/Comparativa",
+        "q": "Mês com maior número de óbitos em internações ortopédicas em SP em 2022",
+        "gold": [{"mes_cmpt": 10, "total_obitos": 224}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "total_obitos"],
+    },
+    {
+        "id": "Q102", "cat": "Temporal/Comparativa",
+        "q": "Volume mensal de internações por fratura de fêmur (S72) em idosos (60 anos ou mais) em SP em 2022",
+        "gold": [{"mes_cmpt": 1, "internacoes": 1409}, {"mes_cmpt": 2, "internacoes": 1298}, {"mes_cmpt": 3, "internacoes": 1508}, {"mes_cmpt": 4, "internacoes": 1433}, {"mes_cmpt": 5, "internacoes": 1573}, {"mes_cmpt": 6, "internacoes": 1599}, {"mes_cmpt": 7, "internacoes": 1778}, {"mes_cmpt": 8, "internacoes": 1831}, {"mes_cmpt": 9, "internacoes": 1696}, {"mes_cmpt": 10, "internacoes": 1775}, {"mes_cmpt": 11, "internacoes": 1557}, {"mes_cmpt": 12, "internacoes": 1663}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "internacoes"],
+    },
+    {
+        "id": "Q103", "cat": "Temporal/Comparativa",
+        "q": "Custo mensal de internações ortopédicas de idosos (60 anos ou mais) em SP em 2022",
+        "gold": [{"mes_cmpt": 1, "custo_total": 5379118.99}, {"mes_cmpt": 2, "custo_total": 5328629.21}, {"mes_cmpt": 3, "custo_total": 6042154.42}, {"mes_cmpt": 4, "custo_total": 6031936.59}, {"mes_cmpt": 5, "custo_total": 6376759.64}, {"mes_cmpt": 6, "custo_total": 6395524.78}, {"mes_cmpt": 7, "custo_total": 7308864.01}, {"mes_cmpt": 8, "custo_total": 7440384.44}, {"mes_cmpt": 9, "custo_total": 7031598.3}, {"mes_cmpt": 10, "custo_total": 7484277.84}, {"mes_cmpt": 11, "custo_total": 6447077.11}, {"mes_cmpt": 12, "custo_total": 6743491.93}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "custo_total"],
+    },
+    {
+        "id": "Q104", "cat": "Temporal/Comparativa",
+        "q": "Mês com maior custo total de internações por fratura de fêmur (S72) em SP em 2022",
+        "gold": [{"mes_cmpt": 8, "custo_total": 7659543.93}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "custo_total"],
+    },
+    {
+        "id": "Q105", "cat": "Temporal/Comparativa",
+        "q": "Volume mensal de internações por traumatismos (grupo S00-T98) em SP em 2022",
+        "gold": [{"mes_cmpt": 1, "internacoes": 4733}, {"mes_cmpt": 2, "internacoes": 4560}, {"mes_cmpt": 3, "internacoes": 5093}, {"mes_cmpt": 4, "internacoes": 4669}, {"mes_cmpt": 5, "internacoes": 4849}, {"mes_cmpt": 6, "internacoes": 4690}, {"mes_cmpt": 7, "internacoes": 5279}, {"mes_cmpt": 8, "internacoes": 5443}, {"mes_cmpt": 9, "internacoes": 5164}, {"mes_cmpt": 10, "internacoes": 5188}, {"mes_cmpt": 11, "internacoes": 4821}, {"mes_cmpt": 12, "internacoes": 5182}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "internacoes"],
+    },
+    {
+        "id": "Q106", "cat": "Temporal/Comparativa",
+        "q": "Volume mensal de procedimentos ambulatoriais ortopédicos por sexo em SP em 2022",
+        "gold": [{"mes_cmpt": 1, "sexo_paciente": "F", "total": 2589}, {"mes_cmpt": 1, "sexo_paciente": "M", "total": 3309}, {"mes_cmpt": 2, "sexo_paciente": "F", "total": 3094}, {"mes_cmpt": 2, "sexo_paciente": "M", "total": 4022}, {"mes_cmpt": 3, "sexo_paciente": "F", "total": 3686}, {"mes_cmpt": 3, "sexo_paciente": "M", "total": 4823}, {"mes_cmpt": 4, "sexo_paciente": "F", "total": 3566}, {"mes_cmpt": 4, "sexo_paciente": "M", "total": 4786}, {"mes_cmpt": 5, "sexo_paciente": "F", "total": 4133}, {"mes_cmpt": 5, "sexo_paciente": "M", "total": 5402}, {"mes_cmpt": 6, "sexo_paciente": "F", "total": 3826}, {"mes_cmpt": 6, "sexo_paciente": "M", "total": 5438}, {"mes_cmpt": 7, "sexo_paciente": "F", "total": 3750}, {"mes_cmpt": 7, "sexo_paciente": "M", "total": 5292}, {"mes_cmpt": 8, "sexo_paciente": "F", "total": 4663}, {"mes_cmpt": 8, "sexo_paciente": "M", "total": 6330}, {"mes_cmpt": 9, "sexo_paciente": "F", "total": 4098}, {"mes_cmpt": 9, "sexo_paciente": "M", "total": 5323}, {"mes_cmpt": 10, "sexo_paciente": "F", "total": 4150}, {"mes_cmpt": 10, "sexo_paciente": "M", "total": 5047}, {"mes_cmpt": 11, "sexo_paciente": "F", "total": 4176}, {"mes_cmpt": 11, "sexo_paciente": "M", "total": 5121}, {"mes_cmpt": 12, "sexo_paciente": "F", "total": 3848}, {"mes_cmpt": 12, "sexo_paciente": "M", "total": 4544}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "sexo_paciente", "total"],
+    },
+    {
+        "id": "Q107", "cat": "Temporal/Comparativa",
+        "q": "Comparativo trimestral de internações ortopédicas por grupo diagnóstico em SP em 2022",
+        "gold": [{"trimestre": "Q1", "icd_group": "M00-M99", "total": 1446}, {"trimestre": "Q1", "icd_group": "S00-T98", "total": 14384}, {"trimestre": "Q2", "icd_group": "M00-M99", "total": 1541}, {"trimestre": "Q2", "icd_group": "S00-T98", "total": 14208}, {"trimestre": "Q3", "icd_group": "M00-M99", "total": 1720}, {"trimestre": "Q3", "icd_group": "S00-T98", "total": 15886}, {"trimestre": "Q4", "icd_group": "M00-M99", "total": 1603}, {"trimestre": "Q4", "icd_group": "S00-T98", "total": 15190}],
+        "match": "unordered_rows", "key_cols": ["trimestre", "icd_group", "total"],
+    },
+    {
+        "id": "Q108", "cat": "Temporal/Comparativa",
+        "q": "Mês com maior permanência hospitalar média em internações ortopédicas em SP em 2022",
+        "gold": [{"mes_cmpt": 7, "permanencia_media": 6.2}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "permanencia_media"],
+    },
+    {
+        "id": "Q109", "cat": "Temporal/Comparativa",
+        "q": "Evolução mensal da taxa de mortalidade em internações ortopédicas em SP em 2022",
+        "gold": [{"mes_cmpt": 1, "internacoes": 5209, "obitos": 179.0, "taxa_mortalidade": 3.44}, {"mes_cmpt": 2, "internacoes": 5021, "obitos": 182.0, "taxa_mortalidade": 3.62}, {"mes_cmpt": 3, "internacoes": 5604, "obitos": 167.0, "taxa_mortalidade": 2.98}, {"mes_cmpt": 4, "internacoes": 5136, "obitos": 156.0, "taxa_mortalidade": 3.04}, {"mes_cmpt": 5, "internacoes": 5416, "obitos": 187.0, "taxa_mortalidade": 3.45}, {"mes_cmpt": 6, "internacoes": 5202, "obitos": 182.0, "taxa_mortalidade": 3.5}, {"mes_cmpt": 7, "internacoes": 5852, "obitos": 212.0, "taxa_mortalidade": 3.62}, {"mes_cmpt": 8, "internacoes": 6006, "obitos": 217.0, "taxa_mortalidade": 3.61}, {"mes_cmpt": 9, "internacoes": 5752, "obitos": 183.0, "taxa_mortalidade": 3.18}, {"mes_cmpt": 10, "internacoes": 5772, "obitos": 224.0, "taxa_mortalidade": 3.88}, {"mes_cmpt": 11, "internacoes": 5351, "obitos": 144.0, "taxa_mortalidade": 2.69}, {"mes_cmpt": 12, "internacoes": 5676, "obitos": 190.0, "taxa_mortalidade": 3.35}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "internacoes", "obitos", "taxa_mortalidade"],
+    },
+    {
+        "id": "Q110", "cat": "Temporal/Comparativa",
+        "q": "Trimestre com maior volume de internações por fratura de fêmur (S72) em SP em 2022",
+        "gold": [{"trimestre": "Q3", "total": 8047}],
+        "match": "ordered_rows", "key_cols": ["trimestre", "total"],
+    },
+    {
+        "id": "Q111", "cat": "Temporal/Comparativa",
+        "q": "Comparativo semestral de internações ortopédicas (1º vs 2º semestre) em SP em 2022",
+        "gold": [{"semestre": "1S", "total": 31575}, {"semestre": "2S", "total": 34397}],
+        "match": "unordered_rows", "key_cols": ["semestre", "total"],
+    },
+    {
+        "id": "Q112", "cat": "Temporal/Comparativa",
+        "q": "Custo médio mensal por internação por fratura de fêmur (S72) em SP em 2022",
+        "gold": [{"mes_cmpt": 1, "custo_medio": 2495.78}, {"mes_cmpt": 2, "custo_medio": 2562.31}, {"mes_cmpt": 3, "custo_medio": 2593.24}, {"mes_cmpt": 4, "custo_medio": 2728.3}, {"mes_cmpt": 5, "custo_medio": 2704.05}, {"mes_cmpt": 6, "custo_medio": 2833.3}, {"mes_cmpt": 7, "custo_medio": 2778.57}, {"mes_cmpt": 8, "custo_medio": 2778.22}, {"mes_cmpt": 9, "custo_medio": 2760.19}, {"mes_cmpt": 10, "custo_medio": 2822.09}, {"mes_cmpt": 11, "custo_medio": 2696.97}, {"mes_cmpt": 12, "custo_medio": 2586.28}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "custo_medio"],
+    },
+    {
+        "id": "Q113", "cat": "Temporal/Comparativa",
+        "q": "Volume mensal de internações ortopédicas por sexo do paciente em SP em 2022",
+        "gold": [{"mes_cmpt": 1, "sexo_paciente": "F", "total": 2058}, {"mes_cmpt": 1, "sexo_paciente": "M", "total": 3151}, {"mes_cmpt": 2, "sexo_paciente": "F", "total": 1858}, {"mes_cmpt": 2, "sexo_paciente": "M", "total": 3163}, {"mes_cmpt": 3, "sexo_paciente": "F", "total": 2142}, {"mes_cmpt": 3, "sexo_paciente": "M", "total": 3462}, {"mes_cmpt": 4, "sexo_paciente": "F", "total": 1952}, {"mes_cmpt": 4, "sexo_paciente": "M", "total": 3184}, {"mes_cmpt": 5, "sexo_paciente": "F", "total": 2103}, {"mes_cmpt": 5, "sexo_paciente": "M", "total": 3313}, {"mes_cmpt": 6, "sexo_paciente": "F", "total": 2098}, {"mes_cmpt": 6, "sexo_paciente": "M", "total": 3104}, {"mes_cmpt": 7, "sexo_paciente": "F", "total": 2335}, {"mes_cmpt": 7, "sexo_paciente": "M", "total": 3517}, {"mes_cmpt": 8, "sexo_paciente": "F", "total": 2316}, {"mes_cmpt": 8, "sexo_paciente": "M", "total": 3690}, {"mes_cmpt": 9, "sexo_paciente": "F", "total": 2254}, {"mes_cmpt": 9, "sexo_paciente": "M", "total": 3498}, {"mes_cmpt": 10, "sexo_paciente": "F", "total": 2371}, {"mes_cmpt": 10, "sexo_paciente": "M", "total": 3401}, {"mes_cmpt": 11, "sexo_paciente": "F", "total": 2077}, {"mes_cmpt": 11, "sexo_paciente": "M", "total": 3274}, {"mes_cmpt": 12, "sexo_paciente": "F", "total": 2290}, {"mes_cmpt": 12, "sexo_paciente": "M", "total": 3386}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "sexo_paciente", "total"],
+    },
+    {
+        "id": "Q114", "cat": "Temporal/Comparativa",
+        "q": "Mês com menor volume de procedimentos ambulatoriais ortopédicos em SP em 2022",
+        "gold": [{"mes_cmpt": 1, "total": 5898}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "total"],
+    },
+    {
+        "id": "Q115", "cat": "Temporal/Comparativa",
+        "q": "Volume trimestral de procedimentos ambulatoriais ortopédicos em SP em 2022",
+        "gold": [{"trimestre": "Q1", "total": 21523}, {"trimestre": "Q2", "total": 27151}, {"trimestre": "Q3", "total": 29456}, {"trimestre": "Q4", "total": 26886}],
+        "match": "unordered_rows", "key_cols": ["trimestre", "total"],
+    },
+    {
+        "id": "Q116", "cat": "Temporal/Comparativa",
+        "q": "Custo mensal de procedimentos ambulatoriais ortopédicos em SP em 2022",
+        "gold": [{"mes_cmpt": 1, "custo_total": 512553.88}, {"mes_cmpt": 2, "custo_total": 595800.35}, {"mes_cmpt": 3, "custo_total": 674510.71}, {"mes_cmpt": 4, "custo_total": 738060.12}, {"mes_cmpt": 5, "custo_total": 763125.98}, {"mes_cmpt": 6, "custo_total": 735410.89}, {"mes_cmpt": 7, "custo_total": 736615.45}, {"mes_cmpt": 8, "custo_total": 811250.03}, {"mes_cmpt": 9, "custo_total": 765290.48}, {"mes_cmpt": 10, "custo_total": 837949.76}, {"mes_cmpt": 11, "custo_total": 767868.86}, {"mes_cmpt": 12, "custo_total": 782781.4}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "custo_total"],
+    },
+    {
+        "id": "Q117", "cat": "Temporal/Comparativa",
+        "q": "Comparativo semestral do custo total de internações ortopédicas em SP em 2022",
+        "gold": [{"semestre": "1S", "custo_total": 82207816.93}, {"semestre": "2S", "custo_total": 93075611.84}],
+        "match": "unordered_rows", "key_cols": ["semestre", "custo_total"],
+    },
+    {
+        "id": "Q118", "cat": "Temporal/Comparativa",
+        "q": "Evolução mensal da permanência média em internações por fratura de fêmur (S72) em SP em 2022",
+        "gold": [{"mes_cmpt": 1, "permanencia_media": 6.1}, {"mes_cmpt": 2, "permanencia_media": 6.3}, {"mes_cmpt": 3, "permanencia_media": 6.4}, {"mes_cmpt": 4, "permanencia_media": 6.7}, {"mes_cmpt": 5, "permanencia_media": 6.1}, {"mes_cmpt": 6, "permanencia_media": 6.6}, {"mes_cmpt": 7, "permanencia_media": 6.7}, {"mes_cmpt": 8, "permanencia_media": 6.6}, {"mes_cmpt": 9, "permanencia_media": 6.7}, {"mes_cmpt": 10, "permanencia_media": 6.9}, {"mes_cmpt": 11, "permanencia_media": 6.6}, {"mes_cmpt": 12, "permanencia_media": 6.7}],
+        "match": "ordered_rows", "key_cols": ["mes_cmpt", "permanencia_media"],
+    },
 ]
 
 # ── Lógica de comparação ──────────────────────────────────────────────────────
@@ -948,17 +1360,54 @@ def _run_one(queries: list, caller, timeout: int) -> list:
     return records
 
 
+def _load_gold_file(path: str) -> dict[str, list]:
+    """Load pre-computed gold-standard from JSON (output of compute_gold.py)."""
+    import json as _json
+    return _json.loads(Path(path).read_text())
+
+
+def _apply_gold_override(queries: list[dict], gold_map: dict[str, list]) -> list[dict]:
+    """Replace 'gold' in each query dict with the value from gold_map.
+    For scalar match types, also updates 'col' to match the gold column name,
+    since compute_gold.py may use different aliases than the hardcoded BENCHMARK.
+    """
+    out = []
+    for q in queries:
+        qid = q["id"]
+        if qid in gold_map and gold_map[qid]:
+            q = dict(q)
+            q["gold"] = gold_map[qid]
+            if q.get("match") == "scalar":
+                q["col"] = list(gold_map[qid][0].keys())[0]
+        out.append(q)
+    return out
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Benchmark evaluation — SUS Data RAG")
     parser.add_argument("--model",       default="ollama", help="ollama | openai")
     parser.add_argument("--timeout",     type=int,   default=DEFAULT_TIMEOUT)
     parser.add_argument("--out",         default=None, help="Caminho base do JSON de saída")
-    parser.add_argument("--start",       type=int,   default=1,   help="Query inicial (1-50)")
-    parser.add_argument("--end",         type=int,   default=50,  help="Query final (1-50)")
+    parser.add_argument("--start",       type=int,   default=1,   help="Query inicial (1-N)")
+    parser.add_argument("--end",         type=int,   default=None, help="Query final (padrão: última)")
     parser.add_argument("--runs",        type=int,   default=1,   help="Número de execuções (multi-run)")
     parser.add_argument("--temperature", type=float, default=0.0, help="Temperatura LLM (0=greedy, >0=estocástico)")
     parser.add_argument("--direct",      action="store_true",     help="Bypass API: chama rag direto (suporta --temperature)")
+    parser.add_argument("--state",       default="SP",  help="Estado (SP, RJ, MG...) — substitui no texto da pergunta")
+    parser.add_argument("--year",        type=int, default=2022,  help="Ano do benchmark (2022, 2023...)")
+    parser.add_argument("--gold-file",   default=None, metavar="PATH",
+                        help="JSON gold-standard para este escopo (saída de compute_gold.py). "
+                             "Obrigatório quando --state != SP ou --year != 2022.")
     args = parser.parse_args()
+
+    # ── Scope validation ──────────────────────────────────────────────────────
+    non_default_scope = (args.state != "SP" or args.year != 2022)
+    if non_default_scope and not args.gold_file:
+        print(f"❌ --state={args.state} --year={args.year}: "
+              f"escopo não-padrão requer --gold-file.")
+        print(f"   Execute primeiro:")
+        print(f"   uv run python scripts/compute_gold.py --state {args.state} --year {args.year}")
+        sys.exit(1)
 
     out_dir = Path("results")
     out_dir.mkdir(exist_ok=True)
@@ -979,8 +1428,24 @@ def main() -> None:
             sys.exit(1)
         caller = lambda q, t: call_api(q, t)
 
-    queries = [q for q in BENCHMARK if args.start <= int(q["id"][1:]) <= args.end]
-    print(f"\n🚀 {args.runs} run(s) × {len(queries)} queries — modelo: {args.model} — temp: {args.temperature}")
+    end_idx = args.end if args.end is not None else len(BENCHMARK)
+    queries = [q for q in BENCHMARK if args.start <= int(q["id"][1:]) <= end_idx]
+
+    # ── State/year substitution in question text ──────────────────────────────
+    if args.state != "SP" or args.year != 2022:
+        queries = [
+            {**q, "q": q["q"].replace("SP", args.state).replace("2022", str(args.year))}
+            for q in queries
+        ]
+
+    # ── Gold-standard override from file ─────────────────────────────────────
+    if args.gold_file:
+        gold_map = _load_gold_file(args.gold_file)
+        queries = _apply_gold_override(queries, gold_map)
+        print(f"📂 Gold-standard carregado: {args.gold_file} ({len(gold_map)} queries)")
+
+    scope_tag = f"{args.state}_{args.year}"
+    print(f"\n🚀 {args.runs} run(s) × {len(queries)} queries — modelo: {args.model} — temp: {args.temperature} — escopo: {scope_tag}")
     print(f"   Timeout por query: {args.timeout}s\n")
 
     all_runs = []
@@ -1001,7 +1466,7 @@ def main() -> None:
             json_path = Path(args.out)
         else:
             suffix = f"_r{run_idx}" if args.runs > 1 else ""
-            json_path = out_dir / f"eval_{args.model}_{ts_slug_base}{suffix}.json"
+            json_path = out_dir / f"eval_{args.model}_{scope_tag}_{ts_slug_base}{suffix}.json"
         json_path.write_text(json.dumps(records, ensure_ascii=False, indent=2, default=str))
 
         # Salvar relatório MD individual
@@ -1034,7 +1499,7 @@ def main() -> None:
     # Relatório agregado quando runs > 1
     if args.runs > 1:
         agg_md = render_aggregate_report(args.model, args.temperature, all_runs)
-        agg_path = out_dir / f"eval_{args.model}_{ts_slug_base}_aggregate.md"
+        agg_path = out_dir / f"eval_{args.model}_{scope_tag}_{ts_slug_base}_aggregate.md"
         agg_path.write_text(agg_md)
         if mestrado_dir.exists():
             dest = mestrado_dir / agg_path.name
