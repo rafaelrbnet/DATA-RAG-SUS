@@ -1125,25 +1125,33 @@ def call_api(question: str, timeout: int) -> dict:
         return {"error": str(exc), "elapsed_ms": round((time.time() - t0) * 1000)}
 
 
-def call_direct(question: str, timeout: int, temperature: float = 0.0) -> dict:
+def call_direct(question: str, timeout: int, temperature: float = 0.0,
+                self_correct: bool = False) -> dict:
     """Chama rag direto (sem API HTTP) — permite controlar temperatura por chamada."""
     import json as _json
-    from src.rag.sql_generator import generate_sql
+    from src.rag.sql_generator import generate_sql, generate_sql_with_repair
     from src.rag.executor import query as execute_sql
 
     t0 = time.time()
     sql = None
+    rounds = None
     try:
-        sql = generate_sql(question, temperature=temperature)
+        if self_correct:
+            sql, rounds = generate_sql_with_repair(question, temperature=temperature)
+        else:
+            sql = generate_sql(question, temperature=temperature)
     except Exception as exc:
-        return {"error": f"Falha SQL: {exc}", "elapsed_ms": round((time.time() - t0) * 1000)}
+        return {"error": f"Falha SQL: {exc}", "elapsed_ms": round((time.time() - t0) * 1000),
+                "correction_rounds": rounds}
 
     try:
         df = execute_sql(sql)
         result = _json.loads(df.to_json(orient="records", default_handler=str))
-        return {"sql": sql, "result": result, "elapsed_ms": round((time.time() - t0) * 1000)}
+        return {"sql": sql, "result": result, "elapsed_ms": round((time.time() - t0) * 1000),
+                "correction_rounds": rounds}
     except Exception as exc:
-        return {"sql": sql, "error": f"Falha DuckDB: {exc}", "elapsed_ms": round((time.time() - t0) * 1000)}
+        return {"sql": sql, "error": f"Falha DuckDB: {exc}", "elapsed_ms": round((time.time() - t0) * 1000),
+                "correction_rounds": rounds}
 
 
 # ── Relatório Markdown ────────────────────────────────────────────────────────
@@ -1356,6 +1364,7 @@ def _run_one(queries: list, caller, timeout: int) -> list:
             "gold_result": q["gold"],
             "api_error": resp.get("error"),
             "elapsed_ms": resp["elapsed_ms"],
+            "correction_rounds": resp.get("correction_rounds"),
         })
     return records
 
@@ -1393,6 +1402,7 @@ def main() -> None:
     parser.add_argument("--runs",        type=int,   default=1,   help="Número de execuções (multi-run)")
     parser.add_argument("--temperature", type=float, default=0.0, help="Temperatura LLM (0=greedy, >0=estocástico)")
     parser.add_argument("--direct",      action="store_true",     help="Bypass API: chama rag direto (suporta --temperature)")
+    parser.add_argument("--self-correct", action="store_true",    help="Condição E: loop de autocorreção com feedback de execução (requer --direct)")
     parser.add_argument("--state",       default="SP",  help="Estado (SP, RJ, MG...) — substitui no texto da pergunta")
     parser.add_argument("--year",        type=int, default=2022,  help="Ano do benchmark (2022, 2023...)")
     parser.add_argument("--gold-file",   default=None, metavar="PATH",
@@ -1414,8 +1424,10 @@ def main() -> None:
     mestrado_dir = Path("/Users/rbnet/Library/CloudStorage/Dropbox/Docs/MestradoUSF/ProjetoDataRag/Projeto")
 
     if args.direct:
-        print(f"⚡ Modo direto (bypass API) — temperature={args.temperature}")
-        caller = lambda q, t: call_direct(q, t, temperature=args.temperature)
+        mode = " + self-correct (Condição E)" if args.self_correct else ""
+        print(f"⚡ Modo direto (bypass API) — temperature={args.temperature}{mode}")
+        caller = lambda q, t: call_direct(q, t, temperature=args.temperature,
+                                          self_correct=args.self_correct)
     else:
         try:
             health = requests.get(f"{API_URL}/health", timeout=5)

@@ -6,7 +6,7 @@ import os
 import re
 
 from dotenv import load_dotenv
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 
 from .prompts import SCHEMA_CONTEXT, SYSTEM_PROMPT
@@ -99,3 +99,89 @@ def generate_sql(question: str, *, temperature: float = 0.0) -> str:
     sql = _extract_sql(raw)
     _validate_select_only(sql)
     return sql
+
+
+_VERIFY_INSTRUCTION = (
+    "A query executou com sucesso e retornou {n} linha(s) com as colunas {cols}.\n"
+    "Amostra do resultado:\n{preview}\n\n"
+    "Verifique se o resultado responde à pergunta original de forma completa e com a "
+    "estrutura mínima apropriada: as colunas que a pergunta pede presentes, sem colunas "
+    "extras desnecessárias, agregação e granularidade corretas, ordenação e LIMIT quando "
+    "a pergunta pedir top-N. "
+    "Se estiver correto, responda exatamente APROVADO. "
+    "Caso contrário, responda apenas com o SQL corrigido em um bloco ```sql```."
+)
+
+_REPAIR_INSTRUCTION = (
+    "A query falhou no DuckDB com o erro:\n{error}\n\n"
+    "Corrija o SQL. Responda apenas com o SQL corrigido em um bloco ```sql```."
+)
+
+
+def generate_sql_with_repair(
+    question: str, *, temperature: float = 0.0, max_feedback_rounds: int = 2
+) -> tuple[str, int]:
+    """
+    Gera SQL com loop de autocorreção por feedback de execução (Condição E).
+
+    O feedback usa exclusivamente informação da própria execução (erro do DuckDB
+    ou preview do resultado) e a pergunta original — nunca o gold standard.
+    Fluxo: gera SQL → executa → se erro, repara; se sucesso, uma rodada de
+    verificação estrutural (APROVADO ou SQL corrigido).
+
+    Returns:
+        (sql_final, rodadas_de_feedback_usadas)
+    """
+    from .executor import query as _execute
+
+    llm = _get_llm(temperature=temperature)
+    system_content = SYSTEM_PROMPT.format(schema=SCHEMA_CONTEXT)
+    messages = [
+        SystemMessage(content=system_content),
+        HumanMessage(content=question),
+    ]
+    response = llm.invoke(messages)
+    sql = _extract_sql(response.content)
+    _validate_select_only(sql)
+
+    rounds = 0
+    verified = False
+    while rounds < max_feedback_rounds:
+        try:
+            df = _execute(sql)
+        except Exception as exc:
+            rounds += 1
+            messages += [
+                AIMessage(content=f"```sql\n{sql}\n```"),
+                HumanMessage(content=_REPAIR_INSTRUCTION.format(error=exc)),
+            ]
+            response = llm.invoke(messages)
+            sql = _extract_sql(response.content)
+            _validate_select_only(sql)
+            continue
+
+        if verified:
+            break
+
+        rounds += 1
+        verified = True
+        messages += [
+            AIMessage(content=f"```sql\n{sql}\n```"),
+            HumanMessage(content=_VERIFY_INSTRUCTION.format(
+                n=len(df),
+                cols=list(df.columns),
+                preview=df.head(3).to_string(index=False),
+            )),
+        ]
+        response = llm.invoke(messages)
+        content = response.content.strip()
+        if "APROVADO" in content.upper()[:40]:
+            break
+        try:
+            new_sql = _extract_sql(content)
+            _validate_select_only(new_sql)
+            sql = new_sql
+        except ValueError:
+            break  # resposta não é SQL nem APROVADO — mantém SQL vigente
+
+    return sql, rounds
