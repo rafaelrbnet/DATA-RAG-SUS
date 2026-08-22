@@ -1408,6 +1408,9 @@ def main() -> None:
     parser.add_argument("--gold-file",   default=None, metavar="PATH",
                         help="JSON gold-standard para este escopo (saída de compute_gold.py). "
                              "Obrigatório quando --state != SP ou --year != 2022.")
+    parser.add_argument("--tag",         default=None,
+                        help="Subpasta de organização dentro de results/local/ "
+                             "(ex.: zero_shot, current, prompt_g) — não afeta o nome do arquivo.")
     args = parser.parse_args()
 
     # ── Scope validation ──────────────────────────────────────────────────────
@@ -1419,7 +1422,7 @@ def main() -> None:
         print(f"   uv run python scripts/compute_gold.py --state {args.state} --year {args.year}")
         sys.exit(1)
 
-    out_dir = Path("results") / "local"
+    out_dir = Path("results") / "local" / (args.tag or "")
     out_dir.mkdir(parents=True, exist_ok=True)
     mestrado_dir = Path("/Users/rbnet/Library/CloudStorage/Dropbox/Docs/MestradoUSF/ProjetoDataRag/Projeto")
 
