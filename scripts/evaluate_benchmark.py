@@ -1419,8 +1419,8 @@ def main() -> None:
         print(f"   uv run python scripts/compute_gold.py --state {args.state} --year {args.year}")
         sys.exit(1)
 
-    out_dir = Path("results")
-    out_dir.mkdir(exist_ok=True)
+    out_dir = Path("results") / "local"
+    out_dir.mkdir(parents=True, exist_ok=True)
     mestrado_dir = Path("/Users/rbnet/Library/CloudStorage/Dropbox/Docs/MestradoUSF/ProjetoDataRag/Projeto")
 
     if args.direct:

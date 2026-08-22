@@ -2,7 +2,7 @@
 compute_gold.py — Pre-compute benchmark gold-standard for any state/year.
 
 Runs each query's reference SQL against DuckDB and saves the results to
-results/gold_{state}_{year}.json, which evaluate_benchmark.py then loads
+results/local/gold_{state}_{year}.json, which evaluate_benchmark.py then loads
 via --gold-file.
 
 Usage:
@@ -1000,12 +1000,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Compute benchmark gold-standard for any state/year")
     parser.add_argument("--state", default="SP",   help="State abbreviation (SP, RJ, MG...)")
     parser.add_argument("--year",  type=int, default=2022, help="Year (2022, 2023...)")
-    parser.add_argument("--out",   default=None, help="Output path (default: results/gold_{state}_{year}.json)")
+    parser.add_argument("--out",   default=None, help="Output path (default: results/local/gold_{state}_{year}.json)")
     parser.add_argument("--verify", action="store_true", help="Cross-check SP/2022 against hardcoded values")
     args = parser.parse_args()
 
     out_path = Path(args.out) if args.out else (
-        Path(__file__).resolve().parent.parent / "results" / f"gold_{args.state}_{args.year}.json"
+        Path(__file__).resolve().parent.parent / "results" / "local" / f"gold_{args.state}_{args.year}.json"
     )
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
