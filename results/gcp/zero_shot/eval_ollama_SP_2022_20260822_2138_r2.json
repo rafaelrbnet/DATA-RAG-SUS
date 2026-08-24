@@ -1,0 +1,6435 @@
+[
+  {
+    "id": "Q01",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações ortopédicas (M00-M99 e S00-S99) em SP em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=65970 exp=65970",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_internacoes": 65970
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 65970
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4450,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q02",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de procedimentos ambulatoriais ortopédicos em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=None exp=105016",
+    "sql": "SELECT SUM(pa_qtdapr) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND cod_procedimento LIKE '0408%';",
+    "llm_result": [
+      {
+        "total_procedimentos": null
+      }
+    ],
+    "gold_result": [
+      {
+        "total_procedimentos": 105016
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 3822,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q03",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por fratura de fêmur (S72) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=59668 exp=29356",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas');",
+    "llm_result": [
+      {
+        "total_internacoes": 59668
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_fratura_femur": 29356
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5526,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q04",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por osteoartrose (M16, M17) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=156 exp=156",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M16%' OR cid_principal LIKE 'M17%');",
+    "llm_result": [
+      {
+        "total_internacoes": 156
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_artrose": 156
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5057,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q05",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de óbitos em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=73 exp=2223",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_obitos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND morte = 1\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_obitos": 73
+      }
+    ],
+    "gold_result": [
+      {
+        "obitos": 2223
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5362,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q06",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por traumatismos (S00-T98) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=59668 exp=59668",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S%' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_internacoes": 59668
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_trauma": 59668
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5106,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q07",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por doenças osteomusculares (M00-M99) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=6302 exp=6302",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND e.clinical_interpretacao_clinica = 'doencas osteomusculares e do tecido conjuntivo';",
+    "llm_result": [
+      {
+        "total_internacoes": 6302
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_osteomuscular": 6302
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5459,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q08",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de mulheres internadas por causa ortopédica em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=2327 exp=25847",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS num_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'F'\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "num_internacoes": 2327
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_femininas": 25847
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5459,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q09",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de homens internados por causa ortopédica em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=3975 exp=40123",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'M'\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 3975
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_masculinas": 40123
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5457,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q10",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas de idosos (60 anos ou mais) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1685 exp=26666",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 60\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 1685
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_idosos": 26666
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5490,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q11",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de municípios distintos com internação ortopédica registrada em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=496 exp=211",
+    "sql": "SELECT COUNT(DISTINCT cod_munic_residencia) AS num_municipios_distintos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "num_municipios_distintos": 496
+      }
+    ],
+    "gold_result": [
+      {
+        "municipios": 211
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4446,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q12",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de estabelecimentos distintos com internação ortopédica em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=158 exp=381",
+    "sql": "SELECT COUNT(DISTINCT cod_munic_estabelecimento) AS num_estabelecimentos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "num_estabelecimentos": 158
+      }
+    ],
+    "gold_result": [
+      {
+        "estabelecimentos": 381
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5288,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q13",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência superior a 7 dias em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1383 exp=16451",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n  AND dias_perm > 7;",
+    "llm_result": [
+      {
+        "numero_internacoes": 1383
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_longa_permanencia": 16451
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5418,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q14",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com uso de UTI em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=3",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS num_internacoes_uti\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n  AND uti_int_to > 0;",
+    "llm_result": [
+      {
+        "num_internacoes_uti": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_uti": 3
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5257,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q15",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de quadril (S72) em pacientes com 70 anos ou mais em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=17608 exp=15119",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 70\n  AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas');",
+    "llm_result": [
+      {
+        "numero_internacoes": 17608
+      }
+    ],
+    "gold_result": [
+      {
+        "fraturas_quadril_idosos": 15119
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5917,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q16",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 CIDs ortopédicos por volume de internação em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M861', 'internacoes_unicas': 912} exp={'cid_principal': 'S720', 'total': 8980}",
+    "sql": "SELECT \n    cid_principal, \n    COUNT(DISTINCT n_aih) AS internacoes_unicas\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    internacoes_unicas DESC\nLIMIT 10;",
+    "llm_result": [
+      {
+        "cid_principal": "M861",
+        "internacoes_unicas": 912
+      },
+      {
+        "cid_principal": "M869",
+        "internacoes_unicas": 474
+      },
+      {
+        "cid_principal": "M866",
+        "internacoes_unicas": 458
+      },
+      {
+        "cid_principal": "M841",
+        "internacoes_unicas": 366
+      },
+      {
+        "cid_principal": "M868",
+        "internacoes_unicas": 204
+      },
+      {
+        "cid_principal": "M751",
+        "internacoes_unicas": 202
+      },
+      {
+        "cid_principal": "M511",
+        "internacoes_unicas": 182
+      },
+      {
+        "cid_principal": "M860",
+        "internacoes_unicas": 141
+      },
+      {
+        "cid_principal": "M840",
+        "internacoes_unicas": 138
+      },
+      {
+        "cid_principal": "M864",
+        "internacoes_unicas": 127
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total": 8980
+      },
+      {
+        "cid_principal": "S721",
+        "total": 6610
+      },
+      {
+        "cid_principal": "S723",
+        "total": 5044
+      },
+      {
+        "cid_principal": "T813",
+        "total": 3860
+      },
+      {
+        "cid_principal": "S722",
+        "total": 2424
+      },
+      {
+        "cid_principal": "S729",
+        "total": 2356
+      },
+      {
+        "cid_principal": "S822",
+        "total": 1793
+      },
+      {
+        "cid_principal": "S724",
+        "total": 1588
+      },
+      {
+        "cid_principal": "S728",
+        "total": 1506
+      },
+      {
+        "cid_principal": "T814",
+        "total": 1243
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6652,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q17",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 municípios de SP com maior número de internações ortopédicas em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_munic_residencia': '355030', 'num_internacoes': 1190} exp={'cod_munic_estabelecimento': '350000', 'total': 29824}",
+    "sql": "SELECT \n    cod_munic_residencia, \n    COUNT(DISTINCT n_aih) AS num_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cod_munic_residencia\nORDER BY \n    num_internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_munic_residencia": "355030",
+        "num_internacoes": 1190
+      },
+      {
+        "cod_munic_residencia": "354980",
+        "num_internacoes": 208
+      },
+      {
+        "cod_munic_residencia": "355170",
+        "num_internacoes": 194
+      },
+      {
+        "cod_munic_residencia": "354340",
+        "num_internacoes": 146
+      },
+      {
+        "cod_munic_residencia": "351350",
+        "num_internacoes": 138
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "350000",
+        "total": 29824
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "total": 6093
+      },
+      {
+        "cod_munic_estabelecimento": "354870",
+        "total": 1248
+      },
+      {
+        "cod_munic_estabelecimento": "350950",
+        "total": 1234
+      },
+      {
+        "cod_munic_estabelecimento": "354340",
+        "total": 1150
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6831,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q18",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa etária (0-17, 18-59, 60+) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'faixa_etaria': '0-17', 'total': 3619}",
+    "sql": "SELECT \n    CASE \n        WHEN idade_paciente BETWEEN 0 AND 17 THEN '0-17'\n        WHEN idade_paciente BETWEEN 18 AND 59 THEN '18-59'\n        WHEN idade_paciente >= 60 THEN '60+'\n    END AS faixa_etaria,\n    COUNT(DISTINCT n_aih) AS quantidade_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    faixa_etaria\nORDER BY \n    faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": "0-17",
+        "quantidade_internacoes": 481
+      },
+      {
+        "faixa_etaria": "18-59",
+        "quantidade_internacoes": 4136
+      },
+      {
+        "faixa_etaria": "60+",
+        "quantidade_internacoes": 1685
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 3619
+      },
+      {
+        "faixa_etaria": "18-59",
+        "total": 35685
+      },
+      {
+        "faixa_etaria": "60+",
+        "total": 26666
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8738,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q19",
+    "cat": "Epidemiológica Complexa",
+    "question": "Taxa de mortalidade hospitalar por CID ortopédico (top 5) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M895', 'total_internacoes': 2, 'total_obitos': 1.0, 'taxa_mortalidade': 50.0} exp={'cid_principal': 'S062', 'total_internacoes': 70, 'total_obitos': 21, 'taxa_mortalidade_pct': 30.0}",
+    "sql": "SELECT \n    cid_principal,\n    COUNT(DISTINCT n_aih) AS total_internacoes,\n    SUM(morte) AS total_obitos,\n    (SUM(morte) * 1.0 / COUNT(DISTINCT n_aih)) * 100 AS taxa_mortalidade\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    taxa_mortalidade DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M895",
+        "total_internacoes": 2,
+        "total_obitos": 1.0,
+        "taxa_mortalidade": 50.0
+      },
+      {
+        "cid_principal": "M100",
+        "total_internacoes": 3,
+        "total_obitos": 1.0,
+        "taxa_mortalidade": 33.3333333333
+      },
+      {
+        "cid_principal": "M311",
+        "total_internacoes": 3,
+        "total_obitos": 1.0,
+        "taxa_mortalidade": 33.3333333333
+      },
+      {
+        "cid_principal": "M930",
+        "total_internacoes": 5,
+        "total_obitos": 1.0,
+        "taxa_mortalidade": 20.0
+      },
+      {
+        "cid_principal": "M726",
+        "total_internacoes": 43,
+        "total_obitos": 5.0,
+        "taxa_mortalidade": 11.6279069767
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S062",
+        "total_internacoes": 70,
+        "total_obitos": 21,
+        "taxa_mortalidade_pct": 30.0
+      },
+      {
+        "cid_principal": "S063",
+        "total_internacoes": 78,
+        "total_obitos": 19,
+        "taxa_mortalidade_pct": 24.36
+      },
+      {
+        "cid_principal": "S065",
+        "total_internacoes": 706,
+        "total_obitos": 152,
+        "taxa_mortalidade_pct": 21.53
+      },
+      {
+        "cid_principal": "S367",
+        "total_internacoes": 95,
+        "total_obitos": 19,
+        "taxa_mortalidade_pct": 20.0
+      },
+      {
+        "cid_principal": "S270",
+        "total_internacoes": 131,
+        "total_obitos": 25,
+        "taxa_mortalidade_pct": 19.08
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8015,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q20",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 CIDs ambulatoriais ortopédicos por volume de produção em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M216', 'volume_producao': 4743} exp={'cid_principal': 'S720', 'total': 16466}",
+    "sql": "SELECT \n    cid_principal, \n    COUNT(*) AS volume_producao\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    volume_producao DESC\nLIMIT 10;",
+    "llm_result": [
+      {
+        "cid_principal": "M216",
+        "volume_producao": 4743
+      },
+      {
+        "cid_principal": "M214",
+        "volume_producao": 1106
+      },
+      {
+        "cid_principal": "M199",
+        "volume_producao": 879
+      },
+      {
+        "cid_principal": "M869",
+        "volume_producao": 737
+      },
+      {
+        "cid_principal": "M796",
+        "volume_producao": 524
+      },
+      {
+        "cid_principal": "M069",
+        "volume_producao": 273
+      },
+      {
+        "cid_principal": "M545",
+        "volume_producao": 217
+      },
+      {
+        "cid_principal": "M217",
+        "volume_producao": 208
+      },
+      {
+        "cid_principal": "M866",
+        "volume_producao": 168
+      },
+      {
+        "cid_principal": "M160",
+        "volume_producao": 147
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total": 16466
+      },
+      {
+        "cid_principal": "S729",
+        "total": 12180
+      },
+      {
+        "cid_principal": "S723",
+        "total": 10624
+      },
+      {
+        "cid_principal": "S398",
+        "total": 8107
+      },
+      {
+        "cid_principal": "S881",
+        "total": 7604
+      },
+      {
+        "cid_principal": "S781",
+        "total": 7302
+      },
+      {
+        "cid_principal": "S889",
+        "total": 4798
+      },
+      {
+        "cid_principal": "M216",
+        "total": 4743
+      },
+      {
+        "cid_principal": "T882",
+        "total": 3563
+      },
+      {
+        "cid_principal": "S721",
+        "total": 3445
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6310,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q21",
+    "cat": "Epidemiológica Complexa",
+    "question": "Proporção de internações ortopédicas por sexo em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'sexo_paciente': 'M', 'total': 40123, 'pct': 60.8}",
+    "sql": "SELECT \n    sexo_paciente,\n    COUNT(DISTINCT n_aih) AS internacoes,\n    COUNT(DISTINCT n_aih) * 1.0 / SUM(COUNT(DISTINCT n_aih)) OVER () AS proporcao\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    sexo_paciente;",
+    "llm_result": [
+      {
+        "sexo_paciente": "F",
+        "internacoes": 2327,
+        "proporcao": 0.3692478578
+      },
+      {
+        "sexo_paciente": "M",
+        "internacoes": 3975,
+        "proporcao": 0.6307521422
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "M",
+        "total": 40123,
+        "pct": 60.8
+      },
+      {
+        "sexo_paciente": "F",
+        "total": 25847,
+        "pct": 39.2
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6108,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q22",
+    "cat": "Epidemiológica Complexa",
+    "question": "Número de internações por fratura de fêmur (S72) em idosos (60+) comparado ao total em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'num_internacoes_femur': 24981, 'num_internacoes_total': 195574, 'percentual_femur': 12.7731702578} exp={'total_s72': 29356, 's72_idosos': 19120, 'pct_idosos': 65.1}",
+    "sql": "WITH internacoes_femur AS (\n    SELECT\n        COUNT(DISTINCT n_aih) AS num_internacoes_femur\n    FROM\n        processed\n    JOIN\n        enriched e ON processed.row_id = e.row_id\n    WHERE\n        sistema = 'SIH'\n        AND uf_origem = 'SP'\n        AND ano_cmpt = 2022\n        AND idade_paciente >= 60\n        AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas')\n),\ntotal_internacoes AS (\n    SELECT\n        COUNT(DISTINCT n_aih) AS num_internacoes_total\n    FROM\n        processed\n    WHERE\n        sistema = 'SIH'\n        AND uf_origem = 'SP'\n        AND ano_cmpt = 2022\n)\nSELECT\n    num_internacoes_femur,\n    num_internacoes_total,\n    (num_internacoes_femur * 1.0 / num_internacoes_total) * 100 AS percentual_femur\nFROM\n    internacoes_femur,\n    total_internacoes;",
+    "llm_result": [
+      {
+        "num_internacoes_femur": 24981,
+        "num_internacoes_total": 195574,
+        "percentual_femur": 12.7731702578
+      }
+    ],
+    "gold_result": [
+      {
+        "total_s72": 29356,
+        "s72_idosos": 19120,
+        "pct_idosos": 65.1
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 12431,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q23",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 CIDs ortopédicos com maior permanência média hospitalar em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M318', 'media_permanencia': 36.0} exp={'cid_principal': 'S063', 'total_internacoes': 78, 'permanencia_media_dias': 16.4}",
+    "sql": "SELECT \n    cid_principal, \n    AVG(dias_perm) AS media_permanencia\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    media_permanencia DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M318",
+        "media_permanencia": 36.0
+      },
+      {
+        "cid_principal": "M622",
+        "media_permanencia": 32.0
+      },
+      {
+        "cid_principal": "M938",
+        "media_permanencia": 31.3333333333
+      },
+      {
+        "cid_principal": "M62",
+        "media_permanencia": 31.0
+      },
+      {
+        "cid_principal": "M865",
+        "media_permanencia": 21.5483870968
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S063",
+        "total_internacoes": 78,
+        "permanencia_media_dias": 16.4
+      },
+      {
+        "cid_principal": "S122",
+        "total_internacoes": 46,
+        "permanencia_media_dias": 15.9
+      },
+      {
+        "cid_principal": "S320",
+        "total_internacoes": 48,
+        "permanencia_media_dias": 14.1
+      },
+      {
+        "cid_principal": "S062",
+        "total_internacoes": 70,
+        "permanencia_media_dias": 14.0
+      },
+      {
+        "cid_principal": "S221",
+        "total_internacoes": 41,
+        "permanencia_media_dias": 13.7
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6413,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q24",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 estabelecimentos com maior volume de internação ortopédica em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_munic_estabelecimento': '350000', 'volume_internacao': 2800} exp={'cnes_estabelecimento': '2078015', 'total_internacoes': 2221}",
+    "sql": "SELECT \n    cod_munic_estabelecimento, \n    COUNT(DISTINCT n_aih) AS volume_internacao\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cod_munic_estabelecimento\nORDER BY \n    volume_internacao DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "350000",
+        "volume_internacao": 2800
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "volume_internacao": 544
+      },
+      {
+        "cod_munic_estabelecimento": "355170",
+        "volume_internacao": 231
+      },
+      {
+        "cod_munic_estabelecimento": "351350",
+        "volume_internacao": 157
+      },
+      {
+        "cod_munic_estabelecimento": "354980",
+        "volume_internacao": 140
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2078015",
+        "total_internacoes": 2221
+      },
+      {
+        "cnes_estabelecimento": "2091399",
+        "total_internacoes": 1676
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "total_internacoes": 1619
+      },
+      {
+        "cnes_estabelecimento": "2081695",
+        "total_internacoes": 1230
+      },
+      {
+        "cnes_estabelecimento": "7373465",
+        "total_internacoes": 1204
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6912,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q25",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por raça/cor do paciente em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'raca_cor_paciente': '01', 'total': 38121, 'pct': 57.8}",
+    "sql": "SELECT \n    raca_cor_paciente,\n    COUNT(DISTINCT n_aih) AS internacoes_ortopédicas\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    raca_cor_paciente;",
+    "llm_result": [
+      {
+        "raca_cor_paciente": "03",
+        "internacoes_ortopédicas": 1770
+      },
+      {
+        "raca_cor_paciente": "02",
+        "internacoes_ortopédicas": 421
+      },
+      {
+        "raca_cor_paciente": "04",
+        "internacoes_ortopédicas": 48
+      },
+      {
+        "raca_cor_paciente": "01",
+        "internacoes_ortopédicas": 3673
+      },
+      {
+        "raca_cor_paciente": "99",
+        "internacoes_ortopédicas": 389
+      },
+      {
+        "raca_cor_paciente": "05",
+        "internacoes_ortopédicas": 1
+      }
+    ],
+    "gold_result": [
+      {
+        "raca_cor_paciente": "01",
+        "total": 38121,
+        "pct": 57.8
+      },
+      {
+        "raca_cor_paciente": "03",
+        "total": 18259,
+        "pct": 27.7
+      },
+      {
+        "raca_cor_paciente": "99",
+        "total": 5700,
+        "pct": 8.6
+      },
+      {
+        "raca_cor_paciente": "02",
+        "total": 3418,
+        "pct": 5.2
+      },
+      {
+        "raca_cor_paciente": "04",
+        "total": 462,
+        "pct": 0.7
+      },
+      {
+        "raca_cor_paciente": "05",
+        "total": 10,
+        "pct": 0.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6208,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q26",
+    "cat": "Epidemiológica Complexa",
+    "question": "CIDs ortopédicos com maior número de dias totais de internação em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=1 exp=10",
+    "sql": "SELECT \n    cid_principal, \n    SUM(qt_diarias) AS total_dias_internacao\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    total_dias_internacao DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "cid_principal": "M861",
+        "total_dias_internacao": 6669.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 8980,
+        "total_dias_internacao": 64885
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 6610,
+        "total_dias_internacao": 44099
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 3860,
+        "total_dias_internacao": 28976
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 5044,
+        "total_dias_internacao": 27024
+      },
+      {
+        "cid_principal": "S722",
+        "internacoes": 2424,
+        "total_dias_internacao": 16004
+      },
+      {
+        "cid_principal": "S729",
+        "internacoes": 2356,
+        "total_dias_internacao": 13870
+      },
+      {
+        "cid_principal": "T814",
+        "internacoes": 1243,
+        "total_dias_internacao": 10712
+      },
+      {
+        "cid_principal": "S724",
+        "internacoes": 1588,
+        "total_dias_internacao": 10106
+      },
+      {
+        "cid_principal": "S728",
+        "internacoes": 1506,
+        "total_dias_internacao": 9895
+      },
+      {
+        "cid_principal": "S065",
+        "internacoes": 706,
+        "total_dias_internacao": 8084
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6607,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q27",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 procedimentos ambulatoriais ortopédicos mais realizados em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=5",
+    "sql": "SELECT \n    cod_procedimento, \n    COUNT(*) AS quantidade_realizada\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022\n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    cod_procedimento\nORDER BY \n    quantidade_realizada DESC\nLIMIT 5;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "cod_procedimento": "0302050019",
+        "total": 70536
+      },
+      {
+        "cod_procedimento": "0701060018",
+        "total": 6235
+      },
+      {
+        "cod_procedimento": "0701050047",
+        "total": 4334
+      },
+      {
+        "cod_procedimento": "0701060034",
+        "total": 2046
+      },
+      {
+        "cod_procedimento": "0701010142",
+        "total": 2001
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5032,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q28",
+    "cat": "Epidemiológica Complexa",
+    "question": "Proporção de internações ortopédicas com paciente de outro município em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'total_internacoes': 3412, 'internacoes_outro_municipio': 3412, 'proporcao': 1.0} exp={'total_internacoes': 65970, 'deslocamento_intermunicipal': 37219, 'pct_deslocamento': 56.4}",
+    "sql": "WITH internacoes_ortopédicas AS (\n    SELECT\n        p.n_aih,\n        p.cod_munic_residencia,\n        p.cod_munic_estabelecimento\n    FROM\n        processed p\n    JOIN\n        enriched e ON p.row_id = e.row_id\n    WHERE\n        p.sistema = 'SIH'\n        AND p.uf_origem = 'SP'\n        AND p.ano_cmpt = 2022\n        AND (p.cid_principal LIKE 'M%' OR p.icd_group = 'M00-M99')\n        AND p.cod_munic_residencia <> p.cod_munic_estabelecimento\n)\nSELECT\n    COUNT(DISTINCT n_aih) AS total_internacoes,\n    COUNT(DISTINCT CASE WHEN cod_munic_residencia <> cod_munic_estabelecimento THEN n_aih END) AS internacoes_outro_municipio,\n    (COUNT(DISTINCT CASE WHEN cod_munic_residencia <> cod_munic_estabelecimento THEN n_aih END) * 1.0 / COUNT(DISTINCT n_aih)) AS proporcao\nFROM\n    internacoes_ortopédicas;",
+    "llm_result": [
+      {
+        "total_internacoes": 3412,
+        "internacoes_outro_municipio": 3412,
+        "proporcao": 1.0
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 65970,
+        "deslocamento_intermunicipal": 37219,
+        "pct_deslocamento": 56.4
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 11778,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q29",
+    "cat": "Epidemiológica Complexa",
+    "question": "Comparativo de volume mensal SIA vs SIH ortopédico em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'sistema': 'SIA', 'volume_mensal': 521} exp={'mes_cmpt': 1, 'sistema': 'SIA', 'total': 5898}",
+    "sql": "SELECT \n    mes_cmpt,\n    sistema,\n    COUNT(*) AS volume_mensal\nFROM \n    processed\nWHERE \n    uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt, sistema\nORDER BY \n    mes_cmpt, sistema;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIA",
+        "volume_mensal": 521
+      },
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIH",
+        "volume_mensal": 479
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIA",
+        "volume_mensal": 609
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIH",
+        "volume_mensal": 462
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIA",
+        "volume_mensal": 646
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIH",
+        "volume_mensal": 515
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIA",
+        "volume_mensal": 913
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIH",
+        "volume_mensal": 467
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIA",
+        "volume_mensal": 985
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIH",
+        "volume_mensal": 567
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIA",
+        "volume_mensal": 915
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIH",
+        "volume_mensal": 512
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIA",
+        "volume_mensal": 888
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIH",
+        "volume_mensal": 573
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIA",
+        "volume_mensal": 1067
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIH",
+        "volume_mensal": 567
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIA",
+        "volume_mensal": 981
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIH",
+        "volume_mensal": 588
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIA",
+        "volume_mensal": 1164
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIH",
+        "volume_mensal": 584
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIA",
+        "volume_mensal": 1114
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIH",
+        "volume_mensal": 532
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIA",
+        "volume_mensal": 845
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIH",
+        "volume_mensal": 494
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIA",
+        "total": 5898
+      },
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIH",
+        "total": 5212
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIA",
+        "total": 7116
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIH",
+        "total": 5022
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIA",
+        "total": 8509
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIH",
+        "total": 5608
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIA",
+        "total": 8352
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIH",
+        "total": 5136
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIA",
+        "total": 9535
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIH",
+        "total": 5416
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIA",
+        "total": 9264
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIH",
+        "total": 5202
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIA",
+        "total": 9042
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIH",
+        "total": 5852
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIA",
+        "total": 10993
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIH",
+        "total": 6010
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIA",
+        "total": 9421
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIH",
+        "total": 5752
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIA",
+        "total": 9197
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIH",
+        "total": 5772
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIA",
+        "total": 9297
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIH",
+        "total": 5353
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIA",
+        "total": 8392
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIH",
+        "total": 5676
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4995,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q30",
+    "cat": "Epidemiológica Complexa",
+    "question": "Idade média dos pacientes internados por fratura de fêmur (S72) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'idade_media': 62.3961647195} exp={'idade_media': 62.4, 'idade_minima': 0, 'idade_maxima': 99}",
+    "sql": "SELECT AVG(idade_paciente) AS idade_media\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%'",
+    "llm_result": [
+      {
+        "idade_media": 62.3961647195
+      }
+    ],
+    "gold_result": [
+      {
+        "idade_media": 62.4,
+        "idade_minima": 0,
+        "idade_maxima": 99
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4453,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q31",
+    "cat": "Financeira",
+    "question": "Custo total de todas as internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=13990374.039999994 exp=175283428.77",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS custo_total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_total_internacoes": 13990374.039999994
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_reais": 175283428.77
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4447,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q32",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=2219.9895334814 exp=2655.37",
+    "sql": "SELECT \n    COALESCE(SUM(custo_total) / COUNT(DISTINCT n_aih), 0) AS custo_medio_por_internacao\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_medio_por_internacao": 2219.9895334814
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_medio_por_internacao": 2655.37
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5110,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q33",
+    "cat": "Financeira",
+    "question": "Custo total de internações por fratura de fêmur (S72) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=79277316.95999992 exp=79277316.96",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS total_custo\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S72%' OR main_icd LIKE 'S72%');",
+    "llm_result": [
+      {
+        "total_custo": 79277316.95999992
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_s72": 79277316.96
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5213,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q34",
+    "cat": "Financeira",
+    "question": "Top 5 CIDs ortopédicos com maior custo total de internação em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M511', 'total_custo': 878799.22} exp={'cid_principal': 'S720', 'internacoes': 8980, 'custo_total': 29879588.9}",
+    "sql": "SELECT \n    cid_principal, \n    SUM(custo_total) AS total_custo\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    total_custo DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M511",
+        "total_custo": 878799.22
+      },
+      {
+        "cid_principal": "M518",
+        "total_custo": 876634.8
+      },
+      {
+        "cid_principal": "M861",
+        "total_custo": 664902.8900000001
+      },
+      {
+        "cid_principal": "M869",
+        "total_custo": 661732.1
+      },
+      {
+        "cid_principal": "M841",
+        "total_custo": 654641.52
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 8980,
+        "custo_total": 29879588.9
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 6610,
+        "custo_total": 17207131.57
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 5044,
+        "custo_total": 12728219.46
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 3860,
+        "custo_total": 6607677.78
+      },
+      {
+        "cid_principal": "S722",
+        "internacoes": 2424,
+        "custo_total": 5726268.91
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6325,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q35",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas com uso de OPME (val_ortp > 0) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'custo_total_ortopedia': None} exp={'internacoes_com_opme': 0, 'custo_total_opme': None}",
+    "sql": "SELECT SUM(COALESCE(val_ortp, 0)) AS custo_total_ortopedia\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND val_ortp > 0\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_total_ortopedia": null
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_com_opme": 0,
+        "custo_total_opme": null
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5431,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q36",
+    "cat": "Financeira",
+    "question": "Valor total de honorários profissionais (val_sp) em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=2795569.4899999984 exp=30640001.52",
+    "sql": "SELECT SUM(COALESCE(val_sp, 0)) AS total_honorarios_profissionais\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "total_honorarios_profissionais": 2795569.4899999984
+      }
+    ],
+    "gold_result": [
+      {
+        "total_honorarios": 30640001.52
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4450,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q37",
+    "cat": "Financeira",
+    "question": "Custo médio por dia de internação ortopédica em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=391.5581875175 exp=432.54",
+    "sql": "SELECT \n    COALESCE(SUM(custo_total) / SUM(qt_diarias), 0) AS custo_medio_por_dia\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')",
+    "llm_result": [
+      {
+        "custo_medio_por_dia": 391.5581875175
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_por_dia": 432.54
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5962,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q38",
+    "cat": "Financeira",
+    "question": "Top 5 estabelecimentos com maior custo total de internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_munic_estabelecimento': '350000', 'total_custo': 6704942.199999998} exp={'cnes_estabelecimento': '2078015', 'internacoes': 2221, 'custo_total': 11218869.54}",
+    "sql": "SELECT \n    cod_munic_estabelecimento, \n    SUM(COALESCE(custo_total, 0)) AS total_custo\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cod_munic_estabelecimento\nORDER BY \n    total_custo DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "350000",
+        "total_custo": 6704942.199999998
+      },
+      {
+        "cod_munic_estabelecimento": "355170",
+        "total_custo": 766282.4
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "total_custo": 703918.14
+      },
+      {
+        "cod_munic_estabelecimento": "354980",
+        "total_custo": 669465.4600000001
+      },
+      {
+        "cod_munic_estabelecimento": "353070",
+        "total_custo": 449966.8100000001
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2078015",
+        "internacoes": 2221,
+        "custo_total": 11218869.54
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "internacoes": 1619,
+        "custo_total": 7242879.23
+      },
+      {
+        "cnes_estabelecimento": "2078775",
+        "internacoes": 1068,
+        "custo_total": 4066905.35
+      },
+      {
+        "cnes_estabelecimento": "2081695",
+        "internacoes": 1230,
+        "custo_total": 3701329.73
+      },
+      {
+        "cnes_estabelecimento": "2688689",
+        "internacoes": 1011,
+        "custo_total": 3622383.58
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6981,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q39",
+    "cat": "Financeira",
+    "question": "Custo total de procedimentos ambulatoriais ortopédicos em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1945222.8200000036 exp=8721217.91",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS total_custo\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "total_custo": 1945222.8200000036
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_sia": 8721217.91
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4320,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q40",
+    "cat": "Financeira",
+    "question": "Proporção custo serviço hospitalar vs honorários em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'proporcao_custos': 4.0044808723} exp={'custo_servico_hospitalar': 144636796.74, 'honorarios_profissionais': 30640001.52, 'pct_hospitalar': 82.5}",
+    "sql": "SELECT \n    COALESCE(SUM(val_sh), 0) / COALESCE(SUM(val_sp), 1) AS proporcao_custos\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "proporcao_custos": 4.0044808723
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_servico_hospitalar": 144636796.74,
+        "honorarios_profissionais": 30640001.52,
+        "pct_hospitalar": 82.5
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5999,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q41",
+    "cat": "Temporal/Comparativa",
+    "question": "Distribuição mensal de internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'internacoes_ortopédicas': 476} exp={'mes_cmpt': 1, 'internacoes': 5209}",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS internacoes_ortopédicas\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes_ortopédicas": 476
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes_ortopédicas": 461
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes_ortopédicas": 511
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes_ortopédicas": 467
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes_ortopédicas": 567
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes_ortopédicas": 512
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes_ortopédicas": 573
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes_ortopédicas": 563
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes_ortopédicas": 588
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes_ortopédicas": 584
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes_ortopédicas": 530
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes_ortopédicas": 494
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 5209
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 5021
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 5604
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 5136
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 5416
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 5202
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 5852
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 6006
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 5752
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 5772
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 5351
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 5676
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6363,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q42",
+    "cat": "Temporal/Comparativa",
+    "question": "Distribuição mensal de procedimentos ambulatoriais ortopédicos em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=12",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(*) AS quantidade_procedimentos\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "procedimentos": 5898
+      },
+      {
+        "mes_cmpt": 2,
+        "procedimentos": 7116
+      },
+      {
+        "mes_cmpt": 3,
+        "procedimentos": 8509
+      },
+      {
+        "mes_cmpt": 4,
+        "procedimentos": 8352
+      },
+      {
+        "mes_cmpt": 5,
+        "procedimentos": 9535
+      },
+      {
+        "mes_cmpt": 6,
+        "procedimentos": 9264
+      },
+      {
+        "mes_cmpt": 7,
+        "procedimentos": 9042
+      },
+      {
+        "mes_cmpt": 8,
+        "procedimentos": 10993
+      },
+      {
+        "mes_cmpt": 9,
+        "procedimentos": 9421
+      },
+      {
+        "mes_cmpt": 10,
+        "procedimentos": 9197
+      },
+      {
+        "mes_cmpt": 11,
+        "procedimentos": 9297
+      },
+      {
+        "mes_cmpt": 12,
+        "procedimentos": 8392
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4755,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q43",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior número de internações por fratura de fêmur (S72) em SP em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=8 exp=8",
+    "sql": "SELECT mes_cmpt, COUNT(DISTINCT n_aih) AS num_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY num_internacoes DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 8,
+        "num_internacoes": 2757
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 8,
+        "fraturas": 2757
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5504,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q44",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal do custo total de internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'custo_total': 1015180.7699999993} exp={'mes_cmpt': 1, 'custo_total': 12942488.31}",
+    "sql": "SELECT \n    mes_cmpt,\n    SUM(COALESCE(custo_total, 0)) AS custo_total\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 1015180.7699999993
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 1053741.7299999993
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 1134439.0199999993
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 1051199.379999999
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 1189299.9300000004
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 975794.1400000004
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 1254711.63
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 1247075.6599999995
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 1344525.6000000015
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 1348350.1200000015
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 1191701.4399999992
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 1184354.6200000003
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 12942488.31
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 12530190.26
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 14223832.66
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 13771879.44
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 14952640.76
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 13786785.5
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 15817720.1
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 16289447.24
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 15715314.26
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 16046281.06
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 14341406.49
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 14865442.69
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5406,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q45",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por trauma (S00-T98) vs doenças musculoesqueléticas (M00-M99) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=24",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT CASE WHEN icd_group = 'S00-T98' THEN n_aih END) AS trauma_count,\n    COUNT(DISTINCT CASE WHEN icd_group = 'M00-M99' THEN n_aih END) AS musculoesqueletico_count\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "trauma_count": 4733,
+        "musculoesqueletico_count": 476
+      },
+      {
+        "mes_cmpt": 2,
+        "trauma_count": 4560,
+        "musculoesqueletico_count": 461
+      },
+      {
+        "mes_cmpt": 3,
+        "trauma_count": 5093,
+        "musculoesqueletico_count": 511
+      },
+      {
+        "mes_cmpt": 4,
+        "trauma_count": 4669,
+        "musculoesqueletico_count": 467
+      },
+      {
+        "mes_cmpt": 5,
+        "trauma_count": 4849,
+        "musculoesqueletico_count": 567
+      },
+      {
+        "mes_cmpt": 6,
+        "trauma_count": 4690,
+        "musculoesqueletico_count": 512
+      },
+      {
+        "mes_cmpt": 7,
+        "trauma_count": 5279,
+        "musculoesqueletico_count": 573
+      },
+      {
+        "mes_cmpt": 8,
+        "trauma_count": 5443,
+        "musculoesqueletico_count": 563
+      },
+      {
+        "mes_cmpt": 9,
+        "trauma_count": 5164,
+        "musculoesqueletico_count": 588
+      },
+      {
+        "mes_cmpt": 10,
+        "trauma_count": 5188,
+        "musculoesqueletico_count": 584
+      },
+      {
+        "mes_cmpt": 11,
+        "trauma_count": 4821,
+        "musculoesqueletico_count": 530
+      },
+      {
+        "mes_cmpt": 12,
+        "trauma_count": 5182,
+        "musculoesqueletico_count": 494
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "icd_group": "M00-M99",
+        "internacoes": 476
+      },
+      {
+        "mes_cmpt": 1,
+        "icd_group": "S00-T98",
+        "internacoes": 4733
+      },
+      {
+        "mes_cmpt": 2,
+        "icd_group": "M00-M99",
+        "internacoes": 461
+      },
+      {
+        "mes_cmpt": 2,
+        "icd_group": "S00-T98",
+        "internacoes": 4560
+      },
+      {
+        "mes_cmpt": 3,
+        "icd_group": "M00-M99",
+        "internacoes": 511
+      },
+      {
+        "mes_cmpt": 3,
+        "icd_group": "S00-T98",
+        "internacoes": 5093
+      },
+      {
+        "mes_cmpt": 4,
+        "icd_group": "M00-M99",
+        "internacoes": 467
+      },
+      {
+        "mes_cmpt": 4,
+        "icd_group": "S00-T98",
+        "internacoes": 4669
+      },
+      {
+        "mes_cmpt": 5,
+        "icd_group": "M00-M99",
+        "internacoes": 567
+      },
+      {
+        "mes_cmpt": 5,
+        "icd_group": "S00-T98",
+        "internacoes": 4849
+      },
+      {
+        "mes_cmpt": 6,
+        "icd_group": "M00-M99",
+        "internacoes": 512
+      },
+      {
+        "mes_cmpt": 6,
+        "icd_group": "S00-T98",
+        "internacoes": 4690
+      },
+      {
+        "mes_cmpt": 7,
+        "icd_group": "M00-M99",
+        "internacoes": 573
+      },
+      {
+        "mes_cmpt": 7,
+        "icd_group": "S00-T98",
+        "internacoes": 5279
+      },
+      {
+        "mes_cmpt": 8,
+        "icd_group": "M00-M99",
+        "internacoes": 563
+      },
+      {
+        "mes_cmpt": 8,
+        "icd_group": "S00-T98",
+        "internacoes": 5443
+      },
+      {
+        "mes_cmpt": 9,
+        "icd_group": "M00-M99",
+        "internacoes": 588
+      },
+      {
+        "mes_cmpt": 9,
+        "icd_group": "S00-T98",
+        "internacoes": 5164
+      },
+      {
+        "mes_cmpt": 10,
+        "icd_group": "M00-M99",
+        "internacoes": 584
+      },
+      {
+        "mes_cmpt": 10,
+        "icd_group": "S00-T98",
+        "internacoes": 5188
+      },
+      {
+        "mes_cmpt": 11,
+        "icd_group": "M00-M99",
+        "internacoes": 530
+      },
+      {
+        "mes_cmpt": 11,
+        "icd_group": "S00-T98",
+        "internacoes": 4821
+      },
+      {
+        "mes_cmpt": 12,
+        "icd_group": "M00-M99",
+        "internacoes": 494
+      },
+      {
+        "mes_cmpt": 12,
+        "icd_group": "S00-T98",
+        "internacoes": 5182
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7298,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q46",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal de óbitos em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'total_obitos': 6} exp={'mes_cmpt': 1, 'total_obitos': 179}",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS total_obitos\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND morte = 1\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "total_obitos": 6
+      },
+      {
+        "mes_cmpt": 2,
+        "total_obitos": 4
+      },
+      {
+        "mes_cmpt": 3,
+        "total_obitos": 6
+      },
+      {
+        "mes_cmpt": 4,
+        "total_obitos": 5
+      },
+      {
+        "mes_cmpt": 5,
+        "total_obitos": 9
+      },
+      {
+        "mes_cmpt": 6,
+        "total_obitos": 9
+      },
+      {
+        "mes_cmpt": 7,
+        "total_obitos": 5
+      },
+      {
+        "mes_cmpt": 8,
+        "total_obitos": 10
+      },
+      {
+        "mes_cmpt": 9,
+        "total_obitos": 3
+      },
+      {
+        "mes_cmpt": 10,
+        "total_obitos": 6
+      },
+      {
+        "mes_cmpt": 11,
+        "total_obitos": 4
+      },
+      {
+        "mes_cmpt": 12,
+        "total_obitos": 6
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_obitos": 179
+      },
+      {
+        "mes_cmpt": 2,
+        "total_obitos": 182
+      },
+      {
+        "mes_cmpt": 3,
+        "total_obitos": 167
+      },
+      {
+        "mes_cmpt": 4,
+        "total_obitos": 156
+      },
+      {
+        "mes_cmpt": 5,
+        "total_obitos": 187
+      },
+      {
+        "mes_cmpt": 6,
+        "total_obitos": 182
+      },
+      {
+        "mes_cmpt": 7,
+        "total_obitos": 212
+      },
+      {
+        "mes_cmpt": 8,
+        "total_obitos": 217
+      },
+      {
+        "mes_cmpt": 9,
+        "total_obitos": 183
+      },
+      {
+        "mes_cmpt": 10,
+        "total_obitos": 224
+      },
+      {
+        "mes_cmpt": 11,
+        "total_obitos": 144
+      },
+      {
+        "mes_cmpt": 12,
+        "total_obitos": 190
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6535,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q47",
+    "cat": "Temporal/Comparativa",
+    "question": "Permanência média por trimestre nas internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=4",
+    "sql": "SELECT \n    AVG(dias_perm) AS media_permanencia,\n    mes_cmpt AS trimestre\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "media_permanencia": 5.5448851775,
+        "trimestre": 1
+      },
+      {
+        "media_permanencia": 6.7359307359,
+        "trimestre": 2
+      },
+      {
+        "media_permanencia": 5.7553398058,
+        "trimestre": 3
+      },
+      {
+        "media_permanencia": 7.0149892934,
+        "trimestre": 4
+      },
+      {
+        "media_permanencia": 5.5167548501,
+        "trimestre": 5
+      },
+      {
+        "media_permanencia": 5.693359375,
+        "trimestre": 6
+      },
+      {
+        "media_permanencia": 5.8342059337,
+        "trimestre": 7
+      },
+      {
+        "media_permanencia": 5.3774250441,
+        "trimestre": 8
+      },
+      {
+        "media_permanencia": 5.7023809524,
+        "trimestre": 9
+      },
+      {
+        "media_permanencia": 4.7773972603,
+        "trimestre": 10
+      },
+      {
+        "media_permanencia": 5.1954887218,
+        "trimestre": 11
+      },
+      {
+        "media_permanencia": 6.2327935223,
+        "trimestre": 12
+      }
+    ],
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "permanencia_media_dias": 5.8
+      },
+      {
+        "trimestre": "Q2",
+        "permanencia_media_dias": 6.0
+      },
+      {
+        "trimestre": "Q3",
+        "permanencia_media_dias": 6.2
+      },
+      {
+        "trimestre": "Q4",
+        "permanencia_media_dias": 6.1
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6319,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q48",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior custo médio por internação ortopédica em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=12 exp=10",
+    "sql": "WITH orthopedic_internations AS (\n    SELECT\n        mes_cmpt,\n        custo_total\n    FROM\n        processed\n    JOIN\n        enriched e ON processed.row_id = e.row_id\n    WHERE\n        sistema = 'SIH'\n        AND uf_origem = 'SP'\n        AND ano_cmpt = 2022\n        AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n)\nSELECT\n    mes_cmpt,\n    AVG(custo_total) AS avg_cost_per_internation\nFROM\n    orthopedic_internations\nGROUP BY\n    mes_cmpt\nORDER BY\n    avg_cost_per_internation DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 12,
+        "avg_cost_per_internation": 2397.4789878543
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 10,
+        "custo_medio": 2780.02
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7927,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q49",
+    "cat": "Temporal/Comparativa",
+    "question": "Sazonalidade mensal de fraturas de fêmur (S72) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(*) AS quantidade_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND cid_principal LIKE 'S72%'\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "quantidade_internacoes": 2220
+      },
+      {
+        "mes_cmpt": 2,
+        "quantidade_internacoes": 2076
+      },
+      {
+        "mes_cmpt": 3,
+        "quantidade_internacoes": 2385
+      },
+      {
+        "mes_cmpt": 4,
+        "quantidade_internacoes": 2207
+      },
+      {
+        "mes_cmpt": 5,
+        "quantidade_internacoes": 2337
+      },
+      {
+        "mes_cmpt": 6,
+        "quantidade_internacoes": 2403
+      },
+      {
+        "mes_cmpt": 7,
+        "quantidade_internacoes": 2676
+      },
+      {
+        "mes_cmpt": 8,
+        "quantidade_internacoes": 2757
+      },
+      {
+        "mes_cmpt": 9,
+        "quantidade_internacoes": 2614
+      },
+      {
+        "mes_cmpt": 10,
+        "quantidade_internacoes": 2690
+      },
+      {
+        "mes_cmpt": 11,
+        "quantidade_internacoes": 2402
+      },
+      {
+        "mes_cmpt": 12,
+        "quantidade_internacoes": 2592
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "fraturas_femur": 2220
+      },
+      {
+        "mes_cmpt": 2,
+        "fraturas_femur": 2076
+      },
+      {
+        "mes_cmpt": 3,
+        "fraturas_femur": 2385
+      },
+      {
+        "mes_cmpt": 4,
+        "fraturas_femur": 2207
+      },
+      {
+        "mes_cmpt": 5,
+        "fraturas_femur": 2337
+      },
+      {
+        "mes_cmpt": 6,
+        "fraturas_femur": 2403
+      },
+      {
+        "mes_cmpt": 7,
+        "fraturas_femur": 2676
+      },
+      {
+        "mes_cmpt": 8,
+        "fraturas_femur": 2757
+      },
+      {
+        "mes_cmpt": 9,
+        "fraturas_femur": 2614
+      },
+      {
+        "mes_cmpt": 10,
+        "fraturas_femur": 2690
+      },
+      {
+        "mes_cmpt": 11,
+        "fraturas_femur": 2402
+      },
+      {
+        "mes_cmpt": 12,
+        "fraturas_femur": 2592
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5527,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q50",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações ortopédicas de idosos (60 anos ou mais) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'volume_internacoes': 118} exp={'mes_cmpt': 1, 'internacoes_idosos': 1987}",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND idade_paciente >= 60\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "volume_internacoes": 118
+      },
+      {
+        "mes_cmpt": 2,
+        "volume_internacoes": 133
+      },
+      {
+        "mes_cmpt": 3,
+        "volume_internacoes": 150
+      },
+      {
+        "mes_cmpt": 4,
+        "volume_internacoes": 122
+      },
+      {
+        "mes_cmpt": 5,
+        "volume_internacoes": 151
+      },
+      {
+        "mes_cmpt": 6,
+        "volume_internacoes": 149
+      },
+      {
+        "mes_cmpt": 7,
+        "volume_internacoes": 137
+      },
+      {
+        "mes_cmpt": 8,
+        "volume_internacoes": 140
+      },
+      {
+        "mes_cmpt": 9,
+        "volume_internacoes": 148
+      },
+      {
+        "mes_cmpt": 10,
+        "volume_internacoes": 161
+      },
+      {
+        "mes_cmpt": 11,
+        "volume_internacoes": 130
+      },
+      {
+        "mes_cmpt": 12,
+        "volume_internacoes": 149
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes_idosos": 1987
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes_idosos": 1920
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes_idosos": 2145
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes_idosos": 2021
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes_idosos": 2207
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes_idosos": 2173
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes_idosos": 2419
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes_idosos": 2489
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes_idosos": 2332
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes_idosos": 2464
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes_idosos": 2161
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes_idosos": 2354
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6664,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q51",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de fêmur (S72) em mulheres em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=23520 exp=15359",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'F'\n  AND (cid_principal LIKE 'S72%' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "numero_internacoes": 23520
+      }
+    ],
+    "gold_result": [
+      {
+        "total_mulheres_s72": 15359
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5531,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q52",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de fêmur (S72) em homens em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=36148 exp=13997",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'M'\n  AND (cid_principal LIKE 'S72%' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "numero_internacoes": 36148
+      }
+    ],
+    "gold_result": [
+      {
+        "total_homens_s72": 13997
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5548,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q53",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência de 1 dia ou menos em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=2330 exp=13928",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n  AND dias_perm <= 1;",
+    "llm_result": [
+      {
+        "numero_internacoes": 2330
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_curtas": 13928
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5423,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q54",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de procedimentos ambulatoriais ortopédicos realizados em mulheres em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=45579",
+    "sql": "SELECT COUNT(*) AS numero_procedimentos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE processed.sistema = 'SIA'\n  AND processed.uf_origem = 'SP'\n  AND processed.ano_cmpt = 2022\n  AND processed.sexo_paciente = 'F'\n  AND processed.cod_procedimento LIKE '0408%'\n  AND (processed.cid_principal LIKE 'M%' OR processed.icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_procedimentos": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "procedimentos_mulheres": 45579
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5814,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q55",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de procedimentos ambulatoriais ortopédicos realizados por idosos (60 anos ou mais) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=53666",
+    "sql": "SELECT COUNT(*) AS numero_procedimentos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 60\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n  AND cod_procedimento LIKE '0408%';",
+    "llm_result": [
+      {
+        "numero_procedimentos": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "procedimentos_idosos": 53666
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5503,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q56",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de tíbia e perônio (S82) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=59668 exp=6261",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S82%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas');",
+    "llm_result": [
+      {
+        "numero_internacoes": 59668
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_fratura_tibia": 6261
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5523,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q57",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de antebraço (S52) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=59668 exp=1970",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S52%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas');",
+    "llm_result": [
+      {
+        "numero_internacoes": 59668
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_fratura_punho": 1970
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5526,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q58",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de ombro e úmero (S42) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=59668 exp=1248",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S42%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas');",
+    "llm_result": [
+      {
+        "numero_internacoes": 59668
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_fratura_ombro": 1248
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5539,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q59",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas em crianças (menores de 18 anos) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=481 exp=3619",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND idade_paciente < 18\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 481
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_criancas": 3619
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5494,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q60",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência entre 8 e 30 dias em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1239 exp=15489",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND dias_perm BETWEEN 8 AND 30\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 1239
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes": 15489
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5561,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q61",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por artrose de quadril e joelho (M16 e M17) em idosos (60 anos ou mais) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=89 exp=89",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M16%' OR cid_principal LIKE 'M17%')\n  AND idade_paciente >= 60;",
+    "llm_result": [
+      {
+        "numero_internacoes": 89
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_artrose_idosos": 89
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5461,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q62",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de fêmur (S72) em mulheres com 70 anos ou mais em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=12217 exp=10944",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 70\n  AND sexo_paciente = 'F'\n  AND (cid_principal LIKE 'S72%' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "numero_internacoes": 12217
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_s72_mulheres_idosas": 10944
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5952,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q63",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência superior a 30 dias em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=157 exp=975",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND dias_perm > 30\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 157
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_longa_permanencia": 975
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5441,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q64",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de procedimentos ambulatoriais ortopédicos realizados em homens em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=59437",
+    "sql": "SELECT COUNT(*) AS numero_procedimentos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'M'\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n  AND cod_procedimento LIKE '0408%';",
+    "llm_result": [
+      {
+        "numero_procedimentos": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "procedimentos_homens": 59437
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5458,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q65",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por traumatismos (grupo S00-T98) em idosos (60 anos ou mais) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=24981 exp=24981",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 60\n  AND (cid_principal LIKE 'S%' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "numero_internacoes": 24981
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_trauma_idosos": 24981
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5498,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q66",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por doenças osteomusculares (grupo M00-M99) em mulheres em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=2327 exp=2327",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'F'\n  AND icd_group = 'M00-M99';",
+    "llm_result": [
+      {
+        "numero_internacoes": 2327
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_m_mulheres": 2327
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5135,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q67",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de óbitos em internações por fratura de fêmur (S72) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=1216 exp=1216",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_obitos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%'\n  AND morte = 1;",
+    "llm_result": [
+      {
+        "numero_obitos": 1216
+      }
+    ],
+    "gold_result": [
+      {
+        "obitos_s72": 1216
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4912,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q68",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de municípios distintos com registro de procedimentos ambulatoriais ortopédicos em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=399",
+    "sql": "SELECT COUNT(DISTINCT cod_munic_residencia) AS num_municipios_distintos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND cod_procedimento LIKE '0408%';",
+    "llm_result": [
+      {
+        "num_municipios_distintos": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "municipios_sia": 399
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4127,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q69",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 municípios por volume de procedimentos ambulatoriais ortopédicos em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=5",
+    "sql": "SELECT \n    cod_munic_residencia,\n    COUNT(*) AS volume_procedimentos\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    cod_munic_residencia\nORDER BY \n    volume_procedimentos DESC\nLIMIT 5;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "355030",
+        "total": 33846
+      },
+      {
+        "cod_munic_estabelecimento": "354980",
+        "total": 4658
+      },
+      {
+        "cod_munic_estabelecimento": "355220",
+        "total": 2971
+      },
+      {
+        "cod_munic_estabelecimento": "354850",
+        "total": 2819
+      },
+      {
+        "cod_munic_estabelecimento": "350600",
+        "total": 2409
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5231,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q70",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de procedimentos ambulatoriais ortopédicos por faixa etária em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=3",
+    "sql": "SELECT \n    FLOOR(idade_paciente / 10) * 10 AS faixa_etaria,\n    COUNT(*) AS quantidade_procedimentos\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIA'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    faixa_etaria\nORDER BY \n    faixa_etaria;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 4868
+      },
+      {
+        "faixa_etaria": "18-59",
+        "total": 46482
+      },
+      {
+        "faixa_etaria": "60+",
+        "total": 53666
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6085,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q71",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos com maior número de óbitos em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M869', 'num_obitos': 13} exp={'cid_principal': 'S720', 'total_internacoes': 8980, 'total_obitos': 455.0}",
+    "sql": "SELECT \n    cid_principal,\n    COUNT(DISTINCT n_aih) AS num_obitos\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND morte = 1\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    num_obitos DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M869",
+        "num_obitos": 13
+      },
+      {
+        "cid_principal": "M866",
+        "num_obitos": 11
+      },
+      {
+        "cid_principal": "M861",
+        "num_obitos": 8
+      },
+      {
+        "cid_principal": "M726",
+        "num_obitos": 5
+      },
+      {
+        "cid_principal": "M868",
+        "num_obitos": 4
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_internacoes": 8980,
+        "total_obitos": 455.0
+      },
+      {
+        "cid_principal": "S721",
+        "total_internacoes": 6610,
+        "total_obitos": 342.0
+      },
+      {
+        "cid_principal": "S065",
+        "total_internacoes": 706,
+        "total_obitos": 152.0
+      },
+      {
+        "cid_principal": "T813",
+        "total_internacoes": 3860,
+        "total_obitos": 132.0
+      },
+      {
+        "cid_principal": "S722",
+        "total_internacoes": 2424,
+        "total_obitos": 114.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6674,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q72",
+    "cat": "Epidemiológica Complexa",
+    "question": "Permanência hospitalar média por sexo em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'sexo_paciente': 'F', 'permanencia_media': 6.3}",
+    "sql": "SELECT \n    sexo_paciente,\n    AVG(dias_perm) AS media_permanencia\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    sexo_paciente;",
+    "llm_result": [
+      {
+        "sexo_paciente": "F",
+        "media_permanencia": 5.0128150363
+      },
+      {
+        "sexo_paciente": "M",
+        "media_permanencia": 6.1750437609
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "F",
+        "permanencia_media": 6.3
+      },
+      {
+        "sexo_paciente": "M",
+        "permanencia_media": 5.8
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5804,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q73",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 estabelecimentos por volume de procedimentos ambulatoriais ortopédicos em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=10",
+    "sql": "SELECT \n    cod_munic_estabelecimento,\n    COUNT(*) AS volume_procedimentos\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    cod_munic_estabelecimento\nORDER BY \n    volume_procedimentos DESC\nLIMIT 10;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2068974",
+        "total": 9214
+      },
+      {
+        "cnes_estabelecimento": "2078015",
+        "total": 5158
+      },
+      {
+        "cnes_estabelecimento": "2077574",
+        "total": 3994
+      },
+      {
+        "cnes_estabelecimento": "3060322",
+        "total": 2899
+      },
+      {
+        "cnes_estabelecimento": "9642927",
+        "total": 2614
+      },
+      {
+        "cnes_estabelecimento": "7536917",
+        "total": 2304
+      },
+      {
+        "cnes_estabelecimento": "2091399",
+        "total": 2241
+      },
+      {
+        "cnes_estabelecimento": "6859186",
+        "total": 1748
+      },
+      {
+        "cnes_estabelecimento": "2792168",
+        "total": 1491
+      },
+      {
+        "cnes_estabelecimento": "2077655",
+        "total": 1311
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5350,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q74",
+    "cat": "Epidemiológica Complexa",
+    "question": "Taxa de mortalidade por sexo em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'sexo_paciente': 'F', 'total_obitos': 1081.0, 'taxa_mortalidade': 4.18}",
+    "sql": "SELECT \n    sexo_paciente,\n    COUNT(DISTINCT n_aih) AS total_internacoes,\n    SUM(CASE WHEN morte = 1 THEN 1 ELSE 0 END) AS total_obitos,\n    SUM(CASE WHEN morte = 1 THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT n_aih) AS taxa_mortalidade\nFROM \n    processed\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    sexo_paciente;",
+    "llm_result": [
+      {
+        "sexo_paciente": "F",
+        "total_internacoes": 2327,
+        "total_obitos": 38.0,
+        "taxa_mortalidade": 0.0163300387
+      },
+      {
+        "sexo_paciente": "M",
+        "total_internacoes": 3975,
+        "total_obitos": 35.0,
+        "taxa_mortalidade": 0.0088050314
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "F",
+        "total_obitos": 1081.0,
+        "taxa_mortalidade": 4.18
+      },
+      {
+        "sexo_paciente": "M",
+        "total_obitos": 1142.0,
+        "taxa_mortalidade": 2.85
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7451,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q75",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por grupo diagnóstico (M e S) e faixa etária em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=16 exp=6",
+    "sql": "SELECT \n    icd_group,\n    CASE \n        WHEN idade_paciente < 18 THEN '0-17'\n        WHEN idade_paciente < 30 THEN '18-29'\n        WHEN idade_paciente < 40 THEN '30-39'\n        WHEN idade_paciente < 50 THEN '40-49'\n        WHEN idade_paciente < 60 THEN '50-59'\n        WHEN idade_paciente < 70 THEN '60-69'\n        WHEN idade_paciente < 80 THEN '70-79'\n        ELSE '80+'\n    END AS faixa_etaria,\n    COUNT(DISTINCT n_aih) AS internacoes\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99' OR cid_principal LIKE 'S%' OR icd_group = 'S00-T98')\nGROUP BY \n    icd_group, faixa_etaria\nORDER BY \n    icd_group, faixa_etaria;",
+    "llm_result": [
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "0-17",
+        "internacoes": 481
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "18-29",
+        "internacoes": 837
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "30-39",
+        "internacoes": 978
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "40-49",
+        "internacoes": 1175
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "50-59",
+        "internacoes": 1146
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "60-69",
+        "internacoes": 984
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "70-79",
+        "internacoes": 525
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "80+",
+        "internacoes": 176
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "0-17",
+        "internacoes": 3138
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "18-29",
+        "internacoes": 10839
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "30-39",
+        "internacoes": 7313
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "40-49",
+        "internacoes": 6782
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "50-59",
+        "internacoes": 6615
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "60-69",
+        "internacoes": 7373
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "70-79",
+        "internacoes": 8055
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "80+",
+        "internacoes": 9553
+      }
+    ],
+    "gold_result": [
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "0-17",
+        "total": 481
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "18-59",
+        "total": 4136
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "60+",
+        "total": 1685
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "0-17",
+        "total": 3138
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "18-59",
+        "total": 31549
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "60+",
+        "total": 24981
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 11764,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q76",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos de traumatismo com maior permanência média em SP em 2022 (mínimo 40 internações)",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'S063', 'media_permanencia': 16.358974359, 'internacoes': 78} exp={'cid_principal': 'S063', 'internacoes': 78, 'permanencia_media': 16.4}",
+    "sql": "SELECT \n    cid_principal, \n    AVG(dias_perm) AS media_permanencia, \n    COUNT(DISTINCT n_aih) AS internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'S%' OR icd_group = 'S00-T98')\nGROUP BY \n    cid_principal\nHAVING \n    COUNT(DISTINCT n_aih) >= 40\nORDER BY \n    media_permanencia DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "S063",
+        "media_permanencia": 16.358974359,
+        "internacoes": 78
+      },
+      {
+        "cid_principal": "S122",
+        "media_permanencia": 15.9347826087,
+        "internacoes": 46
+      },
+      {
+        "cid_principal": "S320",
+        "media_permanencia": 14.125,
+        "internacoes": 48
+      },
+      {
+        "cid_principal": "S062",
+        "media_permanencia": 13.9571428571,
+        "internacoes": 70
+      },
+      {
+        "cid_principal": "S221",
+        "media_permanencia": 13.7073170732,
+        "internacoes": 41
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S063",
+        "internacoes": 78,
+        "permanencia_media": 16.4
+      },
+      {
+        "cid_principal": "S122",
+        "internacoes": 46,
+        "permanencia_media": 15.9
+      },
+      {
+        "cid_principal": "S320",
+        "internacoes": 48,
+        "permanencia_media": 14.1
+      },
+      {
+        "cid_principal": "S062",
+        "internacoes": 70,
+        "permanencia_media": 14.0
+      },
+      {
+        "cid_principal": "S221",
+        "internacoes": 41,
+        "permanencia_media": 13.7
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7646,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q77",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa etária (0-17, 18-39, 40-59, 60-79, 80+) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'faixa_etaria': '0-17', 'total': 3619}",
+    "sql": "SELECT \n    CASE \n        WHEN idade_paciente BETWEEN 0 AND 17 THEN '0-17'\n        WHEN idade_paciente BETWEEN 18 AND 39 THEN '18-39'\n        WHEN idade_paciente BETWEEN 40 AND 59 THEN '40-59'\n        WHEN idade_paciente BETWEEN 60 AND 79 THEN '60-79'\n        WHEN idade_paciente >= 80 THEN '80+'\n    END AS faixa_etaria,\n    COUNT(DISTINCT n_aih) AS quantidade_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    faixa_etaria\nORDER BY \n    faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": "0-17",
+        "quantidade_internacoes": 481
+      },
+      {
+        "faixa_etaria": "18-39",
+        "quantidade_internacoes": 1815
+      },
+      {
+        "faixa_etaria": "40-59",
+        "quantidade_internacoes": 2321
+      },
+      {
+        "faixa_etaria": "60-79",
+        "quantidade_internacoes": 1509
+      },
+      {
+        "faixa_etaria": "80+",
+        "quantidade_internacoes": 176
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 3619
+      },
+      {
+        "faixa_etaria": "18-39",
+        "total": 19967
+      },
+      {
+        "faixa_etaria": "40-59",
+        "total": 15718
+      },
+      {
+        "faixa_etaria": "60-79",
+        "total": 16937
+      },
+      {
+        "faixa_etaria": "80+",
+        "total": 9729
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 10400,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q78",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 estabelecimentos com maior volume de internações por fratura de fêmur (S72) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_munic_estabelecimento': '350000', 'volume_internacoes': 27024} exp={'cnes_estabelecimento': '2091399', 'internacoes': 816}",
+    "sql": "SELECT \n    cod_munic_estabelecimento,\n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas')\nGROUP BY \n    cod_munic_estabelecimento\nORDER BY \n    volume_internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "350000",
+        "volume_internacoes": 27024
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "volume_internacoes": 5549
+      },
+      {
+        "cod_munic_estabelecimento": "354870",
+        "volume_internacoes": 1175
+      },
+      {
+        "cod_munic_estabelecimento": "350950",
+        "volume_internacoes": 1113
+      },
+      {
+        "cod_munic_estabelecimento": "354340",
+        "volume_internacoes": 1061
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2091399",
+        "internacoes": 816
+      },
+      {
+        "cnes_estabelecimento": "2081695",
+        "internacoes": 577
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "internacoes": 573
+      },
+      {
+        "cnes_estabelecimento": "2786435",
+        "internacoes": 499
+      },
+      {
+        "cnes_estabelecimento": "0009628",
+        "internacoes": 470
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7239,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q79",
+    "cat": "Epidemiológica Complexa",
+    "question": "Permanência hospitalar média por faixa etária em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=10 exp=3",
+    "sql": "SELECT \n    FLOOR(idade_paciente / 10) * 10 AS faixa_etaria,\n    AVG(dias_perm) AS media_permanencia\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    faixa_etaria\nORDER BY \n    faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": 0.0,
+        "media_permanencia": 6.55625
+      },
+      {
+        "faixa_etaria": 10.0,
+        "media_permanencia": 4.195
+      },
+      {
+        "faixa_etaria": 20.0,
+        "media_permanencia": 5.2033898305
+      },
+      {
+        "faixa_etaria": 30.0,
+        "media_permanencia": 5.1681957187
+      },
+      {
+        "faixa_etaria": 40.0,
+        "media_permanencia": 5.8299832496
+      },
+      {
+        "faixa_etaria": 50.0,
+        "media_permanencia": 5.2201914708
+      },
+      {
+        "faixa_etaria": 60.0,
+        "media_permanencia": 6.4133738602
+      },
+      {
+        "faixa_etaria": 70.0,
+        "media_permanencia": 7.1844106464
+      },
+      {
+        "faixa_etaria": 80.0,
+        "media_permanencia": 9.0434782609
+      },
+      {
+        "faixa_etaria": 90.0,
+        "media_permanencia": 7.8
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "permanencia_media": 4.4
+      },
+      {
+        "faixa_etaria": "18-59",
+        "permanencia_media": 5.4
+      },
+      {
+        "faixa_etaria": "60+",
+        "permanencia_media": 7.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6875,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q80",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos de doença osteomuscular (M00-M99) por número de internações em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "5 linhas corretas (flexível)",
+    "sql": "SELECT \n    cid_principal, \n    COUNT(DISTINCT n_aih) AS num_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND icd_group = 'M00-M99'\nGROUP BY \n    cid_principal\nORDER BY \n    num_internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M861",
+        "num_internacoes": 912
+      },
+      {
+        "cid_principal": "M869",
+        "num_internacoes": 474
+      },
+      {
+        "cid_principal": "M866",
+        "num_internacoes": 458
+      },
+      {
+        "cid_principal": "M841",
+        "num_internacoes": 366
+      },
+      {
+        "cid_principal": "M868",
+        "num_internacoes": 204
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "M861",
+        "total": 912
+      },
+      {
+        "cid_principal": "M869",
+        "total": 474
+      },
+      {
+        "cid_principal": "M866",
+        "total": 458
+      },
+      {
+        "cid_principal": "M841",
+        "total": 366
+      },
+      {
+        "cid_principal": "M868",
+        "total": 204
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6203,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q81",
+    "cat": "Epidemiológica Complexa",
+    "question": "Número de internações ortopédicas com permanência entre 3 e 7 dias em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1465 exp=25807",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND dias_perm BETWEEN 3 AND 7\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 1465
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes": 25807
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5539,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q82",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos ambulatoriais ortopédicos em idosos (60 anos ou mais) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M216', 'quantidade': 1596} exp={'cid_principal': 'S720', 'total': 11096}",
+    "sql": "SELECT \n    cid_principal, \n    COUNT(*) AS quantidade\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND idade_paciente >= 60 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    quantidade DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M216",
+        "quantidade": 1596
+      },
+      {
+        "cid_principal": "M199",
+        "quantidade": 661
+      },
+      {
+        "cid_principal": "M869",
+        "quantidade": 294
+      },
+      {
+        "cid_principal": "M796",
+        "quantidade": 146
+      },
+      {
+        "cid_principal": "M069",
+        "quantidade": 140
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total": 11096
+      },
+      {
+        "cid_principal": "S729",
+        "total": 6750
+      },
+      {
+        "cid_principal": "S398",
+        "total": 4485
+      },
+      {
+        "cid_principal": "S881",
+        "total": 4170
+      },
+      {
+        "cid_principal": "S723",
+        "total": 4151
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6453,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q83",
+    "cat": "Epidemiológica Complexa",
+    "question": "Média de internações ortopédicas por estabelecimento em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=353930 exp=173.1",
+    "sql": "SELECT \n    cod_munic_estabelecimento,\n    COUNT(DISTINCT n_aih) AS internacoes_ortopedicas\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cod_munic_estabelecimento;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "353930",
+        "internacoes_ortopedicas": 4
+      },
+      {
+        "cod_munic_estabelecimento": "350635",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "353470",
+        "internacoes_ortopedicas": 19
+      },
+      {
+        "cod_munic_estabelecimento": "352130",
+        "internacoes_ortopedicas": 7
+      },
+      {
+        "cod_munic_estabelecimento": "354130",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "350850",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "350950",
+        "internacoes_ortopedicas": 121
+      },
+      {
+        "cod_munic_estabelecimento": "353060",
+        "internacoes_ortopedicas": 79
+      },
+      {
+        "cod_munic_estabelecimento": "355170",
+        "internacoes_ortopedicas": 231
+      },
+      {
+        "cod_munic_estabelecimento": "352920",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "353030",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "353430",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "355060",
+        "internacoes_ortopedicas": 6
+      },
+      {
+        "cod_munic_estabelecimento": "351220",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "352740",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "354400",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "353890",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "350000",
+        "internacoes_ortopedicas": 2800
+      },
+      {
+        "cod_munic_estabelecimento": "355670",
+        "internacoes_ortopedicas": 22
+      },
+      {
+        "cod_munic_estabelecimento": "353870",
+        "internacoes_ortopedicas": 50
+      },
+      {
+        "cod_munic_estabelecimento": "354660",
+        "internacoes_ortopedicas": 4
+      },
+      {
+        "cod_munic_estabelecimento": "350400",
+        "internacoes_ortopedicas": 26
+      },
+      {
+        "cod_munic_estabelecimento": "352230",
+        "internacoes_ortopedicas": 4
+      },
+      {
+        "cod_munic_estabelecimento": "351310",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "354850",
+        "internacoes_ortopedicas": 56
+      },
+      {
+        "cod_munic_estabelecimento": "351140",
+        "internacoes_ortopedicas": 6
+      },
+      {
+        "cod_munic_estabelecimento": "350530",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "352520",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "354060",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "351870",
+        "internacoes_ortopedicas": 56
+      },
+      {
+        "cod_munic_estabelecimento": "353650",
+        "internacoes_ortopedicas": 15
+      },
+      {
+        "cod_munic_estabelecimento": "352390",
+        "internacoes_ortopedicas": 43
+      },
+      {
+        "cod_munic_estabelecimento": "355540",
+        "internacoes_ortopedicas": 18
+      },
+      {
+        "cod_munic_estabelecimento": "355020",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "350940",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "350570",
+        "internacoes_ortopedicas": 47
+      },
+      {
+        "cod_munic_estabelecimento": "355220",
+        "internacoes_ortopedicas": 57
+      },
+      {
+        "cod_munic_estabelecimento": "355410",
+        "internacoes_ortopedicas": 95
+      },
+      {
+        "cod_munic_estabelecimento": "353050",
+        "internacoes_ortopedicas": 21
+      },
+      {
+        "cod_munic_estabelecimento": "354070",
+        "internacoes_ortopedicas": 5
+      },
+      {
+        "cod_munic_estabelecimento": "354680",
+        "internacoes_ortopedicas": 4
+      },
+      {
+        "cod_munic_estabelecimento": "355070",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "353600",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "354560",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "internacoes_ortopedicas": 544
+      },
+      {
+        "cod_munic_estabelecimento": "352010",
+        "internacoes_ortopedicas": 9
+      },
+      {
+        "cod_munic_estabelecimento": "353070",
+        "internacoes_ortopedicas": 79
+      },
+      {
+        "cod_munic_estabelecimento": "352940",
+        "internacoes_ortopedicas": 16
+      },
+      {
+        "cod_munic_estabelecimento": "352280",
+        "internacoes_ortopedicas": 12
+      },
+      {
+        "cod_munic_estabelecimento": "354080",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "352260",
+        "internacoes_ortopedicas": 15
+      },
+      {
+        "cod_munic_estabelecimento": "354150",
+        "internacoes_ortopedicas": 13
+      },
+      {
+        "cod_munic_estabelecimento": "350070",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "352400",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "353460",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "354760",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "353880",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "354100",
+        "internacoes_ortopedicas": 39
+      },
+      {
+        "cod_munic_estabelecimento": "354890",
+        "internacoes_ortopedicas": 42
+      },
+      {
+        "cod_munic_estabelecimento": "352900",
+        "internacoes_ortopedicas": 84
+      },
+      {
+        "cod_munic_estabelecimento": "350160",
+        "internacoes_ortopedicas": 11
+      },
+      {
+        "cod_munic_estabelecimento": "354970",
+        "internacoes_ortopedicas": 7
+      },
+      {
+        "cod_munic_estabelecimento": "352270",
+        "internacoes_ortopedicas": 9
+      },
+      {
+        "cod_munic_estabelecimento": "350760",
+        "internacoes_ortopedicas": 15
+      },
+      {
+        "cod_munic_estabelecimento": "352530",
+        "internacoes_ortopedicas": 26
+      },
+      {
+        "cod_munic_estabelecimento": "351860",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "354880",
+        "internacoes_ortopedicas": 11
+      },
+      {
+        "cod_munic_estabelecimento": "350640",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "353350",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "350740",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "352090",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "355150",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "354980",
+        "internacoes_ortopedicas": 140
+      },
+      {
+        "cod_munic_estabelecimento": "350100",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "352340",
+        "internacoes_ortopedicas": 50
+      },
+      {
+        "cod_munic_estabelecimento": "352680",
+        "internacoes_ortopedicas": 45
+      },
+      {
+        "cod_munic_estabelecimento": "353950",
+        "internacoes_ortopedicas": 7
+      },
+      {
+        "cod_munic_estabelecimento": "355400",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "353550",
+        "internacoes_ortopedicas": 5
+      },
+      {
+        "cod_munic_estabelecimento": "353670",
+        "internacoes_ortopedicas": 7
+      },
+      {
+        "cod_munic_estabelecimento": "352710",
+        "internacoes_ortopedicas": 10
+      },
+      {
+        "cod_munic_estabelecimento": "350130",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "355640",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "355620",
+        "internacoes_ortopedicas": 9
+      },
+      {
+        "cod_munic_estabelecimento": "352670",
+        "internacoes_ortopedicas": 7
+      },
+      {
+        "cod_munic_estabelecimento": "354750",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "351370",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "354580",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "353130",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "350410",
+        "internacoes_ortopedicas": 9
+      },
+      {
+        "cod_munic_estabelecimento": "354340",
+        "internacoes_ortopedicas": 89
+      },
+      {
+        "cod_munic_estabelecimento": "352440",
+        "internacoes_ortopedicas": 38
+      },
+      {
+        "cod_munic_estabelecimento": "351280",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "350610",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "354540",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "351840",
+        "internacoes_ortopedicas": 6
+      },
+      {
+        "cod_munic_estabelecimento": "352040",
+        "internacoes_ortopedicas": 6
+      },
+      {
+        "cod_munic_estabelecimento": "351440",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "355700",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "354990",
+        "internacoes_ortopedicas": 31
+      },
+      {
+        "cod_munic_estabelecimento": "354910",
+        "internacoes_ortopedicas": 12
+      },
+      {
+        "cod_munic_estabelecimento": "352720",
+        "internacoes_ortopedicas": 4
+      },
+      {
+        "cod_munic_estabelecimento": "351080",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "352850",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "354640",
+        "internacoes_ortopedicas": 41
+      },
+      {
+        "cod_munic_estabelecimento": "350650",
+        "internacoes_ortopedicas": 11
+      },
+      {
+        "cod_munic_estabelecimento": "350450",
+        "internacoes_ortopedicas": 81
+      },
+      {
+        "cod_munic_estabelecimento": "355040",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "353080",
+        "internacoes_ortopedicas": 14
+      },
+      {
+        "cod_munic_estabelecimento": "354380",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "351880",
+        "internacoes_ortopedicas": 29
+      },
+      {
+        "cod_munic_estabelecimento": "354390",
+        "internacoes_ortopedicas": 26
+      },
+      {
+        "cod_munic_estabelecimento": "353110",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "350550",
+        "internacoes_ortopedicas": 38
+      },
+      {
+        "cod_munic_estabelecimento": "352590",
+        "internacoes_ortopedicas": 43
+      },
+      {
+        "cod_munic_estabelecimento": "351050",
+        "internacoes_ortopedicas": 46
+      },
+      {
+        "cod_munic_estabelecimento": "352410",
+        "internacoes_ortopedicas": 7
+      },
+      {
+        "cod_munic_estabelecimento": "351630",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "351740",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "352320",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "351040",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "355010",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "351518",
+        "internacoes_ortopedicas": 4
+      },
+      {
+        "cod_munic_estabelecimento": "353710",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "352470",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "350330",
+        "internacoes_ortopedicas": 13
+      },
+      {
+        "cod_munic_estabelecimento": "353440",
+        "internacoes_ortopedicas": 67
+      },
+      {
+        "cod_munic_estabelecimento": "351350",
+        "internacoes_ortopedicas": 157
+      },
+      {
+        "cod_munic_estabelecimento": "354630",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "354870",
+        "internacoes_ortopedicas": 73
+      },
+      {
+        "cod_munic_estabelecimento": "352050",
+        "internacoes_ortopedicas": 22
+      },
+      {
+        "cod_munic_estabelecimento": "354520",
+        "internacoes_ortopedicas": 8
+      },
+      {
+        "cod_munic_estabelecimento": "353190",
+        "internacoes_ortopedicas": 15
+      },
+      {
+        "cod_munic_estabelecimento": "350960",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "353180",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "355370",
+        "internacoes_ortopedicas": 17
+      },
+      {
+        "cod_munic_estabelecimento": "350320",
+        "internacoes_ortopedicas": 9
+      },
+      {
+        "cod_munic_estabelecimento": "355160",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "352970",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "354490",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "350270",
+        "internacoes_ortopedicas": 1
+      },
+      {
+        "cod_munic_estabelecimento": "351907",
+        "internacoes_ortopedicas": 4
+      },
+      {
+        "cod_munic_estabelecimento": "351380",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "352690",
+        "internacoes_ortopedicas": 88
+      },
+      {
+        "cod_munic_estabelecimento": "355100",
+        "internacoes_ortopedicas": 35
+      },
+      {
+        "cod_munic_estabelecimento": "355250",
+        "internacoes_ortopedicas": 10
+      },
+      {
+        "cod_munic_estabelecimento": "354780",
+        "internacoes_ortopedicas": 38
+      },
+      {
+        "cod_munic_estabelecimento": "350590",
+        "internacoes_ortopedicas": 9
+      },
+      {
+        "cod_munic_estabelecimento": "350010",
+        "internacoes_ortopedicas": 3
+      },
+      {
+        "cod_munic_estabelecimento": "353740",
+        "internacoes_ortopedicas": 34
+      },
+      {
+        "cod_munic_estabelecimento": "350190",
+        "internacoes_ortopedicas": 5
+      },
+      {
+        "cod_munic_estabelecimento": "350920",
+        "internacoes_ortopedicas": 4
+      },
+      {
+        "cod_munic_estabelecimento": "352240",
+        "internacoes_ortopedicas": 18
+      },
+      {
+        "cod_munic_estabelecimento": "353730",
+        "internacoes_ortopedicas": 11
+      },
+      {
+        "cod_munic_estabelecimento": "353800",
+        "internacoes_ortopedicas": 4
+      },
+      {
+        "cod_munic_estabelecimento": "352730",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "352430",
+        "internacoes_ortopedicas": 2
+      },
+      {
+        "cod_munic_estabelecimento": "351960",
+        "internacoes_ortopedicas": 4
+      }
+    ],
+    "gold_result": [
+      {
+        "media_internacoes_por_estabelecimento": 173.1
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6433,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q84",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa de permanência em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=5 exp=4",
+    "sql": "SELECT \n    CASE \n        WHEN dias_perm < 7 THEN 'Menos de 7 dias'\n        WHEN dias_perm BETWEEN 7 AND 14 THEN '7 a 14 dias'\n        WHEN dias_perm BETWEEN 15 AND 30 THEN '15 a 30 dias'\n        WHEN dias_perm BETWEEN 31 AND 60 THEN '31 a 60 dias'\n        ELSE 'Mais de 60 dias'\n    END AS faixa_permanencia,\n    COUNT(DISTINCT n_aih) AS quantidade_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    faixa_permanencia\nORDER BY \n    faixa_permanencia;",
+    "llm_result": [
+      {
+        "faixa_permanencia": "15 a 30 dias",
+        "quantidade_internacoes": 477
+      },
+      {
+        "faixa_permanencia": "31 a 60 dias",
+        "quantidade_internacoes": 135
+      },
+      {
+        "faixa_permanencia": "7 a 14 dias",
+        "quantidade_internacoes": 986
+      },
+      {
+        "faixa_permanencia": "Mais de 60 dias",
+        "quantidade_internacoes": 22
+      },
+      {
+        "faixa_permanencia": "Menos de 7 dias",
+        "quantidade_internacoes": 4700
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_permanencia": "1-3 dias",
+        "total": 27844
+      },
+      {
+        "faixa_permanencia": "15+ dias",
+        "total": 8508
+      },
+      {
+        "faixa_permanencia": "4-7 dias",
+        "total": 18697
+      },
+      {
+        "faixa_permanencia": "8-14 dias",
+        "total": 10929
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 10227,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q85",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas de idosos (60 anos ou mais) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=4489529.78 exp=78009817.26",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS custo_total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 60\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_total_internacoes": 4489529.78
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_idosos": 78009817.26
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5748,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q86",
+    "cat": "Financeira",
+    "question": "Custo médio por internação por fratura de fêmur (S72) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=2703.0392440214 exp=2700.27",
+    "sql": "SELECT \n    AVG(custo_total) AS custo_medio_internacao\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas')",
+    "llm_result": [
+      {
+        "custo_medio_internacao": 2703.0392440214
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_medio_s72": 2700.27
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5845,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q87",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas com passagem por UTI em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=None exp=15904.56",
+    "sql": "SELECT SUM(COALESCE(val_uti, 0)) AS custo_total_uti\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n  AND uti_int_to > 0;",
+    "llm_result": [
+      {
+        "custo_total_uti": null
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_uti": 15904.56
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5387,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q88",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica por sexo do paciente em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'sexo_paciente': 'F', 'custo_medio': 2684.14}",
+    "sql": "SELECT \n    sexo_paciente,\n    AVG(custo_total) AS custo_medio_internacao\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    sexo_paciente;",
+    "llm_result": [
+      {
+        "sexo_paciente": "F",
+        "custo_medio_internacao": 2456.0921102093
+      },
+      {
+        "sexo_paciente": "M",
+        "custo_medio_internacao": 2060.6807726932
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "F",
+        "custo_medio": 2684.14
+      },
+      {
+        "sexo_paciente": "M",
+        "custo_medio": 2636.83
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6000,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q89",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas em crianças (menores de 18 anos) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=927790.9100000001 exp=7450877.25",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS custo_total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND idade_paciente < 18\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_total_internacoes": 927790.9100000001
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_criancas": 7450877.25
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5745,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q90",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica com permanência superior a 7 dias em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=3083.8746901408 exp=4423.19",
+    "sql": "SELECT \n    AVG(custo_total) AS custo_medio_por_internacao\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND dias_perm > 7\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_medio_por_internacao": 3083.8746901408
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_medio_longa_perm": 4423.19
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4811,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q91",
+    "cat": "Financeira",
+    "question": "Top 3 municípios com maior custo total em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_munic_residencia': '355030', 'total_custo': 2553035.5} exp={'cod_munic_estabelecimento': '350000', 'custo_total': 91002293.78}",
+    "sql": "SELECT \n    cod_munic_residencia, \n    SUM(custo_total) AS total_custo\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cod_munic_residencia\nORDER BY \n    total_custo DESC\nLIMIT 3;",
+    "llm_result": [
+      {
+        "cod_munic_residencia": "355030",
+        "total_custo": 2553035.5
+      },
+      {
+        "cod_munic_residencia": "354980",
+        "total_custo": 806344.9199999999
+      },
+      {
+        "cod_munic_residencia": "355170",
+        "total_custo": 693987.1500000001
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "350000",
+        "custo_total": 91002293.78
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "custo_total": 12755298.09
+      },
+      {
+        "cod_munic_estabelecimento": "354870",
+        "custo_total": 3588394.3
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6645,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q92",
+    "cat": "Financeira",
+    "question": "Valor total de serviço hospitalar em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=11194804.549999993 exp=144636796.74",
+    "sql": "SELECT SUM(COALESCE(val_sh, 0)) AS total_val_sh\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "total_val_sh": 11194804.549999993
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_hospitalar_total": 144636796.74
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5170,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q93",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica por faixa etária em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=10 exp=3",
+    "sql": "SELECT \n    FLOOR(idade_paciente / 10) * 10 AS faixa_etaria,\n    AVG(custo_total) AS custo_medio_internacao\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    faixa_etaria\nORDER BY \n    faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": 0.0,
+        "custo_medio_internacao": 2226.136625
+      },
+      {
+        "faixa_etaria": 10.0,
+        "custo_medio_internacao": 1729.968475
+      },
+      {
+        "faixa_etaria": 20.0,
+        "custo_medio_internacao": 1856.5226857888
+      },
+      {
+        "faixa_etaria": 30.0,
+        "custo_medio_internacao": 1810.2383384302
+      },
+      {
+        "faixa_etaria": 40.0,
+        "custo_medio_internacao": 1951.5874371859
+      },
+      {
+        "faixa_etaria": 50.0,
+        "custo_medio_internacao": 2543.6752828547
+      },
+      {
+        "faixa_etaria": 60.0,
+        "custo_medio_internacao": 2621.7550253293
+      },
+      {
+        "faixa_etaria": 70.0,
+        "custo_medio_internacao": 2793.5960076046
+      },
+      {
+        "faixa_etaria": 80.0,
+        "custo_medio_internacao": 2364.3008074534
+      },
+      {
+        "faixa_etaria": 90.0,
+        "custo_medio_internacao": 3451.576
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "custo_medio": 2058.82
+      },
+      {
+        "faixa_etaria": "18-59",
+        "custo_medio": 2514.7
+      },
+      {
+        "faixa_etaria": "60+",
+        "custo_medio": 2924.67
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6993,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q94",
+    "cat": "Financeira",
+    "question": "Valor total de UTI em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1275788.72 exp=37073666.92",
+    "sql": "SELECT SUM(COALESCE(val_uti, 0)) AS total_uti\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "total_uti": 1275788.72
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_uti_total": 37073666.92
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5219,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q95",
+    "cat": "Financeira",
+    "question": "Custo total de internações por doenças osteomusculares (M00-M99) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=13990374.04 exp=13990374.04",
+    "sql": "SELECT SUM(custo_total) AS custo_total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND e.clinical_interpretacao_clinica = 'doencas osteomusculares e do tecido conjuntivo';",
+    "llm_result": [
+      {
+        "custo_total_internacoes": 13990374.04
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_m": 13990374.04
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5414,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q96",
+    "cat": "Financeira",
+    "question": "Custo total de internações por traumatismos (S00-T98) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=161293054.73000056 exp=161293054.73",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS custo_total\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND icd_group = 'S00-T98';",
+    "llm_result": [
+      {
+        "custo_total": 161293054.73000056
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_s": 161293054.73
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4894,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q97",
+    "cat": "Financeira",
+    "question": "Top 5 diagnósticos com maior custo médio por internação ortopédica em SP em 2022 (mínimo 40 internações)",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M518', 'custo_medio': 7827.0964285714, 'quantidade_internacoes': 112} exp={'cid_principal': 'S221', 'internacoes': 41, 'custo_medio': 14053.88}",
+    "sql": "SELECT \n    cid_principal,\n    AVG(custo_total) AS custo_medio,\n    COUNT(n_aih) AS quantidade_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nHAVING \n    COUNT(n_aih) >= 40\nORDER BY \n    custo_medio DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M518",
+        "custo_medio": 7827.0964285714,
+        "quantidade_internacoes": 112
+      },
+      {
+        "cid_principal": "M480",
+        "custo_medio": 7712.9857142857,
+        "quantidade_internacoes": 42
+      },
+      {
+        "cid_principal": "M500",
+        "custo_medio": 7614.9189230769,
+        "quantidade_internacoes": 65
+      },
+      {
+        "cid_principal": "M510",
+        "custo_medio": 6890.5918333333,
+        "quantidade_internacoes": 60
+      },
+      {
+        "cid_principal": "M169",
+        "custo_medio": 6587.4693023256,
+        "quantidade_internacoes": 43
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S221",
+        "internacoes": 41,
+        "custo_medio": 14053.88
+      },
+      {
+        "cid_principal": "S122",
+        "internacoes": 46,
+        "custo_medio": 12936.88
+      },
+      {
+        "cid_principal": "S062",
+        "internacoes": 70,
+        "custo_medio": 11559.05
+      },
+      {
+        "cid_principal": "S069",
+        "internacoes": 219,
+        "custo_medio": 10739.3
+      },
+      {
+        "cid_principal": "S063",
+        "internacoes": 78,
+        "custo_medio": 10701.76
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7382,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q98",
+    "cat": "Financeira",
+    "question": "Custo médio por procedimento ambulatorial ortopédico em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Resultado vazio",
+    "sql": "SELECT \n    cod_procedimento,\n    AVG(custo_total) AS custo_medio\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022\n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    cod_procedimento;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "custo_medio_sia": 83.05
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4635,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q99",
+    "cat": "Financeira",
+    "question": "Top 5 procedimentos ambulatoriais com maior custo total em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_procedimento': '0702100048', 'total_custo': 46893518.21000075} exp={'cod_procedimento': '0701020369', 'custo_total': 1201460.4}",
+    "sql": "SELECT \n    cod_procedimento, \n    SUM(custo_total) AS total_custo\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022\nGROUP BY \n    cod_procedimento\nORDER BY \n    total_custo DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_procedimento": "0702100048",
+        "total_custo": 46893518.21000075
+      },
+      {
+        "cod_procedimento": "0701050047",
+        "total_custo": 14166486.0
+      },
+      {
+        "cod_procedimento": "0701030135",
+        "total_custo": 10496500.0
+      },
+      {
+        "cod_procedimento": "0701030143",
+        "total_custo": 10133200.0
+      },
+      {
+        "cod_procedimento": "0701070137",
+        "total_custo": 8358425.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_procedimento": "0701020369",
+        "custo_total": 1201460.4
+      },
+      {
+        "cod_procedimento": "0701050047",
+        "custo_total": 768834.0
+      },
+      {
+        "cod_procedimento": "0302050019",
+        "custo_total": 738314.5
+      },
+      {
+        "cod_procedimento": "0701010053",
+        "custo_total": 714316.8
+      },
+      {
+        "cod_procedimento": "0701020415",
+        "custo_total": 484653.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4638,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q100",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas de idosos (60+) com permanência superior a 7 dias em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1801433.3399999999 exp=35943333.49",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS custo_total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 60\n  AND dias_perm > 7\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_total_internacoes": 1801433.3399999999
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 35943333.49
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6058,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q101",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior número de óbitos em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 8, 'num_obitos': 10} exp={'mes_cmpt': 10, 'total_obitos': 224}",
+    "sql": "SELECT mes_cmpt, COUNT(DISTINCT n_aih) AS num_obitos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'M%'\n  AND morte = 1\nGROUP BY mes_cmpt\nORDER BY num_obitos DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 8,
+        "num_obitos": 10
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 10,
+        "total_obitos": 224
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5670,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q102",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por fratura de fêmur (S72) em idosos (60 anos ou mais) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'volume_internacoes': 1869} exp={'mes_cmpt': 1, 'internacoes': 1409}",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND idade_paciente >= 60\n    AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "volume_internacoes": 1869
+      },
+      {
+        "mes_cmpt": 2,
+        "volume_internacoes": 1787
+      },
+      {
+        "mes_cmpt": 3,
+        "volume_internacoes": 1995
+      },
+      {
+        "mes_cmpt": 4,
+        "volume_internacoes": 1899
+      },
+      {
+        "mes_cmpt": 5,
+        "volume_internacoes": 2056
+      },
+      {
+        "mes_cmpt": 6,
+        "volume_internacoes": 2024
+      },
+      {
+        "mes_cmpt": 7,
+        "volume_internacoes": 2282
+      },
+      {
+        "mes_cmpt": 8,
+        "volume_internacoes": 2349
+      },
+      {
+        "mes_cmpt": 9,
+        "volume_internacoes": 2184
+      },
+      {
+        "mes_cmpt": 10,
+        "volume_internacoes": 2303
+      },
+      {
+        "mes_cmpt": 11,
+        "volume_internacoes": 2031
+      },
+      {
+        "mes_cmpt": 12,
+        "volume_internacoes": 2205
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 1409
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 1298
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 1508
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 1433
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 1573
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 1599
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 1778
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 1831
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 1696
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 1775
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 1557
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 1663
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7078,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q103",
+    "cat": "Temporal/Comparativa",
+    "question": "Custo mensal de internações ortopédicas de idosos (60 anos ou mais) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'custo_total': 287024.49} exp={'mes_cmpt': 1, 'custo_total': 5379118.99}",
+    "sql": "SELECT \n    mes_cmpt,\n    SUM(COALESCE(custo_total, 0)) AS custo_total\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND idade_paciente >= 60\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 287024.49
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 395422.5499999998
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 407591.24
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 360408.16
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 350854.9599999999
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 298440.9400000001
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 388895.3300000001
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 432854.0499999998
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 385313.56
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 452152.0200000001
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 278002.1200000001
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 452570.3600000002
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 5379118.99
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 5328629.21
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 6042154.42
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 6031936.59
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 6376759.64
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 6395524.78
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 7308864.01
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 7440384.44
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 7031598.3
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 7484277.84
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 6447077.11
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 6743491.93
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6759,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q104",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior custo total de internações por fratura de fêmur (S72) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "1 linhas corretas (flexível)",
+    "sql": "SELECT mes_cmpt, SUM(COALESCE(custo_total, 0)) AS total_custo\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY total_custo DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 8,
+        "total_custo": 7659543.929999998
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 8,
+        "custo_total": 7659543.93
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5570,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q105",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por traumatismos (grupo S00-T98) em SP em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas'\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "volume_internacoes": 4733
+      },
+      {
+        "mes_cmpt": 2,
+        "volume_internacoes": 4560
+      },
+      {
+        "mes_cmpt": 3,
+        "volume_internacoes": 5093
+      },
+      {
+        "mes_cmpt": 4,
+        "volume_internacoes": 4669
+      },
+      {
+        "mes_cmpt": 5,
+        "volume_internacoes": 4849
+      },
+      {
+        "mes_cmpt": 6,
+        "volume_internacoes": 4690
+      },
+      {
+        "mes_cmpt": 7,
+        "volume_internacoes": 5279
+      },
+      {
+        "mes_cmpt": 8,
+        "volume_internacoes": 5443
+      },
+      {
+        "mes_cmpt": 9,
+        "volume_internacoes": 5164
+      },
+      {
+        "mes_cmpt": 10,
+        "volume_internacoes": 5188
+      },
+      {
+        "mes_cmpt": 11,
+        "volume_internacoes": 4821
+      },
+      {
+        "mes_cmpt": 12,
+        "volume_internacoes": 5182
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 4733
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 4560
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 5093
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 4669
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 4849
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 4690
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 5279
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 5443
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 5164
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 5188
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 4821
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 5182
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6337,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q106",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de procedimentos ambulatoriais ortopédicos por sexo em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=24",
+    "sql": "SELECT \n    mes_cmpt,\n    sexo_paciente,\n    COUNT(*) AS volume_procedimentos\nFROM \n    processed\nWHERE \n    sistema = 'SIA'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    mes_cmpt, sexo_paciente\nORDER BY \n    mes_cmpt, sexo_paciente;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "F",
+        "total": 2589
+      },
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "M",
+        "total": 3309
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "F",
+        "total": 3094
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "M",
+        "total": 4022
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "F",
+        "total": 3686
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "M",
+        "total": 4823
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "F",
+        "total": 3566
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "M",
+        "total": 4786
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "F",
+        "total": 4133
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "M",
+        "total": 5402
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "F",
+        "total": 3826
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "M",
+        "total": 5438
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "F",
+        "total": 3750
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "M",
+        "total": 5292
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "F",
+        "total": 4663
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "M",
+        "total": 6330
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "F",
+        "total": 4098
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "M",
+        "total": 5323
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "F",
+        "total": 4150
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "M",
+        "total": 5047
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "F",
+        "total": 4176
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "M",
+        "total": 5121
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "F",
+        "total": 3848
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "M",
+        "total": 4544
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5192,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q107",
+    "cat": "Temporal/Comparativa",
+    "question": "Comparativo trimestral de internações ortopédicas por grupo diagnóstico em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Catalog Error: Scalar Function with name to_date does not exist!\nDid you mean \"to_days\"?\n\nLINE 3:     EXTRACT(QUARTER FROM TO_DATE(dt_inter, 'YYYYMMDD')) AS trimestre,\n                                 ^",
+    "sql": "SELECT \n    icd_group,\n    EXTRACT(QUARTER FROM TO_DATE(dt_inter, 'YYYYMMDD')) AS trimestre,\n    COUNT(DISTINCT n_aih) AS internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    icd_group, trimestre\nORDER BY \n    icd_group, trimestre;",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "icd_group": "M00-M99",
+        "total": 1446
+      },
+      {
+        "trimestre": "Q1",
+        "icd_group": "S00-T98",
+        "total": 14384
+      },
+      {
+        "trimestre": "Q2",
+        "icd_group": "M00-M99",
+        "total": 1541
+      },
+      {
+        "trimestre": "Q2",
+        "icd_group": "S00-T98",
+        "total": 14208
+      },
+      {
+        "trimestre": "Q3",
+        "icd_group": "M00-M99",
+        "total": 1720
+      },
+      {
+        "trimestre": "Q3",
+        "icd_group": "S00-T98",
+        "total": 15886
+      },
+      {
+        "trimestre": "Q4",
+        "icd_group": "M00-M99",
+        "total": 1603
+      },
+      {
+        "trimestre": "Q4",
+        "icd_group": "S00-T98",
+        "total": 15190
+      }
+    ],
+    "api_error": "Falha DuckDB: Catalog Error: Scalar Function with name to_date does not exist!\nDid you mean \"to_days\"?\n\nLINE 3:     EXTRACT(QUARTER FROM TO_DATE(dt_inter, 'YYYYMMDD')) AS trimestre,\n                                 ^",
+    "elapsed_ms": 6647,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q108",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior permanência hospitalar média em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 4, 'media_permanencia': 7.0149892934} exp={'mes_cmpt': 7, 'permanencia_media': 6.2}",
+    "sql": "SELECT mes_cmpt, AVG(dias_perm) AS media_permanencia\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY mes_cmpt\nORDER BY media_permanencia DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 4,
+        "media_permanencia": 7.0149892934
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 7,
+        "permanencia_media": 6.2
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5843,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q109",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal da taxa de mortalidade em internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'mortes': 6, 'total_internacoes': 476, 'taxa_mortalidade': 0.012605042} exp={'mes_cmpt': 1, 'internacoes': 5209, 'obitos': 179.0, 'taxa_mortalidade': 3.44}",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT CASE WHEN morte = 1 THEN n_aih END) AS mortes,\n    COUNT(DISTINCT n_aih) AS total_internacoes,\n    (COUNT(DISTINCT CASE WHEN morte = 1 THEN n_aih END) * 1.0 / COUNT(DISTINCT n_aih)) AS taxa_mortalidade\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "mortes": 6,
+        "total_internacoes": 476,
+        "taxa_mortalidade": 0.012605042
+      },
+      {
+        "mes_cmpt": 2,
+        "mortes": 4,
+        "total_internacoes": 461,
+        "taxa_mortalidade": 0.0086767896
+      },
+      {
+        "mes_cmpt": 3,
+        "mortes": 6,
+        "total_internacoes": 511,
+        "taxa_mortalidade": 0.011741683
+      },
+      {
+        "mes_cmpt": 4,
+        "mortes": 5,
+        "total_internacoes": 467,
+        "taxa_mortalidade": 0.0107066381
+      },
+      {
+        "mes_cmpt": 5,
+        "mortes": 9,
+        "total_internacoes": 567,
+        "taxa_mortalidade": 0.0158730159
+      },
+      {
+        "mes_cmpt": 6,
+        "mortes": 9,
+        "total_internacoes": 512,
+        "taxa_mortalidade": 0.017578125
+      },
+      {
+        "mes_cmpt": 7,
+        "mortes": 5,
+        "total_internacoes": 573,
+        "taxa_mortalidade": 0.0087260035
+      },
+      {
+        "mes_cmpt": 8,
+        "mortes": 10,
+        "total_internacoes": 563,
+        "taxa_mortalidade": 0.0177619893
+      },
+      {
+        "mes_cmpt": 9,
+        "mortes": 3,
+        "total_internacoes": 588,
+        "taxa_mortalidade": 0.0051020408
+      },
+      {
+        "mes_cmpt": 10,
+        "mortes": 6,
+        "total_internacoes": 584,
+        "taxa_mortalidade": 0.0102739726
+      },
+      {
+        "mes_cmpt": 11,
+        "mortes": 4,
+        "total_internacoes": 530,
+        "taxa_mortalidade": 0.0075471698
+      },
+      {
+        "mes_cmpt": 12,
+        "mortes": 6,
+        "total_internacoes": 494,
+        "taxa_mortalidade": 0.012145749
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 5209,
+        "obitos": 179.0,
+        "taxa_mortalidade": 3.44
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 5021,
+        "obitos": 182.0,
+        "taxa_mortalidade": 3.62
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 5604,
+        "obitos": 167.0,
+        "taxa_mortalidade": 2.98
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 5136,
+        "obitos": 156.0,
+        "taxa_mortalidade": 3.04
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 5416,
+        "obitos": 187.0,
+        "taxa_mortalidade": 3.45
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 5202,
+        "obitos": 182.0,
+        "taxa_mortalidade": 3.5
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 5852,
+        "obitos": 212.0,
+        "taxa_mortalidade": 3.62
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 6006,
+        "obitos": 217.0,
+        "taxa_mortalidade": 3.61
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 5752,
+        "obitos": 183.0,
+        "taxa_mortalidade": 3.18
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 5772,
+        "obitos": 224.0,
+        "taxa_mortalidade": 3.88
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 5351,
+        "obitos": 144.0,
+        "taxa_mortalidade": 2.69
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 5676,
+        "obitos": 190.0,
+        "taxa_mortalidade": 3.35
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8659,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q110",
+    "cat": "Temporal/Comparativa",
+    "question": "Trimestre com maior volume de internações por fratura de fêmur (S72) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 8, 'volume_internacoes': 2757} exp={'trimestre': 'Q3', 'total': 8047}",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND cid_principal LIKE 'S72%'\nGROUP BY \n    mes_cmpt\nORDER BY \n    volume_internacoes DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 8,
+        "volume_internacoes": 2757
+      }
+    ],
+    "gold_result": [
+      {
+        "trimestre": "Q3",
+        "total": 8047
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6101,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q111",
+    "cat": "Temporal/Comparativa",
+    "question": "Comparativo semestral de internações ortopédicas (1º vs 2º semestre) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=2",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS internacoes_ortopedicas\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes_ortopedicas": 476
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes_ortopedicas": 461
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes_ortopedicas": 511
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes_ortopedicas": 467
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes_ortopedicas": 567
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes_ortopedicas": 512
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes_ortopedicas": 573
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes_ortopedicas": 563
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes_ortopedicas": 588
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes_ortopedicas": 584
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes_ortopedicas": 530
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes_ortopedicas": 494
+      }
+    ],
+    "gold_result": [
+      {
+        "semestre": "1S",
+        "total": 31575
+      },
+      {
+        "semestre": "2S",
+        "total": 34397
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6373,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q112",
+    "cat": "Temporal/Comparativa",
+    "question": "Custo médio mensal por internação por fratura de fêmur (S72) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=1 exp=12",
+    "sql": "SELECT \n    AVG(COALESCE(custo_total, 0)) AS custo_medio_mensal\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND cid_principal LIKE 'S72%'",
+    "llm_result": [
+      {
+        "custo_medio_mensal": 2700.2730665213
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_medio": 2495.78
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_medio": 2562.31
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_medio": 2593.24
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_medio": 2728.3
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_medio": 2704.05
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_medio": 2833.3
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_medio": 2778.57
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_medio": 2778.22
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_medio": 2760.19
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_medio": 2822.09
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_medio": 2696.97
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_medio": 2586.28
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5213,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q113",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações ortopédicas por sexo do paciente em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'sexo_paciente': 'F', 'volume_internacoes': 180} exp={'mes_cmpt': 1, 'sexo_paciente': 'F', 'total': 2058}",
+    "sql": "SELECT \n    mes_cmpt,\n    sexo_paciente,\n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt, sexo_paciente\nORDER BY \n    mes_cmpt, sexo_paciente;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "F",
+        "volume_internacoes": 180
+      },
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "M",
+        "volume_internacoes": 296
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "F",
+        "volume_internacoes": 162
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "M",
+        "volume_internacoes": 299
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "F",
+        "volume_internacoes": 186
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "M",
+        "volume_internacoes": 325
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "F",
+        "volume_internacoes": 162
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "M",
+        "volume_internacoes": 305
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "F",
+        "volume_internacoes": 186
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "M",
+        "volume_internacoes": 381
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "F",
+        "volume_internacoes": 207
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "M",
+        "volume_internacoes": 305
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "F",
+        "volume_internacoes": 213
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "M",
+        "volume_internacoes": 360
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "F",
+        "volume_internacoes": 199
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "M",
+        "volume_internacoes": 364
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "F",
+        "volume_internacoes": 214
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "M",
+        "volume_internacoes": 374
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "F",
+        "volume_internacoes": 235
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "M",
+        "volume_internacoes": 349
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "F",
+        "volume_internacoes": 199
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "M",
+        "volume_internacoes": 331
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "F",
+        "volume_internacoes": 191
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "M",
+        "volume_internacoes": 303
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "F",
+        "total": 2058
+      },
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "M",
+        "total": 3151
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "F",
+        "total": 1858
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "M",
+        "total": 3163
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "F",
+        "total": 2142
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "M",
+        "total": 3462
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "F",
+        "total": 1952
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "M",
+        "total": 3184
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "F",
+        "total": 2103
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "M",
+        "total": 3313
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "F",
+        "total": 2098
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "M",
+        "total": 3104
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "F",
+        "total": 2335
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "M",
+        "total": 3517
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "F",
+        "total": 2316
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "M",
+        "total": 3690
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "F",
+        "total": 2254
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "M",
+        "total": 3498
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "F",
+        "total": 2371
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "M",
+        "total": 3401
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "F",
+        "total": 2077
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "M",
+        "total": 3274
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "F",
+        "total": 2290
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "M",
+        "total": 3386
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6761,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q114",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com menor volume de procedimentos ambulatoriais ortopédicos em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1} exp={'mes_cmpt': 1, 'total': 5898}",
+    "sql": "SELECT mes_cmpt\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY mes_cmpt\nORDER BY COUNT(*) ASC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total": 5898
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5333,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q115",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume trimestral de procedimentos ambulatoriais ortopédicos em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=4",
+    "sql": "SELECT \n    ano_cmpt,\n    mes_cmpt,\n    COUNT(*) AS volume_procedimentos\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    ano_cmpt, mes_cmpt\nORDER BY \n    ano_cmpt, mes_cmpt;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "total": 21523
+      },
+      {
+        "trimestre": "Q2",
+        "total": 27151
+      },
+      {
+        "trimestre": "Q3",
+        "total": 29456
+      },
+      {
+        "trimestre": "Q4",
+        "total": 26886
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5269,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q116",
+    "cat": "Temporal/Comparativa",
+    "question": "Custo mensal de procedimentos ambulatoriais ortopédicos em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=12",
+    "sql": "SELECT \n    mes_cmpt,\n    SUM(COALESCE(custo_total, 0)) AS custo_total\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'SP' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 512553.88
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 595800.35
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 674510.71
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 738060.12
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 763125.98
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 735410.89
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 736615.45
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 811250.03
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 765290.48
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 837949.76
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 767868.86
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 782781.4
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5117,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q117",
+    "cat": "Temporal/Comparativa",
+    "question": "Comparativo semestral do custo total de internações ortopédicas em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=2",
+    "sql": "SELECT \n    mes_cmpt,\n    SUM(custo_total) AS custo_total\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 1015180.7699999993
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 1053741.7299999993
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 1134439.0199999993
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 1051199.379999999
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 1189299.9300000004
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 975794.1400000004
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 1254711.63
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 1247075.6599999995
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 1344525.6000000015
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 1348350.1200000015
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 1191701.4399999992
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 1184354.6200000003
+      }
+    ],
+    "gold_result": [
+      {
+        "semestre": "1S",
+        "custo_total": 82207816.93
+      },
+      {
+        "semestre": "2S",
+        "custo_total": 93075611.84
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5120,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q118",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal da permanência média em internações por fratura de fêmur (S72) em SP em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'media_permanencia': 5.6021550813} exp={'mes_cmpt': 1, 'permanencia_media': 6.1}",
+    "sql": "SELECT \n    mes_cmpt,\n    AVG(dias_perm) AS media_permanencia\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'SP'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "media_permanencia": 5.6021550813
+      },
+      {
+        "mes_cmpt": 2,
+        "media_permanencia": 5.6993421053
+      },
+      {
+        "mes_cmpt": 3,
+        "media_permanencia": 5.8676614962
+      },
+      {
+        "mes_cmpt": 4,
+        "media_permanencia": 6.0079246091
+      },
+      {
+        "mes_cmpt": 5,
+        "media_permanencia": 6.0313466694
+      },
+      {
+        "mes_cmpt": 6,
+        "media_permanencia": 5.9714285714
+      },
+      {
+        "mes_cmpt": 7,
+        "media_permanencia": 6.2574351203
+      },
+      {
+        "mes_cmpt": 8,
+        "media_permanencia": 6.2531692082
+      },
+      {
+        "mes_cmpt": 9,
+        "media_permanencia": 6.2106893881
+      },
+      {
+        "mes_cmpt": 10,
+        "media_permanencia": 6.3016576715
+      },
+      {
+        "mes_cmpt": 11,
+        "media_permanencia": 6.0950010371
+      },
+      {
+        "mes_cmpt": 12,
+        "media_permanencia": 6.0351215747
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "permanencia_media": 6.1
+      },
+      {
+        "mes_cmpt": 2,
+        "permanencia_media": 6.3
+      },
+      {
+        "mes_cmpt": 3,
+        "permanencia_media": 6.4
+      },
+      {
+        "mes_cmpt": 4,
+        "permanencia_media": 6.7
+      },
+      {
+        "mes_cmpt": 5,
+        "permanencia_media": 6.1
+      },
+      {
+        "mes_cmpt": 6,
+        "permanencia_media": 6.6
+      },
+      {
+        "mes_cmpt": 7,
+        "permanencia_media": 6.7
+      },
+      {
+        "mes_cmpt": 8,
+        "permanencia_media": 6.6
+      },
+      {
+        "mes_cmpt": 9,
+        "permanencia_media": 6.7
+      },
+      {
+        "mes_cmpt": 10,
+        "permanencia_media": 6.9
+      },
+      {
+        "mes_cmpt": 11,
+        "permanencia_media": 6.6
+      },
+      {
+        "mes_cmpt": 12,
+        "permanencia_media": 6.7
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6559,
+    "correction_rounds": null
+  }
+]

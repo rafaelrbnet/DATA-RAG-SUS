@@ -1,0 +1,5696 @@
+[
+  {
+    "id": "Q01",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações ortopédicas (M00-M99 e S00-S99) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=6880 exp=69487",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-S99');",
+    "llm_result": [
+      {
+        "total_internacoes": 6880
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 69487
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 10946,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q02",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=105364 exp=105364",
+    "sql": "SELECT COUNT(*) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_procedimentos": 105364
+      }
+    ],
+    "gold_result": [
+      {
+        "total_procedimentos": 105364
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5789,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q03",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=30272 exp=30272",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%';",
+    "llm_result": [
+      {
+        "total_internacoes": 30272
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 30272
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5361,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q04",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por osteoartrose (M16, M17) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=165 exp=165",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (cid_principal LIKE 'M16%' OR cid_principal LIKE 'M17%');",
+    "llm_result": [
+      {
+        "total_internacoes": 165
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 165
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5755,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q05",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de óbitos em internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"obito\" not found in FROM clause!\nCandidate bindings: \"morte\", \"gestao\", \"row_id\", \"cod_munic_estabelecimento\", \"sistema\"\n\nLINE 7:   AND obito = 'S';\n              ^",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_obitos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND obito = 'S';",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_obitos": 2274
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"obito\" not found in FROM clause!\nCandidate bindings: \"morte\", \"gestao\", \"row_id\", \"cod_munic_estabelecimento\", \"sistema\"\n\nLINE 7:   AND obito = 'S';\n              ^",
+    "elapsed_ms": 6005,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q06",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por traumatismos (S00-T98) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=62607 exp=62607",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND icd_group = 'S00-T98';",
+    "llm_result": [
+      {
+        "total_internacoes": 62607
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 62607
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4322,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q07",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por doenças osteomusculares (M00-M99) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=6880 exp=6880",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND icd_group = 'M00-M99';",
+    "llm_result": [
+      {
+        "total_internacoes": 6880
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 6880
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5470,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q08",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de mulheres internadas por causa ortopédica em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=27029 exp=27027",
+    "sql": "SELECT COUNT(*) AS total_mulheres_internadas\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND sexo_paciente = 'F'\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_mulheres_internadas": 27029
+      }
+    ],
+    "gold_result": [
+      {
+        "total_mulheres_internadas": 27027
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5102,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q09",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de homens internados por causa ortopédica em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=42489.0 exp=42460",
+    "sql": "SELECT SUM(CASE WHEN sexo_paciente = 'M' THEN 1 ELSE 0 END) AS total_homens_internados\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_homens_internados": 42489.0
+      }
+    ],
+    "gold_result": [
+      {
+        "total_homens_internados": 42460
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5379,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q10",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas de idosos (60 anos ou mais) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=28165 exp=28165",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND idade_paciente >= 60;",
+    "llm_result": [
+      {
+        "total_internacoes": 28165
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 28165
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5287,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q11",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de municípios distintos com internação ortopédica registrada em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=215 exp=215",
+    "sql": "SELECT COUNT(DISTINCT cod_munic_estabelecimento) AS num_municipios_distintos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "num_municipios_distintos": 215
+      }
+    ],
+    "gold_result": [
+      {
+        "num_municipios": 215
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5157,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q12",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de estabelecimentos distintos com internação ortopédica em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=385 exp=385",
+    "sql": "SELECT COUNT(DISTINCT cnes_estabelecimento) AS total_estabelecimentos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_estabelecimentos": 385
+      }
+    ],
+    "gold_result": [
+      {
+        "num_estabelecimentos": 385
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6210,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q13",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência superior a 7 dias em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=17778 exp=17778",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND dias_perm > 7;",
+    "llm_result": [
+      {
+        "total_internacoes": 17778
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 17778
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5213,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q14",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com uso de UTI em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=13764 exp=1",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes_uti\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND val_uti > 0;",
+    "llm_result": [
+      {
+        "total_internacoes_uti": 13764
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes_uti": 1
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6496,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q15",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de quadril (S72) em pacientes com 70 anos ou mais em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=15626 exp=15626",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\n  AND idade_paciente >= 70;",
+    "llm_result": [
+      {
+        "total_internacoes": 15626
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 15626
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5755,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q16",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 CIDs ortopédicos por volume de internação em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "10 linhas corretas (flexível)",
+    "sql": "SELECT cid_principal,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY internacoes DESC\nLIMIT 10;",
+    "llm_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 9059
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 6780
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 5398
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 3998
+      },
+      {
+        "cid_principal": "S722",
+        "internacoes": 2513
+      },
+      {
+        "cid_principal": "S729",
+        "internacoes": 2303
+      },
+      {
+        "cid_principal": "S822",
+        "internacoes": 1833
+      },
+      {
+        "cid_principal": "S728",
+        "internacoes": 1580
+      },
+      {
+        "cid_principal": "S724",
+        "internacoes": 1565
+      },
+      {
+        "cid_principal": "T814",
+        "internacoes": 1290
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_internacoes": 9059
+      },
+      {
+        "cid_principal": "S721",
+        "total_internacoes": 6780
+      },
+      {
+        "cid_principal": "S723",
+        "total_internacoes": 5398
+      },
+      {
+        "cid_principal": "T813",
+        "total_internacoes": 3998
+      },
+      {
+        "cid_principal": "S722",
+        "total_internacoes": 2513
+      },
+      {
+        "cid_principal": "S729",
+        "total_internacoes": 2303
+      },
+      {
+        "cid_principal": "S822",
+        "total_internacoes": 1833
+      },
+      {
+        "cid_principal": "S728",
+        "total_internacoes": 1580
+      },
+      {
+        "cid_principal": "S724",
+        "total_internacoes": 1565
+      },
+      {
+        "cid_principal": "T814",
+        "total_internacoes": 1290
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5594,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q17",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 municípios de SP com maior número de internações ortopédicas em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "5 linhas corretas (flexível)",
+    "sql": "SELECT cod_munic_estabelecimento,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cod_munic_estabelecimento\nORDER BY internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "350000",
+        "internacoes": 32140
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "internacoes": 6158
+      },
+      {
+        "cod_munic_estabelecimento": "354870",
+        "internacoes": 1284
+      },
+      {
+        "cod_munic_estabelecimento": "350950",
+        "internacoes": 1253
+      },
+      {
+        "cod_munic_estabelecimento": "355170",
+        "internacoes": 1122
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "350000",
+        "internacoes": 32140
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "internacoes": 6158
+      },
+      {
+        "cod_munic_estabelecimento": "354870",
+        "internacoes": 1284
+      },
+      {
+        "cod_munic_estabelecimento": "350950",
+        "internacoes": 1253
+      },
+      {
+        "cod_munic_estabelecimento": "355170",
+        "internacoes": 1122
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5961,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q18",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa etária (0-17, 18-59, 60+) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "3 linhas corretas, ordem livre (flexível)",
+    "sql": "SELECT\n  CASE\n    WHEN idade_paciente BETWEEN 0 AND 17 THEN '0-17'\n    WHEN idade_paciente BETWEEN 18 AND 59 THEN '18-59'\n    ELSE '60+'\n  END AS faixa_etaria,\n  COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY faixa_etaria\nORDER BY faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total_internacoes": 4040
+      },
+      {
+        "faixa_etaria": "18-59",
+        "total_internacoes": 37282
+      },
+      {
+        "faixa_etaria": "60+",
+        "total_internacoes": 28165
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 4040
+      },
+      {
+        "faixa_etaria": "18-59",
+        "total": 37282
+      },
+      {
+        "faixa_etaria": "60+",
+        "total": 28165
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8955,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q19",
+    "cat": "Epidemiológica Complexa",
+    "question": "Taxa de mortalidade hospitalar por CID ortopédico (top 5) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"morte_hospitalar\" not found in FROM clause!\nCandidate bindings: \"morte\", \"mun_res_tipo\", \"custo_total\", \"mun_res_lat\", \"dt_saida\"\n\nLINE 3:   COUNT(CASE WHEN morte_hospitalar = 'SIM' THEN 1 END) AS mortes,\n                          ^",
+    "sql": "SELECT \n  cid_principal,\n  COUNT(CASE WHEN morte_hospitalar = 'SIM' THEN 1 END) AS mortes,\n  COUNT(*) AS total_internacoes,\n  ROUND(100.0 * COUNT(CASE WHEN morte_hospitalar = 'SIM' THEN 1 END) / COUNT(*), 2) AS taxa_mortalidade\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  cid_principal\nORDER BY \n  mortes DESC\nLIMIT 5;",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cid_principal": "S062",
+        "total_internacoes": 58,
+        "total_obitos": 20.0,
+        "taxa_mortalidade_pct": 34.48
+      },
+      {
+        "cid_principal": "S272",
+        "total_internacoes": 49,
+        "total_obitos": 14.0,
+        "taxa_mortalidade_pct": 28.57
+      },
+      {
+        "cid_principal": "S065",
+        "total_internacoes": 732,
+        "total_obitos": 156.0,
+        "taxa_mortalidade_pct": 21.31
+      },
+      {
+        "cid_principal": "S270",
+        "total_internacoes": 139,
+        "total_obitos": 25.0,
+        "taxa_mortalidade_pct": 17.99
+      },
+      {
+        "cid_principal": "S063",
+        "total_internacoes": 108,
+        "total_obitos": 19.0,
+        "taxa_mortalidade_pct": 17.59
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"morte_hospitalar\" not found in FROM clause!\nCandidate bindings: \"morte\", \"mun_res_tipo\", \"custo_total\", \"mun_res_lat\", \"dt_saida\"\n\nLINE 3:   COUNT(CASE WHEN morte_hospitalar = 'SIM' THEN 1 END) AS mortes,\n                          ^",
+    "elapsed_ms": 7975,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q20",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 CIDs ambulatoriais ortopédicos por volume de produção em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "10 linhas corretas (flexível)",
+    "sql": "SELECT cid_principal,\n  COUNT(*) AS volume_producao\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY volume_producao DESC\nLIMIT 10;",
+    "llm_result": [
+      {
+        "cid_principal": "S720",
+        "volume_producao": 17325
+      },
+      {
+        "cid_principal": "S729",
+        "volume_producao": 12083
+      },
+      {
+        "cid_principal": "S723",
+        "volume_producao": 10787
+      },
+      {
+        "cid_principal": "S881",
+        "volume_producao": 8845
+      },
+      {
+        "cid_principal": "S781",
+        "volume_producao": 7622
+      },
+      {
+        "cid_principal": "S398",
+        "volume_producao": 7082
+      },
+      {
+        "cid_principal": "M216",
+        "volume_producao": 5349
+      },
+      {
+        "cid_principal": "S889",
+        "volume_producao": 4660
+      },
+      {
+        "cid_principal": "S721",
+        "volume_producao": 2902
+      },
+      {
+        "cid_principal": "S724",
+        "volume_producao": 2731
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_procedimentos": 17325
+      },
+      {
+        "cid_principal": "S729",
+        "total_procedimentos": 12083
+      },
+      {
+        "cid_principal": "S723",
+        "total_procedimentos": 10787
+      },
+      {
+        "cid_principal": "S881",
+        "total_procedimentos": 8845
+      },
+      {
+        "cid_principal": "S781",
+        "total_procedimentos": 7622
+      },
+      {
+        "cid_principal": "S398",
+        "total_procedimentos": 7082
+      },
+      {
+        "cid_principal": "M216",
+        "total_procedimentos": 5349
+      },
+      {
+        "cid_principal": "S889",
+        "total_procedimentos": 4660
+      },
+      {
+        "cid_principal": "S721",
+        "total_procedimentos": 2902
+      },
+      {
+        "cid_principal": "S724",
+        "total_procedimentos": 2731
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6707,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q21",
+    "cat": "Epidemiológica Complexa",
+    "question": "Proporção de internações ortopédicas por sexo em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'sexo_paciente': 'M', 'total_internacoes': 42460, 'pct': 61.1}",
+    "sql": "SELECT \n  sexo_paciente,\n  COUNT(*) AS total_internacoes,\n  ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 1) AS pct\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  sexo_paciente\nORDER BY \n  total_internacoes DESC;",
+    "llm_result": [
+      {
+        "sexo_paciente": "M",
+        "total_internacoes": 42489,
+        "pct": 61.1
+      },
+      {
+        "sexo_paciente": "F",
+        "total_internacoes": 27029,
+        "pct": 38.9
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "M",
+        "total_internacoes": 42460,
+        "pct": 61.1
+      },
+      {
+        "sexo_paciente": "F",
+        "total_internacoes": 27027,
+        "pct": 38.9
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6782,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q22",
+    "cat": "Epidemiológica Complexa",
+    "question": "Número de internações por fratura de fêmur (S72) em idosos (60+) comparado ao total em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'internacoes_idosos': 19598.0, 'internacoes_total': 30272} exp={'total_s72': 30272, 's72_idosos': 19598.0, 'pct_idosos': 64.7}",
+    "sql": "SELECT\n  SUM(CASE WHEN idade_paciente >= 60 THEN 1 ELSE 0 END) AS internacoes_idosos,\n  COUNT(DISTINCT n_aih) AS internacoes_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%';",
+    "llm_result": [
+      {
+        "internacoes_idosos": 19598.0,
+        "internacoes_total": 30272
+      }
+    ],
+    "gold_result": [
+      {
+        "total_s72": 30272,
+        "s72_idosos": 19598.0,
+        "pct_idosos": 64.7
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6482,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q23",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 CIDs ortopédicos com maior permanência média hospitalar em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'S141', 'permanencia_media_dias': 73.0} exp={'cid_principal': 'S272', 'total_internacoes': 49, 'permanencia_media_dias': 14.3}",
+    "sql": "SELECT cid_principal,\n  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY permanencia_media_dias DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "S141",
+        "permanencia_media_dias": 73.0
+      },
+      {
+        "cid_principal": "S281",
+        "permanencia_media_dias": 71.0
+      },
+      {
+        "cid_principal": "M412",
+        "permanencia_media_dias": 60.0
+      },
+      {
+        "cid_principal": "T751",
+        "permanencia_media_dias": 42.0
+      },
+      {
+        "cid_principal": "S97",
+        "permanencia_media_dias": 38.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S272",
+        "total_internacoes": 49,
+        "permanencia_media_dias": 14.3
+      },
+      {
+        "cid_principal": "S122",
+        "total_internacoes": 44,
+        "permanencia_media_dias": 13.0
+      },
+      {
+        "cid_principal": "S063",
+        "total_internacoes": 108,
+        "permanencia_media_dias": 12.2
+      },
+      {
+        "cid_principal": "S062",
+        "total_internacoes": 58,
+        "permanencia_media_dias": 11.8
+      },
+      {
+        "cid_principal": "T845",
+        "total_internacoes": 98,
+        "permanencia_media_dias": 11.4
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5873,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q24",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 estabelecimentos com maior volume de internação ortopédica em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "5 linhas corretas (flexível)",
+    "sql": "SELECT cnes_estabelecimento,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cnes_estabelecimento\nORDER BY internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cnes_estabelecimento": "2078015",
+        "internacoes": 2257
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "internacoes": 1652
+      },
+      {
+        "cnes_estabelecimento": "2091399",
+        "internacoes": 1489
+      },
+      {
+        "cnes_estabelecimento": "2077477",
+        "internacoes": 1270
+      },
+      {
+        "cnes_estabelecimento": "2082187",
+        "internacoes": 1263
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2078015",
+        "internacoes": 2257
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "internacoes": 1652
+      },
+      {
+        "cnes_estabelecimento": "2091399",
+        "internacoes": 1489
+      },
+      {
+        "cnes_estabelecimento": "2077477",
+        "internacoes": 1270
+      },
+      {
+        "cnes_estabelecimento": "2082187",
+        "internacoes": 1263
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5439,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q25",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por raça/cor do paciente em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'raca_cor_paciente': '01', 'total': 42626, 'pct': 61.3}",
+    "sql": "SELECT raca_cor_paciente,\n  COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY raca_cor_paciente\nORDER BY total_internacoes DESC;",
+    "llm_result": [
+      {
+        "raca_cor_paciente": "01",
+        "total_internacoes": 42626
+      },
+      {
+        "raca_cor_paciente": "03",
+        "total_internacoes": 22198
+      },
+      {
+        "raca_cor_paciente": "02",
+        "total_internacoes": 3802
+      },
+      {
+        "raca_cor_paciente": "04",
+        "total_internacoes": 487
+      },
+      {
+        "raca_cor_paciente": "99",
+        "total_internacoes": 362
+      },
+      {
+        "raca_cor_paciente": "05",
+        "total_internacoes": 12
+      }
+    ],
+    "gold_result": [
+      {
+        "raca_cor_paciente": "01",
+        "total": 42626,
+        "pct": 61.3
+      },
+      {
+        "raca_cor_paciente": "03",
+        "total": 22198,
+        "pct": 31.9
+      },
+      {
+        "raca_cor_paciente": "02",
+        "total": 3802,
+        "pct": 5.5
+      },
+      {
+        "raca_cor_paciente": "04",
+        "total": 487,
+        "pct": 0.7
+      },
+      {
+        "raca_cor_paciente": "99",
+        "total": 362,
+        "pct": 0.5
+      },
+      {
+        "raca_cor_paciente": "05",
+        "total": 12,
+        "pct": 0.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5353,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q26",
+    "cat": "Epidemiológica Complexa",
+    "question": "CIDs ortopédicos com maior número de dias totais de internação em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"dias_totais_internacao\" not found in FROM clause!\nCandidate bindings: \"dt_inter\", \"dias_perm\", \"tipo_financiamento\", \"dt_saida\", \"cod_munic_estabelecimento\"\n\nLINE 2:   SUM(dias_totais_internacao) AS total_dias_internacao\n              ^",
+    "sql": "SELECT cid_principal,\n  SUM(dias_totais_internacao) AS total_dias_internacao\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY total_dias_internacao DESC;",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 9059,
+        "total_dias_internacao": 65515.0
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 6780,
+        "total_dias_internacao": 45929.0
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 3998,
+        "total_dias_internacao": 32775.0
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 5398,
+        "total_dias_internacao": 30575.0
+      },
+      {
+        "cid_principal": "S722",
+        "internacoes": 2513,
+        "total_dias_internacao": 16678.0
+      },
+      {
+        "cid_principal": "S729",
+        "internacoes": 2303,
+        "total_dias_internacao": 14207.0
+      },
+      {
+        "cid_principal": "T814",
+        "internacoes": 1290,
+        "total_dias_internacao": 11071.0
+      },
+      {
+        "cid_principal": "S724",
+        "internacoes": 1565,
+        "total_dias_internacao": 10175.0
+      },
+      {
+        "cid_principal": "S728",
+        "internacoes": 1580,
+        "total_dias_internacao": 10088.0
+      },
+      {
+        "cid_principal": "S822",
+        "internacoes": 1833,
+        "total_dias_internacao": 9307.0
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"dias_totais_internacao\" not found in FROM clause!\nCandidate bindings: \"dt_inter\", \"dias_perm\", \"tipo_financiamento\", \"dt_saida\", \"cod_munic_estabelecimento\"\n\nLINE 2:   SUM(dias_totais_internacao) AS total_dias_internacao\n              ^",
+    "elapsed_ms": 5487,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q27",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 procedimentos ambulatoriais ortopédicos mais realizados em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'S720', 'total_procedimentos': 17325} exp={'cod_procedimento': '0302050019', 'total_procedimentos': 72108}",
+    "sql": "SELECT cid_principal,\n  COUNT(*) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY total_procedimentos DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "S720",
+        "total_procedimentos": 17325
+      },
+      {
+        "cid_principal": "S729",
+        "total_procedimentos": 12083
+      },
+      {
+        "cid_principal": "S723",
+        "total_procedimentos": 10787
+      },
+      {
+        "cid_principal": "S881",
+        "total_procedimentos": 8845
+      },
+      {
+        "cid_principal": "S781",
+        "total_procedimentos": 7622
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_procedimento": "0302050019",
+        "total_procedimentos": 72108
+      },
+      {
+        "cod_procedimento": "0701050047",
+        "total_procedimentos": 3953
+      },
+      {
+        "cod_procedimento": "0701060018",
+        "total_procedimentos": 3505
+      },
+      {
+        "cod_procedimento": "0701010142",
+        "total_procedimentos": 2239
+      },
+      {
+        "cod_procedimento": "0701060034",
+        "total_procedimentos": 1777
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5499,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q28",
+    "cat": "Epidemiológica Complexa",
+    "question": "Proporção de internações ortopédicas com paciente de outro município em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"uf_destino\" not found in FROM clause!\nCandidate bindings: \"uf\", \"mun_res_tipo\", \"uti_mes_to\", \"mun_res_nome\", \"gestao\"\n\nLINE 2:   ROUND(100.0 * COUNT(CASE WHEN uf_origem <> uf_destino THEN 1 ELSE NULL END) / COUNT(*), 2) AS pct_inte...\n                                                     ^",
+    "sql": "SELECT\n  ROUND(100.0 * COUNT(CASE WHEN uf_origem <> uf_destino THEN 1 ELSE NULL END) / COUNT(*), 2) AS pct_internacoes_outro_municipio\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "total_internacoes": 69487,
+        "deslocamento_intermunicipal": 39611.0,
+        "pct_deslocamento": 57.0
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"uf_destino\" not found in FROM clause!\nCandidate bindings: \"uf\", \"mun_res_tipo\", \"uti_mes_to\", \"mun_res_nome\", \"gestao\"\n\nLINE 2:   ROUND(100.0 * COUNT(CASE WHEN uf_origem <> uf_destino THEN 1 ELSE NULL END) / COUNT(*), 2) AS pct_inte...\n                                                     ^",
+    "elapsed_ms": 5380,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q29",
+    "cat": "Epidemiológica Complexa",
+    "question": "Comparativo de volume mensal SIA vs SIH ortopédico em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=24",
+    "sql": "SELECT\n  mes_cmpt,\n  COUNT(CASE WHEN sistema = 'SIA' THEN 1 END) AS total_sia,\n  COUNT(CASE WHEN sistema = 'SIH' THEN 1 END) AS total_sih\nFROM processed\nWHERE uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "total_sia": 8415,
+        "total_sih": 5667
+      },
+      {
+        "mes_cmpt": 2,
+        "total_sia": 8530,
+        "total_sih": 5121
+      },
+      {
+        "mes_cmpt": 3,
+        "total_sia": 9867,
+        "total_sih": 5777
+      },
+      {
+        "mes_cmpt": 4,
+        "total_sia": 9694,
+        "total_sih": 5440
+      },
+      {
+        "mes_cmpt": 5,
+        "total_sia": 9533,
+        "total_sih": 5918
+      },
+      {
+        "mes_cmpt": 6,
+        "total_sia": 3733,
+        "total_sih": 5830
+      },
+      {
+        "mes_cmpt": 7,
+        "total_sia": 9079,
+        "total_sih": 5824
+      },
+      {
+        "mes_cmpt": 8,
+        "total_sia": 10300,
+        "total_sih": 6396
+      },
+      {
+        "mes_cmpt": 9,
+        "total_sia": 9071,
+        "total_sih": 5830
+      },
+      {
+        "mes_cmpt": 10,
+        "total_sia": 9863,
+        "total_sih": 5887
+      },
+      {
+        "mes_cmpt": 11,
+        "total_sia": 8870,
+        "total_sih": 5677
+      },
+      {
+        "mes_cmpt": 12,
+        "total_sia": 8409,
+        "total_sih": 6151
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIA",
+        "total": 8415
+      },
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIH",
+        "total": 5667
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIA",
+        "total": 8530
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIH",
+        "total": 5121
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIA",
+        "total": 9867
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIH",
+        "total": 5777
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIA",
+        "total": 9694
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIH",
+        "total": 5440
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIA",
+        "total": 9533
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIH",
+        "total": 5917
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIA",
+        "total": 3733
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIH",
+        "total": 5830
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIA",
+        "total": 9079
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIH",
+        "total": 5824
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIA",
+        "total": 10300
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIH",
+        "total": 6396
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIA",
+        "total": 9071
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIH",
+        "total": 5830
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIA",
+        "total": 9863
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIH",
+        "total": 5887
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIA",
+        "total": 8870
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIH",
+        "total": 5677
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIA",
+        "total": 8409
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIH",
+        "total": 6151
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5947,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q30",
+    "cat": "Epidemiológica Complexa",
+    "question": "Idade média dos pacientes internados por fratura de fêmur (S72) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'idade_media': 62.4} exp={'idade_media': 62.4, 'idade_minima': 0.0, 'idade_maxima': 99.0}",
+    "sql": "SELECT ROUND(AVG(idade_paciente), 1) AS idade_media\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%';",
+    "llm_result": [
+      {
+        "idade_media": 62.4
+      }
+    ],
+    "gold_result": [
+      {
+        "idade_media": 62.4,
+        "idade_minima": 0.0,
+        "idade_maxima": 99.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4281,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q31",
+    "cat": "Financeira",
+    "question": "Custo total de todas as internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=187220821.79 exp=187220821.79",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_total": 187220821.79
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 187220821.79
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5224,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q32",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=2693.13 exp=2693.13",
+    "sql": "SELECT ROUND(AVG(custo_total), 2) AS custo_medio_por_internacao\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_medio_por_internacao": 2693.13
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_medio": 2693.13
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5154,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q33",
+    "cat": "Financeira",
+    "question": "Custo total de internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=82692089.44 exp=82692089.44",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%';",
+    "llm_result": [
+      {
+        "custo_total": 82692089.44
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 82692089.44
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4565,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q34",
+    "cat": "Financeira",
+    "question": "Top 5 CIDs ortopédicos com maior custo total de internação em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'S720', 'custo_total': 30400546.73} exp={'cid_principal': 'S720', 'internacoes': 9059, 'custo_total': 30400546.73}",
+    "sql": "SELECT cid_principal,\n  ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nORDER BY custo_total DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "S720",
+        "custo_total": 30400546.73
+      },
+      {
+        "cid_principal": "S721",
+        "custo_total": 17784405.42
+      },
+      {
+        "cid_principal": "S723",
+        "custo_total": 13813655.09
+      },
+      {
+        "cid_principal": "T813",
+        "custo_total": 7188065.64
+      },
+      {
+        "cid_principal": "S722",
+        "custo_total": 6256179.73
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 9059,
+        "custo_total": 30400546.73
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 6780,
+        "custo_total": 17784405.42
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 5398,
+        "custo_total": 13813655.09
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 3998,
+        "custo_total": 7188065.64
+      },
+      {
+        "cid_principal": "S722",
+        "internacoes": 2513,
+        "custo_total": 6256179.73
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6010,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q35",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas com uso de OPME (val_ortp > 0) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'custo_total': None} exp={'internacoes_com_opme': 0, 'custo_total_opme': None}",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND val_ortp > 0;",
+    "llm_result": [
+      {
+        "custo_total": null
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_com_opme": 0,
+        "custo_total_opme": null
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5549,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q36",
+    "cat": "Financeira",
+    "question": "Valor total de honorários profissionais (val_sp) em internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=32810269.18 exp=32810269.18",
+    "sql": "SELECT ROUND(SUM(COALESCE(val_sp, 0)), 2) AS valor_total_honorarios\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "valor_total_honorarios": 32810269.18
+      }
+    ],
+    "gold_result": [
+      {
+        "total_honorarios_profissionais": 32810269.18
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6462,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q37",
+    "cat": "Financeira",
+    "question": "Custo médio por dia de internação ortopédica em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=441.21 exp=441.21",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)) / SUM(COALESCE(dias_perm, 0)), 2) AS custo_medio_por_dia\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_medio_por_dia": 441.21
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_por_dia": 441.21
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5893,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q38",
+    "cat": "Financeira",
+    "question": "Top 5 estabelecimentos com maior custo total de internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cnes_estabelecimento': '2078015', 'custo_total': 11295149.42} exp={'cnes_estabelecimento': '2078015', 'internacoes': 2257, 'custo_total': 11295149.42}",
+    "sql": "SELECT cnes_estabelecimento,\n  ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cnes_estabelecimento\nORDER BY custo_total DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cnes_estabelecimento": "2078015",
+        "custo_total": 11295149.42
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "custo_total": 7048588.75
+      },
+      {
+        "cnes_estabelecimento": "2077477",
+        "custo_total": 4787468.91
+      },
+      {
+        "cnes_estabelecimento": "2748029",
+        "custo_total": 4282682.44
+      },
+      {
+        "cnes_estabelecimento": "2082187",
+        "custo_total": 4099918.47
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2078015",
+        "internacoes": 2257,
+        "custo_total": 11295149.42
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "internacoes": 1652,
+        "custo_total": 7048588.75
+      },
+      {
+        "cnes_estabelecimento": "2077477",
+        "internacoes": 1270,
+        "custo_total": 4787468.91
+      },
+      {
+        "cnes_estabelecimento": "2748029",
+        "internacoes": 985,
+        "custo_total": 4282682.44
+      },
+      {
+        "cnes_estabelecimento": "2082187",
+        "internacoes": 1263,
+        "custo_total": 4099918.47
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6335,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q39",
+    "cat": "Financeira",
+    "question": "Custo total de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=9092221.75 exp=9092221.75",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_total": 9092221.75
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 9092221.75
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5229,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q40",
+    "cat": "Financeira",
+    "question": "Proporção custo serviço hospitalar vs honorários em internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"val_honorarios\" not found in FROM clause!\nCandidate bindings: \"val_sh\", \"val_ortp\", \"val_uci\", \"val_uti\", \"pa_docorig\"\n\nLINE 3:   ROUND(100.0 * SUM(COALESCE(val_honorarios, 0)) / SUM(COALESCE(custo_total, 0)), 2)...\n                                     ^",
+    "sql": "SELECT \n  ROUND(100.0 * SUM(COALESCE(val_sh, 0)) / SUM(COALESCE(custo_total, 0)), 2) AS pct_val_sh,\n  ROUND(100.0 * SUM(COALESCE(val_honorarios, 0)) / SUM(COALESCE(custo_total, 0)), 2) AS pct_val_honorarios\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "custo_servico_hospitalar": 153782049.46,
+        "honorarios_profissionais": 32810269.18,
+        "pct_hospitalar": 82.4
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"val_honorarios\" not found in FROM clause!\nCandidate bindings: \"val_sh\", \"val_ortp\", \"val_uci\", \"val_uti\", \"pa_docorig\"\n\nLINE 3:   ROUND(100.0 * SUM(COALESCE(val_honorarios, 0)) / SUM(COALESCE(custo_total, 0)), 2)...\n                                     ^",
+    "elapsed_ms": 7511,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q41",
+    "cat": "Temporal/Comparativa",
+    "question": "Distribuição mensal de internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT \n  mes_cmpt,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  mes_cmpt\nORDER BY \n  mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 5667
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 5121
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 5777
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 5440
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 5917
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 5830
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 5824
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 6396
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 5830
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 5887
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 5677
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 6151
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_internacoes": 5667
+      },
+      {
+        "mes_cmpt": 2,
+        "total_internacoes": 5121
+      },
+      {
+        "mes_cmpt": 3,
+        "total_internacoes": 5777
+      },
+      {
+        "mes_cmpt": 4,
+        "total_internacoes": 5440
+      },
+      {
+        "mes_cmpt": 5,
+        "total_internacoes": 5917
+      },
+      {
+        "mes_cmpt": 6,
+        "total_internacoes": 5830
+      },
+      {
+        "mes_cmpt": 7,
+        "total_internacoes": 5824
+      },
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 6396
+      },
+      {
+        "mes_cmpt": 9,
+        "total_internacoes": 5830
+      },
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 5887
+      },
+      {
+        "mes_cmpt": 11,
+        "total_internacoes": 5677
+      },
+      {
+        "mes_cmpt": 12,
+        "total_internacoes": 6151
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5909,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q42",
+    "cat": "Temporal/Comparativa",
+    "question": "Distribuição mensal de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT \n  mes_cmpt,\n  COUNT(*) AS total_procedimentos\nFROM \n  processed\nWHERE \n  sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  mes_cmpt\nORDER BY \n  mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "total_procedimentos": 8415
+      },
+      {
+        "mes_cmpt": 2,
+        "total_procedimentos": 8530
+      },
+      {
+        "mes_cmpt": 3,
+        "total_procedimentos": 9867
+      },
+      {
+        "mes_cmpt": 4,
+        "total_procedimentos": 9694
+      },
+      {
+        "mes_cmpt": 5,
+        "total_procedimentos": 9533
+      },
+      {
+        "mes_cmpt": 6,
+        "total_procedimentos": 3733
+      },
+      {
+        "mes_cmpt": 7,
+        "total_procedimentos": 9079
+      },
+      {
+        "mes_cmpt": 8,
+        "total_procedimentos": 10300
+      },
+      {
+        "mes_cmpt": 9,
+        "total_procedimentos": 9071
+      },
+      {
+        "mes_cmpt": 10,
+        "total_procedimentos": 9863
+      },
+      {
+        "mes_cmpt": 11,
+        "total_procedimentos": 8870
+      },
+      {
+        "mes_cmpt": 12,
+        "total_procedimentos": 8409
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "procedimentos": 8415
+      },
+      {
+        "mes_cmpt": 2,
+        "procedimentos": 8530
+      },
+      {
+        "mes_cmpt": 3,
+        "procedimentos": 9867
+      },
+      {
+        "mes_cmpt": 4,
+        "procedimentos": 9694
+      },
+      {
+        "mes_cmpt": 5,
+        "procedimentos": 9533
+      },
+      {
+        "mes_cmpt": 6,
+        "procedimentos": 3733
+      },
+      {
+        "mes_cmpt": 7,
+        "procedimentos": 9079
+      },
+      {
+        "mes_cmpt": 8,
+        "procedimentos": 10300
+      },
+      {
+        "mes_cmpt": 9,
+        "procedimentos": 9071
+      },
+      {
+        "mes_cmpt": 10,
+        "procedimentos": 9863
+      },
+      {
+        "mes_cmpt": 11,
+        "procedimentos": 8870
+      },
+      {
+        "mes_cmpt": 12,
+        "procedimentos": 8409
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5739,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q43",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior número de internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=8 exp=8",
+    "sql": "SELECT mes_cmpt,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY internacoes DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 8,
+        "internacoes": 2816
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 2816
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4963,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q44",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal do custo total de internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "12 linhas corretas (exato)",
+    "sql": "SELECT\n  mes_cmpt,\n  ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 16004871.37
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 13762388.36
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 15269201.32
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 14662611.92
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 15420504.69
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 15070372.92
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 16158159.96
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 17202950.64
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 15443485.25
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 15738389.56
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 15428177.15
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 17059708.65
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 16004871.37
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 13762388.36
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 15269201.32
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 14662611.92
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 15420504.69
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 15070372.92
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 16158159.96
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 17202950.64
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 15443485.25
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 15738389.56
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 15428177.15
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 17059708.65
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5967,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q45",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por trauma (S00-T98) vs doenças musculoesqueléticas (M00-M99) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=24",
+    "sql": "SELECT\n  mes_cmpt,\n  COUNT(CASE WHEN icd_group = 'S00-T98' THEN 1 END) AS internacoes_trauma,\n  COUNT(CASE WHEN icd_group = 'M00-M99' THEN 1 END) AS internacoes_musculoesqueléticas\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes_trauma": 5160,
+        "internacoes_musculoesqueléticas": 507
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes_trauma": 4560,
+        "internacoes_musculoesqueléticas": 561
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes_trauma": 5166,
+        "internacoes_musculoesqueléticas": 611
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes_trauma": 4874,
+        "internacoes_musculoesqueléticas": 566
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes_trauma": 5308,
+        "internacoes_musculoesqueléticas": 610
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes_trauma": 5254,
+        "internacoes_musculoesqueléticas": 576
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes_trauma": 5199,
+        "internacoes_musculoesqueléticas": 625
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes_trauma": 5784,
+        "internacoes_musculoesqueléticas": 612
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes_trauma": 5224,
+        "internacoes_musculoesqueléticas": 606
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes_trauma": 5332,
+        "internacoes_musculoesqueléticas": 555
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes_trauma": 5155,
+        "internacoes_musculoesqueléticas": 522
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes_trauma": 5600,
+        "internacoes_musculoesqueléticas": 551
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "icd_group": "M00-M99",
+        "internacoes": 507
+      },
+      {
+        "mes_cmpt": 1,
+        "icd_group": "S00-T98",
+        "internacoes": 5160
+      },
+      {
+        "mes_cmpt": 2,
+        "icd_group": "M00-M99",
+        "internacoes": 561
+      },
+      {
+        "mes_cmpt": 2,
+        "icd_group": "S00-T98",
+        "internacoes": 4560
+      },
+      {
+        "mes_cmpt": 3,
+        "icd_group": "M00-M99",
+        "internacoes": 611
+      },
+      {
+        "mes_cmpt": 3,
+        "icd_group": "S00-T98",
+        "internacoes": 5166
+      },
+      {
+        "mes_cmpt": 4,
+        "icd_group": "M00-M99",
+        "internacoes": 566
+      },
+      {
+        "mes_cmpt": 4,
+        "icd_group": "S00-T98",
+        "internacoes": 4874
+      },
+      {
+        "mes_cmpt": 5,
+        "icd_group": "M00-M99",
+        "internacoes": 609
+      },
+      {
+        "mes_cmpt": 5,
+        "icd_group": "S00-T98",
+        "internacoes": 5308
+      },
+      {
+        "mes_cmpt": 6,
+        "icd_group": "M00-M99",
+        "internacoes": 576
+      },
+      {
+        "mes_cmpt": 6,
+        "icd_group": "S00-T98",
+        "internacoes": 5254
+      },
+      {
+        "mes_cmpt": 7,
+        "icd_group": "M00-M99",
+        "internacoes": 625
+      },
+      {
+        "mes_cmpt": 7,
+        "icd_group": "S00-T98",
+        "internacoes": 5199
+      },
+      {
+        "mes_cmpt": 8,
+        "icd_group": "M00-M99",
+        "internacoes": 612
+      },
+      {
+        "mes_cmpt": 8,
+        "icd_group": "S00-T98",
+        "internacoes": 5784
+      },
+      {
+        "mes_cmpt": 9,
+        "icd_group": "M00-M99",
+        "internacoes": 606
+      },
+      {
+        "mes_cmpt": 9,
+        "icd_group": "S00-T98",
+        "internacoes": 5224
+      },
+      {
+        "mes_cmpt": 10,
+        "icd_group": "M00-M99",
+        "internacoes": 555
+      },
+      {
+        "mes_cmpt": 10,
+        "icd_group": "S00-T98",
+        "internacoes": 5332
+      },
+      {
+        "mes_cmpt": 11,
+        "icd_group": "M00-M99",
+        "internacoes": 522
+      },
+      {
+        "mes_cmpt": 11,
+        "icd_group": "S00-T98",
+        "internacoes": 5155
+      },
+      {
+        "mes_cmpt": 12,
+        "icd_group": "M00-M99",
+        "internacoes": 551
+      },
+      {
+        "mes_cmpt": 12,
+        "icd_group": "S00-T98",
+        "internacoes": 5600
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7567,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q46",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal de óbitos em internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"obito\" not found in FROM clause!\nCandidate bindings: \"morte\", \"gestao\", \"row_id\", \"cod_munic_estabelecimento\", \"sistema\"\n\nLINE 11:   AND obito = 'SIM'\n               ^",
+    "sql": "SELECT \n  mes_cmpt,\n  COUNT(DISTINCT n_aih) AS total_obitos\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND obito = 'SIM'\nGROUP BY \n  mes_cmpt\nORDER BY \n  mes_cmpt;",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_obitos": 198
+      },
+      {
+        "mes_cmpt": 2,
+        "total_obitos": 142
+      },
+      {
+        "mes_cmpt": 3,
+        "total_obitos": 170
+      },
+      {
+        "mes_cmpt": 4,
+        "total_obitos": 188
+      },
+      {
+        "mes_cmpt": 5,
+        "total_obitos": 202
+      },
+      {
+        "mes_cmpt": 6,
+        "total_obitos": 196
+      },
+      {
+        "mes_cmpt": 7,
+        "total_obitos": 201
+      },
+      {
+        "mes_cmpt": 8,
+        "total_obitos": 201
+      },
+      {
+        "mes_cmpt": 9,
+        "total_obitos": 183
+      },
+      {
+        "mes_cmpt": 10,
+        "total_obitos": 199
+      },
+      {
+        "mes_cmpt": 11,
+        "total_obitos": 209
+      },
+      {
+        "mes_cmpt": 12,
+        "total_obitos": 185
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"obito\" not found in FROM clause!\nCandidate bindings: \"morte\", \"gestao\", \"row_id\", \"cod_munic_estabelecimento\", \"sistema\"\n\nLINE 11:   AND obito = 'SIM'\n               ^",
+    "elapsed_ms": 5965,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q47",
+    "cat": "Temporal/Comparativa",
+    "question": "Permanência média por trimestre nas internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "4 linhas corretas, ordem livre (exato)",
+    "sql": "SELECT\n  CASE\n    WHEN mes_cmpt BETWEEN 1 AND 3 THEN 'Q1'\n    WHEN mes_cmpt BETWEEN 4 AND 6 THEN 'Q2'\n    WHEN mes_cmpt BETWEEN 7 AND 9 THEN 'Q3'\n    ELSE 'Q4'\n  END AS trimestre,\n  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY trimestre\nORDER BY trimestre;",
+    "llm_result": [
+      {
+        "trimestre": "Q1",
+        "permanencia_media_dias": 6.1
+      },
+      {
+        "trimestre": "Q2",
+        "permanencia_media_dias": 6.0
+      },
+      {
+        "trimestre": "Q3",
+        "permanencia_media_dias": 6.1
+      },
+      {
+        "trimestre": "Q4",
+        "permanencia_media_dias": 6.2
+      }
+    ],
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "permanencia_media_dias": 6.1
+      },
+      {
+        "trimestre": "Q2",
+        "permanencia_media_dias": 6.0
+      },
+      {
+        "trimestre": "Q3",
+        "permanencia_media_dias": 6.1
+      },
+      {
+        "trimestre": "Q4",
+        "permanencia_media_dias": 6.2
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7532,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q48",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior custo médio por internação ortopédica em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=1 exp=1",
+    "sql": "SELECT mes_cmpt,\n  ROUND(AVG(custo_total), 2) AS custo_medio\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY custo_medio DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_medio": 2824.22
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_medio": 2824.22
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5456,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q49",
+    "cat": "Temporal/Comparativa",
+    "question": "Sazonalidade mensal de fraturas de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT\n  mes_cmpt,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 2467
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 2238
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 2453
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 2338
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 2607
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 2614
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 2646
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 2816
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 2488
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 2488
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 2449
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 2677
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_fraturas": 2467
+      },
+      {
+        "mes_cmpt": 2,
+        "total_fraturas": 2238
+      },
+      {
+        "mes_cmpt": 3,
+        "total_fraturas": 2453
+      },
+      {
+        "mes_cmpt": 4,
+        "total_fraturas": 2338
+      },
+      {
+        "mes_cmpt": 5,
+        "total_fraturas": 2607
+      },
+      {
+        "mes_cmpt": 6,
+        "total_fraturas": 2614
+      },
+      {
+        "mes_cmpt": 7,
+        "total_fraturas": 2646
+      },
+      {
+        "mes_cmpt": 8,
+        "total_fraturas": 2816
+      },
+      {
+        "mes_cmpt": 9,
+        "total_fraturas": 2488
+      },
+      {
+        "mes_cmpt": 10,
+        "total_fraturas": 2488
+      },
+      {
+        "mes_cmpt": 11,
+        "total_fraturas": 2449
+      },
+      {
+        "mes_cmpt": 12,
+        "total_fraturas": 2677
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4875,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q50",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações ortopédicas de idosos (60 anos ou mais) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT \n  mes_cmpt,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND idade_paciente >= 60\nGROUP BY \n  mes_cmpt\nORDER BY \n  mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 2318
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 2080
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 2269
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 2222
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 2436
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 2481
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 2499
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 2574
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 2321
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 2313
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 2204
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 2469
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_internacoes": 2318
+      },
+      {
+        "mes_cmpt": 2,
+        "total_internacoes": 2080
+      },
+      {
+        "mes_cmpt": 3,
+        "total_internacoes": 2269
+      },
+      {
+        "mes_cmpt": 4,
+        "total_internacoes": 2222
+      },
+      {
+        "mes_cmpt": 5,
+        "total_internacoes": 2436
+      },
+      {
+        "mes_cmpt": 6,
+        "total_internacoes": 2481
+      },
+      {
+        "mes_cmpt": 7,
+        "total_internacoes": 2499
+      },
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 2574
+      },
+      {
+        "mes_cmpt": 9,
+        "total_internacoes": 2321
+      },
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 2313
+      },
+      {
+        "mes_cmpt": 11,
+        "total_internacoes": 2204
+      },
+      {
+        "mes_cmpt": 12,
+        "total_internacoes": 2469
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6309,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q51",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de fêmur (S72) em mulheres em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=15639 exp=15639",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\n  AND sexo_paciente = 'F';",
+    "llm_result": [
+      {
+        "total_internacoes": 15639
+      }
+    ],
+    "gold_result": [
+      {
+        "total_mulheres_s72": 15639
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4575,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q52",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de fêmur (S72) em homens em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=14633 exp=14633",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\n  AND sexo_paciente = 'M';",
+    "llm_result": [
+      {
+        "total_internacoes": 14633
+      }
+    ],
+    "gold_result": [
+      {
+        "total_homens_s72": 14633
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4561,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q53",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência de 1 dia ou menos em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=14718 exp=14718",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND dias_perm <= 1;",
+    "llm_result": [
+      {
+        "internacoes": 14718
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_curtas": 14718
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5162,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q54",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de procedimentos ambulatoriais ortopédicos realizados em mulheres em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=47792 exp=47792",
+    "sql": "SELECT COUNT(*) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND sexo_paciente = 'F'\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_procedimentos": 47792
+      }
+    ],
+    "gold_result": [
+      {
+        "procedimentos_mulheres": 47792
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5032,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q55",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de procedimentos ambulatoriais ortopédicos realizados por idosos (60 anos ou mais) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=55711 exp=55711",
+    "sql": "SELECT COUNT(*) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND idade_paciente >= 60;",
+    "llm_result": [
+      {
+        "total_procedimentos": 55711
+      }
+    ],
+    "gold_result": [
+      {
+        "procedimentos_idosos": 55711
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5071,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q56",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de tíbia e perônio (S82) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=6827 exp=6827",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S82%';",
+    "llm_result": [
+      {
+        "total_internacoes": 6827
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_fratura_tibia": 6827
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4238,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q57",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de antebraço (S52) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=2264 exp=2264",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S52%';",
+    "llm_result": [
+      {
+        "total_internacoes": 2264
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_fratura_punho": 2264
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4236,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q58",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de ombro e úmero (S42) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=1391 exp=1391",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S42%';",
+    "llm_result": [
+      {
+        "total_internacoes": 1391
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_fratura_ombro": 1391
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4255,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q59",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas em crianças (menores de 18 anos) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=4040 exp=4040",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND idade_paciente < 18;",
+    "llm_result": [
+      {
+        "total_internacoes": 4040
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_criancas": 4040
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5326,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q60",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência entre 8 e 30 dias em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=16748 exp=16748",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND dias_perm BETWEEN 8 AND 30;",
+    "llm_result": [
+      {
+        "total_internacoes": 16748
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes": 16748
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4950,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q61",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por artrose de quadril e joelho (M16 e M17) em idosos (60 anos ou mais) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=100",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M16' OR icd_group = 'M17')\n  AND idade_paciente >= 60;",
+    "llm_result": [
+      {
+        "total_internacoes": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_artrose_idosos": 100
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5093,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q62",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de fêmur (S72) em mulheres com 70 anos ou mais em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=11171 exp=11171",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\n  AND sexo_paciente = 'F'\n  AND idade_paciente >= 70;",
+    "llm_result": [
+      {
+        "total_internacoes": 11171
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_s72_mulheres_idosas": 11171
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6179,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q63",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência superior a 30 dias em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=1037 exp=1037",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND dias_perm > 30;",
+    "llm_result": [
+      {
+        "total_internacoes": 1037
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_longa_permanencia": 1037
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5276,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q64",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de procedimentos ambulatoriais ortopédicos realizados em homens em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=57572 exp=57572",
+    "sql": "SELECT COUNT(*) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND sexo_paciente = 'M'\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_procedimentos": 57572
+      }
+    ],
+    "gold_result": [
+      {
+        "procedimentos_homens": 57572
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5036,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q65",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por traumatismos (grupo S00-T98) em idosos (60 anos ou mais) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=26253 exp=26253",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND icd_group = 'S00-T98'\n  AND idade_paciente >= 60;",
+    "llm_result": [
+      {
+        "total_internacoes": 26253
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_trauma_idosos": 26253
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4771,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q66",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por doenças osteomusculares (grupo M00-M99) em mulheres em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=2554 exp=2554",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND icd_group = 'M00-M99'\n  AND sexo_paciente = 'F';",
+    "llm_result": [
+      {
+        "total_internacoes": 2554
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_m_mulheres": 2554
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4715,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q67",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de óbitos em internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"obito\" not found in FROM clause!\nCandidate bindings: \"morte\", \"gestao\", \"row_id\", \"cod_munic_estabelecimento\", \"sistema\"\n\nLINE 7:   AND obito = 'SIM';\n              ^",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_obitos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\n  AND obito = 'SIM';",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "obitos_s72": 1250
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"obito\" not found in FROM clause!\nCandidate bindings: \"morte\", \"gestao\", \"row_id\", \"cod_munic_estabelecimento\", \"sistema\"\n\nLINE 7:   AND obito = 'SIM';\n              ^",
+    "elapsed_ms": 4205,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q68",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de municípios distintos com registro de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=400 exp=400",
+    "sql": "SELECT COUNT(DISTINCT cod_munic_estabelecimento) AS numero_municipios_distintos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "numero_municipios_distintos": 400
+      }
+    ],
+    "gold_result": [
+      {
+        "municipios_sia": 400
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5183,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q69",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 municípios por volume de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "5 linhas corretas (flexível)",
+    "sql": "SELECT cod_munic_estabelecimento,\n  COUNT(*) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cod_munic_estabelecimento\nORDER BY total_procedimentos DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "355030",
+        "total_procedimentos": 35601
+      },
+      {
+        "cod_munic_estabelecimento": "354980",
+        "total_procedimentos": 4443
+      },
+      {
+        "cod_munic_estabelecimento": "355220",
+        "total_procedimentos": 2445
+      },
+      {
+        "cod_munic_estabelecimento": "350950",
+        "total_procedimentos": 2314
+      },
+      {
+        "cod_munic_estabelecimento": "350600",
+        "total_procedimentos": 2270
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "355030",
+        "total": 35601
+      },
+      {
+        "cod_munic_estabelecimento": "354980",
+        "total": 4443
+      },
+      {
+        "cod_munic_estabelecimento": "355220",
+        "total": 2445
+      },
+      {
+        "cod_munic_estabelecimento": "350950",
+        "total": 2314
+      },
+      {
+        "cod_munic_estabelecimento": "350600",
+        "total": 2270
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5894,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q70",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de procedimentos ambulatoriais ortopédicos por faixa etária em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=5 exp=3",
+    "sql": "SELECT \n  CASE \n    WHEN idade_paciente BETWEEN 0 AND 17 THEN '0-17'\n    WHEN idade_paciente BETWEEN 18 AND 29 THEN '18-29'\n    WHEN idade_paciente BETWEEN 30 AND 44 THEN '30-44'\n    WHEN idade_paciente BETWEEN 45 AND 59 THEN '45-59'\n    ELSE '60+'\n  END AS faixa_etaria,\n  COUNT(*) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY faixa_etaria\nORDER BY faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total_procedimentos": 4981
+      },
+      {
+        "faixa_etaria": "18-29",
+        "total_procedimentos": 8445
+      },
+      {
+        "faixa_etaria": "30-44",
+        "total_procedimentos": 12945
+      },
+      {
+        "faixa_etaria": "45-59",
+        "total_procedimentos": 23282
+      },
+      {
+        "faixa_etaria": "60+",
+        "total_procedimentos": 55711
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 4981
+      },
+      {
+        "faixa_etaria": "18-59",
+        "total": 44672
+      },
+      {
+        "faixa_etaria": "60+",
+        "total": 55711
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8781,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q71",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos com maior número de óbitos em internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"situacao\" not found in FROM clause!\nCandidate bindings: \"gestao\", \"sistema\", \"sequencia\", \"financ\", \"nacional\"\n\nLINE 8:   AND situacao = 'ÓBITO'\n              ^",
+    "sql": "SELECT cid_principal,\n  COUNT(DISTINCT n_aih) AS total_obitos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND situacao = 'ÓBITO'\nGROUP BY cid_principal\nORDER BY total_obitos DESC\nLIMIT 5;",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_internacoes": 9059,
+        "total_obitos": 478.0
+      },
+      {
+        "cid_principal": "S721",
+        "total_internacoes": 6780,
+        "total_obitos": 332.0
+      },
+      {
+        "cid_principal": "S065",
+        "total_internacoes": 732,
+        "total_obitos": 156.0
+      },
+      {
+        "cid_principal": "S729",
+        "total_internacoes": 2303,
+        "total_obitos": 132.0
+      },
+      {
+        "cid_principal": "T813",
+        "total_internacoes": 3998,
+        "total_obitos": 118.0
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"situacao\" not found in FROM clause!\nCandidate bindings: \"gestao\", \"sistema\", \"sequencia\", \"financ\", \"nacional\"\n\nLINE 8:   AND situacao = 'ÓBITO'\n              ^",
+    "elapsed_ms": 5790,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q72",
+    "cat": "Epidemiológica Complexa",
+    "question": "Permanência hospitalar média por sexo em internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "2 linhas corretas, ordem livre (flexível)",
+    "sql": "SELECT \n  sexo_paciente,\n  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  sexo_paciente\nORDER BY \n  sexo_paciente;",
+    "llm_result": [
+      {
+        "sexo_paciente": "F",
+        "permanencia_media_dias": 6.3
+      },
+      {
+        "sexo_paciente": "M",
+        "permanencia_media_dias": 6.0
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "F",
+        "permanencia_media": 6.3
+      },
+      {
+        "sexo_paciente": "M",
+        "permanencia_media": 6.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6101,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q73",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 estabelecimentos por volume de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cnes_estabelecimento': '2063085', 'procedimentos': 0} exp={'cnes_estabelecimento': '2068974', 'total': 7838}",
+    "sql": "SELECT cnes_estabelecimento,\n  COUNT(DISTINCT n_aih) AS procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cnes_estabelecimento\nORDER BY procedimentos DESC\nLIMIT 10;",
+    "llm_result": [
+      {
+        "cnes_estabelecimento": "2063085",
+        "procedimentos": 0
+      },
+      {
+        "cnes_estabelecimento": "6640591",
+        "procedimentos": 0
+      },
+      {
+        "cnes_estabelecimento": "2044889",
+        "procedimentos": 0
+      },
+      {
+        "cnes_estabelecimento": "9937870",
+        "procedimentos": 0
+      },
+      {
+        "cnes_estabelecimento": "2040379",
+        "procedimentos": 0
+      },
+      {
+        "cnes_estabelecimento": "2749599",
+        "procedimentos": 0
+      },
+      {
+        "cnes_estabelecimento": "9165827",
+        "procedimentos": 0
+      },
+      {
+        "cnes_estabelecimento": "2039125",
+        "procedimentos": 0
+      },
+      {
+        "cnes_estabelecimento": "2791056",
+        "procedimentos": 0
+      },
+      {
+        "cnes_estabelecimento": "9545204",
+        "procedimentos": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2068974",
+        "total": 7838
+      },
+      {
+        "cnes_estabelecimento": "2078015",
+        "total": 6916
+      },
+      {
+        "cnes_estabelecimento": "6859186",
+        "total": 2403
+      },
+      {
+        "cnes_estabelecimento": "3060322",
+        "total": 2039
+      },
+      {
+        "cnes_estabelecimento": "9642927",
+        "total": 2000
+      },
+      {
+        "cnes_estabelecimento": "2077574",
+        "total": 1802
+      },
+      {
+        "cnes_estabelecimento": "7536917",
+        "total": 1774
+      },
+      {
+        "cnes_estabelecimento": "2792168",
+        "total": 1664
+      },
+      {
+        "cnes_estabelecimento": "2091399",
+        "total": 1597
+      },
+      {
+        "cnes_estabelecimento": "6657141",
+        "total": 1508
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5973,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q74",
+    "cat": "Epidemiológica Complexa",
+    "question": "Taxa de mortalidade por sexo em internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"outcome\" not found in FROM clause!\nCandidate bindings: \"morte\", \"uti_mes_to\", \"custo_total\", \"ano_cmpt\", \"tipo_financiamento\"\n\nLINE 3:   COUNT(DISTINCT CASE WHEN outcome = 'ÓBITO' THEN n_aih END) AS obitos,\n                                   ^",
+    "sql": "SELECT \n  sexo_paciente,\n  COUNT(DISTINCT CASE WHEN outcome = 'ÓBITO' THEN n_aih END) AS obitos,\n  COUNT(DISTINCT n_aih) AS total_internacoes,\n  ROUND(100.0 * COUNT(DISTINCT CASE WHEN outcome = 'ÓBITO' THEN n_aih END) / COUNT(DISTINCT n_aih), 2) AS taxa_mortalidade\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  sexo_paciente\nORDER BY \n  taxa_mortalidade DESC;",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "sexo_paciente": "F",
+        "total_obitos": 1050.0,
+        "taxa_mortalidade": 3.89
+      },
+      {
+        "sexo_paciente": "M",
+        "total_obitos": 1224.0,
+        "taxa_mortalidade": 2.88
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"outcome\" not found in FROM clause!\nCandidate bindings: \"morte\", \"uti_mes_to\", \"custo_total\", \"ano_cmpt\", \"tipo_financiamento\"\n\nLINE 3:   COUNT(DISTINCT CASE WHEN outcome = 'ÓBITO' THEN n_aih END) AS obitos,\n                                   ^",
+    "elapsed_ms": 9731,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q75",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por grupo diagnóstico (M e S) e faixa etária em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"faixa_etaria\" not found in FROM clause!\nCandidate bindings: \"pa_autoriz\", \"faec_tp\", \"raca_cor_paciente\", \"main_icd\", \"cid_notif\"\n\nLINE 10: GROUP BY icd_group, faixa_etaria\n                             ^",
+    "sql": "SELECT \n  icd_group,\n  faixa_etaria,\n  COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY icd_group, faixa_etaria\nORDER BY icd_group, faixa_etaria;",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "0-17",
+        "total": 559
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "18-59",
+        "total": 4409
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "60+",
+        "total": 1912
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "0-17",
+        "total": 3481
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "18-59",
+        "total": 32873
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "60+",
+        "total": 26253
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"faixa_etaria\" not found in FROM clause!\nCandidate bindings: \"pa_autoriz\", \"faec_tp\", \"raca_cor_paciente\", \"main_icd\", \"cid_notif\"\n\nLINE 10: GROUP BY icd_group, faixa_etaria\n                             ^",
+    "elapsed_ms": 6018,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q76",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos de traumatismo com maior permanência média em SP em 2023 (mínimo 40 internações)",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'S272', 'permanencia_media_dias': 14.2653061224, 'internacoes': 49} exp={'cid_principal': 'S272', 'internacoes': 49, 'permanencia_media': 14.3}",
+    "sql": "SELECT cid_principal,\n  AVG(dias_perm) AS permanencia_media_dias,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND icd_group = 'S00-T98'\nGROUP BY cid_principal\nHAVING COUNT(DISTINCT n_aih) >= 40\nORDER BY permanencia_media_dias DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "S272",
+        "permanencia_media_dias": 14.2653061224,
+        "internacoes": 49
+      },
+      {
+        "cid_principal": "S122",
+        "permanencia_media_dias": 13.0454545455,
+        "internacoes": 44
+      },
+      {
+        "cid_principal": "S063",
+        "permanencia_media_dias": 12.1666666667,
+        "internacoes": 108
+      },
+      {
+        "cid_principal": "S062",
+        "permanencia_media_dias": 11.8103448276,
+        "internacoes": 58
+      },
+      {
+        "cid_principal": "T845",
+        "permanencia_media_dias": 11.4387755102,
+        "internacoes": 98
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S272",
+        "internacoes": 49,
+        "permanencia_media": 14.3
+      },
+      {
+        "cid_principal": "S122",
+        "internacoes": 44,
+        "permanencia_media": 13.0
+      },
+      {
+        "cid_principal": "S063",
+        "internacoes": 108,
+        "permanencia_media": 12.2
+      },
+      {
+        "cid_principal": "S062",
+        "internacoes": 58,
+        "permanencia_media": 11.8
+      },
+      {
+        "cid_principal": "T845",
+        "internacoes": 98,
+        "permanencia_media": 11.4
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5812,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q77",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa etária (0-17, 18-39, 40-59, 60-79, 80+) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "5 linhas corretas, ordem livre (flexível)",
+    "sql": "SELECT\n  CASE\n    WHEN idade_paciente BETWEEN 0 AND 17 THEN '0-17'\n    WHEN idade_paciente BETWEEN 18 AND 39 THEN '18-39'\n    WHEN idade_paciente BETWEEN 40 AND 59 THEN '40-59'\n    WHEN idade_paciente BETWEEN 60 AND 79 THEN '60-79'\n    ELSE '80+'\n  END AS faixa_etaria,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY faixa_etaria\nORDER BY internacoes DESC;",
+    "llm_result": [
+      {
+        "faixa_etaria": "18-39",
+        "internacoes": 20381
+      },
+      {
+        "faixa_etaria": "60-79",
+        "internacoes": 18218
+      },
+      {
+        "faixa_etaria": "40-59",
+        "internacoes": 16901
+      },
+      {
+        "faixa_etaria": "80+",
+        "internacoes": 9947
+      },
+      {
+        "faixa_etaria": "0-17",
+        "internacoes": 4040
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 4040
+      },
+      {
+        "faixa_etaria": "18-39",
+        "total": 20381
+      },
+      {
+        "faixa_etaria": "40-59",
+        "total": 16901
+      },
+      {
+        "faixa_etaria": "60-79",
+        "total": 18218
+      },
+      {
+        "faixa_etaria": "80+",
+        "total": 9947
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 10562,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q78",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 estabelecimentos com maior volume de internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "5 linhas corretas (exato)",
+    "sql": "SELECT cnes_estabelecimento,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\nGROUP BY cnes_estabelecimento\nORDER BY internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cnes_estabelecimento": "2091399",
+        "internacoes": 826
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "internacoes": 559
+      },
+      {
+        "cnes_estabelecimento": "2786435",
+        "internacoes": 535
+      },
+      {
+        "cnes_estabelecimento": "2081695",
+        "internacoes": 522
+      },
+      {
+        "cnes_estabelecimento": "0009628",
+        "internacoes": 460
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2091399",
+        "internacoes": 826
+      },
+      {
+        "cnes_estabelecimento": "2077396",
+        "internacoes": 559
+      },
+      {
+        "cnes_estabelecimento": "2786435",
+        "internacoes": 535
+      },
+      {
+        "cnes_estabelecimento": "2081695",
+        "internacoes": 522
+      },
+      {
+        "cnes_estabelecimento": "0009628",
+        "internacoes": 460
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5208,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q79",
+    "cat": "Epidemiológica Complexa",
+    "question": "Permanência hospitalar média por faixa etária em internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=5 exp=3",
+    "sql": "SELECT\n  CASE\n    WHEN idade_paciente < 18 THEN '0-17'\n    WHEN idade_paciente BETWEEN 18 AND 34 THEN '18-34'\n    WHEN idade_paciente BETWEEN 35 AND 49 THEN '35-49'\n    WHEN idade_paciente BETWEEN 50 AND 64 THEN '50-64'\n    ELSE '65+'\n  END AS faixa_etaria,\n  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY faixa_etaria\nORDER BY faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": "0-17",
+        "permanencia_media_dias": 4.3
+      },
+      {
+        "faixa_etaria": "18-34",
+        "permanencia_media_dias": 5.2
+      },
+      {
+        "faixa_etaria": "35-49",
+        "permanencia_media_dias": 5.5
+      },
+      {
+        "faixa_etaria": "50-64",
+        "permanencia_media_dias": 6.4
+      },
+      {
+        "faixa_etaria": "65+",
+        "permanencia_media_dias": 7.2
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "permanencia_media": 4.3
+      },
+      {
+        "faixa_etaria": "18-59",
+        "permanencia_media": 5.5
+      },
+      {
+        "faixa_etaria": "60+",
+        "permanencia_media": 7.1
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 9479,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q80",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos de doença osteomuscular (M00-M99) por número de internações em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "5 linhas corretas (flexível)",
+    "sql": "SELECT cid_principal,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND icd_group = 'M00-M99'\nGROUP BY cid_principal\nORDER BY internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M861",
+        "internacoes": 957
+      },
+      {
+        "cid_principal": "M869",
+        "internacoes": 565
+      },
+      {
+        "cid_principal": "M866",
+        "internacoes": 546
+      },
+      {
+        "cid_principal": "M841",
+        "internacoes": 415
+      },
+      {
+        "cid_principal": "M751",
+        "internacoes": 212
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "M861",
+        "total": 957
+      },
+      {
+        "cid_principal": "M869",
+        "total": 565
+      },
+      {
+        "cid_principal": "M866",
+        "total": 546
+      },
+      {
+        "cid_principal": "M841",
+        "total": 415
+      },
+      {
+        "cid_principal": "M751",
+        "total": 212
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5045,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q81",
+    "cat": "Epidemiológica Complexa",
+    "question": "Número de internações ortopédicas com permanência entre 3 e 7 dias em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=27009 exp=27009",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND dias_perm BETWEEN 3 AND 7;",
+    "llm_result": [
+      {
+        "total_internacoes": 27009
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes": 27009
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5347,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q82",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos ambulatoriais ortopédicos em idosos (60 anos ou mais) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "5 linhas corretas (flexível)",
+    "sql": "SELECT cid_principal,\n  COUNT(*) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND idade_paciente >= 60\nGROUP BY cid_principal\nORDER BY total_internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "S720",
+        "total_internacoes": 11745
+      },
+      {
+        "cid_principal": "S729",
+        "total_internacoes": 7269
+      },
+      {
+        "cid_principal": "S881",
+        "total_internacoes": 5031
+      },
+      {
+        "cid_principal": "S723",
+        "total_internacoes": 4640
+      },
+      {
+        "cid_principal": "S398",
+        "total_internacoes": 3975
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total": 11745
+      },
+      {
+        "cid_principal": "S729",
+        "total": 7269
+      },
+      {
+        "cid_principal": "S881",
+        "total": 5031
+      },
+      {
+        "cid_principal": "S723",
+        "total": 4640
+      },
+      {
+        "cid_principal": "S398",
+        "total": 3975
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5904,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q83",
+    "cat": "Epidemiológica Complexa",
+    "question": "Média de internações ortopédicas por estabelecimento em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: aggregate function calls cannot be nested\n\nLINE 2:   ROUND(AVG(COUNT(DISTINCT n_aih)), 1) AS media_internacoes\n                    ^",
+    "sql": "SELECT cnes_estabelecimento,\n  ROUND(AVG(COUNT(DISTINCT n_aih)), 1) AS media_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cnes_estabelecimento\nORDER BY media_internacoes DESC;",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "media_internacoes_por_estabelecimento": 180.5
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: aggregate function calls cannot be nested\n\nLINE 2:   ROUND(AVG(COUNT(DISTINCT n_aih)), 1) AS media_internacoes\n                    ^",
+    "elapsed_ms": 5889,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q84",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa de permanência em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=5 exp=4",
+    "sql": "SELECT\n  CASE\n    WHEN dias_perm < 5 THEN '0-4 dias'\n    WHEN dias_perm BETWEEN 5 AND 10 THEN '5-10 dias'\n    WHEN dias_perm BETWEEN 11 AND 15 THEN '11-15 dias'\n    WHEN dias_perm BETWEEN 16 AND 20 THEN '16-20 dias'\n    ELSE '21+ dias'\n  END AS faixa_permanencia,\n  COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY faixa_permanencia\nORDER BY faixa_permanencia;",
+    "llm_result": [
+      {
+        "faixa_permanencia": "0-4 dias",
+        "total_internacoes": 38253
+      },
+      {
+        "faixa_permanencia": "11-15 dias",
+        "total_internacoes": 5474
+      },
+      {
+        "faixa_permanencia": "16-20 dias",
+        "total_internacoes": 2321
+      },
+      {
+        "faixa_permanencia": "21+ dias",
+        "total_internacoes": 2973
+      },
+      {
+        "faixa_permanencia": "5-10 dias",
+        "total_internacoes": 20472
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_permanencia": "1-3 dias",
+        "total": 29016
+      },
+      {
+        "faixa_permanencia": "15+ dias",
+        "total": 9127
+      },
+      {
+        "faixa_permanencia": "4-7 dias",
+        "total": 19602
+      },
+      {
+        "faixa_permanencia": "8-14 dias",
+        "total": 11747
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 9373,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q85",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas de idosos (60 anos ou mais) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=83044181.8 exp=83044181.8",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND idade_paciente >= 60;",
+    "llm_result": [
+      {
+        "custo_total": 83044181.8
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_idosos": 83044181.8
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5644,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q86",
+    "cat": "Financeira",
+    "question": "Custo médio por internação por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=2731.64 exp=2730.82",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)) / COUNT(DISTINCT n_aih), 2) AS custo_medio_por_internacao\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%';",
+    "llm_result": [
+      {
+        "custo_medio_por_internacao": 2731.64
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_medio_s72": 2730.82
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5117,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q87",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas com passagem por UTI em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=86143722.88 exp=6792.17",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND val_uti > 0;",
+    "llm_result": [
+      {
+        "custo_total": 86143722.88
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_uti": 6792.17
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5591,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q88",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica por sexo do paciente em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "2 linhas corretas, ordem livre (flexível)",
+    "sql": "SELECT \n  sexo_paciente,\n  ROUND(AVG(custo_total), 2) AS custo_medio_por_internacao\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  sexo_paciente\nORDER BY \n  sexo_paciente;",
+    "llm_result": [
+      {
+        "sexo_paciente": "F",
+        "custo_medio_por_internacao": 2710.26
+      },
+      {
+        "sexo_paciente": "M",
+        "custo_medio_por_internacao": 2682.23
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "F",
+        "custo_medio": 2710.26
+      },
+      {
+        "sexo_paciente": "M",
+        "custo_medio": 2682.23
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6217,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q89",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas em crianças (menores de 18 anos) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=7933442.51 exp=7933442.51",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND idade_paciente < 18\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_total": 7933442.51
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_criancas": 7933442.51
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6853,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q90",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica com permanência superior a 7 dias em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=4390.48 exp=4390.48",
+    "sql": "SELECT ROUND(AVG(custo_total), 2) AS custo_medio_por_internacao\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND dias_perm > 7;",
+    "llm_result": [
+      {
+        "custo_medio_por_internacao": 4390.48
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_medio_longa_perm": 4390.48
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5469,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q91",
+    "cat": "Financeira",
+    "question": "Top 3 municípios com maior custo total em internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "3 linhas corretas (exato)",
+    "sql": "SELECT cod_munic_estabelecimento,\n  ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cod_munic_estabelecimento\nORDER BY custo_total DESC\nLIMIT 3;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "350000",
+        "custo_total": 98503323.97
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "custo_total": 13591910.34
+      },
+      {
+        "cod_munic_estabelecimento": "354870",
+        "custo_total": 3808533.81
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "350000",
+        "custo_total": 98503323.97
+      },
+      {
+        "cod_munic_estabelecimento": "355030",
+        "custo_total": 13591910.34
+      },
+      {
+        "cod_munic_estabelecimento": "354870",
+        "custo_total": 3808533.81
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6413,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q92",
+    "cat": "Financeira",
+    "question": "Valor total de serviço hospitalar em internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=153782049.46 exp=153782049.46",
+    "sql": "SELECT ROUND(SUM(COALESCE(val_sh, 0)), 2) AS valor_servico_hospitalar\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "valor_servico_hospitalar": 153782049.46
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_hospitalar_total": 153782049.46
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5301,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q93",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica por faixa etária em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=8 exp=3",
+    "sql": "SELECT\n  CASE\n    WHEN idade_paciente < 18 THEN '0-17'\n    WHEN idade_paciente < 30 THEN '18-29'\n    WHEN idade_paciente < 40 THEN '30-39'\n    WHEN idade_paciente < 50 THEN '40-49'\n    WHEN idade_paciente < 60 THEN '50-59'\n    WHEN idade_paciente < 70 THEN '60-69'\n    WHEN idade_paciente < 80 THEN '70-79'\n    ELSE '80+'\n  END AS faixa_etaria,\n  ROUND(AVG(custo_total), 2) AS custo_medio_por_internacao\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY faixa_etaria\nORDER BY faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": "0-17",
+        "custo_medio_por_internacao": 1963.72
+      },
+      {
+        "faixa_etaria": "18-29",
+        "custo_medio_por_internacao": 2596.32
+      },
+      {
+        "faixa_etaria": "30-39",
+        "custo_medio_por_internacao": 2597.84
+      },
+      {
+        "faixa_etaria": "40-49",
+        "custo_medio_por_internacao": 2543.76
+      },
+      {
+        "faixa_etaria": "50-59",
+        "custo_medio_por_internacao": 2579.07
+      },
+      {
+        "faixa_etaria": "60-69",
+        "custo_medio_por_internacao": 2774.39
+      },
+      {
+        "faixa_etaria": "70-79",
+        "custo_medio_por_internacao": 2962.69
+      },
+      {
+        "faixa_etaria": "80+",
+        "custo_medio_por_internacao": 3085.94
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "custo_medio": 1963.72
+      },
+      {
+        "faixa_etaria": "18-59",
+        "custo_medio": 2580.8
+      },
+      {
+        "faixa_etaria": "60+",
+        "custo_medio": 2946.29
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 11130,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q94",
+    "cat": "Financeira",
+    "question": "Valor total de UTI em internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=40878597.03 exp=40878597.03",
+    "sql": "SELECT ROUND(SUM(COALESCE(val_uti, 0)), 2) AS valor_uti_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "valor_uti_total": 40878597.03
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_uti_total": 40878597.03
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5289,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q95",
+    "cat": "Financeira",
+    "question": "Custo total de internações por doenças osteomusculares (M00-M99) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=15790831.06 exp=15790831.06",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND icd_group = 'M00-M99';",
+    "llm_result": [
+      {
+        "custo_total": 15790831.06
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_m": 15790831.06
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5880,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q96",
+    "cat": "Financeira",
+    "question": "Custo total de internações por traumatismos (S00-T98) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=171429990.73 exp=171429990.73",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND icd_group = 'S00-T98';",
+    "llm_result": [
+      {
+        "custo_total": 171429990.73
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_s": 171429990.73
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4682,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q97",
+    "cat": "Financeira",
+    "question": "Top 5 diagnósticos com maior custo médio por internação ortopédica em SP em 2023 (mínimo 40 internações)",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "5 linhas corretas (exato)",
+    "sql": "SELECT cid_principal,\n  AVG(custo_total) AS custo_medio,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY cid_principal\nHAVING COUNT(DISTINCT n_aih) >= 40\nORDER BY custo_medio DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "S221",
+        "custo_medio": 14403.6609756098,
+        "internacoes": 41
+      },
+      {
+        "cid_principal": "S122",
+        "custo_medio": 12851.8888636364,
+        "internacoes": 44
+      },
+      {
+        "cid_principal": "S062",
+        "custo_medio": 11037.0675862069,
+        "internacoes": 58
+      },
+      {
+        "cid_principal": "S320",
+        "custo_medio": 11001.0975862069,
+        "internacoes": 58
+      },
+      {
+        "cid_principal": "S063",
+        "custo_medio": 10339.075,
+        "internacoes": 108
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S221",
+        "internacoes": 41,
+        "custo_medio": 14403.66
+      },
+      {
+        "cid_principal": "S122",
+        "internacoes": 44,
+        "custo_medio": 12851.89
+      },
+      {
+        "cid_principal": "S062",
+        "internacoes": 58,
+        "custo_medio": 11037.07
+      },
+      {
+        "cid_principal": "S320",
+        "internacoes": 58,
+        "custo_medio": 11001.1
+      },
+      {
+        "cid_principal": "S063",
+        "internacoes": 108,
+        "custo_medio": 10339.07
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7934,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q98",
+    "cat": "Financeira",
+    "question": "Custo médio por procedimento ambulatorial ortopédico em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=86.29 exp=86.29",
+    "sql": "SELECT ROUND(AVG(custo_total), 2) AS custo_medio\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_medio": 86.29
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_medio_sia": 86.29
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5007,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q99",
+    "cat": "Financeira",
+    "question": "Top 5 procedimentos ambulatoriais com maior custo total em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_procedimento': '0702100048', 'total_procedimentos': 15268, 'custo_total': 45189222.96} exp={'cod_procedimento': '0701020369', 'custo_total': 1261008.0}",
+    "sql": "SELECT cod_procedimento,\n  COUNT(*) AS total_procedimentos,\n  ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\nGROUP BY cod_procedimento\nORDER BY custo_total DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_procedimento": "0702100048",
+        "total_procedimentos": 15268,
+        "custo_total": 45189222.96
+      },
+      {
+        "cod_procedimento": "0701050047",
+        "total_procedimentos": 74041,
+        "custo_total": 12885462.0
+      },
+      {
+        "cod_procedimento": "0701030135",
+        "total_procedimentos": 8168,
+        "custo_total": 10465700.0
+      },
+      {
+        "cod_procedimento": "0701070137",
+        "total_procedimentos": 64581,
+        "custo_total": 9986850.0
+      },
+      {
+        "cod_procedimento": "0701030143",
+        "total_procedimentos": 4674,
+        "custo_total": 9256500.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_procedimento": "0701020369",
+        "custo_total": 1261008.0
+      },
+      {
+        "cod_procedimento": "0302050019",
+        "custo_total": 728052.9
+      },
+      {
+        "cod_procedimento": "0701010053",
+        "custo_total": 726054.4
+      },
+      {
+        "cod_procedimento": "0701050047",
+        "custo_total": 699750.0
+      },
+      {
+        "cod_procedimento": "0701020415",
+        "custo_total": 625005.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5410,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q100",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas de idosos (60+) com permanência superior a 7 dias em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=37989386.14 exp=37989386.14",
+    "sql": "SELECT ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND idade_paciente >= 60\n  AND dias_perm > 7;",
+    "llm_result": [
+      {
+        "custo_total": 37989386.14
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 37989386.14
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5954,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q101",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior número de óbitos em internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"obito\" not found in FROM clause!\nCandidate bindings: \"morte\", \"gestao\", \"row_id\", \"cod_munic_estabelecimento\", \"sistema\"\n\nLINE 8:   AND obito = 'S'\n              ^",
+    "sql": "SELECT mes_cmpt,\n  COUNT(DISTINCT n_aih) AS total_obitos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND obito = 'S'\nGROUP BY mes_cmpt\nORDER BY total_obitos DESC\nLIMIT 1;",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 11,
+        "total_obitos": 209
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"obito\" not found in FROM clause!\nCandidate bindings: \"morte\", \"gestao\", \"row_id\", \"cod_munic_estabelecimento\", \"sistema\"\n\nLINE 8:   AND obito = 'S'\n              ^",
+    "elapsed_ms": 5775,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q102",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por fratura de fêmur (S72) em idosos (60 anos ou mais) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "12 linhas corretas (exato)",
+    "sql": "SELECT \n  mes_cmpt,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\n  AND idade_paciente >= 60\nGROUP BY \n  mes_cmpt\nORDER BY \n  mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 1597
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 1445
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 1557
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 1535
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 1733
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 1785
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 1795
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 1836
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 1607
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 1543
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 1492
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 1673
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 1597
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 1445
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 1557
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 1535
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 1733
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 1785
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 1795
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 1836
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 1607
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 1543
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 1492
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 1673
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6806,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q103",
+    "cat": "Temporal/Comparativa",
+    "question": "Custo mensal de internações ortopédicas de idosos (60 anos ou mais) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT \n  mes_cmpt,\n  ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_mensal\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\n  AND idade_paciente >= 60\nGROUP BY \n  mes_cmpt\nORDER BY \n  mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_mensal": 7166029.19
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_mensal": 5927879.64
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_mensal": 6539279.37
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_mensal": 6512279.25
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_mensal": 6700672.16
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_mensal": 6885503.11
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_mensal": 7538463.0
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_mensal": 7655705.6
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_mensal": 6954550.31
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_mensal": 6917458.31
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_mensal": 6633701.19
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_mensal": 7612660.67
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 7166029.19
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 5927879.64
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 6539279.37
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 6512279.25
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 6700672.16
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 6885503.11
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 7538463.0
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 7655705.6
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 6954550.31
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 6917458.31
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 6633701.19
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 7612660.67
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6798,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q104",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior custo total de internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "1 linhas corretas (exato)",
+    "sql": "SELECT mes_cmpt,\n  ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY custo_total DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 8,
+        "custo_total": 7745411.5
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 8,
+        "custo_total": 7745411.5
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5394,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q105",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por traumatismos (grupo S00-T98) em SP em 2023",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "12 linhas corretas (exato)",
+    "sql": "SELECT \n  mes_cmpt,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND icd_group = 'S00-T98'\nGROUP BY \n  mes_cmpt\nORDER BY \n  mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 5160
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 4560
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 5166
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 4874
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 5308
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 5254
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 5199
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 5784
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 5224
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 5332
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 5155
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 5600
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 5160
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 4560
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 5166
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 4874
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 5308
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 5254
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 5199
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 5784
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 5224
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 5332
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 5155
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 5600
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5358,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q106",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de procedimentos ambulatoriais ortopédicos por sexo em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "24 linhas corretas (flexível)",
+    "sql": "SELECT \n  mes_cmpt,\n  sexo_paciente,\n  COUNT(*) AS volume_procedimentos\nFROM \n  processed\nWHERE \n  sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  mes_cmpt, sexo_paciente\nORDER BY \n  mes_cmpt, sexo_paciente;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 3733
+      },
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 4682
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 3854
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 4676
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 4477
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 5390
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 4386
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 5308
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 4394
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 5139
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 1561
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 2172
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 4277
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 4802
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 4552
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 5748
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 4047
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 5024
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 4594
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 5269
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 4121
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 4749
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "F",
+        "volume_procedimentos": 3796
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "M",
+        "volume_procedimentos": 4613
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "F",
+        "total": 3733
+      },
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "M",
+        "total": 4682
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "F",
+        "total": 3854
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "M",
+        "total": 4676
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "F",
+        "total": 4477
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "M",
+        "total": 5390
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "F",
+        "total": 4386
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "M",
+        "total": 5308
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "F",
+        "total": 4394
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "M",
+        "total": 5139
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "F",
+        "total": 1561
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "M",
+        "total": 2172
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "F",
+        "total": 4277
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "M",
+        "total": 4802
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "F",
+        "total": 4552
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "M",
+        "total": 5748
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "F",
+        "total": 4047
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "M",
+        "total": 5024
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "F",
+        "total": 4594
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "M",
+        "total": 5269
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "F",
+        "total": 4121
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "M",
+        "total": 4749
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "F",
+        "total": 3796
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "M",
+        "total": 4613
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6252,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q107",
+    "cat": "Temporal/Comparativa",
+    "question": "Comparativo trimestral de internações ortopédicas por grupo diagnóstico em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "8 linhas corretas, ordem livre (flexível)",
+    "sql": "SELECT\n  CASE\n    WHEN mes_cmpt BETWEEN 1 AND 3 THEN 'Q1'\n    WHEN mes_cmpt BETWEEN 4 AND 6 THEN 'Q2'\n    WHEN mes_cmpt BETWEEN 7 AND 9 THEN 'Q3'\n    ELSE 'Q4'\n  END AS trimestre,\n  icd_group AS grupo_diagnostico,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY trimestre, icd_group\nORDER BY trimestre, grupo_diagnostico;",
+    "llm_result": [
+      {
+        "trimestre": "Q1",
+        "grupo_diagnostico": "M00-M99",
+        "internacoes": 1673
+      },
+      {
+        "trimestre": "Q1",
+        "grupo_diagnostico": "S00-T98",
+        "internacoes": 14886
+      },
+      {
+        "trimestre": "Q2",
+        "grupo_diagnostico": "M00-M99",
+        "internacoes": 1746
+      },
+      {
+        "trimestre": "Q2",
+        "grupo_diagnostico": "S00-T98",
+        "internacoes": 15436
+      },
+      {
+        "trimestre": "Q3",
+        "grupo_diagnostico": "M00-M99",
+        "internacoes": 1840
+      },
+      {
+        "trimestre": "Q3",
+        "grupo_diagnostico": "S00-T98",
+        "internacoes": 16204
+      },
+      {
+        "trimestre": "Q4",
+        "grupo_diagnostico": "M00-M99",
+        "internacoes": 1626
+      },
+      {
+        "trimestre": "Q4",
+        "grupo_diagnostico": "S00-T98",
+        "internacoes": 16083
+      }
+    ],
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "icd_group": "M00-M99",
+        "total": 1673
+      },
+      {
+        "trimestre": "Q1",
+        "icd_group": "S00-T98",
+        "total": 14886
+      },
+      {
+        "trimestre": "Q2",
+        "icd_group": "M00-M99",
+        "total": 1746
+      },
+      {
+        "trimestre": "Q2",
+        "icd_group": "S00-T98",
+        "total": 15436
+      },
+      {
+        "trimestre": "Q3",
+        "icd_group": "M00-M99",
+        "total": 1840
+      },
+      {
+        "trimestre": "Q3",
+        "icd_group": "S00-T98",
+        "total": 16204
+      },
+      {
+        "trimestre": "Q4",
+        "icd_group": "M00-M99",
+        "total": 1626
+      },
+      {
+        "trimestre": "Q4",
+        "icd_group": "S00-T98",
+        "total": 16083
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8548,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q108",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior permanência hospitalar média em internações ortopédicas em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "1 linhas corretas (flexível)",
+    "sql": "SELECT\n  mes_cmpt,\n  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY permanencia_media_dias DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 11,
+        "permanencia_media_dias": 6.4
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 11,
+        "permanencia_media": 6.4
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6072,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q109",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal da taxa de mortalidade em internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Falha DuckDB: Binder Error: Referenced column \"obito_30dias\" not found in FROM clause!\nCandidate bindings: \"qt_diarias\", \"dt_saida\", \"pa_motsai\", \"cod_idade\", \"pa_cbocod\"\n\nLINE 3:   ROUND(SUM(CASE WHEN obito_30dias = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(DISTINCT...\n                              ^",
+    "sql": "SELECT\n  mes_cmpt,\n  ROUND(SUM(CASE WHEN obito_30dias = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(DISTINCT n_aih), 2) AS taxa_mortalidade\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": null,
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 5667,
+        "obitos": 198.0,
+        "taxa_mortalidade": 3.49
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 5121,
+        "obitos": 142.0,
+        "taxa_mortalidade": 2.77
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 5777,
+        "obitos": 170.0,
+        "taxa_mortalidade": 2.94
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 5440,
+        "obitos": 188.0,
+        "taxa_mortalidade": 3.46
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 5917,
+        "obitos": 202.0,
+        "taxa_mortalidade": 3.41
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 5830,
+        "obitos": 196.0,
+        "taxa_mortalidade": 3.36
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 5824,
+        "obitos": 201.0,
+        "taxa_mortalidade": 3.45
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 6396,
+        "obitos": 201.0,
+        "taxa_mortalidade": 3.14
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 5830,
+        "obitos": 183.0,
+        "taxa_mortalidade": 3.14
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 5887,
+        "obitos": 199.0,
+        "taxa_mortalidade": 3.38
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 5677,
+        "obitos": 209.0,
+        "taxa_mortalidade": 3.68
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 6151,
+        "obitos": 185.0,
+        "taxa_mortalidade": 3.01
+      }
+    ],
+    "api_error": "Falha DuckDB: Binder Error: Referenced column \"obito_30dias\" not found in FROM clause!\nCandidate bindings: \"qt_diarias\", \"dt_saida\", \"pa_motsai\", \"cod_idade\", \"pa_cbocod\"\n\nLINE 3:   ROUND(SUM(CASE WHEN obito_30dias = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(DISTINCT...\n                              ^",
+    "elapsed_ms": 6751,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q110",
+    "cat": "Temporal/Comparativa",
+    "question": "Trimestre com maior volume de internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "1 linhas corretas (flexível)",
+    "sql": "SELECT\n  CASE\n    WHEN mes_cmpt BETWEEN 1 AND 3 THEN 'Q1'\n    WHEN mes_cmpt BETWEEN 4 AND 6 THEN 'Q2'\n    WHEN mes_cmpt BETWEEN 7 AND 9 THEN 'Q3'\n    ELSE 'Q4'\n  END AS trimestre,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\nGROUP BY trimestre\nORDER BY internacoes DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "trimestre": "Q3",
+        "internacoes": 7947
+      }
+    ],
+    "gold_result": [
+      {
+        "trimestre": "Q3",
+        "total": 7947
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7280,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q111",
+    "cat": "Temporal/Comparativa",
+    "question": "Comparativo semestral de internações ortopédicas (1º vs 2º semestre) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'semestre': '1S', 'total': 33739}",
+    "sql": "SELECT\n  CASE\n    WHEN mes_cmpt BETWEEN 1 AND 6 THEN '1º Semestre'\n    ELSE '2º Semestre'\n  END AS semestre,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY semestre\nORDER BY semestre;",
+    "llm_result": [
+      {
+        "semestre": "1º Semestre",
+        "internacoes": 33739
+      },
+      {
+        "semestre": "2º Semestre",
+        "internacoes": 35750
+      }
+    ],
+    "gold_result": [
+      {
+        "semestre": "1S",
+        "total": 33739
+      },
+      {
+        "semestre": "2S",
+        "total": 35750
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6699,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q112",
+    "cat": "Temporal/Comparativa",
+    "question": "Custo médio mensal por internação por fratura de fêmur (S72) em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=1 exp=12",
+    "sql": "SELECT \n  ROUND(AVG(custo_total), 2) AS custo_medio_mensal\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%';",
+    "llm_result": [
+      {
+        "custo_medio_mensal": 2730.82
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_medio": 2724.45
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_medio": 2733.43
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_medio": 2745.5
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_medio": 2767.13
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_medio": 2653.37
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_medio": 2720.17
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_medio": 2712.13
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_medio": 2750.5
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_medio": 2663.99
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_medio": 2773.69
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_medio": 2732.17
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_medio": 2794.02
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4687,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q113",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações ortopédicas por sexo do paciente em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "24 linhas corretas (flexível)",
+    "sql": "SELECT\n  mes_cmpt,\n  sexo_paciente,\n  COUNT(DISTINCT n_aih) AS internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt, sexo_paciente\nORDER BY mes_cmpt, sexo_paciente;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "F",
+        "internacoes": 2219
+      },
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "M",
+        "internacoes": 3448
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "F",
+        "internacoes": 1983
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "M",
+        "internacoes": 3138
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "F",
+        "internacoes": 2205
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "M",
+        "internacoes": 3572
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "F",
+        "internacoes": 2101
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "M",
+        "internacoes": 3339
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "F",
+        "internacoes": 2214
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "M",
+        "internacoes": 3703
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "F",
+        "internacoes": 2341
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "M",
+        "internacoes": 3489
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "F",
+        "internacoes": 2424
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "M",
+        "internacoes": 3400
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "F",
+        "internacoes": 2509
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "M",
+        "internacoes": 3887
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "F",
+        "internacoes": 2296
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "M",
+        "internacoes": 3534
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "F",
+        "internacoes": 2212
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "M",
+        "internacoes": 3675
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "F",
+        "internacoes": 2114
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "M",
+        "internacoes": 3563
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "F",
+        "internacoes": 2411
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "M",
+        "internacoes": 3740
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "F",
+        "total": 2219
+      },
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "M",
+        "total": 3448
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "F",
+        "total": 1983
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "M",
+        "total": 3138
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "F",
+        "total": 2205
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "M",
+        "total": 3572
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "F",
+        "total": 2101
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "M",
+        "total": 3339
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "F",
+        "total": 2214
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "M",
+        "total": 3703
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "F",
+        "total": 2341
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "M",
+        "total": 3489
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "F",
+        "total": 2424
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "M",
+        "total": 3400
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "F",
+        "total": 2509
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "M",
+        "total": 3887
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "F",
+        "total": 2296
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "M",
+        "total": 3534
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "F",
+        "total": 2212
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "M",
+        "total": 3675
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "F",
+        "total": 2114
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "M",
+        "total": 3563
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "F",
+        "total": 2411
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "M",
+        "total": 3740
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6103,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q114",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com menor volume de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "1 linhas corretas (flexível)",
+    "sql": "SELECT mes_cmpt,\n  COUNT(*) AS total_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY mes_cmpt\nORDER BY total_procedimentos ASC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 6,
+        "total_procedimentos": 3733
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 6,
+        "total": 3733
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5581,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q115",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume trimestral de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "4 linhas corretas, ordem livre (flexível)",
+    "sql": "SELECT\n  CASE\n    WHEN mes_cmpt BETWEEN 1 AND 3 THEN 'Q1'\n    WHEN mes_cmpt BETWEEN 4 AND 6 THEN 'Q2'\n    WHEN mes_cmpt BETWEEN 7 AND 9 THEN 'Q3'\n    ELSE 'Q4'\n  END AS trimestre,\n  COUNT(*) AS volume_procedimentos\nFROM processed\nWHERE sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY trimestre\nORDER BY trimestre;",
+    "llm_result": [
+      {
+        "trimestre": "Q1",
+        "volume_procedimentos": 26812
+      },
+      {
+        "trimestre": "Q2",
+        "volume_procedimentos": 22960
+      },
+      {
+        "trimestre": "Q3",
+        "volume_procedimentos": 28450
+      },
+      {
+        "trimestre": "Q4",
+        "volume_procedimentos": 27142
+      }
+    ],
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "total": 26812
+      },
+      {
+        "trimestre": "Q2",
+        "total": 22960
+      },
+      {
+        "trimestre": "Q3",
+        "total": 28450
+      },
+      {
+        "trimestre": "Q4",
+        "total": 27142
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7627,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q116",
+    "cat": "Temporal/Comparativa",
+    "question": "Custo mensal de procedimentos ambulatoriais ortopédicos em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT \n  mes_cmpt,\n  ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_mensal\nFROM \n  processed\nWHERE \n  sistema = 'SIA'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY \n  mes_cmpt\nORDER BY \n  mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_mensal": 598431.72
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_mensal": 647400.17
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_mensal": 694492.79
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_mensal": 770087.63
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_mensal": 741899.02
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_mensal": 610222.4
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_mensal": 779824.65
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_mensal": 805752.66
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_mensal": 792247.1
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_mensal": 860727.21
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_mensal": 851655.48
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_mensal": 939480.92
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 598431.72
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 647400.17
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 694492.79
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 770087.63
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 741899.02
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 610222.4
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 779824.65
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 805752.66
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 792247.1
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 860727.21
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 851655.48
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 939480.92
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6379,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q117",
+    "cat": "Temporal/Comparativa",
+    "question": "Comparativo semestral do custo total de internações ortopédicas em SP em 2023",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'semestre': '1S', 'custo_total': 90189950.58}",
+    "sql": "SELECT\n  CASE\n    WHEN mes_cmpt BETWEEN 1 AND 6 THEN 'Semestre 1'\n    ELSE 'Semestre 2'\n  END AS semestre,\n  ROUND(SUM(COALESCE(custo_total, 0)), 2) AS custo_total\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')\nGROUP BY semestre\nORDER BY semestre;",
+    "llm_result": [
+      {
+        "semestre": "Semestre 1",
+        "custo_total": 90189950.58
+      },
+      {
+        "semestre": "Semestre 2",
+        "custo_total": 97030871.21
+      }
+    ],
+    "gold_result": [
+      {
+        "semestre": "1S",
+        "custo_total": 90189950.58
+      },
+      {
+        "semestre": "2S",
+        "custo_total": 97030871.21
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7091,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q118",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal da permanência média em internações por fratura de fêmur (S72) em SP em 2023",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT\n  mes_cmpt,\n  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'SP'\n  AND ano_cmpt = 2023\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "permanencia_media_dias": 6.6
+      },
+      {
+        "mes_cmpt": 2,
+        "permanencia_media_dias": 6.9
+      },
+      {
+        "mes_cmpt": 3,
+        "permanencia_media_dias": 6.6
+      },
+      {
+        "mes_cmpt": 4,
+        "permanencia_media_dias": 6.6
+      },
+      {
+        "mes_cmpt": 5,
+        "permanencia_media_dias": 6.6
+      },
+      {
+        "mes_cmpt": 6,
+        "permanencia_media_dias": 6.6
+      },
+      {
+        "mes_cmpt": 7,
+        "permanencia_media_dias": 6.4
+      },
+      {
+        "mes_cmpt": 8,
+        "permanencia_media_dias": 6.7
+      },
+      {
+        "mes_cmpt": 9,
+        "permanencia_media_dias": 6.5
+      },
+      {
+        "mes_cmpt": 10,
+        "permanencia_media_dias": 7.0
+      },
+      {
+        "mes_cmpt": 11,
+        "permanencia_media_dias": 6.8
+      },
+      {
+        "mes_cmpt": 12,
+        "permanencia_media_dias": 6.7
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "permanencia_media": 6.6
+      },
+      {
+        "mes_cmpt": 2,
+        "permanencia_media": 6.9
+      },
+      {
+        "mes_cmpt": 3,
+        "permanencia_media": 6.6
+      },
+      {
+        "mes_cmpt": 4,
+        "permanencia_media": 6.6
+      },
+      {
+        "mes_cmpt": 5,
+        "permanencia_media": 6.6
+      },
+      {
+        "mes_cmpt": 6,
+        "permanencia_media": 6.6
+      },
+      {
+        "mes_cmpt": 7,
+        "permanencia_media": 6.4
+      },
+      {
+        "mes_cmpt": 8,
+        "permanencia_media": 6.7
+      },
+      {
+        "mes_cmpt": 9,
+        "permanencia_media": 6.5
+      },
+      {
+        "mes_cmpt": 10,
+        "permanencia_media": 7.0
+      },
+      {
+        "mes_cmpt": 11,
+        "permanencia_media": 6.8
+      },
+      {
+        "mes_cmpt": 12,
+        "permanencia_media": 6.7
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5082,
+    "correction_rounds": null
+  }
+]

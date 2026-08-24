@@ -1,0 +1,5973 @@
+[
+  {
+    "id": "Q01",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações ortopédicas (M00-M99 e S00-S99) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=28056 exp=28056",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_internacoes": 28056
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 28056
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4503,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q02",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=27201",
+    "sql": "SELECT \n    COUNT(*) AS total_procedimentos\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIA'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND cod_procedimento LIKE '0408%'",
+    "llm_result": [
+      {
+        "total_procedimentos": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "total_procedimentos": 27201
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4560,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q03",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=25731 exp=9945",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S72%' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_internacoes": 25731
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 9945
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5216,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q04",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por osteoartrose (M16, M17) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=102 exp=102",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M16%' OR cid_principal LIKE 'M17%');",
+    "llm_result": [
+      {
+        "total_internacoes": 102
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 102
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5098,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q05",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de óbitos em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=21 exp=965",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_obitos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND morte = 1\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_obitos": 21
+      }
+    ],
+    "gold_result": [
+      {
+        "total_obitos": 965
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5413,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q06",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por traumatismos (S00-T98) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=25731 exp=25731",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S%' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "total_internacoes": 25731
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 25731
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5142,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q07",
+    "cat": "Epidemiológica Simples",
+    "question": "Total de internações por doenças osteomusculares (M00-M99) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=2325 exp=2325",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND e.clinical_interpretacao_clinica = 'doencas osteomusculares e do tecido conjuntivo';",
+    "llm_result": [
+      {
+        "total_internacoes": 2325
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 2325
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5488,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q08",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de mulheres internadas por causa ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=880 exp=10444",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'F'\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 880
+      }
+    ],
+    "gold_result": [
+      {
+        "total_mulheres_internadas": 10444
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5471,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q09",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de homens internados por causa ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1445 exp=17612",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'M'\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 1445
+      }
+    ],
+    "gold_result": [
+      {
+        "total_homens_internados": 17612
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5488,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q10",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas de idosos (60 anos ou mais) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=586 exp=10149",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 60\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 586
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 10149
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5515,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q11",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de municípios distintos com internação ortopédica registrada em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=102 exp=63",
+    "sql": "SELECT COUNT(DISTINCT cod_munic_residencia) AS num_municipios\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "num_municipios": 102
+      }
+    ],
+    "gold_result": [
+      {
+        "num_municipios": 63
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5261,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q12",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de estabelecimentos distintos com internação ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=46 exp=135",
+    "sql": "SELECT COUNT(DISTINCT cod_munic_estabelecimento) AS num_estabelecimentos\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "num_estabelecimentos": 46
+      }
+    ],
+    "gold_result": [
+      {
+        "num_estabelecimentos": 135
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4447,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q13",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência superior a 7 dias em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=734 exp=9244",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND dias_perm > 7\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 734
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 9244
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4567,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q14",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com uso de UTI em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=0 exp=0",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n  AND uti_int_to > 0;",
+    "llm_result": [
+      {
+        "numero_internacoes": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes_uti": 0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5218,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q15",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de quadril (S72) em pacientes com 70 anos ou mais em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=6365 exp=5140",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 70\n  AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas');",
+    "llm_result": [
+      {
+        "numero_internacoes": 6365
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 5140
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5963,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q16",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 CIDs ortopédicos por volume de internação em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M861', 'volume_internacao': 182} exp={'cid_principal': 'S720', 'total_internacoes': 3502}",
+    "sql": "SELECT \n    cid_principal, \n    COUNT(*) AS volume_internacao\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    volume_internacao DESC\nLIMIT 10;",
+    "llm_result": [
+      {
+        "cid_principal": "M861",
+        "volume_internacao": 182
+      },
+      {
+        "cid_principal": "M841",
+        "volume_internacao": 143
+      },
+      {
+        "cid_principal": "M511",
+        "volume_internacao": 129
+      },
+      {
+        "cid_principal": "M866",
+        "volume_internacao": 120
+      },
+      {
+        "cid_principal": "M869",
+        "volume_internacao": 94
+      },
+      {
+        "cid_principal": "M751",
+        "volume_internacao": 81
+      },
+      {
+        "cid_principal": "M245",
+        "volume_internacao": 79
+      },
+      {
+        "cid_principal": "M411",
+        "volume_internacao": 67
+      },
+      {
+        "cid_principal": "M840",
+        "volume_internacao": 64
+      },
+      {
+        "cid_principal": "M238",
+        "volume_internacao": 63
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_internacoes": 3502
+      },
+      {
+        "cid_principal": "T813",
+        "total_internacoes": 2823
+      },
+      {
+        "cid_principal": "S721",
+        "total_internacoes": 1697
+      },
+      {
+        "cid_principal": "S723",
+        "total_internacoes": 1243
+      },
+      {
+        "cid_principal": "S728",
+        "total_internacoes": 886
+      },
+      {
+        "cid_principal": "S822",
+        "total_internacoes": 793
+      },
+      {
+        "cid_principal": "S722",
+        "total_internacoes": 757
+      },
+      {
+        "cid_principal": "S828",
+        "total_internacoes": 610
+      },
+      {
+        "cid_principal": "S525",
+        "total_internacoes": 596
+      },
+      {
+        "cid_principal": "S729",
+        "total_internacoes": 587
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6355,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q17",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 municípios de RJ com maior número de internações ortopédicas em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_munic_residencia': '330455', 'num_internacoes': 514} exp={'cod_munic_estabelecimento': '330000', 'internacoes': 9878}",
+    "sql": "SELECT \n    cod_munic_residencia,\n    COUNT(DISTINCT n_aih) AS num_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cod_munic_residencia\nORDER BY \n    num_internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_munic_residencia": "330455",
+        "num_internacoes": 514
+      },
+      {
+        "cod_munic_residencia": "330490",
+        "num_internacoes": 166
+      },
+      {
+        "cod_munic_residencia": "330100",
+        "num_internacoes": 137
+      },
+      {
+        "cod_munic_residencia": "330170",
+        "num_internacoes": 130
+      },
+      {
+        "cod_munic_residencia": "330390",
+        "num_internacoes": 106
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "330000",
+        "internacoes": 9878
+      },
+      {
+        "cod_munic_estabelecimento": "330455",
+        "internacoes": 5163
+      },
+      {
+        "cod_munic_estabelecimento": "330170",
+        "internacoes": 4574
+      },
+      {
+        "cod_munic_estabelecimento": "330350",
+        "internacoes": 991
+      },
+      {
+        "cod_munic_estabelecimento": "330390",
+        "internacoes": 878
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6831,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q18",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa etária (0-17, 18-59, 60+) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'faixa_etaria': '0-17', 'total': 2380}",
+    "sql": "SELECT \n    CASE \n        WHEN idade_paciente >= 0 AND idade_paciente <= 17 THEN '0-17'\n        WHEN idade_paciente >= 18 AND idade_paciente <= 59 THEN '18-59'\n        WHEN idade_paciente >= 60 THEN '60+'\n    END AS faixa_etaria,\n    COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    faixa_etaria\nORDER BY \n    faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": "0-17",
+        "numero_internacoes": 358
+      },
+      {
+        "faixa_etaria": "18-59",
+        "numero_internacoes": 1381
+      },
+      {
+        "faixa_etaria": "60+",
+        "numero_internacoes": 586
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 2380
+      },
+      {
+        "faixa_etaria": "18-59",
+        "total": 15527
+      },
+      {
+        "faixa_etaria": "60+",
+        "total": 10149
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 9088,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q19",
+    "cat": "Epidemiológica Complexa",
+    "question": "Taxa de mortalidade hospitalar por CID ortopédico (top 5) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M858', 'total_internacoes': 1, 'total_obitos': 1.0, 'taxa_mortalidade': 1.0} exp={'cid_principal': 'T203', 'total_internacoes': 44, 'total_obitos': 26.0, 'taxa_mortalidade_pct': 59.09}",
+    "sql": "SELECT \n    cid_principal,\n    COUNT(DISTINCT n_aih) AS total_internacoes,\n    SUM(morte) AS total_obitos,\n    (SUM(morte) * 1.0 / COUNT(DISTINCT n_aih)) AS taxa_mortalidade\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    taxa_mortalidade DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M858",
+        "total_internacoes": 1,
+        "total_obitos": 1.0,
+        "taxa_mortalidade": 1.0
+      },
+      {
+        "cid_principal": "M532",
+        "total_internacoes": 1,
+        "total_obitos": 1.0,
+        "taxa_mortalidade": 1.0
+      },
+      {
+        "cid_principal": "M001",
+        "total_internacoes": 4,
+        "total_obitos": 1.0,
+        "taxa_mortalidade": 0.25
+      },
+      {
+        "cid_principal": "M768",
+        "total_internacoes": 5,
+        "total_obitos": 1.0,
+        "taxa_mortalidade": 0.2
+      },
+      {
+        "cid_principal": "M869",
+        "total_internacoes": 94,
+        "total_obitos": 5.0,
+        "taxa_mortalidade": 0.0531914894
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "T203",
+        "total_internacoes": 44,
+        "total_obitos": 26.0,
+        "taxa_mortalidade_pct": 59.09
+      },
+      {
+        "cid_principal": "S367",
+        "total_internacoes": 91,
+        "total_obitos": 24.0,
+        "taxa_mortalidade_pct": 26.37
+      },
+      {
+        "cid_principal": "S065",
+        "total_internacoes": 295,
+        "total_obitos": 74.0,
+        "taxa_mortalidade_pct": 25.08
+      },
+      {
+        "cid_principal": "S360",
+        "total_internacoes": 65,
+        "total_obitos": 14.0,
+        "taxa_mortalidade_pct": 21.54
+      },
+      {
+        "cid_principal": "S068",
+        "total_internacoes": 55,
+        "total_obitos": 11.0,
+        "taxa_mortalidade_pct": 20.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7872,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q20",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 CIDs ambulatoriais ortopédicos por volume de produção em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M216', 'volume_producao': 1963} exp={'cid_principal': 'S720', 'total_procedimentos': 5570}",
+    "sql": "SELECT \n    cid_principal, \n    COUNT(*) AS volume_producao\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    volume_producao DESC\nLIMIT 10;",
+    "llm_result": [
+      {
+        "cid_principal": "M216",
+        "volume_producao": 1963
+      },
+      {
+        "cid_principal": "M199",
+        "volume_producao": 350
+      },
+      {
+        "cid_principal": "M214",
+        "volume_producao": 305
+      },
+      {
+        "cid_principal": "M213",
+        "volume_producao": 174
+      },
+      {
+        "cid_principal": "M866",
+        "volume_producao": 40
+      },
+      {
+        "cid_principal": "M210",
+        "volume_producao": 29
+      },
+      {
+        "cid_principal": "M418",
+        "volume_producao": 28
+      },
+      {
+        "cid_principal": "M412",
+        "volume_producao": 25
+      },
+      {
+        "cid_principal": "M211",
+        "volume_producao": 23
+      },
+      {
+        "cid_principal": "M545",
+        "volume_producao": 21
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_procedimentos": 5570
+      },
+      {
+        "cid_principal": "S369",
+        "total_procedimentos": 5026
+      },
+      {
+        "cid_principal": "S729",
+        "total_procedimentos": 2692
+      },
+      {
+        "cid_principal": "S781",
+        "total_procedimentos": 2331
+      },
+      {
+        "cid_principal": "M216",
+        "total_procedimentos": 1963
+      },
+      {
+        "cid_principal": "S881",
+        "total_procedimentos": 1137
+      },
+      {
+        "cid_principal": "S723",
+        "total_procedimentos": 1048
+      },
+      {
+        "cid_principal": "S727",
+        "total_procedimentos": 1001
+      },
+      {
+        "cid_principal": "S880",
+        "total_procedimentos": 786
+      },
+      {
+        "cid_principal": "S889",
+        "total_procedimentos": 704
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5398,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q21",
+    "cat": "Epidemiológica Complexa",
+    "question": "Proporção de internações ortopédicas por sexo em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'sexo_paciente': 'M', 'total_internacoes': 17612, 'pct': 62.8}",
+    "sql": "SELECT \n    sexo_paciente, \n    COUNT(DISTINCT n_aih) AS internacoes_count, \n    (COUNT(DISTINCT n_aih) * 1.0 / SUM(COUNT(DISTINCT n_aih)) OVER ()) AS proporcao\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    sexo_paciente;",
+    "llm_result": [
+      {
+        "sexo_paciente": "F",
+        "internacoes_count": 880,
+        "proporcao": 0.3784946237
+      },
+      {
+        "sexo_paciente": "M",
+        "internacoes_count": 1445,
+        "proporcao": 0.6215053763
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "M",
+        "total_internacoes": 17612,
+        "pct": 62.8
+      },
+      {
+        "sexo_paciente": "F",
+        "total_internacoes": 10444,
+        "pct": 37.2
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7384,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q22",
+    "cat": "Epidemiológica Complexa",
+    "question": "Número de internações por fratura de fêmur (S72) em idosos (60+) comparado ao total em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'num_internacoes_fratura_femur': 6628, 'num_internacoes_total': 69787, 'percentual': 9.4974708557} exp={'total_s72': 9945, 's72_idosos': 6628.0, 'pct_idosos': 66.6}",
+    "sql": "WITH fratura_femur AS (\n    SELECT COUNT(DISTINCT n_aih) AS num_internacoes\n    FROM processed\n    JOIN enriched e ON processed.row_id = e.row_id\n    WHERE sistema = 'SIH'\n      AND cid_principal LIKE 'S72%'\n      AND idade_paciente >= 60\n      AND uf_origem = 'RJ'\n      AND ano_cmpt = 2022\n),\ntotal_internacoes AS (\n    SELECT COUNT(DISTINCT n_aih) AS num_internacoes\n    FROM processed\n    WHERE sistema = 'SIH'\n      AND uf_origem = 'RJ'\n      AND ano_cmpt = 2022\n)\nSELECT \n    ff.num_internacoes AS num_internacoes_fratura_femur,\n    ti.num_internacoes AS num_internacoes_total,\n    (ff.num_internacoes::FLOAT / ti.num_internacoes) * 100 AS percentual\nFROM fratura_femur ff\nCROSS JOIN total_internacoes ti;",
+    "llm_result": [
+      {
+        "num_internacoes_fratura_femur": 6628,
+        "num_internacoes_total": 69787,
+        "percentual": 9.4974708557
+      }
+    ],
+    "gold_result": [
+      {
+        "total_s72": 9945,
+        "s72_idosos": 6628.0,
+        "pct_idosos": 66.6
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 11221,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q23",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 CIDs ortopédicos com maior permanência média hospitalar em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M463', 'media_permanencia': 57.5} exp={'cid_principal': 'T203', 'total_internacoes': 44, 'permanencia_media_dias': 30.1}",
+    "sql": "SELECT \n    cid_principal, \n    AVG(dias_perm) AS media_permanencia\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    media_permanencia DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M463",
+        "media_permanencia": 57.5
+      },
+      {
+        "cid_principal": "M321",
+        "media_permanencia": 48.0
+      },
+      {
+        "cid_principal": "M51",
+        "media_permanencia": 40.0
+      },
+      {
+        "cid_principal": "M479",
+        "media_permanencia": 36.0
+      },
+      {
+        "cid_principal": "M873",
+        "media_permanencia": 33.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "T203",
+        "total_internacoes": 44,
+        "permanencia_media_dias": 30.1
+      },
+      {
+        "cid_principal": "M861",
+        "total_internacoes": 182,
+        "permanencia_media_dias": 20.8
+      },
+      {
+        "cid_principal": "T845",
+        "total_internacoes": 53,
+        "permanencia_media_dias": 18.7
+      },
+      {
+        "cid_principal": "M866",
+        "total_internacoes": 120,
+        "permanencia_media_dias": 15.2
+      },
+      {
+        "cid_principal": "T840",
+        "total_internacoes": 46,
+        "permanencia_media_dias": 13.8
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6446,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q24",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 estabelecimentos com maior volume de internação ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_munic_estabelecimento': '330000', 'volume_internacao': 1007} exp={'cnes_estabelecimento': '2290227', 'internacoes': 5043}",
+    "sql": "SELECT \n    cod_munic_estabelecimento, \n    COUNT(DISTINCT n_aih) AS volume_internacao\nFROM \n    processed\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cod_munic_estabelecimento\nORDER BY \n    volume_internacao DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "330000",
+        "volume_internacao": 1007
+      },
+      {
+        "cod_munic_estabelecimento": "330455",
+        "volume_internacao": 574
+      },
+      {
+        "cod_munic_estabelecimento": "330220",
+        "volume_internacao": 145
+      },
+      {
+        "cod_munic_estabelecimento": "330100",
+        "volume_internacao": 125
+      },
+      {
+        "cod_munic_estabelecimento": "330390",
+        "volume_internacao": 96
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2290227",
+        "internacoes": 5043
+      },
+      {
+        "cnes_estabelecimento": "2298031",
+        "internacoes": 2710
+      },
+      {
+        "cnes_estabelecimento": "2270234",
+        "internacoes": 1717
+      },
+      {
+        "cnes_estabelecimento": "5478898",
+        "internacoes": 1583
+      },
+      {
+        "cnes_estabelecimento": "0012521",
+        "internacoes": 1156
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6001,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q25",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por raça/cor do paciente em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=5 exp=6",
+    "sql": "SELECT \n    raca_cor_paciente,\n    COUNT(DISTINCT n_aih) AS internacoes_count\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    raca_cor_paciente;",
+    "llm_result": [
+      {
+        "raca_cor_paciente": "04",
+        "internacoes_count": 13
+      },
+      {
+        "raca_cor_paciente": "99",
+        "internacoes_count": 275
+      },
+      {
+        "raca_cor_paciente": "01",
+        "internacoes_count": 729
+      },
+      {
+        "raca_cor_paciente": "02",
+        "internacoes_count": 299
+      },
+      {
+        "raca_cor_paciente": "03",
+        "internacoes_count": 1009
+      }
+    ],
+    "gold_result": [
+      {
+        "raca_cor_paciente": "03",
+        "total": 11890,
+        "pct": 42.4
+      },
+      {
+        "raca_cor_paciente": "99",
+        "total": 6657,
+        "pct": 23.7
+      },
+      {
+        "raca_cor_paciente": "01",
+        "total": 6021,
+        "pct": 21.5
+      },
+      {
+        "raca_cor_paciente": "02",
+        "total": 3401,
+        "pct": 12.1
+      },
+      {
+        "raca_cor_paciente": "04",
+        "total": 84,
+        "pct": 0.3
+      },
+      {
+        "raca_cor_paciente": "05",
+        "total": 3,
+        "pct": 0.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6090,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q26",
+    "cat": "Epidemiológica Complexa",
+    "question": "CIDs ortopédicos com maior número de dias totais de internação em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=1 exp=10",
+    "sql": "SELECT \n    cid_principal, \n    SUM(qt_diarias) AS total_dias_internacao\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    total_dias_internacao DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "cid_principal": "M861",
+        "total_dias_internacao": 3741.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 3502,
+        "total_dias_internacao": 36557.0
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 2823,
+        "total_dias_internacao": 19569.0
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 1697,
+        "total_dias_internacao": 17625.0
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 1243,
+        "total_dias_internacao": 10832.0
+      },
+      {
+        "cid_principal": "S722",
+        "internacoes": 757,
+        "total_dias_internacao": 8453.0
+      },
+      {
+        "cid_principal": "S728",
+        "internacoes": 886,
+        "total_dias_internacao": 7143.0
+      },
+      {
+        "cid_principal": "S822",
+        "internacoes": 793,
+        "total_dias_internacao": 5714.0
+      },
+      {
+        "cid_principal": "S729",
+        "internacoes": 587,
+        "total_dias_internacao": 5058.0
+      },
+      {
+        "cid_principal": "S724",
+        "internacoes": 495,
+        "total_dias_internacao": 4796.0
+      },
+      {
+        "cid_principal": "S727",
+        "internacoes": 463,
+        "total_dias_internacao": 3819.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6631,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q27",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 procedimentos ambulatoriais ortopédicos mais realizados em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=5",
+    "sql": "SELECT \n    cod_procedimento,\n    COUNT(*) AS quantidade_realizada\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    cod_procedimento\nORDER BY \n    quantidade_realizada DESC\nLIMIT 5;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "cod_procedimento": "0302050019",
+        "total_procedimentos": 15646
+      },
+      {
+        "cod_procedimento": "0701050020",
+        "total_procedimentos": 3026
+      },
+      {
+        "cod_procedimento": "0701060018",
+        "total_procedimentos": 1900
+      },
+      {
+        "cod_procedimento": "0701010053",
+        "total_procedimentos": 1093
+      },
+      {
+        "cod_procedimento": "0701050047",
+        "total_procedimentos": 799
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5016,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q28",
+    "cat": "Epidemiológica Complexa",
+    "question": "Proporção de internações ortopédicas com paciente de outro município em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'proporcao': 0.6253763441} exp={'total_internacoes': 28056, 'deslocamento_intermunicipal': 14192.0, 'pct_deslocamento': 50.6}",
+    "sql": "SELECT \n    SUM(CASE WHEN cod_munic_residencia != cod_munic_estabelecimento THEN 1 ELSE 0 END) * 1.0 / COUNT(DISTINCT n_aih) AS proporcao\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "proporcao": 0.6253763441
+      }
+    ],
+    "gold_result": [
+      {
+        "total_internacoes": 28056,
+        "deslocamento_intermunicipal": 14192.0,
+        "pct_deslocamento": 50.6
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6635,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q29",
+    "cat": "Epidemiológica Complexa",
+    "question": "Comparativo de volume mensal SIA vs SIH ortopédico em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'sistema': 'SIA', 'volume': 208} exp={'mes_cmpt': 1, 'sistema': 'SIA', 'total': 1647}",
+    "sql": "SELECT \n    mes_cmpt,\n    sistema,\n    COUNT(*) AS volume\nFROM \n    processed\nWHERE \n    uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt, sistema\nORDER BY \n    mes_cmpt, sistema;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIA",
+        "volume": 208
+      },
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIH",
+        "volume": 121
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIA",
+        "volume": 234
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIH",
+        "volume": 141
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIA",
+        "volume": 314
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIH",
+        "volume": 127
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIA",
+        "volume": 199
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIH",
+        "volume": 111
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIA",
+        "volume": 258
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIH",
+        "volume": 172
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIA",
+        "volume": 291
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIH",
+        "volume": 216
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIA",
+        "volume": 291
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIH",
+        "volume": 205
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIA",
+        "volume": 304
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIH",
+        "volume": 236
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIA",
+        "volume": 236
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIH",
+        "volume": 229
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIA",
+        "volume": 313
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIH",
+        "volume": 273
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIA",
+        "volume": 259
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIH",
+        "volume": 227
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIA",
+        "volume": 279
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIH",
+        "volume": 279
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIA",
+        "total": 1647
+      },
+      {
+        "mes_cmpt": 1,
+        "sistema": "SIH",
+        "total": 1998
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIA",
+        "total": 1674
+      },
+      {
+        "mes_cmpt": 2,
+        "sistema": "SIH",
+        "total": 1959
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIA",
+        "total": 2078
+      },
+      {
+        "mes_cmpt": 3,
+        "sistema": "SIH",
+        "total": 1781
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIA",
+        "total": 1710
+      },
+      {
+        "mes_cmpt": 4,
+        "sistema": "SIH",
+        "total": 2034
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIA",
+        "total": 2401
+      },
+      {
+        "mes_cmpt": 5,
+        "sistema": "SIH",
+        "total": 1844
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIA",
+        "total": 1921
+      },
+      {
+        "mes_cmpt": 6,
+        "sistema": "SIH",
+        "total": 2601
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIA",
+        "total": 3009
+      },
+      {
+        "mes_cmpt": 7,
+        "sistema": "SIH",
+        "total": 2502
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIA",
+        "total": 3490
+      },
+      {
+        "mes_cmpt": 8,
+        "sistema": "SIH",
+        "total": 2657
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIA",
+        "total": 2642
+      },
+      {
+        "mes_cmpt": 9,
+        "sistema": "SIH",
+        "total": 2427
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIA",
+        "total": 2409
+      },
+      {
+        "mes_cmpt": 10,
+        "sistema": "SIH",
+        "total": 2853
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIA",
+        "total": 1921
+      },
+      {
+        "mes_cmpt": 11,
+        "sistema": "SIH",
+        "total": 2567
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIA",
+        "total": 2299
+      },
+      {
+        "mes_cmpt": 12,
+        "sistema": "SIH",
+        "total": 2844
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4921,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q30",
+    "cat": "Epidemiológica Complexa",
+    "question": "Idade média dos pacientes internados por fratura de fêmur (S72) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'idade_media': 63.3186525892} exp={'idade_media': 63.3, 'idade_minima': 0.0, 'idade_maxima': 99.0}",
+    "sql": "SELECT AVG(idade_paciente) AS idade_media\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%';",
+    "llm_result": [
+      {
+        "idade_media": 63.3186525892
+      }
+    ],
+    "gold_result": [
+      {
+        "idade_media": 63.3,
+        "idade_minima": 0.0,
+        "idade_maxima": 99.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4545,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q31",
+    "cat": "Financeira",
+    "question": "Custo total de todas as internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=8405202.74 exp=70893354.22",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS total_custo\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "total_custo": 8405202.74
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 70893354.22
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4375,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q32",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=3596.5779803166 exp=2525.77",
+    "sql": "SELECT \n    AVG(COALESCE(custo_total, 0)) AS custo_medio_por_internacao\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_medio_por_internacao": 3596.5779803166
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_medio": 2525.77
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4780,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q33",
+    "cat": "Financeira",
+    "question": "Custo total de internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=26337280.380000003 exp=26337280.38",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS custo_total_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%';",
+    "llm_result": [
+      {
+        "custo_total_internacoes": 26337280.380000003
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 26337280.38
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4050,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q34",
+    "cat": "Financeira",
+    "question": "Top 5 CIDs ortopédicos com maior custo total de internação em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M511', 'total_custo': 1137816.1400000001} exp={'cid_principal': 'S720', 'internacoes': 3502, 'custo_total': 10821184.25}",
+    "sql": "SELECT \n    cid_principal, \n    SUM(custo_total) AS total_custo\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    total_custo DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M511",
+        "total_custo": 1137816.1400000001
+      },
+      {
+        "cid_principal": "M411",
+        "total_custo": 1059415.26
+      },
+      {
+        "cid_principal": "M500",
+        "total_custo": 337336.92
+      },
+      {
+        "cid_principal": "M412",
+        "total_custo": 306283.05
+      },
+      {
+        "cid_principal": "M861",
+        "total_custo": 282581.06
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "internacoes": 3502,
+        "custo_total": 10821184.25
+      },
+      {
+        "cid_principal": "S721",
+        "internacoes": 1697,
+        "custo_total": 4550070.08
+      },
+      {
+        "cid_principal": "T813",
+        "internacoes": 2823,
+        "custo_total": 4177324.45
+      },
+      {
+        "cid_principal": "S723",
+        "internacoes": 1243,
+        "custo_total": 2940866.06
+      },
+      {
+        "cid_principal": "S822",
+        "internacoes": 793,
+        "custo_total": 2284002.03
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6354,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q35",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas com uso de OPME (val_ortp > 0) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'custo_total_ortopedia': None} exp={'internacoes_com_opme': 0, 'custo_total_opme': None}",
+    "sql": "SELECT SUM(COALESCE(val_ortp, 0)) AS custo_total_ortopedia\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND val_ortp > 0\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_total_ortopedia": null
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_com_opme": 0,
+        "custo_total_opme": null
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4889,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q36",
+    "cat": "Financeira",
+    "question": "Valor total de honorários profissionais (val_sp) em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1467550.33 exp=13402482.02",
+    "sql": "SELECT SUM(COALESCE(val_sp, 0)) AS total_honorarios\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "total_honorarios": 1467550.33
+      }
+    ],
+    "gold_result": [
+      {
+        "total_honorarios_profissionais": 13402482.02
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4364,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q37",
+    "cat": "Financeira",
+    "question": "Custo médio por dia de internação ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1065.5450283921 exp=321.98",
+    "sql": "SELECT \n    AVG(custo_total / qt_diarias) AS custo_medio_por_dia\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n    AND qt_diarias > 0;",
+    "llm_result": [
+      {
+        "custo_medio_por_dia": 1065.5450283921
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_por_dia": 321.98
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5965,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q38",
+    "cat": "Financeira",
+    "question": "Top 5 estabelecimentos com maior custo total de internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_munic_estabelecimento': '330000', 'total_custo': 3740518.55} exp={'cnes_estabelecimento': '2290227', 'internacoes': 5043, 'custo_total': 9418220.5}",
+    "sql": "SELECT \n    cod_munic_estabelecimento,\n    SUM(custo_total) AS total_custo\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cod_munic_estabelecimento\nORDER BY \n    total_custo DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "330000",
+        "total_custo": 3740518.55
+      },
+      {
+        "cod_munic_estabelecimento": "330455",
+        "total_custo": 2063916.1199999996
+      },
+      {
+        "cod_munic_estabelecimento": "330220",
+        "total_custo": 1114251.65
+      },
+      {
+        "cod_munic_estabelecimento": "330390",
+        "total_custo": 282152.51
+      },
+      {
+        "cod_munic_estabelecimento": "330100",
+        "total_custo": 278640.36
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2290227",
+        "internacoes": 5043,
+        "custo_total": 9418220.5
+      },
+      {
+        "cnes_estabelecimento": "2298031",
+        "internacoes": 2710,
+        "custo_total": 7695080.67
+      },
+      {
+        "cnes_estabelecimento": "2270234",
+        "internacoes": 1717,
+        "custo_total": 5114853.92
+      },
+      {
+        "cnes_estabelecimento": "2278855",
+        "internacoes": 832,
+        "custo_total": 4001446.6
+      },
+      {
+        "cnes_estabelecimento": "0012521",
+        "internacoes": 1156,
+        "custo_total": 3202913.54
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6723,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q39",
+    "cat": "Financeira",
+    "question": "Custo total de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=867233.2599999987 exp=4149578.04",
+    "sql": "SELECT \n    SUM(COALESCE(custo_total, 0)) AS custo_total_ortopédico\nFROM \n    processed\nWHERE \n    sistema = 'SIA'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')",
+    "llm_result": [
+      {
+        "custo_total_ortopédico": 867233.2599999987
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 4149578.04
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4789,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q40",
+    "cat": "Financeira",
+    "question": "Proporção custo serviço hospitalar vs honorários em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'total_val_sh': 6937652.41, 'total_val_sp': 1467550.33, 'proporcao_val_sh_val_sp': 4.727369323} exp={'custo_servico_hospitalar': 57490872.2, 'honorarios_profissionais': 13402482.02, 'pct_hospitalar': 81.1}",
+    "sql": "SELECT \n    COALESCE(SUM(val_sh), 0) AS total_val_sh,\n    COALESCE(SUM(val_sp), 0) AS total_val_sp,\n    (COALESCE(SUM(val_sh), 0) / NULLIF(COALESCE(SUM(val_sp), 0), 0)) AS proporcao_val_sh_val_sp\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "total_val_sh": 6937652.41,
+        "total_val_sp": 1467550.33,
+        "proporcao_val_sh_val_sp": 4.727369323
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_servico_hospitalar": 57490872.2,
+        "honorarios_profissionais": 13402482.02,
+        "pct_hospitalar": 81.1
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6777,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q41",
+    "cat": "Temporal/Comparativa",
+    "question": "Distribuição mensal de internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'internacoes_ortopedicas': 121} exp={'mes_cmpt': 1, 'total_internacoes': 1998}",
+    "sql": "SELECT \n    mes_cmpt, \n    COUNT(DISTINCT n_aih) AS internacoes_ortopedicas\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes_ortopedicas": 121
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes_ortopedicas": 141
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes_ortopedicas": 127
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes_ortopedicas": 111
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes_ortopedicas": 172
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes_ortopedicas": 216
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes_ortopedicas": 205
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes_ortopedicas": 236
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes_ortopedicas": 229
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes_ortopedicas": 273
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes_ortopedicas": 226
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes_ortopedicas": 279
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_internacoes": 1998
+      },
+      {
+        "mes_cmpt": 2,
+        "total_internacoes": 1959
+      },
+      {
+        "mes_cmpt": 3,
+        "total_internacoes": 1781
+      },
+      {
+        "mes_cmpt": 4,
+        "total_internacoes": 2034
+      },
+      {
+        "mes_cmpt": 5,
+        "total_internacoes": 1844
+      },
+      {
+        "mes_cmpt": 6,
+        "total_internacoes": 2601
+      },
+      {
+        "mes_cmpt": 7,
+        "total_internacoes": 2502
+      },
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 2657
+      },
+      {
+        "mes_cmpt": 9,
+        "total_internacoes": 2427
+      },
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 2853
+      },
+      {
+        "mes_cmpt": 11,
+        "total_internacoes": 2567
+      },
+      {
+        "mes_cmpt": 12,
+        "total_internacoes": 2844
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6509,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q42",
+    "cat": "Temporal/Comparativa",
+    "question": "Distribuição mensal de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=12",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(*) AS quantidade_procedimentos\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "procedimentos": 1647
+      },
+      {
+        "mes_cmpt": 2,
+        "procedimentos": 1674
+      },
+      {
+        "mes_cmpt": 3,
+        "procedimentos": 2078
+      },
+      {
+        "mes_cmpt": 4,
+        "procedimentos": 1710
+      },
+      {
+        "mes_cmpt": 5,
+        "procedimentos": 2401
+      },
+      {
+        "mes_cmpt": 6,
+        "procedimentos": 1921
+      },
+      {
+        "mes_cmpt": 7,
+        "procedimentos": 3009
+      },
+      {
+        "mes_cmpt": 8,
+        "procedimentos": 3490
+      },
+      {
+        "mes_cmpt": 9,
+        "procedimentos": 2642
+      },
+      {
+        "mes_cmpt": 10,
+        "procedimentos": 2409
+      },
+      {
+        "mes_cmpt": 11,
+        "procedimentos": 1921
+      },
+      {
+        "mes_cmpt": 12,
+        "procedimentos": 2299
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5451,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q43",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior número de internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=10 exp=10",
+    "sql": "SELECT mes_cmpt, COUNT(DISTINCT n_aih) AS num_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY num_internacoes DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 10,
+        "num_internacoes": 941
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 941
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5541,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q44",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal do custo total de internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'custo_total': 515324.59} exp={'mes_cmpt': 1, 'custo_total': 4528720.12}",
+    "sql": "SELECT \n    mes_cmpt,\n    SUM(COALESCE(custo_total, 0)) AS custo_total\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 515324.59
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 361344.2299999999
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 431715.06
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 421810.5099999999
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 524979.77
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 975967.7600000007
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 683259.4799999999
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 729123.4999999994
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 902004.5800000004
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 1012039.8699999992
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 835457.1599999996
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 1012176.2300000003
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 4528720.12
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 4220345.99
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 4421241.72
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 4977036.46
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 4826770.48
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 6860376.5
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 5959520.47
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 6966100.36
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 6489344.92
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 7436999.19
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 7031604.58
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 7175293.43
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5422,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q45",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por trauma (S00-T98) vs doenças musculoesqueléticas (M00-M99) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=24",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT CASE WHEN icd_group = 'S00-T98' THEN n_aih END) AS trauma_count,\n    COUNT(DISTINCT CASE WHEN icd_group = 'M00-M99' THEN n_aih END) AS musculoesqueletico_count\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "trauma_count": 1877,
+        "musculoesqueletico_count": 121
+      },
+      {
+        "mes_cmpt": 2,
+        "trauma_count": 1818,
+        "musculoesqueletico_count": 141
+      },
+      {
+        "mes_cmpt": 3,
+        "trauma_count": 1654,
+        "musculoesqueletico_count": 127
+      },
+      {
+        "mes_cmpt": 4,
+        "trauma_count": 1923,
+        "musculoesqueletico_count": 111
+      },
+      {
+        "mes_cmpt": 5,
+        "trauma_count": 1672,
+        "musculoesqueletico_count": 172
+      },
+      {
+        "mes_cmpt": 6,
+        "trauma_count": 2385,
+        "musculoesqueletico_count": 216
+      },
+      {
+        "mes_cmpt": 7,
+        "trauma_count": 2297,
+        "musculoesqueletico_count": 205
+      },
+      {
+        "mes_cmpt": 8,
+        "trauma_count": 2421,
+        "musculoesqueletico_count": 236
+      },
+      {
+        "mes_cmpt": 9,
+        "trauma_count": 2198,
+        "musculoesqueletico_count": 229
+      },
+      {
+        "mes_cmpt": 10,
+        "trauma_count": 2580,
+        "musculoesqueletico_count": 273
+      },
+      {
+        "mes_cmpt": 11,
+        "trauma_count": 2341,
+        "musculoesqueletico_count": 226
+      },
+      {
+        "mes_cmpt": 12,
+        "trauma_count": 2565,
+        "musculoesqueletico_count": 279
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "icd_group": "M00-M99",
+        "internacoes": 121
+      },
+      {
+        "mes_cmpt": 1,
+        "icd_group": "S00-T98",
+        "internacoes": 1877
+      },
+      {
+        "mes_cmpt": 2,
+        "icd_group": "M00-M99",
+        "internacoes": 141
+      },
+      {
+        "mes_cmpt": 2,
+        "icd_group": "S00-T98",
+        "internacoes": 1818
+      },
+      {
+        "mes_cmpt": 3,
+        "icd_group": "M00-M99",
+        "internacoes": 127
+      },
+      {
+        "mes_cmpt": 3,
+        "icd_group": "S00-T98",
+        "internacoes": 1654
+      },
+      {
+        "mes_cmpt": 4,
+        "icd_group": "M00-M99",
+        "internacoes": 111
+      },
+      {
+        "mes_cmpt": 4,
+        "icd_group": "S00-T98",
+        "internacoes": 1923
+      },
+      {
+        "mes_cmpt": 5,
+        "icd_group": "M00-M99",
+        "internacoes": 172
+      },
+      {
+        "mes_cmpt": 5,
+        "icd_group": "S00-T98",
+        "internacoes": 1672
+      },
+      {
+        "mes_cmpt": 6,
+        "icd_group": "M00-M99",
+        "internacoes": 216
+      },
+      {
+        "mes_cmpt": 6,
+        "icd_group": "S00-T98",
+        "internacoes": 2385
+      },
+      {
+        "mes_cmpt": 7,
+        "icd_group": "M00-M99",
+        "internacoes": 205
+      },
+      {
+        "mes_cmpt": 7,
+        "icd_group": "S00-T98",
+        "internacoes": 2297
+      },
+      {
+        "mes_cmpt": 8,
+        "icd_group": "M00-M99",
+        "internacoes": 236
+      },
+      {
+        "mes_cmpt": 8,
+        "icd_group": "S00-T98",
+        "internacoes": 2421
+      },
+      {
+        "mes_cmpt": 9,
+        "icd_group": "M00-M99",
+        "internacoes": 229
+      },
+      {
+        "mes_cmpt": 9,
+        "icd_group": "S00-T98",
+        "internacoes": 2198
+      },
+      {
+        "mes_cmpt": 10,
+        "icd_group": "M00-M99",
+        "internacoes": 273
+      },
+      {
+        "mes_cmpt": 10,
+        "icd_group": "S00-T98",
+        "internacoes": 2580
+      },
+      {
+        "mes_cmpt": 11,
+        "icd_group": "M00-M99",
+        "internacoes": 226
+      },
+      {
+        "mes_cmpt": 11,
+        "icd_group": "S00-T98",
+        "internacoes": 2341
+      },
+      {
+        "mes_cmpt": 12,
+        "icd_group": "M00-M99",
+        "internacoes": 279
+      },
+      {
+        "mes_cmpt": 12,
+        "icd_group": "S00-T98",
+        "internacoes": 2565
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7331,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q46",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal de óbitos em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=11 exp=12",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS obitos\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND morte = 1\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "obitos": 2
+      },
+      {
+        "mes_cmpt": 2,
+        "obitos": 1
+      },
+      {
+        "mes_cmpt": 3,
+        "obitos": 2
+      },
+      {
+        "mes_cmpt": 5,
+        "obitos": 2
+      },
+      {
+        "mes_cmpt": 6,
+        "obitos": 3
+      },
+      {
+        "mes_cmpt": 7,
+        "obitos": 1
+      },
+      {
+        "mes_cmpt": 8,
+        "obitos": 1
+      },
+      {
+        "mes_cmpt": 9,
+        "obitos": 3
+      },
+      {
+        "mes_cmpt": 10,
+        "obitos": 1
+      },
+      {
+        "mes_cmpt": 11,
+        "obitos": 4
+      },
+      {
+        "mes_cmpt": 12,
+        "obitos": 1
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_obitos": 104
+      },
+      {
+        "mes_cmpt": 2,
+        "total_obitos": 72
+      },
+      {
+        "mes_cmpt": 3,
+        "total_obitos": 84
+      },
+      {
+        "mes_cmpt": 4,
+        "total_obitos": 77
+      },
+      {
+        "mes_cmpt": 5,
+        "total_obitos": 88
+      },
+      {
+        "mes_cmpt": 6,
+        "total_obitos": 76
+      },
+      {
+        "mes_cmpt": 7,
+        "total_obitos": 81
+      },
+      {
+        "mes_cmpt": 8,
+        "total_obitos": 81
+      },
+      {
+        "mes_cmpt": 9,
+        "total_obitos": 96
+      },
+      {
+        "mes_cmpt": 10,
+        "total_obitos": 66
+      },
+      {
+        "mes_cmpt": 11,
+        "total_obitos": 79
+      },
+      {
+        "mes_cmpt": 12,
+        "total_obitos": 61
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6524,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q47",
+    "cat": "Temporal/Comparativa",
+    "question": "Permanência média por trimestre nas internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=4",
+    "sql": "SELECT \n    AVG(dias_perm) AS media_permanencia,\n    mes_cmpt\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "media_permanencia": 10.4297520661,
+        "mes_cmpt": 1
+      },
+      {
+        "media_permanencia": 8.4468085106,
+        "mes_cmpt": 2
+      },
+      {
+        "media_permanencia": 11.5039370079,
+        "mes_cmpt": 3
+      },
+      {
+        "media_permanencia": 10.0,
+        "mes_cmpt": 4
+      },
+      {
+        "media_permanencia": 9.8081395349,
+        "mes_cmpt": 5
+      },
+      {
+        "media_permanencia": 9.6018518519,
+        "mes_cmpt": 6
+      },
+      {
+        "media_permanencia": 10.0146341463,
+        "mes_cmpt": 7
+      },
+      {
+        "media_permanencia": 7.7881355932,
+        "mes_cmpt": 8
+      },
+      {
+        "media_permanencia": 7.7510917031,
+        "mes_cmpt": 9
+      },
+      {
+        "media_permanencia": 7.8644688645,
+        "mes_cmpt": 10
+      },
+      {
+        "media_permanencia": 9.0881057269,
+        "mes_cmpt": 11
+      },
+      {
+        "media_permanencia": 6.1720430108,
+        "mes_cmpt": 12
+      }
+    ],
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "permanencia_media_dias": 8.8
+      },
+      {
+        "trimestre": "Q2",
+        "permanencia_media_dias": 7.9
+      },
+      {
+        "trimestre": "Q3",
+        "permanencia_media_dias": 7.4
+      },
+      {
+        "trimestre": "Q4",
+        "permanencia_media_dias": 7.5
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6156,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q48",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior custo médio por internação ortopédica em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=6 exp=11",
+    "sql": "SELECT \n    mes_cmpt, \n    AVG(custo_total) AS custo_medio\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    custo_medio DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 6,
+        "custo_medio": 4518.3692592593
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 11,
+        "custo_medio": 2739.23
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6519,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q49",
+    "cat": "Temporal/Comparativa",
+    "question": "Sazonalidade mensal de fraturas de fêmur (S72) em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(*) AS quantidade_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND cid_principal LIKE 'S72%'\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "quantidade_internacoes": 770
+      },
+      {
+        "mes_cmpt": 2,
+        "quantidade_internacoes": 685
+      },
+      {
+        "mes_cmpt": 3,
+        "quantidade_internacoes": 705
+      },
+      {
+        "mes_cmpt": 4,
+        "quantidade_internacoes": 774
+      },
+      {
+        "mes_cmpt": 5,
+        "quantidade_internacoes": 716
+      },
+      {
+        "mes_cmpt": 6,
+        "quantidade_internacoes": 907
+      },
+      {
+        "mes_cmpt": 7,
+        "quantidade_internacoes": 922
+      },
+      {
+        "mes_cmpt": 8,
+        "quantidade_internacoes": 888
+      },
+      {
+        "mes_cmpt": 9,
+        "quantidade_internacoes": 897
+      },
+      {
+        "mes_cmpt": 10,
+        "quantidade_internacoes": 941
+      },
+      {
+        "mes_cmpt": 11,
+        "quantidade_internacoes": 868
+      },
+      {
+        "mes_cmpt": 12,
+        "quantidade_internacoes": 872
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_fraturas": 770
+      },
+      {
+        "mes_cmpt": 2,
+        "total_fraturas": 685
+      },
+      {
+        "mes_cmpt": 3,
+        "total_fraturas": 705
+      },
+      {
+        "mes_cmpt": 4,
+        "total_fraturas": 774
+      },
+      {
+        "mes_cmpt": 5,
+        "total_fraturas": 716
+      },
+      {
+        "mes_cmpt": 6,
+        "total_fraturas": 907
+      },
+      {
+        "mes_cmpt": 7,
+        "total_fraturas": 922
+      },
+      {
+        "mes_cmpt": 8,
+        "total_fraturas": 888
+      },
+      {
+        "mes_cmpt": 9,
+        "total_fraturas": 897
+      },
+      {
+        "mes_cmpt": 10,
+        "total_fraturas": 941
+      },
+      {
+        "mes_cmpt": 11,
+        "total_fraturas": 868
+      },
+      {
+        "mes_cmpt": 12,
+        "total_fraturas": 872
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5548,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q50",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações ortopédicas de idosos (60 anos ou mais) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'volume_internacoes': 26} exp={'mes_cmpt': 1, 'total_internacoes': 731}",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND idade_paciente >= 60\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "volume_internacoes": 26
+      },
+      {
+        "mes_cmpt": 2,
+        "volume_internacoes": 36
+      },
+      {
+        "mes_cmpt": 3,
+        "volume_internacoes": 32
+      },
+      {
+        "mes_cmpt": 4,
+        "volume_internacoes": 24
+      },
+      {
+        "mes_cmpt": 5,
+        "volume_internacoes": 47
+      },
+      {
+        "mes_cmpt": 6,
+        "volume_internacoes": 43
+      },
+      {
+        "mes_cmpt": 7,
+        "volume_internacoes": 63
+      },
+      {
+        "mes_cmpt": 8,
+        "volume_internacoes": 61
+      },
+      {
+        "mes_cmpt": 9,
+        "volume_internacoes": 53
+      },
+      {
+        "mes_cmpt": 10,
+        "volume_internacoes": 69
+      },
+      {
+        "mes_cmpt": 11,
+        "volume_internacoes": 49
+      },
+      {
+        "mes_cmpt": 12,
+        "volume_internacoes": 83
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_internacoes": 731
+      },
+      {
+        "mes_cmpt": 2,
+        "total_internacoes": 697
+      },
+      {
+        "mes_cmpt": 3,
+        "total_internacoes": 661
+      },
+      {
+        "mes_cmpt": 4,
+        "total_internacoes": 713
+      },
+      {
+        "mes_cmpt": 5,
+        "total_internacoes": 716
+      },
+      {
+        "mes_cmpt": 6,
+        "total_internacoes": 933
+      },
+      {
+        "mes_cmpt": 7,
+        "total_internacoes": 927
+      },
+      {
+        "mes_cmpt": 8,
+        "total_internacoes": 943
+      },
+      {
+        "mes_cmpt": 9,
+        "total_internacoes": 930
+      },
+      {
+        "mes_cmpt": 10,
+        "total_internacoes": 1043
+      },
+      {
+        "mes_cmpt": 11,
+        "total_internacoes": 868
+      },
+      {
+        "mes_cmpt": 12,
+        "total_internacoes": 987
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6689,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q51",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de fêmur (S72) em mulheres em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=9564 exp=5436",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'F'\n  AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas');",
+    "llm_result": [
+      {
+        "numero_internacoes": 9564
+      }
+    ],
+    "gold_result": [
+      {
+        "total_mulheres_s72": 5436
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5918,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q52",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de fêmur (S72) em homens em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=16167 exp=4509",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'M'\n  AND (cid_principal LIKE 'S72%' OR icd_group = 'S00-T98')\n  AND clinical_interpretacao_clinica = 'lesoes e causas traumaticas';",
+    "llm_result": [
+      {
+        "numero_internacoes": 16167
+      }
+    ],
+    "gold_result": [
+      {
+        "total_homens_s72": 4509
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6348,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q53",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência de 1 dia ou menos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=373 exp=5619",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n  AND dias_perm <= 1;",
+    "llm_result": [
+      {
+        "numero_internacoes": 373
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_curtas": 5619
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5472,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q54",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de procedimentos ambulatoriais ortopédicos realizados em mulheres em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1721 exp=12838",
+    "sql": "SELECT COUNT(*) AS numero_procedimentos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE processed.uf_origem = 'RJ'\n  AND processed.ano_cmpt = 2022\n  AND processed.sexo_paciente = 'F'\n  AND (processed.cid_principal LIKE 'M%' OR processed.icd_group = 'M00-M99')\n  AND processed.sistema = 'SIA';",
+    "llm_result": [
+      {
+        "numero_procedimentos": 1721
+      }
+    ],
+    "gold_result": [
+      {
+        "procedimentos_mulheres": 12838
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5618,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q55",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de procedimentos ambulatoriais ortopédicos realizados por idosos (60 anos ou mais) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=13298",
+    "sql": "SELECT COUNT(*) AS num_procedimentos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE processed.sistema = 'SIA'\n  AND processed.uf_origem = 'RJ'\n  AND processed.ano_cmpt = 2022\n  AND processed.idade_paciente >= 60\n  AND (processed.cid_principal LIKE 'M%' OR processed.icd_group = 'M00-M99')\n  AND processed.cod_procedimento LIKE '0408%';",
+    "llm_result": [
+      {
+        "num_procedimentos": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "procedimentos_idosos": 13298
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5940,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q56",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de tíbia e perônio (S82) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=25731 exp=2991",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S82%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas');",
+    "llm_result": [
+      {
+        "numero_internacoes": 25731
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_fratura_tibia": 2991
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5554,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q57",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de antebraço (S52) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=25731 exp=1447",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S52%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas');",
+    "llm_result": [
+      {
+        "numero_internacoes": 25731
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_fratura_punho": 1447
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5551,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q58",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de ombro e úmero (S42) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=3090 exp=765",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S42%' OR e.clinical_interpretacao_clinica = 'doencas osteomusculares e do tecido conjuntivo');",
+    "llm_result": [
+      {
+        "numero_internacoes": 3090
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_fratura_ombro": 765
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5866,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q59",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas em crianças (menores de 18 anos) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=358 exp=2380",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND idade_paciente < 18\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 358
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_criancas": 2380
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5534,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q60",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência entre 8 e 30 dias em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=604 exp=8235",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND dias_perm BETWEEN 8 AND 30\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 604
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes": 8235
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4735,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q61",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por artrose de quadril e joelho (M16 e M17) em idosos (60 anos ou mais) em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=62 exp=62",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M16%' OR cid_principal LIKE 'M17%')\n  AND idade_paciente >= 60;",
+    "llm_result": [
+      {
+        "numero_internacoes": 62
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_artrose_idosos": 62
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5508,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q62",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por fratura de fêmur (S72) em mulheres com 70 anos ou mais em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=4487 exp=3841",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 70\n  AND sexo_paciente = 'F'\n  AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas');",
+    "llm_result": [
+      {
+        "numero_internacoes": 4487
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_s72_mulheres_idosas": 3841
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6315,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q63",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações ortopédicas com permanência superior a 30 dias em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=131 exp=1010",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\n  AND dias_perm > 30;",
+    "llm_result": [
+      {
+        "numero_internacoes": 131
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_longa_permanencia": 1010
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5502,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q64",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de procedimentos ambulatoriais ortopédicos realizados em homens em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=14363",
+    "sql": "SELECT COUNT(*) AS num_procedimentos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE processed.sistema = 'SIA'\n  AND processed.uf_origem = 'RJ'\n  AND processed.ano_cmpt = 2022\n  AND processed.sexo_paciente = 'M'\n  AND (processed.cid_principal LIKE 'M%' OR processed.icd_group = 'M00-M99')\n  AND processed.cod_procedimento LIKE '0408%';",
+    "llm_result": [
+      {
+        "num_procedimentos": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "procedimentos_homens": 14363
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5891,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q65",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por traumatismos (grupo S00-T98) em idosos (60 anos ou mais) em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=9563 exp=9563",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 60\n  AND (cid_principal LIKE 'S%' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "numero_internacoes": 9563
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_trauma_idosos": 9563
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5533,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q66",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de internações por doenças osteomusculares (grupo M00-M99) em mulheres em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=880 exp=880",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND sexo_paciente = 'F'\n  AND icd_group = 'M00-M99';",
+    "llm_result": [
+      {
+        "numero_internacoes": 880
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes_m_mulheres": 880
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5174,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q67",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de óbitos em internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=944 exp=425",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS num_obitos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas')\n  AND morte = 1;",
+    "llm_result": [
+      {
+        "num_obitos": 944
+      }
+    ],
+    "gold_result": [
+      {
+        "obitos_s72": 425
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5823,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q68",
+    "cat": "Epidemiológica Simples",
+    "question": "Número de municípios distintos com registro de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=0 exp=74",
+    "sql": "SELECT COUNT(DISTINCT cod_munic_residencia) AS num_municipios_distintos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIA'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND cod_procedimento LIKE '0408%'",
+    "llm_result": [
+      {
+        "num_municipios_distintos": 0
+      }
+    ],
+    "gold_result": [
+      {
+        "municipios_sia": 74
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4714,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q69",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 municípios por volume de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=5",
+    "sql": "SELECT \n    cod_munic_residencia,\n    COUNT(*) AS volume_procedimentos\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    cod_munic_residencia\nORDER BY \n    volume_procedimentos DESC\nLIMIT 5;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "330455",
+        "total": 7104
+      },
+      {
+        "cod_munic_estabelecimento": "330330",
+        "total": 3160
+      },
+      {
+        "cod_munic_estabelecimento": "330170",
+        "total": 3139
+      },
+      {
+        "cod_munic_estabelecimento": "330045",
+        "total": 1103
+      },
+      {
+        "cod_munic_estabelecimento": "330285",
+        "total": 1062
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5935,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q70",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de procedimentos ambulatoriais ortopédicos por faixa etária em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=3",
+    "sql": "SELECT \n    FLOOR(idade_paciente / 10) * 10 AS faixa_etaria,\n    COUNT(*) AS quantidade_procedimentos\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    faixa_etaria\nORDER BY \n    faixa_etaria;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 1897
+      },
+      {
+        "faixa_etaria": "18-59",
+        "total": 12006
+      },
+      {
+        "faixa_etaria": "60+",
+        "total": 13298
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6200,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q71",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos com maior número de óbitos em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M869', 'num_obitos': 5} exp={'cid_principal': 'S720', 'total_internacoes': 3502, 'total_obitos': 187.0}",
+    "sql": "SELECT \n    cid_principal, \n    COUNT(*) AS num_obitos\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND morte = 1 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    num_obitos DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M869",
+        "num_obitos": 5
+      },
+      {
+        "cid_principal": "M861",
+        "num_obitos": 4
+      },
+      {
+        "cid_principal": "M866",
+        "num_obitos": 2
+      },
+      {
+        "cid_principal": "M848",
+        "num_obitos": 1
+      },
+      {
+        "cid_principal": "M864",
+        "num_obitos": 1
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total_internacoes": 3502,
+        "total_obitos": 187.0
+      },
+      {
+        "cid_principal": "S721",
+        "total_internacoes": 1697,
+        "total_obitos": 90.0
+      },
+      {
+        "cid_principal": "S065",
+        "total_internacoes": 295,
+        "total_obitos": 74.0
+      },
+      {
+        "cid_principal": "S722",
+        "total_internacoes": 757,
+        "total_obitos": 38.0
+      },
+      {
+        "cid_principal": "S728",
+        "total_internacoes": 886,
+        "total_obitos": 37.0
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6562,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q72",
+    "cat": "Epidemiológica Complexa",
+    "question": "Permanência hospitalar média por sexo em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'sexo_paciente': 'F', 'permanencia_media': 8.6}",
+    "sql": "SELECT \n    sexo_paciente,\n    AVG(dias_perm) AS media_permanencia\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    sexo_paciente;",
+    "llm_result": [
+      {
+        "sexo_paciente": "F",
+        "media_permanencia": 7.742338252
+      },
+      {
+        "sexo_paciente": "M",
+        "media_permanencia": 9.3145604396
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "F",
+        "permanencia_media": 8.6
+      },
+      {
+        "sexo_paciente": "M",
+        "permanencia_media": 7.4
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5840,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q73",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 10 estabelecimentos por volume de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=10",
+    "sql": "SELECT \n    cod_munic_estabelecimento, \n    COUNT(*) AS volume_procedimentos\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    cod_munic_estabelecimento\nORDER BY \n    volume_procedimentos DESC\nLIMIT 10;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2270048",
+        "total": 4745
+      },
+      {
+        "cnes_estabelecimento": "2277700",
+        "total": 2410
+      },
+      {
+        "cnes_estabelecimento": "2272997",
+        "total": 1993
+      },
+      {
+        "cnes_estabelecimento": "2273004",
+        "total": 1076
+      },
+      {
+        "cnes_estabelecimento": "6683444",
+        "total": 1062
+      },
+      {
+        "cnes_estabelecimento": "2270528",
+        "total": 962
+      },
+      {
+        "cnes_estabelecimento": "6908179",
+        "total": 857
+      },
+      {
+        "cnes_estabelecimento": "2295326",
+        "total": 740
+      },
+      {
+        "cnes_estabelecimento": "2281481",
+        "total": 657
+      },
+      {
+        "cnes_estabelecimento": "6007317",
+        "total": 648
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5432,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q74",
+    "cat": "Epidemiológica Complexa",
+    "question": "Taxa de mortalidade por sexo em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'sexo_paciente': 'F', 'total_obitos': 412.0, 'taxa_mortalidade': 3.94}",
+    "sql": "SELECT \n    sexo_paciente,\n    COUNT(DISTINCT CASE WHEN morte = 1 THEN n_aih END) AS mortes,\n    COUNT(DISTINCT n_aih) AS total_internacoes,\n    (COUNT(DISTINCT CASE WHEN morte = 1 THEN n_aih END) * 1.0 / COUNT(DISTINCT n_aih)) AS taxa_mortalidade\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    sexo_paciente;",
+    "llm_result": [
+      {
+        "sexo_paciente": "M",
+        "mortes": 9,
+        "total_internacoes": 1445,
+        "taxa_mortalidade": 0.0062283737
+      },
+      {
+        "sexo_paciente": "F",
+        "mortes": 12,
+        "total_internacoes": 880,
+        "taxa_mortalidade": 0.0136363636
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "F",
+        "total_obitos": 412.0,
+        "taxa_mortalidade": 3.94
+      },
+      {
+        "sexo_paciente": "M",
+        "total_obitos": 553.0,
+        "taxa_mortalidade": 3.14
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 8388,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q75",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por grupo diagnóstico (M e S) e faixa etária em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=8 exp=6",
+    "sql": "SELECT \n    icd_group,\n    CASE \n        WHEN idade_paciente < 18 THEN '0-17'\n        WHEN idade_paciente < 35 THEN '18-34'\n        WHEN idade_paciente < 60 THEN '35-59'\n        ELSE '60+'\n    END AS faixa_etaria,\n    COUNT(DISTINCT n_aih) AS quantidade_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99' OR cid_principal LIKE 'S%' OR icd_group = 'S00-T98')\nGROUP BY \n    icd_group, faixa_etaria\nORDER BY \n    icd_group, faixa_etaria;",
+    "llm_result": [
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "0-17",
+        "quantidade_internacoes": 358
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "18-34",
+        "quantidade_internacoes": 430
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "35-59",
+        "quantidade_internacoes": 951
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "60+",
+        "quantidade_internacoes": 586
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "0-17",
+        "quantidade_internacoes": 2022
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "18-34",
+        "quantidade_internacoes": 6820
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "35-59",
+        "quantidade_internacoes": 7326
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "60+",
+        "quantidade_internacoes": 9563
+      }
+    ],
+    "gold_result": [
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "0-17",
+        "total": 358
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "18-59",
+        "total": 1381
+      },
+      {
+        "icd_group": "M00-M99",
+        "faixa_etaria": "60+",
+        "total": 586
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "0-17",
+        "total": 2022
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "18-59",
+        "total": 14146
+      },
+      {
+        "icd_group": "S00-T98",
+        "faixa_etaria": "60+",
+        "total": 9563
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 10155,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q76",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos de traumatismo com maior permanência média em RJ em 2022 (mínimo 40 internações)",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'T203', 'media_permanencia': 30.0681818182, 'internacoes': 44} exp={'cid_principal': 'T203', 'internacoes': 44, 'permanencia_media': 30.1}",
+    "sql": "SELECT \n    cid_principal,\n    AVG(dias_perm) AS media_permanencia,\n    COUNT(DISTINCT n_aih) AS internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'S%' OR icd_group = 'S00-T98')\nGROUP BY \n    cid_principal\nHAVING \n    COUNT(DISTINCT n_aih) >= 40\nORDER BY \n    media_permanencia DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "T203",
+        "media_permanencia": 30.0681818182,
+        "internacoes": 44
+      },
+      {
+        "cid_principal": "T845",
+        "media_permanencia": 18.7169811321,
+        "internacoes": 53
+      },
+      {
+        "cid_principal": "T840",
+        "media_permanencia": 13.7608695652,
+        "internacoes": 46
+      },
+      {
+        "cid_principal": "T847",
+        "media_permanencia": 12.90625,
+        "internacoes": 64
+      },
+      {
+        "cid_principal": "S365",
+        "media_permanencia": 12.1451612903,
+        "internacoes": 62
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "T203",
+        "internacoes": 44,
+        "permanencia_media": 30.1
+      },
+      {
+        "cid_principal": "T845",
+        "internacoes": 53,
+        "permanencia_media": 18.7
+      },
+      {
+        "cid_principal": "T840",
+        "internacoes": 46,
+        "permanencia_media": 13.8
+      },
+      {
+        "cid_principal": "T847",
+        "internacoes": 64,
+        "permanencia_media": 12.9
+      },
+      {
+        "cid_principal": "S065",
+        "internacoes": 295,
+        "permanencia_media": 12.1
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7596,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q77",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa etária (0-17, 18-39, 40-59, 60-79, 80+) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'faixa_etaria': '0-17', 'total': 2380}",
+    "sql": "SELECT \n  CASE \n    WHEN idade_paciente BETWEEN 0 AND 17 THEN '0-17'\n    WHEN idade_paciente BETWEEN 18 AND 39 THEN '18-39'\n    WHEN idade_paciente BETWEEN 40 AND 59 THEN '40-59'\n    WHEN idade_paciente BETWEEN 60 AND 79 THEN '60-79'\n    WHEN idade_paciente >= 80 THEN '80+'\n  END AS faixa_etaria,\n  COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM \n  processed\nJOIN \n  enriched e ON processed.row_id = e.row_id\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n  faixa_etaria\nORDER BY \n  faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": "0-17",
+        "numero_internacoes": 358
+      },
+      {
+        "faixa_etaria": "18-39",
+        "numero_internacoes": 576
+      },
+      {
+        "faixa_etaria": "40-59",
+        "numero_internacoes": 805
+      },
+      {
+        "faixa_etaria": "60-79",
+        "numero_internacoes": 549
+      },
+      {
+        "faixa_etaria": "80+",
+        "numero_internacoes": 37
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "total": 2380
+      },
+      {
+        "faixa_etaria": "18-39",
+        "total": 8942
+      },
+      {
+        "faixa_etaria": "40-59",
+        "total": 6585
+      },
+      {
+        "faixa_etaria": "60-79",
+        "total": 6726
+      },
+      {
+        "faixa_etaria": "80+",
+        "total": 3423
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 10438,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q78",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 estabelecimentos com maior volume de internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_munic_estabelecimento': '330000', 'volume_internacoes': 8871} exp={'cnes_estabelecimento': '2290227', 'internacoes': 788}",
+    "sql": "SELECT \n    cod_munic_estabelecimento,\n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'S72%' OR icd_group = 'S00-T98')\nGROUP BY \n    cod_munic_estabelecimento\nORDER BY \n    volume_internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "330000",
+        "volume_internacoes": 8871
+      },
+      {
+        "cod_munic_estabelecimento": "330455",
+        "volume_internacoes": 4589
+      },
+      {
+        "cod_munic_estabelecimento": "330170",
+        "volume_internacoes": 4505
+      },
+      {
+        "cod_munic_estabelecimento": "330350",
+        "volume_internacoes": 977
+      },
+      {
+        "cod_munic_estabelecimento": "330390",
+        "volume_internacoes": 782
+      }
+    ],
+    "gold_result": [
+      {
+        "cnes_estabelecimento": "2290227",
+        "internacoes": 788
+      },
+      {
+        "cnes_estabelecimento": "2798662",
+        "internacoes": 611
+      },
+      {
+        "cnes_estabelecimento": "2270234",
+        "internacoes": 599
+      },
+      {
+        "cnes_estabelecimento": "2298031",
+        "internacoes": 575
+      },
+      {
+        "cnes_estabelecimento": "6586767",
+        "internacoes": 536
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6918,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q79",
+    "cat": "Epidemiológica Complexa",
+    "question": "Permanência hospitalar média por faixa etária em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=8 exp=3",
+    "sql": "SELECT \n    CASE \n        WHEN idade_paciente < 18 THEN '0-17'\n        WHEN idade_paciente < 30 THEN '18-29'\n        WHEN idade_paciente < 40 THEN '30-39'\n        WHEN idade_paciente < 50 THEN '40-49'\n        WHEN idade_paciente < 60 THEN '50-59'\n        WHEN idade_paciente < 70 THEN '60-69'\n        WHEN idade_paciente < 80 THEN '70-79'\n        ELSE '80+'\n    END AS faixa_etaria,\n    AVG(dias_perm) AS media_permanencia\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    faixa_etaria\nORDER BY \n    faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": "0-17",
+        "media_permanencia": 8.4357541899
+      },
+      {
+        "faixa_etaria": "18-29",
+        "media_permanencia": 6.9803921569
+      },
+      {
+        "faixa_etaria": "30-39",
+        "media_permanencia": 7.4132841328
+      },
+      {
+        "faixa_etaria": "40-49",
+        "media_permanencia": 8.1647058824
+      },
+      {
+        "faixa_etaria": "50-59",
+        "media_permanencia": 9.2605042017
+      },
+      {
+        "faixa_etaria": "60-69",
+        "media_permanencia": 9.5681818182
+      },
+      {
+        "faixa_etaria": "70-79",
+        "media_permanencia": 12.3660130719
+      },
+      {
+        "faixa_etaria": "80+",
+        "media_permanencia": 9.5405405405
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "permanencia_media": 5.2
+      },
+      {
+        "faixa_etaria": "18-59",
+        "permanencia_media": 6.9
+      },
+      {
+        "faixa_etaria": "60+",
+        "permanencia_media": 9.9
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 11410,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q80",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos de doença osteomuscular (M00-M99) por número de internações em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "5 linhas corretas (flexível)",
+    "sql": "SELECT \n    cid_principal, \n    COUNT(DISTINCT n_aih) AS num_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND icd_group = 'M00-M99'\nGROUP BY \n    cid_principal\nORDER BY \n    num_internacoes DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M861",
+        "num_internacoes": 182
+      },
+      {
+        "cid_principal": "M841",
+        "num_internacoes": 143
+      },
+      {
+        "cid_principal": "M511",
+        "num_internacoes": 129
+      },
+      {
+        "cid_principal": "M866",
+        "num_internacoes": 120
+      },
+      {
+        "cid_principal": "M869",
+        "num_internacoes": 94
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "M861",
+        "total": 182
+      },
+      {
+        "cid_principal": "M841",
+        "total": 143
+      },
+      {
+        "cid_principal": "M511",
+        "total": 129
+      },
+      {
+        "cid_principal": "M866",
+        "total": 120
+      },
+      {
+        "cid_principal": "M869",
+        "total": 94
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6251,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q81",
+    "cat": "Epidemiológica Complexa",
+    "question": "Número de internações ortopédicas com permanência entre 3 e 7 dias em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=717 exp=9617",
+    "sql": "SELECT COUNT(DISTINCT n_aih) AS numero_internacoes\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND dias_perm BETWEEN 3 AND 7\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "numero_internacoes": 717
+      }
+    ],
+    "gold_result": [
+      {
+        "internacoes": 9617
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4698,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q82",
+    "cat": "Epidemiológica Complexa",
+    "question": "Top 5 diagnósticos ambulatoriais ortopédicos em idosos (60 anos ou mais) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M216', 'quantidade': 729} exp={'cid_principal': 'S720', 'total': 3056}",
+    "sql": "SELECT \n    cid_principal, \n    COUNT(*) AS quantidade\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND idade_paciente >= 60 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nORDER BY \n    quantidade DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M216",
+        "quantidade": 729
+      },
+      {
+        "cid_principal": "M199",
+        "quantidade": 243
+      },
+      {
+        "cid_principal": "M214",
+        "quantidade": 91
+      },
+      {
+        "cid_principal": "M213",
+        "quantidade": 49
+      },
+      {
+        "cid_principal": "M069",
+        "quantidade": 12
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "S720",
+        "total": 3056
+      },
+      {
+        "cid_principal": "S369",
+        "total": 2166
+      },
+      {
+        "cid_principal": "S781",
+        "total": 1525
+      },
+      {
+        "cid_principal": "S729",
+        "total": 1359
+      },
+      {
+        "cid_principal": "M216",
+        "total": 729
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6500,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q83",
+    "cat": "Epidemiológica Complexa",
+    "question": "Média de internações ortopédicas por estabelecimento em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=330300 exp=207.8",
+    "sql": "SELECT \n    cod_munic_estabelecimento,\n    AVG(qt_diarias) AS media_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cod_munic_estabelecimento;",
+    "llm_result": [
+      {
+        "cod_munic_estabelecimento": "330300",
+        "media_internacoes": 12.0
+      },
+      {
+        "cod_munic_estabelecimento": "330010",
+        "media_internacoes": 4.0
+      },
+      {
+        "cod_munic_estabelecimento": "330500",
+        "media_internacoes": 1.0909090909
+      },
+      {
+        "cod_munic_estabelecimento": "330360",
+        "media_internacoes": 21.5
+      },
+      {
+        "cod_munic_estabelecimento": "330100",
+        "media_internacoes": 2.44
+      },
+      {
+        "cod_munic_estabelecimento": "330015",
+        "media_internacoes": 15.5
+      },
+      {
+        "cod_munic_estabelecimento": "330620",
+        "media_internacoes": 4.6666666667
+      },
+      {
+        "cod_munic_estabelecimento": "330480",
+        "media_internacoes": 1.0
+      },
+      {
+        "cod_munic_estabelecimento": "330490",
+        "media_internacoes": 14.5714285714
+      },
+      {
+        "cod_munic_estabelecimento": "330400",
+        "media_internacoes": 2.5
+      },
+      {
+        "cod_munic_estabelecimento": "330310",
+        "media_internacoes": 6.0
+      },
+      {
+        "cod_munic_estabelecimento": "330475",
+        "media_internacoes": 1.0
+      },
+      {
+        "cod_munic_estabelecimento": "330340",
+        "media_internacoes": 17.25
+      },
+      {
+        "cod_munic_estabelecimento": "330452",
+        "media_internacoes": 11.0
+      },
+      {
+        "cod_munic_estabelecimento": "330610",
+        "media_internacoes": 8.3333333333
+      },
+      {
+        "cod_munic_estabelecimento": "330270",
+        "media_internacoes": 2.4545454545
+      },
+      {
+        "cod_munic_estabelecimento": "330430",
+        "media_internacoes": 1.25
+      },
+      {
+        "cod_munic_estabelecimento": "330025",
+        "media_internacoes": 9.0
+      },
+      {
+        "cod_munic_estabelecimento": "330030",
+        "media_internacoes": 2.0
+      },
+      {
+        "cod_munic_estabelecimento": "330023",
+        "media_internacoes": 19.5
+      },
+      {
+        "cod_munic_estabelecimento": "330190",
+        "media_internacoes": 8.0
+      },
+      {
+        "cod_munic_estabelecimento": "330470",
+        "media_internacoes": 7.75
+      },
+      {
+        "cod_munic_estabelecimento": "330110",
+        "media_internacoes": 1.0
+      },
+      {
+        "cod_munic_estabelecimento": "330000",
+        "media_internacoes": 5.7130089374
+      },
+      {
+        "cod_munic_estabelecimento": "330350",
+        "media_internacoes": 19.0
+      },
+      {
+        "cod_munic_estabelecimento": "330630",
+        "media_internacoes": 4.2
+      },
+      {
+        "cod_munic_estabelecimento": "330380",
+        "media_internacoes": 8.5
+      },
+      {
+        "cod_munic_estabelecimento": "330200",
+        "media_internacoes": 20.8333333333
+      },
+      {
+        "cod_munic_estabelecimento": "330330",
+        "media_internacoes": 27.56
+      },
+      {
+        "cod_munic_estabelecimento": "330080",
+        "media_internacoes": 9.0
+      },
+      {
+        "cod_munic_estabelecimento": "330220",
+        "media_internacoes": 4.8275862069
+      },
+      {
+        "cod_munic_estabelecimento": "330070",
+        "media_internacoes": 2.0
+      },
+      {
+        "cod_munic_estabelecimento": "330570",
+        "media_internacoes": 7.0
+      },
+      {
+        "cod_munic_estabelecimento": "330210",
+        "media_internacoes": 8.0
+      },
+      {
+        "cod_munic_estabelecimento": "330455",
+        "media_internacoes": 14.2852173913
+      },
+      {
+        "cod_munic_estabelecimento": "330420",
+        "media_internacoes": 3.3333333333
+      },
+      {
+        "cod_munic_estabelecimento": "330240",
+        "media_internacoes": 10.125
+      },
+      {
+        "cod_munic_estabelecimento": "330580",
+        "media_internacoes": 12.7446808511
+      },
+      {
+        "cod_munic_estabelecimento": "330600",
+        "media_internacoes": 13.6666666667
+      },
+      {
+        "cod_munic_estabelecimento": "330040",
+        "media_internacoes": 3.2727272727
+      },
+      {
+        "cod_munic_estabelecimento": "330020",
+        "media_internacoes": 16.0
+      },
+      {
+        "cod_munic_estabelecimento": "330390",
+        "media_internacoes": 8.0186915888
+      },
+      {
+        "cod_munic_estabelecimento": "330290",
+        "media_internacoes": 7.0
+      },
+      {
+        "cod_munic_estabelecimento": "330170",
+        "media_internacoes": 6.9565217391
+      },
+      {
+        "cod_munic_estabelecimento": "330060",
+        "media_internacoes": 8.8333333333
+      },
+      {
+        "cod_munic_estabelecimento": "330225",
+        "media_internacoes": 19.0
+      }
+    ],
+    "gold_result": [
+      {
+        "media_internacoes_por_estabelecimento": 207.8
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6273,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q84",
+    "cat": "Epidemiológica Complexa",
+    "question": "Distribuição de internações ortopédicas por faixa de permanência em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=6 exp=4",
+    "sql": "SELECT \n    CASE \n        WHEN dias_perm < 5 THEN '0-4 dias'\n        WHEN dias_perm < 10 THEN '5-9 dias'\n        WHEN dias_perm < 15 THEN '10-14 dias'\n        WHEN dias_perm < 20 THEN '15-19 dias'\n        WHEN dias_perm < 25 THEN '20-24 dias'\n        ELSE '25+ dias'\n    END AS faixa_permanencia,\n    COUNT(DISTINCT n_aih) AS quantidade_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    faixa_permanencia\nORDER BY \n    faixa_permanencia;",
+    "llm_result": [
+      {
+        "faixa_permanencia": "0-4 dias",
+        "quantidade_internacoes": 1261
+      },
+      {
+        "faixa_permanencia": "10-14 dias",
+        "quantidade_internacoes": 200
+      },
+      {
+        "faixa_permanencia": "15-19 dias",
+        "quantidade_internacoes": 134
+      },
+      {
+        "faixa_permanencia": "20-24 dias",
+        "quantidade_internacoes": 69
+      },
+      {
+        "faixa_permanencia": "25+ dias",
+        "quantidade_internacoes": 193
+      },
+      {
+        "faixa_permanencia": "5-9 dias",
+        "quantidade_internacoes": 468
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_permanencia": "1-3 dias",
+        "total": 10343
+      },
+      {
+        "faixa_permanencia": "15+ dias",
+        "total": 5532
+      },
+      {
+        "faixa_permanencia": "4-7 dias",
+        "total": 6998
+      },
+      {
+        "faixa_permanencia": "8-14 dias",
+        "total": 5183
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 10194,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q85",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas de idosos (60 anos ou mais) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=2115629.96 exp=28396358.5",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS custo_total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 60\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_total_internacoes": 2115629.96
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_idosos": 28396358.5
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5761,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q86",
+    "cat": "Financeira",
+    "question": "Custo médio por internação por fratura de fêmur (S72) em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=2648.293653092 exp=2648.29",
+    "sql": "SELECT \n    AVG(COALESCE(custo_total, 0)) AS custo_medio_por_internacao\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND cid_principal LIKE 'S72%'",
+    "llm_result": [
+      {
+        "custo_medio_por_internacao": 2648.293653092
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_medio_s72": 2648.29
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4335,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q87",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas com passagem por UTI em RJ em 2022",
+    "correct": true,
+    "flexible_match": false,
+    "score_reason": "got=None exp=None",
+    "sql": "SELECT \n    SUM(COALESCE(val_uti, 0)) AS custo_total_uti\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND uti_int_to > 0\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_total_uti": null
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_uti": null
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5080,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q88",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica por sexo do paciente em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha não encontrada: {'sexo_paciente': 'F', 'custo_medio': 2634.6}",
+    "sql": "SELECT \n    sexo_paciente,\n    AVG(custo_total) AS custo_medio_por_internacao\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    sexo_paciente;",
+    "llm_result": [
+      {
+        "sexo_paciente": "F",
+        "custo_medio_por_internacao": 4064.7203291714
+      },
+      {
+        "sexo_paciente": "M",
+        "custo_medio_por_internacao": 3313.3132760989
+      }
+    ],
+    "gold_result": [
+      {
+        "sexo_paciente": "F",
+        "custo_medio": 2634.6
+      },
+      {
+        "sexo_paciente": "M",
+        "custo_medio": 2461.27
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5046,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q89",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas em crianças (menores de 18 anos) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1995445.8099999998 exp=5562026.72",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS custo_total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND idade_paciente < 18\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_total_internacoes": 1995445.8099999998
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_criancas": 5562026.72
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5771,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q90",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica com permanência superior a 7 dias em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=4934.2820643432 exp=3699.42",
+    "sql": "SELECT \n    AVG(custo_total) AS custo_medio_por_internacao\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND dias_perm > 7\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_medio_por_internacao": 4934.2820643432
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_medio_longa_perm": 3699.42
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4847,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q91",
+    "cat": "Financeira",
+    "question": "Top 3 municípios com maior custo total em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_munic_residencia': '330455', 'total_custo': 1993166.9300000004} exp={'cod_munic_estabelecimento': '330000', 'custo_total': 26271214.76}",
+    "sql": "SELECT \n    cod_munic_residencia, \n    SUM(custo_total) AS total_custo\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cod_munic_residencia\nORDER BY \n    total_custo DESC\nLIMIT 3;",
+    "llm_result": [
+      {
+        "cod_munic_residencia": "330455",
+        "total_custo": 1993166.9300000004
+      },
+      {
+        "cod_munic_residencia": "330220",
+        "total_custo": 439014.53
+      },
+      {
+        "cod_munic_residencia": "330490",
+        "total_custo": 427178.29
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_munic_estabelecimento": "330000",
+        "custo_total": 26271214.76
+      },
+      {
+        "cod_munic_estabelecimento": "330455",
+        "custo_total": 15543194.54
+      },
+      {
+        "cod_munic_estabelecimento": "330170",
+        "custo_total": 8819408.33
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6664,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q92",
+    "cat": "Financeira",
+    "question": "Valor total de serviço hospitalar em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=6937652.41 exp=57490872.2",
+    "sql": "SELECT SUM(COALESCE(val_sh, 0)) AS total_val_sh\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "total_val_sh": 6937652.41
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_hospitalar_total": 57490872.2
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5212,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q93",
+    "cat": "Financeira",
+    "question": "Custo médio por internação ortopédica por faixa etária em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=10 exp=3",
+    "sql": "SELECT \n  FLOOR(idade_paciente / 10) * 10 AS faixa_etaria,\n  AVG(custo_total) AS custo_medio_por_internacao\nFROM \n  processed\nJOIN \n  enriched e ON processed.row_id = e.row_id\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n  faixa_etaria\nORDER BY \n  faixa_etaria;",
+    "llm_result": [
+      {
+        "faixa_etaria": 0.0,
+        "custo_medio_por_internacao": 1929.3465384615
+      },
+      {
+        "faixa_etaria": 10.0,
+        "custo_medio_por_internacao": 6618.8978456592
+      },
+      {
+        "faixa_etaria": 20.0,
+        "custo_medio_por_internacao": 2533.3225702811
+      },
+      {
+        "faixa_etaria": 30.0,
+        "custo_medio_por_internacao": 2580.2001845018
+      },
+      {
+        "faixa_etaria": 40.0,
+        "custo_medio_por_internacao": 2913.8772352941
+      },
+      {
+        "faixa_etaria": 50.0,
+        "custo_medio_por_internacao": 3591.7934453782
+      },
+      {
+        "faixa_etaria": 60.0,
+        "custo_medio_por_internacao": 3684.9366919192
+      },
+      {
+        "faixa_etaria": 70.0,
+        "custo_medio_por_internacao": 3508.8140522876
+      },
+      {
+        "faixa_etaria": 80.0,
+        "custo_medio_por_internacao": 3137.2209090909
+      },
+      {
+        "faixa_etaria": 90.0,
+        "custo_medio_por_internacao": 4004.5475
+      }
+    ],
+    "gold_result": [
+      {
+        "faixa_etaria": "0-17",
+        "custo_medio": 2336.99
+      },
+      {
+        "faixa_etaria": "18-59",
+        "custo_medio": 2376.92
+      },
+      {
+        "faixa_etaria": "60+",
+        "custo_medio": 2797.95
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7070,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q94",
+    "cat": "Financeira",
+    "question": "Valor total de UTI em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=868901.98 exp=13056994.92",
+    "sql": "SELECT SUM(COALESCE(val_uti, 0)) AS total_uti\nFROM processed\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "total_uti": 868901.98
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_uti_total": 13056994.92
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4373,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q95",
+    "cat": "Financeira",
+    "question": "Custo total de internações por doenças osteomusculares (M00-M99) em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=8405202.740000004 exp=8405202.74",
+    "sql": "SELECT SUM(custo_total) AS custo_total\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND icd_group = 'M00-M99';",
+    "llm_result": [
+      {
+        "custo_total": 8405202.740000004
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_m": 8405202.74
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4640,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q96",
+    "cat": "Financeira",
+    "question": "Custo total de internações por traumatismos (S00-T98) em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "got=62488151.480000086 exp=62488151.48",
+    "sql": "SELECT \n    SUM(COALESCE(custo_total, 0)) AS custo_total_internacoes\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'S%' OR icd_group = 'S00-T98');",
+    "llm_result": [
+      {
+        "custo_total_internacoes": 62488151.480000086
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total_s": 62488151.48
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4720,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q97",
+    "cat": "Financeira",
+    "question": "Top 5 diagnósticos com maior custo médio por internação ortopédica em RJ em 2022 (mínimo 40 internações)",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cid_principal': 'M411', 'custo_medio': 15812.1680597015, 'quantidade_internacoes': 67} exp={'cid_principal': 'M411', 'internacoes': 67, 'custo_medio': 15812.17}",
+    "sql": "SELECT \n    cid_principal, \n    AVG(custo_total) AS custo_medio, \n    COUNT(DISTINCT n_aih) AS quantidade_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    cid_principal\nHAVING \n    COUNT(DISTINCT n_aih) >= 40\nORDER BY \n    custo_medio DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cid_principal": "M411",
+        "custo_medio": 15812.1680597015,
+        "quantidade_internacoes": 67
+      },
+      {
+        "cid_principal": "M511",
+        "custo_medio": 8820.2801550388,
+        "quantidade_internacoes": 129
+      },
+      {
+        "cid_principal": "M500",
+        "custo_medio": 7845.0446511628,
+        "quantidade_internacoes": 43
+      },
+      {
+        "cid_principal": "M160",
+        "custo_medio": 4828.52625,
+        "quantidade_internacoes": 40
+      },
+      {
+        "cid_principal": "M236",
+        "custo_medio": 2959.242173913,
+        "quantidade_internacoes": 46
+      }
+    ],
+    "gold_result": [
+      {
+        "cid_principal": "M411",
+        "internacoes": 67,
+        "custo_medio": 15812.17
+      },
+      {
+        "cid_principal": "S068",
+        "internacoes": 55,
+        "custo_medio": 8934.42
+      },
+      {
+        "cid_principal": "M511",
+        "internacoes": 129,
+        "custo_medio": 8820.28
+      },
+      {
+        "cid_principal": "M500",
+        "internacoes": 43,
+        "custo_medio": 7845.04
+      },
+      {
+        "cid_principal": "S065",
+        "internacoes": 295,
+        "custo_medio": 7646.92
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7741,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q98",
+    "cat": "Financeira",
+    "question": "Custo médio por procedimento ambulatorial ortopédico em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Resultado vazio",
+    "sql": "SELECT \n    cod_procedimento,\n    AVG(custo_total) AS custo_medio\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    cod_procedimento;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "custo_medio_sia": 152.55
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4673,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q99",
+    "cat": "Financeira",
+    "question": "Top 5 procedimentos ambulatoriais com maior custo total em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'cod_procedimento': '0702100048', 'total_custo': 9146187.890000049} exp={'cod_procedimento': '0701020369', 'custo_total': 665532.0}",
+    "sql": "SELECT \n    cod_procedimento, \n    SUM(custo_total) AS total_custo\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022\nGROUP BY \n    cod_procedimento\nORDER BY \n    total_custo DESC\nLIMIT 5;",
+    "llm_result": [
+      {
+        "cod_procedimento": "0702100048",
+        "total_custo": 9146187.890000049
+      },
+      {
+        "cod_procedimento": "0701050020",
+        "total_custo": 5787828.0
+      },
+      {
+        "cod_procedimento": "0701030143",
+        "total_custo": 4206400.0
+      },
+      {
+        "cod_procedimento": "0701030135",
+        "total_custo": 3360000.0
+      },
+      {
+        "cod_procedimento": "0701030127",
+        "total_custo": 3031875.0
+      }
+    ],
+    "gold_result": [
+      {
+        "cod_procedimento": "0701020369",
+        "custo_total": 665532.0
+      },
+      {
+        "cod_procedimento": "0701050020",
+        "custo_total": 475911.0
+      },
+      {
+        "cod_procedimento": "0701010053",
+        "custo_total": 458185.6
+      },
+      {
+        "cod_procedimento": "0701020415",
+        "custo_total": 344301.0
+      },
+      {
+        "cod_procedimento": "0701010029",
+        "custo_total": 299675.6
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4676,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q100",
+    "cat": "Financeira",
+    "question": "Custo total de internações ortopédicas de idosos (60+) com permanência superior a 7 dias em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "got=1013984.57 exp=16205065.06",
+    "sql": "SELECT SUM(COALESCE(custo_total, 0)) AS custo_total_internacoes\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND idade_paciente >= 60\n  AND dias_perm > 7\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99');",
+    "llm_result": [
+      {
+        "custo_total_internacoes": 1013984.57
+      }
+    ],
+    "gold_result": [
+      {
+        "custo_total": 16205065.06
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6096,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q101",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior número de óbitos em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 11, 'num_obitos': 4} exp={'mes_cmpt': 1, 'total_obitos': 104}",
+    "sql": "SELECT mes_cmpt, COUNT(DISTINCT n_aih) AS num_obitos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND morte = 1\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY mes_cmpt\nORDER BY num_obitos DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 11,
+        "num_obitos": 4
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total_obitos": 104
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6250,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q102",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por fratura de fêmur (S72) em idosos (60 anos ou mais) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'volume_internacoes': 705} exp={'mes_cmpt': 1, 'internacoes': 505}",
+    "sql": "SELECT \n    mes_cmpt, \n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND idade_paciente >= 60 \n    AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "volume_internacoes": 705
+      },
+      {
+        "mes_cmpt": 2,
+        "volume_internacoes": 661
+      },
+      {
+        "mes_cmpt": 3,
+        "volume_internacoes": 629
+      },
+      {
+        "mes_cmpt": 4,
+        "volume_internacoes": 689
+      },
+      {
+        "mes_cmpt": 5,
+        "volume_internacoes": 669
+      },
+      {
+        "mes_cmpt": 6,
+        "volume_internacoes": 890
+      },
+      {
+        "mes_cmpt": 7,
+        "volume_internacoes": 864
+      },
+      {
+        "mes_cmpt": 8,
+        "volume_internacoes": 882
+      },
+      {
+        "mes_cmpt": 9,
+        "volume_internacoes": 877
+      },
+      {
+        "mes_cmpt": 10,
+        "volume_internacoes": 974
+      },
+      {
+        "mes_cmpt": 11,
+        "volume_internacoes": 819
+      },
+      {
+        "mes_cmpt": 12,
+        "volume_internacoes": 904
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 505
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 453
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 460
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 474
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 485
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 607
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 608
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 588
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 640
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 656
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 573
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 579
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7225,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q103",
+    "cat": "Temporal/Comparativa",
+    "question": "Custo mensal de internações ortopédicas de idosos (60 anos ou mais) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'custo_total': 82431.4} exp={'mes_cmpt': 1, 'custo_total': 1749439.39}",
+    "sql": "SELECT \n    mes_cmpt,\n    SUM(COALESCE(custo_total, 0)) AS custo_total\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND idade_paciente >= 60\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 82431.4
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 77312.44
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 132329.67
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 120784.35
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 173807.39
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 194059.04
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 206907.51
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 191739.13
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 181137.71
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 263524.65
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 170450.14
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 321146.5299999999
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 1749439.39
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 1643349.6
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 1904267.68
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 1948875.75
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 2048483.88
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 2783375.75
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 2462475.28
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 2676139.34
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 2609221.26
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 3033379.23
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 2684619.92
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 2852731.42
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6791,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q104",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior custo total de internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "1 linhas corretas (flexível)",
+    "sql": "SELECT mes_cmpt, SUM(custo_total) AS total_custo\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND cid_principal LIKE 'S72%'\nGROUP BY mes_cmpt\nORDER BY total_custo DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 11,
+        "total_custo": 2664457.030000001
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 11,
+        "custo_total": 2664457.03
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5335,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q105",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações por traumatismos (grupo S00-T98) em RJ em 2022",
+    "correct": true,
+    "flexible_match": true,
+    "score_reason": "12 linhas corretas (flexível)",
+    "sql": "SELECT \n    mes_cmpt, \n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas'\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "volume_internacoes": 1877
+      },
+      {
+        "mes_cmpt": 2,
+        "volume_internacoes": 1818
+      },
+      {
+        "mes_cmpt": 3,
+        "volume_internacoes": 1654
+      },
+      {
+        "mes_cmpt": 4,
+        "volume_internacoes": 1923
+      },
+      {
+        "mes_cmpt": 5,
+        "volume_internacoes": 1672
+      },
+      {
+        "mes_cmpt": 6,
+        "volume_internacoes": 2385
+      },
+      {
+        "mes_cmpt": 7,
+        "volume_internacoes": 2297
+      },
+      {
+        "mes_cmpt": 8,
+        "volume_internacoes": 2421
+      },
+      {
+        "mes_cmpt": 9,
+        "volume_internacoes": 2198
+      },
+      {
+        "mes_cmpt": 10,
+        "volume_internacoes": 2580
+      },
+      {
+        "mes_cmpt": 11,
+        "volume_internacoes": 2341
+      },
+      {
+        "mes_cmpt": 12,
+        "volume_internacoes": 2565
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 1877
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 1818
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 1654
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 1923
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 1672
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 2385
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 2297
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 2421
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 2198
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 2580
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 2341
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 2565
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6505,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q106",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de procedimentos ambulatoriais ortopédicos por sexo em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=24",
+    "sql": "SELECT \n    mes_cmpt,\n    sexo_paciente,\n    COUNT(*) AS volume_procedimentos\nFROM \n    processed\nWHERE \n    sistema = 'SIA'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    mes_cmpt, sexo_paciente\nORDER BY \n    mes_cmpt, sexo_paciente;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "F",
+        "total": 739
+      },
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "M",
+        "total": 908
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "F",
+        "total": 682
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "M",
+        "total": 992
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "F",
+        "total": 969
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "M",
+        "total": 1109
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "F",
+        "total": 799
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "M",
+        "total": 911
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "F",
+        "total": 1130
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "M",
+        "total": 1271
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "F",
+        "total": 961
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "M",
+        "total": 960
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "F",
+        "total": 1447
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "M",
+        "total": 1562
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "F",
+        "total": 1691
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "M",
+        "total": 1799
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "F",
+        "total": 1281
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "M",
+        "total": 1361
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "F",
+        "total": 1202
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "M",
+        "total": 1207
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "F",
+        "total": 874
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "M",
+        "total": 1047
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "F",
+        "total": 1063
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "M",
+        "total": 1236
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5232,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q107",
+    "cat": "Temporal/Comparativa",
+    "question": "Comparativo trimestral de internações ortopédicas por grupo diagnóstico em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=8",
+    "sql": "SELECT\n  competencia_ano_mes,\n  icd_group,\n  COUNT(DISTINCT n_aih) AS num_internacoes\nFROM\n  processed\nJOIN\n  enriched e ON processed.row_id = e.row_id\nWHERE\n  sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY\n  competencia_ano_mes,\n  icd_group\nORDER BY\n  competencia_ano_mes,\n  icd_group;",
+    "llm_result": [
+      {
+        "competencia_ano_mes": 202201,
+        "icd_group": "M00-M99",
+        "num_internacoes": 121
+      },
+      {
+        "competencia_ano_mes": 202202,
+        "icd_group": "M00-M99",
+        "num_internacoes": 141
+      },
+      {
+        "competencia_ano_mes": 202203,
+        "icd_group": "M00-M99",
+        "num_internacoes": 127
+      },
+      {
+        "competencia_ano_mes": 202204,
+        "icd_group": "M00-M99",
+        "num_internacoes": 111
+      },
+      {
+        "competencia_ano_mes": 202205,
+        "icd_group": "M00-M99",
+        "num_internacoes": 172
+      },
+      {
+        "competencia_ano_mes": 202206,
+        "icd_group": "M00-M99",
+        "num_internacoes": 216
+      },
+      {
+        "competencia_ano_mes": 202207,
+        "icd_group": "M00-M99",
+        "num_internacoes": 205
+      },
+      {
+        "competencia_ano_mes": 202208,
+        "icd_group": "M00-M99",
+        "num_internacoes": 236
+      },
+      {
+        "competencia_ano_mes": 202209,
+        "icd_group": "M00-M99",
+        "num_internacoes": 229
+      },
+      {
+        "competencia_ano_mes": 202210,
+        "icd_group": "M00-M99",
+        "num_internacoes": 273
+      },
+      {
+        "competencia_ano_mes": 202211,
+        "icd_group": "M00-M99",
+        "num_internacoes": 226
+      },
+      {
+        "competencia_ano_mes": 202212,
+        "icd_group": "M00-M99",
+        "num_internacoes": 279
+      }
+    ],
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "icd_group": "M00-M99",
+        "total": 387
+      },
+      {
+        "trimestre": "Q1",
+        "icd_group": "S00-T98",
+        "total": 5349
+      },
+      {
+        "trimestre": "Q2",
+        "icd_group": "M00-M99",
+        "total": 497
+      },
+      {
+        "trimestre": "Q2",
+        "icd_group": "S00-T98",
+        "total": 5980
+      },
+      {
+        "trimestre": "Q3",
+        "icd_group": "M00-M99",
+        "total": 668
+      },
+      {
+        "trimestre": "Q3",
+        "icd_group": "S00-T98",
+        "total": 6916
+      },
+      {
+        "trimestre": "Q4",
+        "icd_group": "M00-M99",
+        "total": 776
+      },
+      {
+        "trimestre": "Q4",
+        "icd_group": "S00-T98",
+        "total": 7486
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 7095,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q108",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com maior permanência hospitalar média em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 3, 'media_permanencia': 11.5039370079} exp={'mes_cmpt': 1, 'permanencia_media': 9.9}",
+    "sql": "SELECT mes_cmpt, AVG(dias_perm) AS media_permanencia\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY mes_cmpt\nORDER BY media_permanencia DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 3,
+        "media_permanencia": 11.5039370079
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "permanencia_media": 9.9
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5876,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q109",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal da taxa de mortalidade em internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'taxa_mortalidade': 0.0165289256} exp={'mes_cmpt': 1, 'internacoes': 1998, 'obitos': 104.0, 'taxa_mortalidade': 5.21}",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT CASE WHEN morte = 1 THEN n_aih END) / COUNT(DISTINCT n_aih) AS taxa_mortalidade\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "taxa_mortalidade": 0.0165289256
+      },
+      {
+        "mes_cmpt": 2,
+        "taxa_mortalidade": 0.0070921986
+      },
+      {
+        "mes_cmpt": 3,
+        "taxa_mortalidade": 0.0157480315
+      },
+      {
+        "mes_cmpt": 4,
+        "taxa_mortalidade": 0.0
+      },
+      {
+        "mes_cmpt": 5,
+        "taxa_mortalidade": 0.011627907
+      },
+      {
+        "mes_cmpt": 6,
+        "taxa_mortalidade": 0.0138888889
+      },
+      {
+        "mes_cmpt": 7,
+        "taxa_mortalidade": 0.0048780488
+      },
+      {
+        "mes_cmpt": 8,
+        "taxa_mortalidade": 0.0042372881
+      },
+      {
+        "mes_cmpt": 9,
+        "taxa_mortalidade": 0.0131004367
+      },
+      {
+        "mes_cmpt": 10,
+        "taxa_mortalidade": 0.0036630037
+      },
+      {
+        "mes_cmpt": 11,
+        "taxa_mortalidade": 0.017699115
+      },
+      {
+        "mes_cmpt": 12,
+        "taxa_mortalidade": 0.0035842294
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "internacoes": 1998,
+        "obitos": 104.0,
+        "taxa_mortalidade": 5.21
+      },
+      {
+        "mes_cmpt": 2,
+        "internacoes": 1959,
+        "obitos": 72.0,
+        "taxa_mortalidade": 3.68
+      },
+      {
+        "mes_cmpt": 3,
+        "internacoes": 1781,
+        "obitos": 84.0,
+        "taxa_mortalidade": 4.72
+      },
+      {
+        "mes_cmpt": 4,
+        "internacoes": 2034,
+        "obitos": 77.0,
+        "taxa_mortalidade": 3.79
+      },
+      {
+        "mes_cmpt": 5,
+        "internacoes": 1844,
+        "obitos": 88.0,
+        "taxa_mortalidade": 4.77
+      },
+      {
+        "mes_cmpt": 6,
+        "internacoes": 2601,
+        "obitos": 76.0,
+        "taxa_mortalidade": 2.92
+      },
+      {
+        "mes_cmpt": 7,
+        "internacoes": 2502,
+        "obitos": 81.0,
+        "taxa_mortalidade": 3.24
+      },
+      {
+        "mes_cmpt": 8,
+        "internacoes": 2657,
+        "obitos": 81.0,
+        "taxa_mortalidade": 3.05
+      },
+      {
+        "mes_cmpt": 9,
+        "internacoes": 2427,
+        "obitos": 96.0,
+        "taxa_mortalidade": 3.96
+      },
+      {
+        "mes_cmpt": 10,
+        "internacoes": 2853,
+        "obitos": 66.0,
+        "taxa_mortalidade": 2.31
+      },
+      {
+        "mes_cmpt": 11,
+        "internacoes": 2567,
+        "obitos": 79.0,
+        "taxa_mortalidade": 3.08
+      },
+      {
+        "mes_cmpt": 12,
+        "internacoes": 2844,
+        "obitos": 61.0,
+        "taxa_mortalidade": 2.14
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6996,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q110",
+    "cat": "Temporal/Comparativa",
+    "question": "Trimestre com maior volume de internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 10, 'volume_internacoes': 2580} exp={'trimestre': 'Q3', 'total': 2707}",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas')\nGROUP BY \n    mes_cmpt\nORDER BY \n    volume_internacoes DESC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 10,
+        "volume_internacoes": 2580
+      }
+    ],
+    "gold_result": [
+      {
+        "trimestre": "Q3",
+        "total": 2707
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6941,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q111",
+    "cat": "Temporal/Comparativa",
+    "question": "Comparativo semestral de internações ortopédicas (1º vs 2º semestre) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=2",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(DISTINCT n_aih) AS num_internacoes\nFROM \n    processed\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "num_internacoes": 121
+      },
+      {
+        "mes_cmpt": 2,
+        "num_internacoes": 141
+      },
+      {
+        "mes_cmpt": 3,
+        "num_internacoes": 127
+      },
+      {
+        "mes_cmpt": 4,
+        "num_internacoes": 111
+      },
+      {
+        "mes_cmpt": 5,
+        "num_internacoes": 172
+      },
+      {
+        "mes_cmpt": 6,
+        "num_internacoes": 216
+      },
+      {
+        "mes_cmpt": 7,
+        "num_internacoes": 205
+      },
+      {
+        "mes_cmpt": 8,
+        "num_internacoes": 236
+      },
+      {
+        "mes_cmpt": 9,
+        "num_internacoes": 229
+      },
+      {
+        "mes_cmpt": 10,
+        "num_internacoes": 273
+      },
+      {
+        "mes_cmpt": 11,
+        "num_internacoes": 226
+      },
+      {
+        "mes_cmpt": 12,
+        "num_internacoes": 279
+      }
+    ],
+    "gold_result": [
+      {
+        "semestre": "1S",
+        "total": 12212
+      },
+      {
+        "semestre": "2S",
+        "total": 15845
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5321,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q112",
+    "cat": "Temporal/Comparativa",
+    "question": "Custo médio mensal por internação por fratura de fêmur (S72) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=1 exp=12",
+    "sql": "SELECT \n    AVG(custo_total) AS custo_medio_mensal\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND cid_principal LIKE 'S72%'",
+    "llm_result": [
+      {
+        "custo_medio_mensal": 2648.293653092
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_medio": 2277.22
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_medio": 2315.31
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_medio": 2548.21
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_medio": 2452.37
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_medio": 2532.83
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_medio": 2748.18
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_medio": 2505.27
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_medio": 2803.25
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_medio": 2650.4
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_medio": 2829.53
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_medio": 3069.65
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_medio": 2859.53
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4977,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q113",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume mensal de internações ortopédicas por sexo do paciente em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'sexo_paciente': 'F', 'volume_internacoes': 53} exp={'mes_cmpt': 1, 'sexo_paciente': 'F', 'total': 815}",
+    "sql": "SELECT \n    mes_cmpt,\n    sexo_paciente,\n    COUNT(DISTINCT n_aih) AS volume_internacoes\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n    mes_cmpt, sexo_paciente\nORDER BY \n    mes_cmpt, sexo_paciente;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "F",
+        "volume_internacoes": 53
+      },
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "M",
+        "volume_internacoes": 68
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "F",
+        "volume_internacoes": 50
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "M",
+        "volume_internacoes": 91
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "F",
+        "volume_internacoes": 45
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "M",
+        "volume_internacoes": 82
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "F",
+        "volume_internacoes": 48
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "M",
+        "volume_internacoes": 63
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "F",
+        "volume_internacoes": 64
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "M",
+        "volume_internacoes": 108
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "F",
+        "volume_internacoes": 77
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "M",
+        "volume_internacoes": 139
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "F",
+        "volume_internacoes": 76
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "M",
+        "volume_internacoes": 129
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "F",
+        "volume_internacoes": 83
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "M",
+        "volume_internacoes": 153
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "F",
+        "volume_internacoes": 86
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "M",
+        "volume_internacoes": 143
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "F",
+        "volume_internacoes": 91
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "M",
+        "volume_internacoes": 182
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "F",
+        "volume_internacoes": 94
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "M",
+        "volume_internacoes": 132
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "F",
+        "volume_internacoes": 113
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "M",
+        "volume_internacoes": 166
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "F",
+        "total": 815
+      },
+      {
+        "mes_cmpt": 1,
+        "sexo_paciente": "M",
+        "total": 1183
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "F",
+        "total": 704
+      },
+      {
+        "mes_cmpt": 2,
+        "sexo_paciente": "M",
+        "total": 1255
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "F",
+        "total": 730
+      },
+      {
+        "mes_cmpt": 3,
+        "sexo_paciente": "M",
+        "total": 1051
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "F",
+        "total": 761
+      },
+      {
+        "mes_cmpt": 4,
+        "sexo_paciente": "M",
+        "total": 1273
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "F",
+        "total": 717
+      },
+      {
+        "mes_cmpt": 5,
+        "sexo_paciente": "M",
+        "total": 1127
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "F",
+        "total": 936
+      },
+      {
+        "mes_cmpt": 6,
+        "sexo_paciente": "M",
+        "total": 1665
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "F",
+        "total": 866
+      },
+      {
+        "mes_cmpt": 7,
+        "sexo_paciente": "M",
+        "total": 1636
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "F",
+        "total": 1014
+      },
+      {
+        "mes_cmpt": 8,
+        "sexo_paciente": "M",
+        "total": 1643
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "F",
+        "total": 920
+      },
+      {
+        "mes_cmpt": 9,
+        "sexo_paciente": "M",
+        "total": 1507
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "F",
+        "total": 1003
+      },
+      {
+        "mes_cmpt": 10,
+        "sexo_paciente": "M",
+        "total": 1850
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "F",
+        "total": 938
+      },
+      {
+        "mes_cmpt": 11,
+        "sexo_paciente": "M",
+        "total": 1629
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "F",
+        "total": 1040
+      },
+      {
+        "mes_cmpt": 12,
+        "sexo_paciente": "M",
+        "total": 1804
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6788,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q114",
+    "cat": "Temporal/Comparativa",
+    "question": "Mês com menor volume de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 4, 'volume_procedimentos': 199} exp={'mes_cmpt': 1, 'total': 1647}",
+    "sql": "SELECT mes_cmpt, COUNT(*) AS volume_procedimentos\nFROM processed\nJOIN enriched e ON processed.row_id = e.row_id\nWHERE sistema = 'SIA'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY mes_cmpt\nORDER BY volume_procedimentos ASC\nLIMIT 1;",
+    "llm_result": [
+      {
+        "mes_cmpt": 4,
+        "volume_procedimentos": 199
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "total": 1647
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5771,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q115",
+    "cat": "Temporal/Comparativa",
+    "question": "Volume trimestral de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=4",
+    "sql": "SELECT \n    mes_cmpt,\n    COUNT(*) AS volume_procedimentos\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "trimestre": "Q1",
+        "total": 5399
+      },
+      {
+        "trimestre": "Q2",
+        "total": 6032
+      },
+      {
+        "trimestre": "Q3",
+        "total": 9141
+      },
+      {
+        "trimestre": "Q4",
+        "total": 6629
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 4792,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q116",
+    "cat": "Temporal/Comparativa",
+    "question": "Custo mensal de procedimentos ambulatoriais ortopédicos em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=0 exp=12",
+    "sql": "SELECT \n    mes_cmpt,\n    SUM(COALESCE(custo_total, 0)) AS custo_total\nFROM \n    processed\nWHERE \n    sistema = 'SIA' \n    AND uf_origem = 'RJ' \n    AND ano_cmpt = 2022 \n    AND cod_procedimento LIKE '0408%'\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 284703.64
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 313149.99
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 276181.98
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 220505.17
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 333387.15
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 288790.65
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 461413.68
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 451655.74
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 355083.12
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 445551.95
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 327481.67
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 391673.3
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5146,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q117",
+    "cat": "Temporal/Comparativa",
+    "question": "Comparativo semestral do custo total de internações ortopédicas em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Número de linhas: got=12 exp=2",
+    "sql": "SELECT \n  mes_cmpt,\n  SUM(COALESCE(custo_total, 0)) AS custo_total\nFROM \n  processed\nWHERE \n  sistema = 'SIH'\n  AND uf_origem = 'RJ'\n  AND ano_cmpt = 2022\n  AND (cid_principal LIKE 'M%' OR icd_group = 'M00-M99')\nGROUP BY \n  mes_cmpt\nORDER BY \n  mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "custo_total": 515324.59
+      },
+      {
+        "mes_cmpt": 2,
+        "custo_total": 361344.2299999999
+      },
+      {
+        "mes_cmpt": 3,
+        "custo_total": 431715.06
+      },
+      {
+        "mes_cmpt": 4,
+        "custo_total": 421810.5099999999
+      },
+      {
+        "mes_cmpt": 5,
+        "custo_total": 524979.77
+      },
+      {
+        "mes_cmpt": 6,
+        "custo_total": 975967.7600000007
+      },
+      {
+        "mes_cmpt": 7,
+        "custo_total": 683259.4799999999
+      },
+      {
+        "mes_cmpt": 8,
+        "custo_total": 729123.4999999994
+      },
+      {
+        "mes_cmpt": 9,
+        "custo_total": 902004.5800000004
+      },
+      {
+        "mes_cmpt": 10,
+        "custo_total": 1012039.8699999992
+      },
+      {
+        "mes_cmpt": 11,
+        "custo_total": 835457.1599999996
+      },
+      {
+        "mes_cmpt": 12,
+        "custo_total": 1012176.2300000003
+      }
+    ],
+    "gold_result": [
+      {
+        "semestre": "1S",
+        "custo_total": 29834491.27
+      },
+      {
+        "semestre": "2S",
+        "custo_total": 41058862.95
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 5433,
+    "correction_rounds": null
+  },
+  {
+    "id": "Q118",
+    "cat": "Temporal/Comparativa",
+    "question": "Evolução mensal da permanência média em internações por fratura de fêmur (S72) em RJ em 2022",
+    "correct": false,
+    "flexible_match": false,
+    "score_reason": "Linha 1: got={'mes_cmpt': 1, 'media_permanencia': 9.8391049547} exp={'mes_cmpt': 1, 'permanencia_media': 10.8}",
+    "sql": "SELECT \n    mes_cmpt,\n    AVG(dias_perm) AS media_permanencia\nFROM \n    processed\nJOIN \n    enriched e ON processed.row_id = e.row_id\nWHERE \n    sistema = 'SIH'\n    AND uf_origem = 'RJ'\n    AND ano_cmpt = 2022\n    AND (cid_principal LIKE 'S72%' OR e.clinical_interpretacao_clinica = 'lesoes e causas traumaticas')\nGROUP BY \n    mes_cmpt\nORDER BY \n    mes_cmpt;",
+    "llm_result": [
+      {
+        "mes_cmpt": 1,
+        "media_permanencia": 9.8391049547
+      },
+      {
+        "mes_cmpt": 2,
+        "media_permanencia": 7.5599559956
+      },
+      {
+        "mes_cmpt": 3,
+        "media_permanencia": 8.7545344619
+      },
+      {
+        "mes_cmpt": 4,
+        "media_permanencia": 8.0410816433
+      },
+      {
+        "mes_cmpt": 5,
+        "media_permanencia": 8.3648325359
+      },
+      {
+        "mes_cmpt": 6,
+        "media_permanencia": 7.1283018868
+      },
+      {
+        "mes_cmpt": 7,
+        "media_permanencia": 7.1288637353
+      },
+      {
+        "mes_cmpt": 8,
+        "media_permanencia": 7.2912019827
+      },
+      {
+        "mes_cmpt": 9,
+        "media_permanencia": 7.372611465
+      },
+      {
+        "mes_cmpt": 10,
+        "media_permanencia": 7.6899224806
+      },
+      {
+        "mes_cmpt": 11,
+        "media_permanencia": 7.4985049124
+      },
+      {
+        "mes_cmpt": 12,
+        "media_permanencia": 7.4179337232
+      }
+    ],
+    "gold_result": [
+      {
+        "mes_cmpt": 1,
+        "permanencia_media": 10.8
+      },
+      {
+        "mes_cmpt": 2,
+        "permanencia_media": 9.9
+      },
+      {
+        "mes_cmpt": 3,
+        "permanencia_media": 10.8
+      },
+      {
+        "mes_cmpt": 4,
+        "permanencia_media": 9.7
+      },
+      {
+        "mes_cmpt": 5,
+        "permanencia_media": 10.0
+      },
+      {
+        "mes_cmpt": 6,
+        "permanencia_media": 9.3
+      },
+      {
+        "mes_cmpt": 7,
+        "permanencia_media": 9.4
+      },
+      {
+        "mes_cmpt": 8,
+        "permanencia_media": 9.9
+      },
+      {
+        "mes_cmpt": 9,
+        "permanencia_media": 8.4
+      },
+      {
+        "mes_cmpt": 10,
+        "permanencia_media": 10.0
+      },
+      {
+        "mes_cmpt": 11,
+        "permanencia_media": 9.9
+      },
+      {
+        "mes_cmpt": 12,
+        "permanencia_media": 10.4
+      }
+    ],
+    "api_error": null,
+    "elapsed_ms": 6584,
+    "correction_rounds": null
+  }
+]
