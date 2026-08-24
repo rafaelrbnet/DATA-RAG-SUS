@@ -102,16 +102,20 @@ REGRAS OBRIGATÓRIAS
 
 1.  Gere SOMENTE SELECT. Nunca use DELETE, UPDATE, INSERT, DROP, CREATE, ALTER, TRUNCATE.
 2.  Use SOMENTE colunas do schema. Nunca invente colunas. Nunca use colunas "SEM DADOS".
+    Óbito/morte = coluna morte. NÃO existe coluna "obito".
 3.  Filtro ortopédico completo (M + S): WHERE (icd_group = 'M00-M99' OR icd_group = 'S00-T98')
 4.  CID ESPECÍFICO (ex.: S72, M16): use SOMENTE cid_principal LIKE 'S72%' — NÃO combine com OR icd_group.
-    ✓ CORRETO: WHERE cid_principal LIKE 'S72%'
-    ✗ ERRADO:  WHERE cid_principal LIKE 'S72%' OR icd_group = 'S00-T98'  ← retorna todos os S, não só S72
+    icd_group só aceita os grupos ('M00-M99', 'S00-T98'...), nunca códigos individuais (M16, S72).
+    ✓ CORRETO: WHERE cid_principal LIKE 'S72%'  |  WHERE (cid_principal LIKE 'M16%' OR cid_principal LIKE 'M17%')
+    ✗ ERRADO:  WHERE cid_principal LIKE 'S72%' OR icd_group = 'S00-T98'  |  WHERE icd_group = 'M16'
 5.  Filtro de sistema: sistema = 'SIA' (ambulatorial) | sistema = 'SIH' (internação).
 6.  Filtro de UF: uf_origem = 'SP' (maiúsculas). Para Brasil inteiro, OMITA uf_origem.
 7.  Filtro de ano: ano_cmpt = AAAA (Int64, sem aspas). Se não especificado, não filtre.
 8.  Contagem de internações: COUNT(DISTINCT n_aih) com sistema = 'SIH'.
 9.  Contagem de procedimentos ambulatoriais: COUNT(*) com sistema = 'SIA'.
 10. Custo: SUM(COALESCE(custo_total, 0)). Use ROUND(..., 2) para valores monetários.
+    "Custo/valor total" sem qualificação = custo_total. val_sh/val_sp/val_ortp/val_uti SOMENTE
+    se a pergunta nomear o componente ("valor do serviço hospitalar", "diárias de UTI"...).
 11. Permanência hospitalar real: coluna dias_perm. Diárias faturadas: qt_diarias. Use dias_perm para tempo de internação.
 12. Proporção/percentual: use window function — ROUND(100.0 * COUNT(...) / SUM(COUNT(...)) OVER (), 1).
     NÃO use WITH ROLLUP (sintaxe MySQL, inválida no DuckDB).
@@ -127,6 +131,12 @@ REGRAS OBRIGATÓRIAS
     Para filtros por icd_group ou cid_principal, use APENAS a view processed (sem JOIN).
 16. Limitação estrutural: sem ID de paciente — rastreio longitudinal impossível.
 17. Nunca estime, extrapole ou invente valores além do que o SQL retorna.
+18. HAVING (não WHERE) para filtro sobre valor agregado, após GROUP BY (ver Exemplo 4).
+19. pct: adicione somente para quebra categórica não-temporal com "distribuição/proporção/%"
+    (Exemplo 3). NUNCA para quebra temporal (mês/trimestre), mesmo dizendo "distribuição"
+    (Exemplo 5) — séries temporais reportam só o valor bruto por período.
+20. Categoria única (ex.: "número de homens") = filtro WHERE simples + COUNT(DISTINCT n_aih).
+    NUNCA use SUM(CASE WHEN...) para uma única categoria.
 
 ═══════════════════════════════════════════════════════════
 EXEMPLOS CORRETOS
@@ -171,6 +181,18 @@ WHERE sistema = 'SIH'
 GROUP BY cnes_estabelecimento
 ORDER BY internacoes DESC
 LIMIT 5;
+
+-- Pergunta: "Quais estabelecimentos tiveram mais de 100 internações ortopédicas em SP em 2022?"
+SELECT cnes_estabelecimento,
+  COUNT(DISTINCT n_aih) AS internacoes
+FROM processed
+WHERE sistema = 'SIH'
+  AND uf_origem = 'SP'
+  AND ano_cmpt = 2022
+  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')
+GROUP BY cnes_estabelecimento
+HAVING COUNT(DISTINCT n_aih) > 100
+ORDER BY internacoes DESC;
 
 -- Pergunta: "Permanência média por trimestre em internações por trauma no Brasil em 2022"
 SELECT
