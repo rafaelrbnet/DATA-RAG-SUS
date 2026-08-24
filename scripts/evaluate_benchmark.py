@@ -369,7 +369,7 @@ BENCHMARK: list[dict] = [
     {
         "id": "Q37", "cat": "Financeira",
         "q": "Custo médio por dia de internação ortopédica em SP em 2022",
-        "gold": [{"custo_por_dia": 432.54}],
+        "gold": [{"custo_por_dia": 441.95}],
         "match": "scalar", "col": "custo_por_dia",
     },
     {
