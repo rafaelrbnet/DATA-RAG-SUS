@@ -13,7 +13,7 @@ from langchain_openai import ChatOpenAI
 
 from .executor import query as execute_sql
 from .prompts import EXPLAIN_PROMPT
-from .sql_generator import generate_sql, _get_llm
+from .sql_generator import generate_sql, _get_llm, _invoke_with_retry
 
 load_dotenv()
 
@@ -39,7 +39,7 @@ def _explain(question: str, sql: str, df: pd.DataFrame) -> str:
         row_count=len(df),
         result_preview=_result_preview(df),
     )
-    response = llm.invoke([HumanMessage(content=prompt)])
+    response = _invoke_with_retry(llm, [HumanMessage(content=prompt)])
     return response.content.strip()
 
 

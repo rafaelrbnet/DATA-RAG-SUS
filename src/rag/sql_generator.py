@@ -4,14 +4,18 @@ from __future__ import annotations
 
 import os
 import re
+import time
 
 from dotenv import load_dotenv
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
+from openai import RateLimitError
 
 from .prompts import SCHEMA_CONTEXT, SYSTEM_PROMPT
 
 load_dotenv()
+
+_MAX_RATE_LIMIT_ATTEMPTS = 5
 
 _FORBIDDEN = re.compile(
     r"\b(DELETE|UPDATE|INSERT|DROP|CREATE|ALTER|TRUNCATE|EXEC|EXECUTE|GRANT|REVOKE)\b",
@@ -80,6 +84,22 @@ def _get_llm(temperature: float = 0.0) -> ChatOpenAI:
     return ChatOpenAI(model=model, temperature=temperature, api_key=api_key)
 
 
+def _invoke_with_retry(llm: ChatOpenAI, messages: list) -> AIMessage:
+    """llm.invoke() com retry/backoff exponencial em erro 429 (rate limit).
+
+    A API costuma sinalizar em quanto tempo o limite libera (ex.: "try again
+    in 334ms") — sem retry, esse erro transitório é contado como falha
+    permanente da query, distorcendo a Execution Accuracy medida.
+    """
+    for attempt in range(1, _MAX_RATE_LIMIT_ATTEMPTS + 1):
+        try:
+            return llm.invoke(messages)
+        except RateLimitError:
+            if attempt == _MAX_RATE_LIMIT_ATTEMPTS:
+                raise
+            time.sleep(min(2 ** attempt, 30))
+
+
 def generate_sql(question: str, *, temperature: float = 0.0) -> str:
     """
     Converte pergunta em português em SQL DuckDB válido via LLM configurado.
@@ -94,7 +114,7 @@ def generate_sql(question: str, *, temperature: float = 0.0) -> str:
         SystemMessage(content=system_content),
         HumanMessage(content=question),
     ]
-    response = llm.invoke(messages)
+    response = _invoke_with_retry(llm, messages)
     raw: str = response.content
     sql = _extract_sql(raw)
     _validate_select_only(sql)
@@ -140,7 +160,7 @@ def generate_sql_with_repair(
         SystemMessage(content=system_content),
         HumanMessage(content=question),
     ]
-    response = llm.invoke(messages)
+    response = _invoke_with_retry(llm, messages)
     sql = _extract_sql(response.content)
     _validate_select_only(sql)
 
@@ -155,7 +175,7 @@ def generate_sql_with_repair(
                 AIMessage(content=f"```sql\n{sql}\n```"),
                 HumanMessage(content=_REPAIR_INSTRUCTION.format(error=exc)),
             ]
-            response = llm.invoke(messages)
+            response = _invoke_with_retry(llm, messages)
             sql = _extract_sql(response.content)
             _validate_select_only(sql)
             continue
@@ -173,7 +193,7 @@ def generate_sql_with_repair(
                 preview=df.head(3).to_string(index=False),
             )),
         ]
-        response = llm.invoke(messages)
+        response = _invoke_with_retry(llm, messages)
         content = response.content.strip()
         if "APROVADO" in content.upper()[:40]:
             break

@@ -2,9 +2,19 @@
 
 from __future__ import annotations
 
-import pytest
+from unittest.mock import MagicMock
 
-from src.rag.sql_generator import _extract_sql, _validate_select_only
+import httpx
+import pytest
+from openai import RateLimitError
+
+from src.rag.sql_generator import _extract_sql, _invoke_with_retry, _validate_select_only
+
+
+def _rate_limit_error() -> RateLimitError:
+    request = httpx.Request("POST", "https://api.openai.com/v1/chat/completions")
+    response = httpx.Response(429, request=request)
+    return RateLimitError("rate limit exceeded", response=response, body=None)
 
 
 # ---------------------------------------------------------------------------
@@ -57,3 +67,32 @@ def test_validate_raises_for_non_select():
 def test_validate_raises_for_insert():
     with pytest.raises(ValueError, match="INSERT"):
         _validate_select_only("INSERT INTO processed VALUES (1)")
+
+
+# ---------------------------------------------------------------------------
+# _invoke_with_retry
+# ---------------------------------------------------------------------------
+
+def test_invoke_with_retry_succeeds_first_try():
+    llm = MagicMock()
+    llm.invoke.return_value = "ok"
+    assert _invoke_with_retry(llm, []) == "ok"
+    assert llm.invoke.call_count == 1
+
+
+def test_invoke_with_retry_recovers_after_rate_limit(monkeypatch):
+    monkeypatch.setattr("src.rag.sql_generator.time.sleep", lambda _: None)
+    llm = MagicMock()
+    llm.invoke.side_effect = [_rate_limit_error(), _rate_limit_error(), "ok"]
+    assert _invoke_with_retry(llm, []) == "ok"
+    assert llm.invoke.call_count == 3
+
+
+def test_invoke_with_retry_raises_after_exhausting_attempts(monkeypatch):
+    monkeypatch.setattr("src.rag.sql_generator.time.sleep", lambda _: None)
+    llm = MagicMock()
+    llm.invoke.side_effect = _rate_limit_error()
+    with pytest.raises(RateLimitError):
+        _invoke_with_retry(llm, [])
+    from src.rag.sql_generator import _MAX_RATE_LIMIT_ATTEMPTS
+    assert llm.invoke.call_count == _MAX_RATE_LIMIT_ATTEMPTS
