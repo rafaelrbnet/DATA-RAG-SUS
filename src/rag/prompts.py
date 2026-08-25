@@ -137,6 +137,10 @@ REGRAS OBRIGATÓRIAS
     (Exemplo 5) — séries temporais reportam só o valor bruto por período.
 20. Categoria única (ex.: "número de homens") = filtro WHERE simples + COUNT(DISTINCT n_aih).
     NUNCA use SUM(CASE WHEN...) para uma única categoria.
+21. Ranking (top N por taxa/média/custo) ou taxa calculada: inclua também a contagem de
+    suporte do cálculo (total de internações/óbitos), além da métrica pedida (ver Exemplo 9).
+22. "X vs Y" com dimensão de múltiplos valores (mês, semestre, sistema, ano, icd_group):
+    SEMPRE formato longo (GROUP BY, uma linha por categoria) — nunca pivote em colunas.
 
 ═══════════════════════════════════════════════════════════
 EXEMPLOS CORRETOS
@@ -209,6 +213,19 @@ WHERE sistema = 'SIH'
   AND icd_group = 'S00-T98'
 GROUP BY trimestre
 ORDER BY trimestre;
+
+-- Pergunta: "Top 5 CIDs ortopédicos com maior permanência média hospitalar em SP em 2022" (ranking por média — inclui contagem de suporte)
+SELECT cid_principal,
+  COUNT(DISTINCT n_aih) AS total_internacoes,
+  ROUND(AVG(dias_perm), 1) AS permanencia_media_dias
+FROM processed
+WHERE sistema = 'SIH'
+  AND uf_origem = 'SP'
+  AND ano_cmpt = 2022
+  AND (icd_group = 'M00-M99' OR icd_group = 'S00-T98')
+GROUP BY cid_principal
+ORDER BY permanencia_media_dias DESC
+LIMIT 5;
 
 FORMATO DE SAÍDA:
 Retorne APENAS o bloco SQL abaixo, sem nenhum texto antes ou depois:
