@@ -683,7 +683,7 @@ BENCHMARK: list[dict] = [
     },
     {
         "id": "Q70", "cat": "Epidemiológica Complexa",
-        "q": "Distribuição de procedimentos ambulatoriais ortopédicos por faixa etária em SP em 2022",
+        "q": "Distribuição de procedimentos ambulatoriais ortopédicos por faixa etária (0-17, 18-59, 60+) em SP em 2022",
         "gold": [{"faixa_etaria": "0-17", "total": 4868}, {"faixa_etaria": "18-59", "total": 46482}, {"faixa_etaria": "60+", "total": 53666}],
         "match": "unordered_rows", "key_cols": ["faixa_etaria", "total"],
     },
@@ -767,7 +767,7 @@ BENCHMARK: list[dict] = [
     },
     {
         "id": "Q84", "cat": "Epidemiológica Complexa",
-        "q": "Distribuição de internações ortopédicas por faixa de permanência em SP em 2022",
+        "q": "Distribuição de internações ortopédicas por faixa de permanência (rótulos: '1-3 dias', '4-7 dias', '8-14 dias', '15+ dias') em SP em 2022",
         "gold": [{"faixa_permanencia": "1-3 dias", "total": 27844}, {"faixa_permanencia": "15+ dias", "total": 8508}, {"faixa_permanencia": "4-7 dias", "total": 18697}, {"faixa_permanencia": "8-14 dias", "total": 10929}],
         "match": "unordered_rows", "key_cols": ["faixa_permanencia", "total"],
     },
@@ -931,7 +931,7 @@ BENCHMARK: list[dict] = [
     },
     {
         "id": "Q111", "cat": "Temporal/Comparativa",
-        "q": "Comparativo semestral de internações ortopédicas (1º vs 2º semestre) em SP em 2022",
+        "q": "Comparativo semestral de internações ortopédicas (1S = jan-jun, 2S = jul-dez) em SP em 2022",
         "gold": [{"semestre": "1S", "total": 31575}, {"semestre": "2S", "total": 34397}],
         "match": "unordered_rows", "key_cols": ["semestre", "total"],
     },
@@ -967,7 +967,7 @@ BENCHMARK: list[dict] = [
     },
     {
         "id": "Q117", "cat": "Temporal/Comparativa",
-        "q": "Comparativo semestral do custo total de internações ortopédicas em SP em 2022",
+        "q": "Comparativo semestral do custo total de internações ortopédicas (1S = jan-jun, 2S = jul-dez) em SP em 2022",
         "gold": [{"semestre": "1S", "custo_total": 82207816.93}, {"semestre": "2S", "custo_total": 93075611.84}],
         "match": "unordered_rows", "key_cols": ["semestre", "custo_total"],
     },
