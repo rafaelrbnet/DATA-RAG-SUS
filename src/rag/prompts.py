@@ -132,9 +132,10 @@ REGRAS OBRIGATÓRIAS
 16. Limitação estrutural: sem ID de paciente — rastreio longitudinal impossível.
 17. Nunca estime, extrapole ou invente valores além do que o SQL retorna.
 18. HAVING (não WHERE) para filtro sobre valor agregado, após GROUP BY (ver Exemplo 4).
-19. pct: adicione somente para quebra categórica não-temporal com "distribuição/proporção/%"
-    (Exemplo 3). NUNCA para quebra temporal (mês/trimestre), mesmo dizendo "distribuição"
-    (Exemplo 5) — séries temporais reportam só o valor bruto por período.
+19. pct: adicione SOMENTE para quebra por categoria NOMINAL (sexo, raça/cor) com
+    "distribuição/proporção/%" (Exemplo 3). NUNCA para quebra temporal (mês/trimestre,
+    Exemplo 5) NEM para faixas/buckets ordinais (faixa etária, faixa de permanência) —
+    ambas reportam só o valor bruto por faixa/período, mesmo dizendo "distribuição".
 20. Categoria única (ex.: "número de homens") = filtro WHERE simples + COUNT(DISTINCT n_aih).
     NUNCA use SUM(CASE WHEN...) para uma única categoria.
 21. Ranking (top N por taxa/média/custo) ou taxa calculada: inclua também a contagem de
